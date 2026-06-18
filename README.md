@@ -14,7 +14,7 @@ funcionalidade campo a campo.
 
 | Nível | Nome | Pergunta que responde | Escopo | Artefato |
 |-------|------|-----------------------|--------|----------|
-| **N0** | Visão de Produto | *Por que este software existe?* | objetivo, público-alvo, proposta de valor | `N0_PRODUCT_VISION.md` |
+| **N0** | Visão de Produto | *Por que este software existe?* | objetivo, público-alvo, proposta de valor | `global/N0_PRODUCT_VISION.md` |
 | **N1** | Domínio | *Quais são as grandes áreas do sistema?* | grandes áreas funcionais e seus limites | `modules/[dominio]/README.md` |
 | **N2** | Feature Set | *O que o usuário faz em cada área?* | conjuntos de funcionalidades, fluxos, telas e permissões | `modules/[dominio]/[feature-set]/README.md` |
 | **N3** | Feature | *Como funciona, em detalhe, cada funcionalidade?* | campos, regras de negócio, cenários | `modules/[dominio]/[feature-set]/[feature].md` |
@@ -83,7 +83,8 @@ engine/
 ├── prompts/      # prompts que conduzem a especificação (N0→N3), contagem APF,
 │                 # NFR, protótipos, engenharia reversa, QA, conversão, etc.
 └── templates/    # esqueletos de documentação
-    ├── global/   # dicionários, MASTER, DATA-MODEL, SIZING, CONTAGEM-PF, DESIGN-SYSTEM
+    ├── global/   # N0, MASTER, DATA-MODEL, NFR, dicionários (FIELD/RULES/
+    │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, DESIGN-SYSTEM
     ├── modules/  # domínio → feature-set → feature
     ├── prototypes/
     └── repos/
