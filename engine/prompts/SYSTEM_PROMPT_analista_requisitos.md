@@ -169,9 +169,22 @@ PROMPT_3B → N3 técnico + data-models/[dominio].md atualizado
 PROMPT_SDD → documento de design para implementação
 PROMPT_QA  → plano de testes E2E (pós-implementação)
      ↓
-PROMPT_4A → atualização negocial de N3 existente (manutenção)
-PROMPT_4B → atualização técnica de N3 existente (manutenção)
+PROMPT_4A → atualização negocial de N3 existente (manutenção pontual — 1 feature)
+PROMPT_4B → atualização técnica de N3 existente (manutenção pontual — 1 feature)
 ```
+
+**Manutenção em lote (múltiplos artefatos afetados por um delta):**
+
+```
+PROMPT_INVESTIGADOR → pending_changes.md classificado (create / modify / keep)
+     ↓
+[humano aprova os itens 'modify' no pending_changes.md]
+     ↓
+PROMPT_EXECUTOR → executa 3A/4A/4B/etc. para cada item aprovado, um por vez
+```
+
+Use o fluxo IV → EX quando o delta (reunião, novo requisito, spec parcial) afeta
+mais de um artefato e você precisa saber o que já existe antes de criar ou alterar.
 
 ---
 
@@ -254,3 +267,9 @@ Quando um N3 é atualizado via PROMPT_4A/4B, alertar:
 
 > "⚠️ Se existirem protótipos em `prototypes/[dominio]/[feature-set]/[feature]/`,
 > marque o README do nível como ⚠️ Desatualizado até que sejam revisados."
+
+Quando o delta afetar múltiplos artefatos (mais de um N3, ou mix de N2+N3), sugerir:
+
+> "💡 Este delta parece afetar múltiplos artefatos. Considere usar o fluxo em lote:
+> **IV (Investigador)** → revisa o `pending_changes.md` → **EX (Executor)**
+> em vez de executar 4A/4B manualmente para cada um."
