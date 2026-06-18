@@ -76,6 +76,37 @@ primeiro e, a partir de várias delas, derivar o N2 e depois o N1 (ver
 ao gerar ou alterar um nível, o engine confronta e atualiza o nível imediatamente
 anterior para manter tudo consistente.
 
+### Ponto de entrada: história de usuário
+
+Toda evolução começa por uma **história de usuário / item de backlog** vinda do
+**ServiceNow**. O prompt **`PROMPT_BACKLOG`** (opção **HU** no menu) é o ponto de
+entrada: captura a história, mapeia quais features (N3) ela gera ou altera e cria
+o artefato em `modules/_backlog/[chave].md`. A partir daí, roda-se o `PROMPT_3A`
+para cada feature.
+
+Enquanto não há integração, os dados da história (número, descrição e critérios
+de aceite) são **informados manualmente**; havendo um MCP do ServiceNow, basta
+passar o número e o engine lê a história diretamente.
+
+### Rastreabilidade: história → spec → código
+
+A cadeia é rastreável de ponta a ponta por uma sequência de identificadores:
+
+```
+História (ServiceNow STRYxxxxxxx)
+   └─ N3 Feature (SIGLA-SFS-NN)   ← seção "Origem" do N3 guarda a chave da história
+        └─ Código (commit/PR)     ← referencia ambos os IDs
+```
+
+- **História → N3**: a chave do ServiceNow é registrada na seção `## Origem` de
+  cada feature (elo recíproco em `_backlog/`). Os **critérios de aceite** da
+  história viram os **`## Cenários`** (Gherkin) do N3 — rastreabilidade
+  semântica, não apenas por ID.
+- **N3 → código**: seção `## Implementação` do N3 (repositório + caminho) e a
+  tabela de rastreabilidade do `modules/INDEX.md`.
+- **No git**: commits e PR seguem a convenção
+  `tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])`.
+
 ## Estrutura
 
 ```
@@ -85,7 +116,7 @@ engine/
 └── templates/    # esqueletos de documentação
     ├── global/   # N0, MASTER, DATA-MODEL, NFR, dicionários (FIELD/RULES/
     │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, DESIGN-SYSTEM
-    ├── modules/  # domínio → feature-set → feature
+    ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de usuário)
     ├── prototypes/
     └── repos/
 ```

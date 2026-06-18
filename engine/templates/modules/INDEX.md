@@ -12,13 +12,15 @@
 
 ---
 
-## Rastreabilidade: spec → código
+## Rastreabilidade: história → spec → código
 
-| Feature | Domínio | Status | PF | CFP | Repositórios |
-|---|---|---|---|---|---|
-| [[SIGLA]-[SFS]-[NN]: Nome da Feature](./[dominio]/[feature-set]/[feature].md) | [Domínio] | 📋 Especificado | — | — | — |
+| História (ServiceNow) | Feature | Domínio | Status | PF | CFP | Repositórios |
+|---|---|---|---|---|---|---|
+| [`STRYxxxxxxx`](./_backlog/[chave].md) | [[SIGLA]-[SFS]-[NN]: Nome da Feature](./[dominio]/[feature-set]/[feature].md) | [Domínio] | 📋 Especificado | — | — | — |
 
 <!--
+  História: chave do ServiceNow que originou a feature (seção "Origem" do N3).
+  Uma feature pode ter mais de uma história; uma história, mais de uma feature.
   PF e CFP: preencher após PROMPT_3B. Ver critérios em global/SIZING.md.
   Totais vigentes excluem features ❌ Deprecadas.
 -->

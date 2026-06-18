@@ -67,15 +67,37 @@ entre ferramentas externas (Jira, Azure DevOps, etc.).
 
 | Nível | Formato | Exemplo |
 |---|---|---|
+| História de usuário (entrada) | chave do **ServiceNow** — origem externa, **não gerada aqui**; é a fonte de verdade da história | `STRY0012345` |
 | Domínio (N1) | `[SIGLA]` — sigla do domínio (sempre 3 letras maiúsculas) definida na criação do domínio | `CRM` |
 | Feature Set (N2) | `[SIGLA]-[SFS]` — sigla do domínio + sigla do Feature Set (sempre 3 letras maiúsculas) | `CRM-CLI` |
 | Feature (N3) | `[SIGLA]-[SFS]-[NN]` — 2 dígitos sequenciais dentro do Feature Set | `CRM-CLI-01` |
 
 **Regras:**
+- A história de usuário entra pelo ServiceNow; o framework **referencia** a chave (nunca cria ID próprio para a história) e a registra na seção `## Origem` do N3
 - A sigla do domínio é definida uma única vez na criação do N1 e nunca alterada
 - A sigla do Feature Set é definida na criação do N2, é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Feature Set (ex.: Usuários → `USR`)
 - A numeração de Features é sequencial dentro do Feature Set e não reutilizada após exclusão
 - O ID fica no cabeçalho de cada artefato, logo abaixo da linha `**Nível X**`
+
+### Rastreabilidade ponta a ponta (história → spec → código)
+
+Todo desenvolvimento começa por uma história de usuário no ServiceNow e é
+rastreável até o código pela cadeia de IDs:
+
+```
+História (ServiceNow STRYxxxxxxx)
+   └─ N3 Feature (SIGLA-SFS-NN)  ← seção "Origem" guarda a chave da história
+        └─ Código (commit/PR)    ← referencia ambos os IDs
+```
+
+- **História → N3**: a chave do ServiceNow é registrada na seção `## Origem` de
+  cada feature; o elo recíproco fica em `modules/_backlog/[chave].md`. Os
+  critérios de aceite da história viram os `## Cenários` (Gherkin) do N3 —
+  rastreabilidade semântica, não só por ID.
+- **N3 → código**: seção `## Implementação` do N3 (repositório + caminho) +
+  coluna na tabela `Rastreabilidade` do `modules/INDEX.md`.
+- **Convenção de commit/PR** *(fecha a cadeia no git)*:
+  `tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])`
 
 ---
 
