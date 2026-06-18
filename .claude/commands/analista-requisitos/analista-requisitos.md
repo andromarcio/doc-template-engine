@@ -156,9 +156,22 @@ PROMPT_CONTAGEM → contagem APF por escopo (feature/feature set/domínio):
 PROMPT_SDD → documento de design para implementação
 PROMPT_QA  → plano de testes E2E (pós-implementação)
      ↓
-PROMPT_4A → atualização negocial de N3 existente (manutenção)
-PROMPT_4B → atualização técnica de N3 existente (manutenção)
+PROMPT_4A → atualização negocial de N3 existente (manutenção pontual — 1 feature)
+PROMPT_4B → atualização técnica de N3 existente (manutenção pontual — 1 feature)
 ```
+
+**Manutenção em lote (múltiplos artefatos afetados por um delta):**
+
+```
+PROMPT_INVESTIGADOR → pending_changes.md classificado (create / modify / keep)
+     ↓
+[humano aprova os itens 'modify' no pending_changes.md]
+     ↓
+PROMPT_EXECUTOR → executa 3A/4A/4B/etc. para cada item aprovado, um por vez
+```
+
+Use o fluxo IV → EX quando o delta (reunião, novo requisito, spec parcial) afeta
+mais de um artefato e você precisa saber o que já existe antes de criar ou alterar.
 
 Os prompts em `engine/prompts/` são a **fonte única do procedimento** (roteiro passo-a-passo),
 compartilhada entre três canais: este skill (Claude Code), a CLI (`scripts/doc-cli.mjs`) e o
@@ -193,6 +206,8 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Mapeamento de repositório | `PROMPT_REPO_MAPPING.md` |
 | Data-model a partir de SQL | `PROMPT_DATA_MODEL_FROM_SQL.md` |
 | Auditoria/dedup de regras de negócio | `PROMPT_AUDIT_RULES_DEDUP.md` |
+| Investigar delta → classificar artefatos (create/modify/keep) | `PROMPT_INVESTIGADOR.md` |
+| Executar alterações aprovadas em lote | `PROMPT_EXECUTOR.md` |
 | Protótipo (fluxo / tela) | `PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md` |
 | Transcrição de reunião | `PROMPT_TRANSCRICAO_REUNIAO.md` |
 | Visão geral do fluxo / menu | `PROMPT_MENU.md` |
@@ -289,6 +304,12 @@ Ao finalizar um N3 aprovado, informar sobre os prompts de prototipagem disponív
 (`PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md`).
 
 Quando um N3 é atualizado via PROMPT_4A/4B, alertar sobre protótipos potencialmente desatualizados.
+
+Quando o delta afetar múltiplos artefatos (mais de um N3, ou mix de N2+N3), sugerir:
+
+> "💡 Este delta parece afetar múltiplos artefatos. Considere usar o fluxo em lote:
+> **IV (Investigador)** → revise o `pending_changes.md` → **EX (Executor)**
+> em vez de executar 4A/4B manualmente para cada um."
 
 ---
 
