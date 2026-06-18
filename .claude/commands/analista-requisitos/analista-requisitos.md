@@ -202,6 +202,24 @@ correto (N3 **e** `global/data-models/[dominio].md` na mesma passada quando o pr
 e leia os dicionários sob demanda — não peça ao usuário para colar conteúdo. A regra absoluta #5
 (campos novos vão para o data-model, nunca para o N3) deixa de depender de edição manual.
 
+### Localização de feature para manutenção (PROMPT_4A / 4B)
+
+Quando o usuário pede para **alterar / ajustar / atualizar uma feature** sem indicar o
+arquivo exato, **não assuma** qual é nem peça para colar o N3. Localize a feature e
+confirme antes de editar:
+
+1. **Pergunte qual feature** se ainda não estiver clara (nome, ID `SIGLA-SFS-NN` ou
+   palavra-chave do que ela faz).
+2. **Busque no repositório** os N3 em `modules/**/[feature].md` — casando nome de
+   arquivo, `## Objetivo`, ID e campos com o que o usuário descreveu.
+3. **Apresente o que encontrou e confirme**:
+   - 1 correspondência → mostre o cartão (nome, ID, caminho, objetivo, campos) e peça "É esta?".
+   - várias → liste as candidatas e peça para escolher (uma pergunta).
+   - nenhuma → avise; pode ser outro nome ou feature ainda não especificada (aí é PROMPT_3A).
+4. Só depois da confirmação leia o N3 alvo e siga o roteiro do PROMPT_4A/4B sobre **ele**.
+
+Isso garante que o ajuste solicitado caia direto na feature certa, e não numa suposição.
+
 > **`engine/` é somente-leitura.** O diretório `engine/` (prompts + templates) é o **motor do
 > framework**, não a documentação. As linhas "Modelo de estrutura: `engine/templates/...`" nos
 > prompts são **referência de leitura** — nunca destino de escrita. A documentação gerada vai
