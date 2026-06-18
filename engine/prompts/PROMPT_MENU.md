@@ -100,6 +100,8 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
 | **AU** | Deduplicar regras de negócio | Analista / Tech Lead | Varre N3s e detecta regras duplicadas, sobrepostas ou contraditórias entre features |
+| **IV** | Investigar artefatos (delta → pending_changes) | PO + Analista | Cruza requisitos/delta com o que já existe e classifica cada bloco em `create`, `modify` ou `keep`; gera `pending_changes.md` para aprovação humana |
+| **EX** | Executar alterações aprovadas | Analista / Dev | Lê o `pending_changes.md` revisado e executa o prompt correto para cada item aprovado — um por vez, com confirmação entre eles |
 
 ---
 
@@ -178,6 +180,8 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **RT** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. MESSAGE-DICTIONARY.md · 6. Artefatos existentes N1/N2/N3 *(opcional — habilita atualização)* · 7. Transcrição da reunião |
 | **3B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 negocial aprovado |
 | **AU** | 1. RULES-DICTIONARY.md · 2. Trechos de regras transversais dos N1s relevantes · 3. N3s a varrer |
+| **IV** | 1. MASTER.md · 2. modules/INDEX.md · 3. RULES-DICTIONARY.md · 4. FIELD-DICTIONARY.md · 5. Delta / requisitos novos ou alterados · 6. Artefatos existentes afetados *(opcional — N3s, N2s relevantes)* |
+| **EX** | 1. MASTER.md · 2. pending_changes.md revisado · 3. Insumos específicos de cada item (coletados durante a execução) |
 | **4A** | 1. MASTER.md · 2. FIELD-DICTIONARY.md · 3. RULES-DICTIONARY.md · 4. N3 existente completo |
 | **4B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 original completo · 10. N3 negocial atualizado (do 4A) |
 | **5A** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. DATA-MODEL.md (índice) · 4. API-PATTERNS.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1(s) · 8. N2(s) · 9. N3(s) a implementar |
@@ -252,6 +256,8 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | 6A | PROMPT_PROTOTYPE_FLOW_FULL.md |
 | 6B | PROMPT_PROTOTYPE_SCREEN_FULL.md |
 | CT | PROMPT_CONTAGEM.md |
+| IV | PROMPT_INVESTIGADOR.md |
+| EX | PROMPT_EXECUTOR.md |
 
 ---
 
