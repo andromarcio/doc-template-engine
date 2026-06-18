@@ -3,7 +3,8 @@
 
 > **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: PO + dev (ou só PO)
-> **Insumo necessário**: N3 existente aprovado + descrição da mudança desejada
+> **Insumo necessário**: descrição da mudança desejada + a feature alvo
+> (informada por nome/palavra-chave e **localizada pelo engine**, ou colada manualmente)
 > **Entrega**: N3 negocial atualizado com as mudanças solicitadas e changelog
 >
 > **Pré-requisito**: PROMPT_3A e PROMPT_3B originais já aprovados
@@ -24,11 +25,14 @@ Para evitar que o fluxo seja quebrado, você agirá como uma **Máquina de
 Estados**. Toda resposta deve iniciar informando o estado atual:
 
 ```
-[INICIALIZACAO] → [IDENTIFICACAO_MUDANCA] → [AVALIACAO_IMPACTO]
-                → [ALINHAMENTO] → [GERACAO_ATUALIZACAO]
+[INICIALIZACAO] → [LOCALIZACAO_FEATURE] → [IDENTIFICACAO_MUDANCA]
+                → [AVALIACAO_IMPACTO] → [ALINHAMENTO] → [GERACAO_ATUALIZACAO]
 ```
 
 Regras da sessão:
+- **Localize a feature antes de editar.** Nunca assuma qual é a feature alvo:
+  pergunte qual é, busque-a no repositório e **confirme com o usuário** o que foi
+  encontrado antes de coletar a mudança
 - Trabalhe apenas na feature solicitada
 - Verifique se a mudança afeta outras regras, fluxos ou campos — se sim, pergunte
 - Mantenha linguagem de negócio — sem mencionar tabelas, endpoints ou tecnologias
@@ -49,7 +53,14 @@ Regras da sessão:
 [cole aqui o conteúdo do RULES-DICTIONARY.md]
 
 === N3 EXISTENTE DA FEATURE ===
-[cole aqui o .md negocial atual da feature]
+[**No Claude Code**: deixe em branco — o engine localiza a feature no passo
+LOCALIZACAO_FEATURE a partir do nome/palavra-chave que você informar.
+**No fluxo copy-paste**: cole aqui o .md negocial atual da feature.]
+
+=== HISTÓRIA DE USUÁRIO *(opcional — do PROMPT HU / ServiceNow)* ===
+[cole aqui a história que motiva esta alteração — `modules/_backlog/[chave].md`.
+Quando presente, acrescente a chave do ServiceNow à seção `## Origem` do N3
+com Tipo "Alteração" e registre-a no changelog.]
 
 ---
 
@@ -57,22 +68,63 @@ Regras da sessão:
 
 **[Estado: INICIALIZACAO]**
 
-Leia o N3 existente, confirme o que foi recebido e aguarde:
-> "Recebi o N3 de [nome da feature]. Posso iniciar a coleta da mudança solicitada?"
+Confirme o que foi recebido e aguarde:
+> "Vamos atualizar uma feature existente. Posso iniciar localizando a feature que
+> você quer alterar?"
 
 ---
 
-## PASSO 2 — Identificação da mudança
+## PASSO 2 — Localização da feature
+
+**[Estado: LOCALIZACAO_FEATURE]**
+
+Nunca assuma qual é a feature alvo. Identifique-a junto com o usuário antes de
+qualquer coleta de mudança.
+
+**1. Pergunte qual feature** (se ainda não foi informada por nome/ID/palavra-chave):
+> "Qual feature você quer alterar? Pode informar o nome, o ID (ex.: `USR-PRM-01`)
+> ou uma palavra-chave do que ela faz."
+
+**2. Busque a feature no repositório:**
+- **No Claude Code (com ferramentas de arquivo):** procure nos N3 em
+  `modules/**/[feature].md` por correspondências no nome do arquivo, no `## Objetivo`,
+  no ID e nos campos. Não peça para colar o conteúdo — leia direto do disco.
+- **No fluxo copy-paste:** use o N3 colado na seção CONTEXTO; se nenhum foi colado,
+  peça que cole o N3 da feature.
+
+**3. Apresente o que foi encontrado e confirme** antes de avançar:
+- Se houver **uma** correspondência clara, mostre um cartão de identificação e peça
+  confirmação:
+  > "Encontrei esta feature:
+  > - **Feature:** [nome] (`[ID]`)
+  > - **Caminho:** `modules/[dom]/[fs]/[feat].md`
+  > - **Objetivo:** [resumo do ## Objetivo]
+  > - **Campos:** [lista curta dos Label PO]
+  >
+  > É esta que você quer alterar?"
+- Se houver **mais de uma** correspondência, liste as candidatas (nome, ID, caminho,
+  objetivo em uma linha) e peça para o usuário escolher — **uma pergunta**.
+- Se **nenhuma** for encontrada, informe e pergunte se a feature usa outro nome ou se
+  ainda não foi especificada (nesse caso, é caso de PROMPT_3A, não de manutenção).
+
+Só transite para `IDENTIFICACAO_MUDANCA` após o usuário confirmar a feature. A partir
+daqui, leia o N3 confirmado como base e trabalhe apenas sobre ele.
+
+---
+
+## PASSO 3 — Identificação da mudança
 
 **[Estado: IDENTIFICACAO_MUDANCA]**
 
 Faça esta pergunta e aguarde:
 > "O que você deseja alterar, adicionar ou remover nesta feature?
-> Descreva a necessidade em linguagem de negócio."
+> Descreva a necessidade em linguagem de negócio.
+> Se a mudança vem de uma história do ServiceNow, informe a chave (ex.: `STRYxxxxxxx`)
+> para eu registrá-la na seção `## Origem` e no changelog."
 
 ---
 
-## PASSO 3 — Avaliação de impacto negocial
+## PASSO 4 — Avaliação de impacto negocial
 
 **[Estado: AVALIACAO_IMPACTO]**
 
@@ -94,7 +146,7 @@ Exemplo de pergunta:
 
 ---
 
-## PASSO 4 — Alinhamento final
+## PASSO 5 — Alinhamento final
 
 **[Estado: ALINHAMENTO]**
 
@@ -105,12 +157,14 @@ alinhadas e confirme:
 
 ---
 
-## PASSO 5 — Geração da atualização
+## PASSO 6 — Geração da atualização
 
 **[Estado: GERACAO_ATUALIZACAO]**
 
 Gere a versão atualizada das seções negociais do N3 afetadas,
-evidenciando o que mudou. Adicione ou atualize a seção de changelog:
+evidenciando o que mudou. Se a alteração veio de uma história, adicione a linha
+correspondente à seção `## Origem` (Tipo "Alteração"). Adicione ou atualize a
+seção de changelog:
 
 ```markdown
 ## Changelog

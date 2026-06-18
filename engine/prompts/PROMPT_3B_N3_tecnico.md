@@ -290,7 +290,7 @@ Apresente apenas as seções técnicas geradas. Pergunte:
 
 Após aprovação, gere o arquivo completo:
 
-📄 `modules/[dominio]/[feature-set]/[feature].md` — versão completa
+📄 `modules/[dominio]/g-[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` — versão completa (usar o mesmo nome de arquivo gerado pelo PROMPT 3A; padrão: `f-` + verbo + entidade singular + adjetivo qualificador quando houver, em kebab-case)
 
 > **Nota**: as seções técnicas **não existem** no N3 negocial gerado pelo PROMPT 3A — este prompt as cria e insere abaixo de `## Comportamento de tela`, dentro do bloco `<div class="dev-only">`.
 

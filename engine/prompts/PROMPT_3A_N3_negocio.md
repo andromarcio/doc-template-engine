@@ -32,6 +32,7 @@ Regras da sessão:
   RULES-DICTIONARY automaticamente sem perguntar sobre o comportamento.
 - Perguntar apenas o que os dicionários deixam em aberto (parâmetros).
 - Sinalize suposições com ⚠️.
+- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. A pasta do Feature Set usa o prefixo `g-`. Padrão: `modules/[dominio]/g-[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen.
 
 ---
 
@@ -58,6 +59,11 @@ Regras da sessão:
 === N2 DO FEATURE SET *(opcional — omita se não existir ainda)* ===
 [cole aqui o README.md do Feature Set]
 
+=== HISTÓRIA DE USUÁRIO *(opcional — do PROMPT HU / ServiceNow)* ===
+[cole aqui o conteúdo de modules/_backlog/[chave].md — a história que originou
+esta feature. Quando presente, registre a chave do ServiceNow na seção
+`## Origem` do N3 e use os critérios de aceite como semente dos cenários.]
+
 === IDENTIFICAÇÃO MANUAL *(preencher apenas no fluxo bottom-up, quando N1/N2 não existem)* ===
 Domínio: [nome do domínio]
 Feature Set: [nome do Feature Set]
@@ -68,6 +74,24 @@ Feature(s) a especificar: [nome da feature — ou lista separada por vírgula]
 ## PASSO 1 — Detecção do modo e confirmação das features
 
 Verifique os insumos recebidos e bifurque:
+
+---
+
+### História de usuário fornecida (se houver)
+
+Se uma **história de usuário** (`modules/_backlog/[chave].md`) foi colada no
+contexto, ela é a **origem** desta feature. Antes de bifurcar entre Modo A/B:
+
+- Registre a **chave do ServiceNow** para preencher a seção `## Origem` do N3.
+- Leia os **critérios de aceite** da história — eles são a **semente dos
+  `## Cenários`** (Gherkin). Reaproveite o Given/When/Then quando já vier nesse
+  formato; isso garante o elo semântico história → cenário, não só por ID.
+- Confirme com o usuário se esta sessão cobre **um critério, vários ou todos**
+  os da história (uma história pode virar mais de uma feature).
+
+> "Esta feature tem origem na história **[STRYxxxxxxx]**. Vou registrá-la na
+> seção `## Origem` e usar os critérios de aceite como base dos cenários.
+> Esta feature cobre [todos os critérios | os critérios N, M] da história?"
 
 ---
 
@@ -402,6 +426,15 @@ Com as respostas de todos os blocos, gere:
 
 ## Descrição
 [uma frase em linguagem de negócio]
+
+---
+
+## Origem
+<!-- Incluir apenas se houver história de usuário de origem; senão, omitir a seção. -->
+
+| História (ServiceNow) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRYxxxxxxx`](../../_backlog/[chave].md) | Criação / Alteração | [critérios de aceite que esta feature realiza] |
 
 ---
 

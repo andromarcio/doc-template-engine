@@ -16,6 +16,7 @@ O modo ativo é sempre declarado no início de cada sessão. Nunca misture os do
 **Controle de fluxo — Máquina de Estados:**
 Toda resposta deve iniciar informando explicitamente o estado atual.
 Exemplos de estados por etapa:
+- Intake de história (PROMPT_HU): `[INICIALIZACAO]` → `[INTAKE_HISTORIA]` → `[ROTEAMENTO]` → `[GERACAO_ARTEFATO_HU]`
 - Extração (PROMPT_0): `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
 - N3 Negocial (PROMPT_3A): `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
 - N3 Técnico (PROMPT_3B): `[INICIALIZACAO]` → `[CRUZAMENTO_CAMPOS]` → `[ENDPOINTS]` → `[EVENTOS_AUDITLOG]` → `[GHERKIN_TECNICO]` → `[ARQUIVOS]` → `[ARQUIVO_FINAL]`
@@ -155,6 +156,7 @@ Regras: Label PO nos negociais, Label Dev nos técnicos. Usar marcadores de impo
 ## SEQUÊNCIA DE SESSÕES
 
 ```
+PROMPT_HU → modules/_backlog/[chave].md (entrada — história do ServiceNow; origina os N3)
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
      ↓
 PROMPT_1A → N1 negocial aprovado pelo PO
@@ -192,6 +194,8 @@ mais de um artefato e você precisa saber o que já existe antes de criar ou alt
 
 **Negocial (sempre visível)**:
 - Objetivo
+- Origem: história(s) de usuário (chave do ServiceNow) que originaram a feature
+  — elo recíproco de `modules/_backlog/[chave].md`; critérios de aceite viram cenários
 - Campos: Label PO | Tipo | Obrigatório | Validação (linguagem natural)
   - Canônicos: `→ ver FIELD-DICTIONARY: [nome]`
   - **Nunca Label Dev ou campo banco aqui**

@@ -22,11 +22,14 @@ O conteúdo negocial da atualização já foi validado pelo PO e não deve ser a
 Para evitar quebra de fluxo, você agirá como uma **Máquina de Estados**:
 
 ```
-[INICIALIZACAO] → [ANALISE_BREAKING_CHANGES] → [ATUALIZACAO_DATA_MODEL]
-                → [GERACAO_TECNICA] → [ARQUIVO_FINAL]
+[INICIALIZACAO] → [LOCALIZACAO_FEATURE] → [ANALISE_BREAKING_CHANGES]
+                → [ATUALIZACAO_DATA_MODEL] → [GERACAO_TECNICA] → [ARQUIVO_FINAL]
 ```
 
 Regras da sessão:
+- **Localize a feature antes de editar.** Confirme com o usuário qual N3 original e
+  qual `data-models/[dominio].md` serão a base, buscando-os no repositório quando
+  possível — não assuma o alvo
 - Foque apenas nas partes técnicas afetadas pela mudança
 - Campos novos vão para `global/data-models/[dominio].md` — NUNCA no N3
 - Se a mudança introduz (ou revela) um campo/regra reutilizável ainda não
@@ -57,7 +60,8 @@ Regras da sessão:
 [cole aqui o conteúdo do ERROR-DICTIONARY.md]
 
 === N3 COMPLETO ORIGINAL ===
-[cole aqui o .md completo original da feature]
+[**No Claude Code**: deixe em branco — o engine localiza a feature no passo
+LOCALIZACAO_FEATURE. **No fluxo copy-paste**: cole aqui o .md completo original.]
 
 === N3 NEGOCIAL ATUALIZADO (gerado pelo PROMPT_4A) ===
 [cole aqui o .md negocial atualizado e aprovado]
@@ -68,13 +72,40 @@ Regras da sessão:
 
 **[Estado: INICIALIZACAO]**
 
-Confirme os artefatos recebidos e aguarde:
-> "Recebi o N3 original e a atualização negocial de [feature].
-> Posso iniciar a análise de breaking changes?"
+Confirme o que foi recebido e aguarde:
+> "Vamos complementar a parte técnica de uma atualização de feature. Posso iniciar
+> localizando a feature?"
 
 ---
 
-## PASSO 2 — Análise de breaking changes
+## PASSO 2 — Localização da feature
+
+**[Estado: LOCALIZACAO_FEATURE]**
+
+Antes de analisar breaking changes, confirme qual feature será atualizada e quais
+artefatos servem de base — não assuma o alvo.
+
+**1. Identifique a feature** (pelo nome/ID informado ou pela atualização negocial do
+PROMPT_4A que motivou esta sessão).
+
+**2. Localize os insumos:**
+- **No Claude Code (com ferramentas de arquivo):** leia do disco o N3 original
+  completo em `modules/[dom]/[fs]/[feat].md` e o `global/data-models/[dominio].md`
+  correspondente. Não peça para colar.
+- **No fluxo copy-paste:** use o conteúdo colado na seção CONTEXTO; se faltar, peça.
+
+**3. Apresente e confirme** antes de avançar:
+> "Vou atualizar a parte técnica de:
+> - **Feature:** [nome] (`[ID]`) — `modules/[dom]/[fs]/[feat].md`
+> - **Data-model:** `global/data-models/[dominio].md`
+>
+> Confirma estes arquivos como base? Posso iniciar a análise de breaking changes?"
+
+Só transite para `ANALISE_BREAKING_CHANGES` após a confirmação.
+
+---
+
+## PASSO 3 — Análise de breaking changes
 
 **[Estado: ANALISE_BREAKING_CHANGES]**
 
@@ -103,7 +134,7 @@ Campos novos para data-models/[dominio].md:
 
 ---
 
-## PASSO 3 — Atualização do data-model
+## PASSO 4 — Atualização do data-model
 
 **[Estado: ATUALIZACAO_DATA_MODEL]**
 
@@ -115,7 +146,7 @@ Se houver campos novos aprovados, liste-os para adição ao fragmento do domíni
 
 ---
 
-## PASSO 4 — Geração da atualização técnica
+## PASSO 5 — Geração da atualização técnica
 
 **[Estado: GERACAO_TECNICA]**
 
@@ -146,7 +177,7 @@ Apresente apenas as seções técnicas alteradas. Pergunte:
 
 ---
 
-## PASSO 5 — Arquivo final e ações pós-sessão
+## PASSO 6 — Arquivo final e ações pós-sessão
 
 **[Estado: ARQUIVO_FINAL]**
 
