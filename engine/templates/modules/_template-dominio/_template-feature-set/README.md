@@ -56,6 +56,20 @@ flowchart TD
 
 ---
 
+## Histórias de usuário relacionadas
+
+<!--
+  Consolida as histórias (ServiceNow) que motivaram as features deste Feature
+  Set. Visão de cobertura: de uma história, quais features a realizam.
+  Detalhe por feature fica na seção "Origem" de cada N3.
+-->
+
+| História (ServiceNow) | Features (N3) que a realizam |
+|---|---|
+| [`STRYxxxxxxx`](../../_backlog/[chave].md) | [Feature 1], [Feature 2] |
+
+---
+
 ---
 
 *Domínio: [Nome do Domínio] · Última revisão: —*

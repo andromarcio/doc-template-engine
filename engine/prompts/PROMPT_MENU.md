@@ -63,6 +63,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | O que faz |
 |---|---|---|
+| **HU** | Registrar história de usuário (ServiceNow) | Captura a história/item de backlog, mapeia as features que ela gera e cria o artefato em `_backlog/` — ponto de entrada do processo, com rastreabilidade história → spec |
 | **0** | Extrair insumos brutos | Organiza transcrições, PDFs, rascunhos e anotações em uma base estruturada para usar nas próximas fases |
 
 ---
@@ -170,6 +171,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **R3** | 1. MASTER.md *(se existir)* · 2. modules/INDEX.md + repos/[repo].md (do R0) *(ou domínio/SIGLA informados)* · 3. DATA-MODEL.md existente *(se houver)* · 4. **Documentação legada** (PDF/wiki/Word/planilha colados) · 5. **Código**: modelos · 6. Código: rotas/controllers · 7. Código: serviços · 8. Código: testes *(opcional)* · 9. Código: eventos/workers *(se houver)* |
 | **B2** | 1. N3s do Feature Set (todos) |
 | **B1** | 1. N2s do domínio (todos) · 2. modules/INDEX.md *(opcional, para mapear integrações)* · 3. N3s adicionais sem N2 *(opcional)* |
+| **HU** | 1. Número da história no ServiceNow + descrição + critérios de aceite *(manual enquanto não há integração; via MCP no futuro)* · 2. modules/INDEX.md *(opcional — ajuda no roteamento)* · 3. N0_PRODUCT_VISION.md *(opcional)* |
 | **0** | 1. N0_PRODUCT_VISION.md *(opcional)* · 2. Insumos brutos (texto livre, transcrição, PDF colado) |
 | **1A** | 1. MASTER.md |
 | **1B** | 1. MASTER.md · 2. DATA-MODEL.md · 3. API-PATTERNS.md · 4. N1 negocial aprovado |
@@ -237,6 +239,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | B2 | PROMPT_N3_TO_N2.md |
 | B1 | PROMPT_N3_TO_N1.md |
 | AU | PROMPT_AUDIT_RULES_DEDUP.md |
+| HU | PROMPT_BACKLOG.md |
 | 0 | PROMPT_0_EXTRACTION.md |
 | 1A | PROMPT_1A_N1_negocio.md |
 | 1B | PROMPT_1B_N1_tecnico.md |

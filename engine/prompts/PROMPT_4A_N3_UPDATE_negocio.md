@@ -51,6 +51,11 @@ Regras da sessão:
 === N3 EXISTENTE DA FEATURE ===
 [cole aqui o .md negocial atual da feature]
 
+=== HISTÓRIA DE USUÁRIO *(opcional — do PROMPT HU / ServiceNow)* ===
+[cole aqui a história que motiva esta alteração — `modules/_backlog/[chave].md`.
+Quando presente, acrescente a chave do ServiceNow à seção `## Origem` do N3
+com Tipo "Alteração" e registre-a no changelog.]
+
 ---
 
 ## PASSO 1 — Inicialização
@@ -68,7 +73,9 @@ Leia o N3 existente, confirme o que foi recebido e aguarde:
 
 Faça esta pergunta e aguarde:
 > "O que você deseja alterar, adicionar ou remover nesta feature?
-> Descreva a necessidade em linguagem de negócio."
+> Descreva a necessidade em linguagem de negócio.
+> Se a mudança vem de uma história do ServiceNow, informe a chave (ex.: `STRYxxxxxxx`)
+> para eu registrá-la na seção `## Origem` e no changelog."
 
 ---
 
@@ -110,7 +117,9 @@ alinhadas e confirme:
 **[Estado: GERACAO_ATUALIZACAO]**
 
 Gere a versão atualizada das seções negociais do N3 afetadas,
-evidenciando o que mudou. Adicione ou atualize a seção de changelog:
+evidenciando o que mudou. Se a alteração veio de uma história, adicione a linha
+correspondente à seção `## Origem` (Tipo "Alteração"). Adicione ou atualize a
+seção de changelog:
 
 ```markdown
 ## Changelog

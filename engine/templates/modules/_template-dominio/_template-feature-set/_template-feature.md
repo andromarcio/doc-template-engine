@@ -16,6 +16,22 @@ para alguém que nunca viu o sistema.]
 
 ---
 
+## Origem
+
+<!--
+  Histórias de usuário (ServiceNow) que originaram ou alteraram esta feature.
+  Elo recíproco da seção "Rastreabilidade" do artefato da história em
+  `modules/_backlog/[chave].md`. Relação M:N: uma feature pode atender a
+  várias histórias; uma história pode gerar várias features.
+  A chave do ServiceNow é a fonte de verdade — não inventar IDs aqui.
+-->
+
+| História (ServiceNow) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRYxxxxxxx`](../../_backlog/[chave].md) | Criação / Alteração | [quais critérios de aceite desta história esta feature realiza] |
+
+---
+
 ## Superfície
 
 <!--
@@ -313,6 +329,16 @@ logAction({
 | [endpoint/componente/job] | [repo] | [caminho no repo] | `main` |
 
 **Status**: `[ ] Especificado` · `[ ] Em desenvolvimento` · `[ ] Implementado` · `[ ] Deprecado`
+
+<!--
+  Elo spec → código. Para que a cadeia História → N3 → código fique completa,
+  referencie ambos os IDs nos commits e no PR:
+    tipo(SIGLA-SFS-NN): resumo da mudança (ServiceNow STRYxxxxxxx)
+  Assim a feature (ID do N3) e a história de origem (chave do ServiceNow desta
+  seção "Origem") são localizáveis a partir do histórico do git.
+-->
+
+**Rastreabilidade no git**: commits/PR referenciam o ID da feature e a história — `tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])`
 
 ---
 
