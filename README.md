@@ -178,6 +178,17 @@ Os prompts e templates são **conteúdo reutilizável**, consumidos por:
 O método foi desenhado para uso com as skills `analista-requisitos` (especificação
 N0–N3) e `apf-cpm` (Análise de Pontos de Função, IFPUG CPM 4.3.1).
 
+### Contexto persistente do projeto
+
+Para que o agente **sempre** tenha o contexto do sistema sendo especificado — sem
+recolá-lo a cada sessão — a instância mantém na sua raiz um `CLAUDE.md` (template em
+[`engine/templates/global/CLAUDE.md`](engine/templates/global/CLAUDE.md)). O Claude
+Code o lê automaticamente no início de toda sessão; ele é um **índice enxuto** que
+importa o contexto mínimo (`global/MASTER.md`, `global/N0_PRODUCT_VISION.md`,
+`modules/INDEX.md`). Os demais arquivos (dicionários, data-models, N1–N3) seguem
+lidos **sob demanda** pela skill `analista-requisitos`, que carrega esse índice na
+abertura da sessão.
+
 ## Contribuindo
 
 Contribuições são bem-vindas via Pull Request. Diretrizes:

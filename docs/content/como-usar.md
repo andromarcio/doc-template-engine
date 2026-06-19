@@ -10,6 +10,16 @@ Os prompts e templates são **conteúdo reutilizável**, consumidos por:
 > O engine fornece **os prompts e os esqueletos**; o conteúdo específico de cada
 > sistema vive na instância, não aqui.
 
+## Contexto persistente do projeto
+
+Para que o agente **sempre** carregue o contexto do sistema sem que você o recole a
+cada sessão, a instância mantém um `CLAUDE.md` na sua raiz (template em
+`engine/templates/global/CLAUDE.md`). O Claude Code lê esse arquivo automaticamente
+no início de toda sessão; ele é um **índice enxuto** que importa o contexto mínimo
+— `global/MASTER.md`, `global/N0_PRODUCT_VISION.md` e `modules/INDEX.md`. Os
+arquivos pesados (dicionários, data-models, N1–N3) continuam lidos **sob demanda**
+pela skill `analista-requisitos`, que carrega esse índice na abertura da sessão.
+
 ## Skills recomendadas
 
 O método foi desenhado para uso com as skills:

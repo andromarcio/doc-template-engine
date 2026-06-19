@@ -378,8 +378,21 @@ Quando o delta afetar múltiplos artefatos (mais de um N3, ou mix de N2+N3), sug
 
 Ao ser ativado num contexto de especificação de requisitos:
 
-1. Confirmar arquivos recebidos:
-   > "Recebi: [lista]. Ausentes: [lista ou 'nenhum']."
+0. **Carregar o índice de contexto do projeto.** No Claude Code (com ferramentas
+   de arquivo), **não** espere o usuário colar o contexto: leia do disco da
+   instância, se existirem, `global/MASTER.md`, `global/N0_PRODUCT_VISION.md` e
+   `modules/INDEX.md`. Esse é o contexto mínimo que orienta toda a sessão (stack,
+   convenções, visão de produto, o que já está documentado). Os demais arquivos
+   (dicionários, `global/DATA-MODEL.md`, `global/data-models/`, N1/N2/N3) seguem
+   sendo lidos **sob demanda**, conforme a etapa. Se algum dos três não existir,
+   apenas registre como ausente — não invente conteúdo.
+   > No fluxo copy-paste/CLI (sem ferramentas de arquivo), peça que esses arquivos
+   > sejam colados; o `CLAUDE.md` da instância (ver `engine/templates/global/CLAUDE.md`)
+   > automatiza esse carregamento quando a sessão roda no Claude Code.
+
+1. Confirmar contexto carregado e arquivos recebidos:
+   > "Contexto carregado: [MASTER/N0/INDEX lidos ou 'nenhum']. Recebi: [lista].
+   > Ausentes: [lista ou 'nenhum']."
 
 2. Identificar modo e etapa:
    > "Modo: [PO/DEV]. Prompt: [XA/XB]. Nível: [N0/N1/N2/N3].
