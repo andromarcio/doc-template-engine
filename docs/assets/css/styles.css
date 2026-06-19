@@ -10,12 +10,12 @@
     Menlo, Consolas, "Liberation Mono", monospace;
 
   /* Brand */
-  --brand-1: #6366f1;
-  --brand-2: #8b5cf6;
-  --brand-3: #22d3ee;
-  --primary: #4f46e5;
-  --primary-strong: #4338ca;
-  --primary-soft: rgba(99, 102, 241, 0.12);
+  --brand-1: #325eae;
+  --brand-2: #1f3e78;
+  --brand-3: #5284e0;
+  --primary: #1f3e78;
+  --primary-strong: #172e59;
+  --primary-soft: rgba(31, 62, 120, 0.12);
 
   /* Light surfaces */
   --bg: #ffffff;
@@ -42,7 +42,7 @@
   --amber: #d97706;
   --amber-soft: rgba(245, 158, 11, 0.15);
   --red: #dc2626;
-  --link: #5b56e6;
+  --link: #285098;
 
   /* Effects */
   --radius-sm: 8px;
@@ -75,10 +75,10 @@
   --border: #23262f;
   --border-strong: #2c303b;
 
-  --primary: #6d68f0;
-  --primary-strong: #8b88ff;
-  --primary-soft: rgba(124, 122, 246, 0.18);
-  --link: #9b97ff;
+  --primary: #4a78cc;
+  --primary-strong: #7ba3ee;
+  --primary-soft: rgba(74, 120, 204, 0.2);
+  --link: #8fb2f5;
 
   --green-soft: rgba(34, 197, 94, 0.16);
   --amber-soft: rgba(245, 158, 11, 0.16);
@@ -539,13 +539,13 @@ button {
   height: 16px;
 }
 .btn--primary {
-  background: #111827;
+  background: var(--primary);
   color: #fff;
   box-shadow: var(--shadow-sm);
 }
 [data-theme="dark"] .btn--primary {
-  background: #f1f2f5;
-  color: #111827;
+  background: #2b59a6;
+  color: #fff;
 }
 .btn--primary:hover {
   box-shadow: var(--shadow);
@@ -748,7 +748,7 @@ button {
   word-break: break-word;
 }
 [data-theme="dark"] .content :not(pre) > code {
-  color: #b8b5ff;
+  color: #a9c5f5;
 }
 
 /* Code blocks */
