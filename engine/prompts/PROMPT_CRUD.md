@@ -36,6 +36,11 @@ Regras da sessão:
   FIELD-DICTIONARY automaticamente, sem perguntar suas regras de validação.
 - Regras canônicas: aplicar o RULES-DICTIONARY automaticamente; perguntar
   apenas os parâmetros em aberto.
+- **Regras de negócio atômicas — uma regra, uma invariante.** Ao escrever a
+  seção `## Regras de negócio` de cada N3, quebre regras compostas: condições
+  independentes ligadas por "e" / "ou" / "além disso" viram **itens distintos**,
+  cada um com **uma única restrição verificável**. A reação do sistema ("não
+  salva", "exibe mensagem") não é regra — vai para os **Cenários**.
 - **Permissões vivem só no N2.** Colete perfis e permissões por operação uma
   vez e registre-os apenas no `README.md` do Feature Set — os N3 não tratam de permissões.
 - Um artefato de cada vez: gere, aguarde aprovação, só então avance.
