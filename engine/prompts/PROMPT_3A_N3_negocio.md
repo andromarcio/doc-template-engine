@@ -357,6 +357,11 @@ Após receber os campos:
 > 8. Esta ação precisa ficar registrada no histórico de auditoria?
 
 Após receber as regras:
+- **Atomicidade — uma regra, uma invariante**: ao montar `## Regras de negócio`,
+  quebre regras compostas. Se a resposta liga condições independentes por
+  "e" / "ou" / "além disso", separe em itens distintos — cada item deve carregar
+  **uma única restrição verificável**. A reação do sistema ("não salva", "exibe
+  mensagem") não é regra: vai para `## Cenários` (BLOCO D).
 - Verificar se alguma é canônica (maioridade, responsável ativo,
   período de vigência, aprovação antes de publicar, limite por organização,
   slug único público, reenvio com cooldown, arquivo com tamanho máximo,
