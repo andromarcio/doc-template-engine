@@ -13,7 +13,7 @@
 > - O Design System ainda não está definido completamente
 > - Quer gerar múltiplas variações para comparação sem repetir o layout
 >
-> **Pré-requisito**: N2 aprovado (PROMPT_2B concluído)
+> **Pré-requisito**: N2 aprovado (PROMPT_2A concluído)
 > **Onde salvar**: `prototypes/[dominio]/[feature-set]/flow-component.html`
 
 ---

@@ -17,8 +17,7 @@ e são **auto-contidos** — não dependem de arquivos fora do `engine/`.
 |---|---|---|
 | [`PROMPT_1A_N1_negocio`](#/file/engine/prompts/PROMPT_1A_N1_negocio.md) | N1 | Negócio |
 | [`PROMPT_1B_N1_tecnico`](#/file/engine/prompts/PROMPT_1B_N1_tecnico.md) | N1 | Técnico |
-| [`PROMPT_2A_N2_negocio`](#/file/engine/prompts/PROMPT_2A_N2_negocio.md) | N2 | Negócio |
-| [`PROMPT_2B_N2_tecnico`](#/file/engine/prompts/PROMPT_2B_N2_tecnico.md) | N2 | Técnico |
+| [`PROMPT_2A_N2_negocio`](#/file/engine/prompts/PROMPT_2A_N2_negocio.md) | N2 | Negócio (passada única) |
 | [`PROMPT_3A_N3_negocio`](#/file/engine/prompts/PROMPT_3A_N3_negocio.md) | N3 | Negócio |
 | [`PROMPT_3A_N3_negocio_transcricao`](#/file/engine/prompts/PROMPT_3A_N3_negocio_transcricao.md) | N3 | Negócio (de transcrição) |
 | [`PROMPT_3B_N3_tecnico`](#/file/engine/prompts/PROMPT_3B_N3_tecnico.md) | N3 | Técnico |

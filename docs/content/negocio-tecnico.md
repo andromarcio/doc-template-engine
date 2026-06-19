@@ -1,8 +1,9 @@
 # Negócio (A) e Técnico (B)
 
-Os níveis **N1, N2 e N3** são produzidos em **duas passadas**. Separar negócio de
+Os níveis **N1 e N3** são produzidos em **duas passadas**. Separar negócio de
 técnica mantém cada artefato legível para o seu público e evita que decisões de
-implementação contaminem a descrição do problema.
+implementação contaminem a descrição do problema. O **N2 (Feature Set) é
+integralmente negocial** — não tem passada técnica.
 
 ## A — Negócio
 
@@ -40,7 +41,9 @@ Nunca pule a validação do negócio: a passada técnica **acrescenta**, não re
 | Nível | Negócio (A) | Técnico (B) |
 |---|---|---|
 | N1 | `PROMPT_1A_N1_negocio` | `PROMPT_1B_N1_tecnico` |
-| N2 | `PROMPT_2A_N2_negocio` | `PROMPT_2B_N2_tecnico` |
 | N3 | `PROMPT_3A_N3_negocio` | `PROMPT_3B_N3_tecnico` |
+
+> O **N2 (Feature Set)** tem passada única — `PROMPT_2A_N2_negocio` (negocial). O
+> detalhe técnico vive nos N3 (`PROMPT_3B`).
 
 Veja o [Fluxo de trabalho](#/fluxo-de-trabalho) completo.

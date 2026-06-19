@@ -8,7 +8,7 @@
 > principal, telas e permissões — sem campos técnicos ou endpoints
 >
 > **Pré-requisito**: PROMPT_1B concluído para o domínio escolhido
-> **Próximo passo**: após aprovação, usar PROMPT_2B com cada README.md gerado
+> **Próximo passo**: após aprovação, usar PROMPT_3A para especificar as features (o N2 é integralmente negocial — sem passada técnica)
 
 ---
 

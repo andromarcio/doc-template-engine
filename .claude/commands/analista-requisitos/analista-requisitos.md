@@ -5,7 +5,7 @@ description: >-
   N0 (Visão de Produto), N1 (Domínio), N2 (Feature Set) e N3 (Feature).
   Acione quando o usuário falar de: especificação de requisitos, levantar requisitos,
   criar N1/N2/N3, feature, feature set, domínio, campos de negócio, regras de negócio,
-  cenários Gherkin, PROMPT_0/1A/1B/2A/2B/3A/3B/4A/4B, FIELD-DICTIONARY,
+  cenários Gherkin, PROMPT_0/1A/1B/2A/3A/3B/4A/4B, FIELD-DICTIONARY,
   RULES-DICTIONARY, ERROR-DICTIONARY, MESSAGE-DICTIONARY, data-model,
   cadastro, pesquisa, edição, exclusão, CRUD padrão, gerar CRUD, Label PO, campo canônico, regra canônica,
   modo PO, modo DEV, ou mencionar qualquer um dos prompts de especificação.
@@ -192,8 +192,7 @@ PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos dese
 PROMPT_1A → N1 negocial aprovado pelo PO
 PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado
      ↓
-PROMPT_2A → N2 negocial aprovado pelo PO
-PROMPT_2B → N2 técnico completo
+PROMPT_2A → N2 negocial aprovado pelo PO (N2 é integralmente negocial — sem passada técnica)
      ↓
 PROMPT_CRUD → atalho: N2 + N3 negociais das 5 operações CRUD (pesquisar/cadastrar/editar/excluir/visualizar) numa sessão
      ↓
@@ -241,8 +240,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
 | N1 (Domínio) negocial | `PROMPT_1A_N1_negocio.md` |
 | N1 (Domínio) técnico + data-model | `PROMPT_1B_N1_tecnico.md` |
-| N2 (Feature Set) negocial | `PROMPT_2A_N2_negocio.md` |
-| N2 (Feature Set) técnico | `PROMPT_2B_N2_tecnico.md` |
+| N2 (Feature Set) negocial — passada única | `PROMPT_2A_N2_negocio.md` |
 | N3 (Feature) negocial | `PROMPT_3A_N3_negocio.md` |
 | N3 negocial a partir de transcrição de reunião | `PROMPT_3A_N3_negocio_transcricao.md` |
 | N3 (Feature) técnico + data-model | `PROMPT_3B_N3_tecnico.md` |

@@ -6,7 +6,7 @@
 > **Entrega**: arquivo `flow.html` navegável mostrando como as telas do
 > Feature Set se conectam, seguindo os padrões do Design System
 >
-> **Pré-requisito**: N2 aprovado (PROMPT_2B concluído)
+> **Pré-requisito**: N2 aprovado (PROMPT_2A concluído)
 > **Onde salvar**: `prototypes/[dominio]/[feature-set]/flow.html`
 >
 > **v2 (2026-06-11)**: regras 10–21, seção de anti-padrões, checklist de

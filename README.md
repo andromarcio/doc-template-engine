@@ -56,13 +56,16 @@ implementar.
 
 ### Negócio (A) e Técnico (B)
 
-Os níveis N1, N2 e N3 são produzidos em **duas passadas**:
+Os níveis **N1 e N3** são produzidos em **duas passadas**:
 
 - **A — Negócio**: escrita pelo PO (com ou sem dev), em linguagem de negócio, sem
   mencionar tabelas, endpoints ou tecnologias. Validada antes de avançar.
 - **B — Técnico**: o dev complementa o artefato negocial já aprovado com
   entidades, campos, integrações e demais detalhes técnicos — sem alterar o
   conteúdo de negócio.
+
+O **N2 (Feature Set) é integralmente negocial** — não tem passada técnica: o
+detalhe técnico do que o Feature Set agrupa vive nos N3 (via `PROMPT_3B`).
 
 Campos detalhados vivem sempre no `global/DATA-MODEL.md` e requisitos
 não-funcionais no `global/NFR.md`, nunca dentro dos artefatos de spec.

@@ -8,7 +8,7 @@
 > **Entrega**: rascunho do .md de cada feature com objetivo, campos
 > em Label PO, regras e cenários Gherkin negociais
 >
-> **Pré-requisito (fluxo top-down)**: PROMPT_2B concluído para o Feature Set escolhido
+> **Pré-requisito (fluxo top-down)**: PROMPT_2A concluído (N2 negocial) para o Feature Set escolhido
 > **Pré-requisito (fluxo bottom-up)**: nenhum — informe nome do domínio, Feature Set e feature
 > **Próximo passo**: após aprovação, usar PROMPT_3B
 

@@ -165,8 +165,7 @@ PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos dese
 PROMPT_1A → N1 negocial aprovado pelo PO
 PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado
      ↓
-PROMPT_2A → N2 negocial aprovado pelo PO
-PROMPT_2B → N2 técnico completo
+PROMPT_2A → N2 negocial aprovado pelo PO (N2 é integralmente negocial — sem passada técnica)
      ↓
 PROMPT_3A → N3 negocial aprovado pelo PO
 PROMPT_3B → N3 técnico + data-models/[dominio].md atualizado

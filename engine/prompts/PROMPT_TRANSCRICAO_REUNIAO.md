@@ -11,7 +11,7 @@
 > **Substitui** o antigo `PROMPT_3A_N3_negocio_transcricao.md` (absorve o N3 e
 > amplia para N2/N1, com consciência de atualização).
 > **Próximo passo**: resolver as lacunas ❓, depois complementar o técnico com
-> `1B / 2B / 3B`.
+> `1B / 3B`.
 
 ---
 
@@ -177,5 +177,5 @@ Encerre **sempre** com:
 3. **Inferências 🔍** — o que foi deduzido e precisa de "ok".
 4. **Conflitos ⚠️** — contradições na transcrição ou contra artefatos existentes.
 5. **Promoções sugeridas** — campo → FIELD / regra → RULES / mensagem → MESSAGE.
-6. **Próximos passos** — o que resolver antes de `1B / 2B / 3B`; rodar **AU**
+6. **Próximos passos** — o que resolver antes de `1B / 3B`; rodar **AU**
    (PROMPT_AUDIT_RULES_DEDUP) se features novas surgiram, para checar duplicidade de regras.

@@ -31,11 +31,12 @@ engine/
 
 ## 3. Rode em duas passadas
 
-Para cada nível, primeiro a versão de **negócio (A)**, validada; depois a **técnica (B)**:
+Em **N1 e N3**, primeiro a versão de **negócio (A)**, validada; depois a **técnica (B)**.
+O **N2 é integralmente negocial** (passada única):
 
 ```text
 N1:  PROMPT_1A  →  (validar)  →  PROMPT_1B
-N2:  PROMPT_2A  →  (validar)  →  PROMPT_2B
+N2:  PROMPT_2A  →  (validar)
 N3:  PROMPT_3A  →  (validar)  →  PROMPT_3B
 ```
 
@@ -46,7 +47,7 @@ O método foi desenhado para uso com as skills:
 - **`analista-requisitos`** — especificação N0–N3.
 - **`apf-cpm`** — Análise de Pontos de Função (IFPUG CPM 4.3.1).
 
-> Dica: o `PROMPT_MENU` lista todas as opções disponíveis (TR, HU, 1A/1B, 2A/2B,
+> Dica: o `PROMPT_MENU` lista todas as opções disponíveis (TR, HU, 1A/1B, 2A,
 > 3A/3B, 4A/4B, IV → EX, etc.) e funciona como índice operacional do engine.
 
 Continue por [Os quatro níveis](#/quatro-niveis).

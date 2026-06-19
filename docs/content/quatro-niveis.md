@@ -36,7 +36,8 @@ Os IDs encadeiam os níveis e tornam tudo rastreável:
 
 ## Negócio e Técnico
 
-Os níveis N1, N2 e N3 são produzidos em **duas passadas** — primeiro **negócio
-(A)**, depois **técnico (B)**. Veja [Negócio e Técnico](#/negocio-tecnico).
+Os níveis **N1 e N3** são produzidos em **duas passadas** — primeiro **negócio
+(A)**, depois **técnico (B)**; o **N2 é integralmente negocial** (passada única).
+Veja [Negócio e Técnico](#/negocio-tecnico).
 
 Explore cada nível: [N0](#/n0) · [N1](#/n1) · [N2](#/n2) · [N3](#/n3).
