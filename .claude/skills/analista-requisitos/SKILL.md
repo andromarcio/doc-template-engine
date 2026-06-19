@@ -257,6 +257,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Mapeamento de repositório | `PROMPT_REPO_MAPPING.md` |
 | Data-model a partir de SQL | `PROMPT_DATA_MODEL_FROM_SQL.md` |
 | Auditoria/dedup de regras de negócio | `PROMPT_AUDIT_RULES_DEDUP.md` |
+| Auditoria de elos história ↔ feature (caminho inverso história → features) | `PROMPT_AUDIT_TRACE_LINKS.md` |
 | Investigar delta → classificar artefatos (create/modify/keep) | `PROMPT_INVESTIGADOR.md` |
 | Executar alterações aprovadas em lote | `PROMPT_EXECUTOR.md` |
 | Protótipo (fluxo / tela) | `PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md` |

@@ -123,6 +123,11 @@ História (ServiceNow STRYxxxxxxx)
   analisado e vira uma **regra de negócio** (se for invariante), um **`## Cenário`**
   (Gherkin, se for comportamento observável) ou **ambos** — rastreabilidade
   semântica, não apenas por ID.
+- **N3 → História (caminho inverso)**: para saber *quais features uma história
+  impactou*, o elo M:N é registrado nos três lugares — `## Origem` do N3, a tabela
+  `## Rastreabilidade` da história em `_backlog/` e o `INDEX.md`. O `PROMPT_3A`/`4A`
+  fecham os três na mesma passada; a auditoria **AT** (`PROMPT_AUDIT_TRACE_LINKS`)
+  detecta elos unilaterais.
 - **N3 → código**: seção `## Implementação` do N3 (repositório + caminho) e a
   tabela de rastreabilidade do `modules/INDEX.md`.
 - **No git**: commits e PR seguem a convenção

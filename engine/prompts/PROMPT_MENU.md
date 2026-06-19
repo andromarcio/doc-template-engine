@@ -119,6 +119,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
 | **AU** | Deduplicar regras de negócio | Analista / Tech Lead | Varre N3s e detecta regras duplicadas, sobrepostas ou contraditórias entre features |
+| **AT** | Auditar elos história ↔ feature | Analista / Tech Lead | Varre `## Origem` dos N3, `## Rastreabilidade` das histórias e o `INDEX.md`; detecta elos unilaterais, ausências no índice e órfãos — garante que o caminho inverso (história → features) está consistente |
 | **IV** | Investigar artefatos (delta → pending_changes) | PO + Analista | Cruza requisitos/delta com o que já existe e classifica cada bloco em `create`, `modify` ou `keep`; gera `pending_changes.md` para aprovação humana |
 | **EX** | Executar alterações aprovadas | Analista / Dev | Lê o `pending_changes.md` revisado e executa o prompt correto para cada item aprovado — um por vez, com confirmação entre eles |
 
@@ -202,6 +203,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **RT** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. MESSAGE-DICTIONARY.md · 6. Artefatos existentes N1/N2/N3 *(opcional — habilita atualização)* · 7. Transcrição da reunião |
 | **3B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 negocial aprovado |
 | **AU** | 1. RULES-DICTIONARY.md · 2. Trechos de regras transversais dos N1s relevantes · 3. N3s a varrer |
+| **AT** | 1. modules/INDEX.md *(no Claude Code é lido do disco)* · 2. Histórias em `modules/_backlog/*.md` (com a seção `## Rastreabilidade`) · 3. N3s a varrer (com a seção `## Origem`) |
 | **IV** | 1. MASTER.md · 2. modules/INDEX.md · 3. RULES-DICTIONARY.md · 4. FIELD-DICTIONARY.md · 5. Delta / requisitos novos ou alterados · 6. Artefatos existentes afetados *(opcional — N3s, N2s relevantes)* |
 | **EX** | 1. MASTER.md · 2. pending_changes.md revisado · 3. Insumos específicos de cada item (coletados durante a execução) |
 | **4A** | 1. MASTER.md · 2. FIELD-DICTIONARY.md · 3. RULES-DICTIONARY.md · 4. N3 existente completo |
@@ -264,6 +266,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | B2 | PROMPT_N3_TO_N2.md |
 | B1 | PROMPT_N3_TO_N1.md |
 | AU | PROMPT_AUDIT_RULES_DEDUP.md |
+| AT | PROMPT_AUDIT_TRACE_LINKS.md |
 | HU | PROMPT_BACKLOG.md |
 | 0 | PROMPT_0_EXTRACTION.md |
 | 1A | PROMPT_1A_N1_negocio.md |
@@ -330,3 +333,4 @@ Se um insumo obrigatório não estiver disponível, oriente como obtê-lo:
 | N2 do Feature Set | "Execute a opção **2A** para criar o N2 a partir do zero, ou **B2** para sintetizá-lo a partir dos N3s existentes." |
 | N3 negocial | "Execute a opção **3A** primeiro para criar a spec negocial desta feature." |
 | N3s para varredura (AU) | "Cole os arquivos N3 das features que deseja auditar. Não é obrigatório varrer o sistema inteiro de uma vez." |
+| Histórias/N3s para auditar elos (AT) | "Cole o `INDEX.md`, as histórias de `modules/_backlog/` e os N3 do escopo. No Claude Code, basta apontar o domínio — leio os arquivos do disco." |

@@ -524,6 +524,47 @@ Após apresentar, pergunte:
 
 ---
 
+## PASSO 3.5 — Fechar o elo recíproco (história ↔ feature)
+
+> Execute este passo **somente se a feature tem origem numa história** (a seção
+> `## Origem` foi preenchida no PASSO 3). O elo história ↔ feature é **M:N** e
+> precisa ficar registrado nos **três lugares** — senão o caminho inverso
+> ("quais features esta história impactou?") fica incompleto. A `## Origem` é só
+> o lado feature → história; os outros dois precisam ser atualizados na mesma passada.
+
+Após o N3 ser aprovado, atualize:
+
+**1. Artefato da história — `modules/_backlog/[chave].md`**
+Na seção `## Rastreabilidade — Features (N3) que realizam esta história`, adicione
+(ou atualize) a linha desta feature — espelho exato da `## Origem` do N3:
+
+```markdown
+| [`[ID]`: Nome da Feature](../[dominio]/[feature-set]/[arquivo].md) | [Domínio] · [Feature Set] | 📋 Especificado |
+```
+
+Atualize também o cabeçalho `> **Especificada em (N3)**:` da história se ainda
+estiver "pendente", e acrescente uma linha ao changelog dela ("Feature especificada").
+
+**2. Índice consolidado — `modules/INDEX.md`**
+Na tabela `## Rastreabilidade: história → spec → código`, adicione uma linha por
+par história↔feature (se ainda não existir):
+
+```markdown
+| [`STRYxxxxxxx`](./_backlog/[chave].md) | [[ID]: Nome](./[dominio]/[feature-set]/[arquivo].md) | [Domínio] | 📋 Especificado | — | — | — |
+```
+
+**No Claude Code (com ferramentas de arquivo):** edite os dois arquivos direto no
+disco, na mesma passada da geração do N3 — não peça para o usuário colar conteúdo.
+**No fluxo copy-paste:** apresente os dois blocos como patch para o usuário aplicar.
+
+Confirme ao final:
+> "Elo recíproco fechado: a feature consta na `## Origem` do N3, na
+> `## Rastreabilidade` da história `[STRYxxxxxxx]` e no `INDEX.md`. O caminho
+> inverso história → features está rastreável.
+> 💡 Para auditar todos os elos de uma vez (e detectar unilaterais), use a opção **AT**."
+
+---
+
 ## PASSO 4 — Confirmação de cobertura
 
 Após todas as features aprovadas, bifurque conforme o modo da sessão:

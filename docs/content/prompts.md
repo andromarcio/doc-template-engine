@@ -50,6 +50,7 @@ e são **auto-contidos** — não dependem de arquivos fora do `engine/`.
 | [`PROMPT_0_EXTRACTION`](#/file/engine/prompts/PROMPT_0_EXTRACTION.md) | Extração inicial de informação |
 | [`PROMPT_TRANSCRICAO_REUNIAO`](#/file/engine/prompts/PROMPT_TRANSCRICAO_REUNIAO.md) | Estrutura uma transcrição de reunião |
 | [`PROMPT_AUDIT_RULES_DEDUP`](#/file/engine/prompts/PROMPT_AUDIT_RULES_DEDUP.md) | Auditoria e deduplicação de regras |
+| [`PROMPT_AUDIT_TRACE_LINKS`](#/file/engine/prompts/PROMPT_AUDIT_TRACE_LINKS.md) | Auditoria dos elos história ↔ feature (consistência bidirecional) |
 
 ## Engenharia reversa e dados
 

@@ -180,3 +180,30 @@ Se houver promoções aprovadas a dicionários, liste-as como ação pendente
 Pergunte:
 > "A atualização negocial do N3 de [feature] está correta?
 > Ajusta algo ou avanço para a parte técnica via PROMPT_4B?"
+
+---
+
+## PASSO 7 — Fechar o elo recíproco (se a alteração veio de uma história)
+
+**[Estado: GERACAO_ATUALIZACAO]**
+
+> Execute **somente se** uma história motivou esta alteração (uma linha Tipo
+> "Alteração" foi adicionada à `## Origem` no PASSO 6). O elo história ↔ feature
+> é **M:N** e precisa ficar registrado dos dois lados mais o índice — senão o
+> caminho inverso ("quais features esta história alterou?") fica incompleto.
+
+Atualize os outros dois lados, espelhando a linha que entrou na `## Origem`:
+
+**1. `modules/_backlog/[chave].md`** — na seção `## Rastreabilidade — Features
+(N3) que realizam esta história`, adicione a linha desta feature se ainda não
+constar, e registre uma linha no changelog da história ("Feature alterada").
+
+**2. `modules/INDEX.md`** — garanta que existe a linha do par história↔feature na
+tabela `## Rastreabilidade: história → spec → código` (adicione se faltar;
+atualize o Status se ele mudou com esta alteração).
+
+**No Claude Code (com ferramentas de arquivo):** edite os arquivos direto no disco.
+**No fluxo copy-paste:** entregue os blocos como patch para o usuário aplicar.
+
+> 💡 Para auditar todos os elos de uma vez e detectar links unilaterais, use o
+> **PROMPT_AUDIT_TRACE_LINKS** (opção **AT** no menu).
