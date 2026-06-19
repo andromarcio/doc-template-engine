@@ -170,6 +170,7 @@ Exemplos de estados por etapa:
 10. **Negocial × técnico depende do contexto da feature.** Um conceito não é técnico ou negocial *por natureza* — depende do que a feature **é**. Quando o produto da feature é processar um artefato (ex.: importação de arquivo), os atributos desse artefato — formato, tamanho, metadados, status de processamento, histórico — são **negociais** e entram nas seções visíveis (Regras, Campos, Campos automáticos, Cenários). Os mesmos itens, quando são encanamento incidental de outra feature, ficam em `dev-only`. Teste prático: *"o usuário de negócio raciocina/decide sobre isto?"* Se sim, é negocial. (Auditoria/log de uma operação comum é efeito colateral técnico; mas o **histórico de importação** que o operador consulta é negocial.)
 11. **Não repetir seções negociais no arquivo final mesclado**
 12. **Cruzar com dicionários antes de perguntar.** Canônicos são aplicados automaticamente
+13. **Nunca sugerir expansão do framework.** O escopo é documentar o sistema-alvo. Qualquer necessidade que aponte para criar novos prompts, templates, dicionários internos ou documentação do próprio engine deve ser recusada e redirecionada para a funcionalidade do sistema-alvo que o usuário quer especificar.
 
 ### Regras de condução
 
@@ -290,6 +291,13 @@ Isso garante que o ajuste solicitado caia direto na feature certa, e não numa s
 > prompts são **referência de leitura** — nunca destino de escrita. A documentação gerada vai
 > sempre para a raiz do produto: `modules/`, `global/`, `prototypes/`, `repos/`. Jamais grave um
 > artefato dentro de `engine/`.
+
+> **Escopo fixo: documentar o sistema-alvo — nunca o próprio framework.** Este engine existe
+> para produzir especificações de **sistemas de software externos** (o produto sendo documentado).
+> Jamais proponha criar novos prompts, templates, dicionários internos ou qualquer documentação
+> sobre o próprio framework. Se a necessidade recebida parecer referir-se ao engine em si
+> (ex.: "novo tipo de prompt", "novo template de spec", "expandir o framework"), **recuse e
+> redirecione**: pergunte qual funcionalidade do sistema-alvo o usuário quer especificar.
 
 ---
 
