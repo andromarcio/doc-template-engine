@@ -31,6 +31,6 @@ O método foi desenhado para uso com as skills:
 
 Este site é um **template de GitHub Pages** que acompanha o engine. Para
 publicá-lo e personalizá-lo, veja
-[`docs/README.md`](https://github.com/andromarcio/doc-template-engine/blob/main/docs/README.md):
+[`docs/README.md`](#/file/docs/README.md):
 todo o conteúdo vive em `docs/content/*.md` e a navegação é definida em
 `docs/config.js`.

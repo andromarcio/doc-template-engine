@@ -10,6 +10,7 @@ window.DOKU_CONFIG = {
   name: "doc-template",
   fullName: "doc-template-engine",
   repo: "https://github.com/andromarcio/doc-template-engine",
+  branch: "main",
   defaultPage: "introducao",
 
   /* Ícones opcionais por item (chaves definidas em assets/js/app.js → ICONS) */

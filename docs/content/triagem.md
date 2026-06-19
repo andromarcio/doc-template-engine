@@ -32,6 +32,6 @@ delta que afeta muitos artefatos de uma vez, ela própria direciona ao
 `PROMPT_INVESTIGADOR`.
 
 > Há um exemplo de saída em
-> [`engine/prompts/examples/PROMPT_TRIAGEM_exemplo.md`](https://github.com/andromarcio/doc-template-engine/blob/main/engine/prompts/examples/PROMPT_TRIAGEM_exemplo.md).
+> [`engine/prompts/examples/PROMPT_TRIAGEM_exemplo.md`](#/file/engine/prompts/examples/PROMPT_TRIAGEM_exemplo.md).
 
 Próximo: [História de usuário](#/historia-usuario).

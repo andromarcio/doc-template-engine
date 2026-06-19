@@ -578,10 +578,10 @@ button {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--toc-w);
   gap: 48px;
-  max-width: 1180px;
+  max-width: none;
   width: 100%;
-  margin: 0 auto;
-  padding: 40px 44px 96px;
+  margin: 0;
+  padding: 40px 48px 96px;
 }
 .content {
   min-width: 0;
@@ -614,6 +614,38 @@ button {
   to {
     background-position: -200% 0;
   }
+}
+
+/* File viewer banner */
+.file-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 24px;
+  padding: 10px 14px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+.file-banner svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  flex: none;
+}
+.file-banner code {
+  background: none !important;
+  color: var(--text) !important;
+  padding: 0 !important;
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+.file-banner a {
+  margin-left: auto;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 /* ---------- Markdown typography ---------- */

@@ -148,15 +148,17 @@
       .replace(/\s+/g, "-");
   }
 
-  function render(md) {
-    var html = window.marked ? marked.parse(md) : "<pre>" + esc(md) + "</pre>";
+  function paint(html, withPageNav) {
     $content.innerHTML = html;
     enhance();
     buildToc();
     setupScrollSpy();
-    renderPageNav();
-    $content.scrollTop = 0;
+    if (withPageNav) renderPageNav();
     window.scrollTo(0, 0);
+  }
+
+  function render(md) {
+    paint(window.marked ? marked.parse(md) : "<pre>" + esc(md) + "</pre>", true);
   }
 
   function enhance() {
@@ -343,27 +345,39 @@
   }
 
   /* ---------- Routing ---------- */
+  function routePath() {
+    return location.hash.replace(/^#\/?/, "").split("#")[0];
+  }
   function currentPage() {
-    var h = location.hash.replace(/^#\//, "").split("#")[0];
-    return h || CFG.defaultPage;
+    var r = routePath();
+    if (r.indexOf("file/") === 0) return r; // file route, not a content page
+    return r || CFG.defaultPage;
   }
   function currentAnchor() {
     var parts = location.hash.split("#");
     return parts.length > 2 ? parts[2] : "";
   }
+  function skeleton() {
+    return (
+      '<div class="state"><div class="skeleton" style="width:45%;height:30px"></div>' +
+      '<div class="skeleton" style="width:92%"></div><div class="skeleton" style="width:84%"></div>' +
+      '<div class="skeleton" style="width:88%"></div></div>'
+    );
+  }
 
   function loadPage() {
-    var page = currentPage();
+    var r = routePath();
+    if (r.indexOf("file/") === 0) loadFile(r.slice(5));
+    else loadContent(r || CFG.defaultPage);
+    closeMobileNav();
+  }
+
+  function loadContent(page) {
     var rec = BYPAGE[page];
     setActive(page);
     setBreadcrumb(rec);
-    document.title =
-      (rec ? rec.title + " · " : "") + (CFG.fullName || CFG.name);
-
-    $content.innerHTML =
-      '<div class="state"><div class="skeleton" style="width:45%;height:30px"></div>' +
-      '<div class="skeleton" style="width:92%"></div><div class="skeleton" style="width:84%"></div>' +
-      '<div class="skeleton" style="width:88%"></div></div>';
+    document.title = (rec ? rec.title + " · " : "") + (CFG.fullName || CFG.name);
+    $content.innerHTML = skeleton();
 
     fetch("content/" + page + ".md", { cache: "no-cache" })
       .then(function (r) {
@@ -383,8 +397,79 @@
       .catch(function (err) {
         showError(page, err);
       });
+  }
 
-    closeMobileNav();
+  /* ---------- Repo file viewer (abre .md/arquivos sem sair do site) ---------- */
+  function rawBase() {
+    var m = (CFG.repo || "").match(/github\.com\/([^/]+\/[^/]+?)(?:\.git)?\/?$/);
+    return m
+      ? "https://raw.githubusercontent.com/" + m[1] + "/" + (CFG.branch || "main")
+      : "";
+  }
+  function blobUrlFor(path) {
+    return (
+      (CFG.repo || "").replace(/\/$/, "") +
+      "/blob/" + (CFG.branch || "main") + "/" + path
+    );
+  }
+  function fileBanner(path) {
+    return (
+      '<div class="file-banner">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/></svg>' +
+      "<code>" + esc(path) + "</code>" +
+      '<a href="' + blobUrlFor(path) + '" target="_blank" rel="noopener">Ver no GitHub ↗</a>' +
+      "</div>"
+    );
+  }
+
+  function loadFile(path) {
+    setActive(null);
+    setBreadcrumbFile(path);
+    document.title = path.split("/").pop() + " · " + (CFG.fullName || CFG.name);
+    $content.innerHTML = skeleton();
+
+    var base = rawBase();
+    if (!base) {
+      showFileError(path, new Error("repositório não configurado"));
+      return;
+    }
+    fetch(base + "/" + path, { cache: "no-cache" })
+      .then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      })
+      .then(function (text) {
+        var isMd = /\.(md|markdown|mdx)$/i.test(path);
+        var body = isMd
+          ? window.marked
+            ? marked.parse(text)
+            : "<pre>" + esc(text) + "</pre>"
+          : "<pre><code>" + esc(text) + "</code></pre>";
+        paint(fileBanner(path) + body, false);
+      })
+      .catch(function (err) {
+        showFileError(path, err);
+      });
+  }
+
+  function setBreadcrumbFile(path) {
+    var chevron =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
+    $breadcrumb.innerHTML =
+      '<a href="#/' + esc(CFG.defaultPage) + '">' + esc(CFG.name) + "</a>" +
+      chevron + "<span>Arquivo</span>" + chevron +
+      "<b>" + esc(path.split("/").pop()) + "</b>";
+  }
+
+  function showFileError(path, err) {
+    $content.innerHTML =
+      '<div class="state"><h1>Não foi possível abrir o arquivo</h1>' +
+      "<p>Falha ao carregar <code>" + esc(path) + "</code>" +
+      (err && err.message ? " (" + esc(err.message) + ")" : "") + ".</p>" +
+      '<p>Abra direto no <a href="' + blobUrlFor(path) +
+      '" target="_blank" rel="noopener">GitHub ↗</a>.</p>' +
+      '<p><a href="#/' + esc(CFG.defaultPage) + '">← Voltar ao início</a></p></div>';
+    $toc.innerHTML = "";
   }
 
   function showError(page, err) {

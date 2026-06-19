@@ -25,9 +25,9 @@ tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])
 - **Tema**: ajuste tokens e estilos em `docs/assets/css/styles.css`.
 
 Ao abrir um PR para a `main`, o workflow
-[`.github/workflows/pages.yml`](https://github.com/andromarcio/doc-template-engine/blob/main/.github/workflows/pages.yml)
+[`.github/workflows/pages.yml`](#/file/.github/workflows/pages.yml)
 publica o site automaticamente no GitHub Pages.
 
 ## Licença
 
-[MIT](https://github.com/andromarcio/doc-template-engine/blob/main/LICENSE).
+[MIT](#/file/LICENSE).
