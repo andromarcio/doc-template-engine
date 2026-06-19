@@ -92,8 +92,15 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **2A** | Especificar Feature Set — negócio | PO + Dev | Levanta fluxo, telas e permissões em linguagem de negócio |
-| ~~**2B**~~ ⚠️ | ~~Especificar Feature Set — técnico~~ **(descontinuado)** | — | O N2 passou a ser **integralmente negocial**; a especificação técnica agora vive nos N3 — use **3B**. Ver `engine/prompts/PROMPT_2B_N2_tecnico.md`. |
+| **2A** | Especificar Feature Set — negócio | PO + Dev | Levanta fluxo, telas e permissões em linguagem de negócio. O N2 passou a ser **integralmente negocial**; a especificação técnica agora vive nos N3 — use **3B**.
+
+---
+
+### ⚡ Atalho — CRUD padrão (N2 + N3)
+
+| # | Opção | Audiência | O que faz |
+|---|---|---|---|
+| **CR** | CRUD padrão — N2 + N3 das 5 operações | PO + Dev | A partir da descrição da entidade e da tabela de campos, gera o N2 do Feature Set e os N3 negociais de **Pesquisar, Cadastrar, Editar, Excluir e Visualizar** numa única sessão — derivando pesquisa/edição/exclusão/visualização do cadastro |
 
 ---
 
@@ -189,7 +196,8 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **0** | 1. N0_PRODUCT_VISION.md *(opcional)* · 2. Insumos brutos (texto livre, transcrição, PDF colado) |
 | **1A** | 1. MASTER.md |
 | **1B** | 1. MASTER.md · 2. DATA-MODEL.md · 3. API-PATTERNS.md · 4. N1 negocial aprovado |
-| **2A** | 1. MASTER.md · 2. N1 completo do domínio |
+| **2A** | 1. MASTER.md · 2. ROUTING.md · 3. N1 completo do domínio |
+| **CR** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. ROUTING.md · 6. N1 do domínio *(opcional)* · 7. Descrição da entidade + tabela de campos *(coletada na sessão)* |
 | **3A** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. N1 *(opcional no bottom-up)* · 6. N2 *(opcional no bottom-up)* |
 | **RT** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. MESSAGE-DICTIONARY.md · 6. Artefatos existentes N1/N2/N3 *(opcional — habilita atualização)* · 7. Transcrição da reunião |
 | **3B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 negocial aprovado |
@@ -261,7 +269,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | 1A | PROMPT_1A_N1_negocio.md |
 | 1B | PROMPT_1B_N1_tecnico.md |
 | 2A | PROMPT_2A_N2_negocio.md |
-| 2B | PROMPT_2B_N2_tecnico.md |
+| CR | PROMPT_CRUD.md |
 | 3A | PROMPT_3A_N3_negocio.md |
 | RT | PROMPT_TRANSCRICAO_REUNIAO.md |
 | 3B | PROMPT_3B_N3_tecnico.md |
