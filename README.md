@@ -136,7 +136,23 @@ engine/
     ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de usuário)
     ├── prototypes/
     └── repos/
+docs/             # site de documentação (template para GitHub Pages)
 ```
+
+## Site de documentação (GitHub Pages)
+
+A pasta [`docs/`](docs/) traz um **template de site estático** (HTML/CSS/JS, sem
+build) com a estética do editor Dokumin: barra lateral em árvore, busca, tema
+claro/escuro e conteúdo em Markdown. Ele apresenta este engine e serve de ponto
+de partida reutilizável para a documentação de qualquer projeto.
+
+- **Conteúdo**: `docs/content/*.md` · **Navegação**: `docs/config.js`
+- **Pré-visualizar**: `python3 -m http.server -d docs 8080` → `http://localhost:8080`
+- **Publicar**: o workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml)
+  publica `docs/` automaticamente ao fazer merge na `main` (basta definir
+  *Settings → Pages → Source: GitHub Actions*).
+
+Mais detalhes em [`docs/README.md`](docs/README.md).
 
 ## Como usar
 
