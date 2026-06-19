@@ -1,14 +1,14 @@
 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo">
   <defs>
     <linearGradient id="dokuGrad" x1="2" y1="2" x2="38" y2="38" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#325EAE"/>
-      <stop offset="0.55" stop-color="#1F3E78"/>
-      <stop offset="1" stop-color="#15294C"/>
+      <stop stop-color="#4750E0"/>
+      <stop offset="0.55" stop-color="#2026BE"/>
+      <stop offset="1" stop-color="#17198A"/>
     </linearGradient>
   </defs>
   <rect width="40" height="40" rx="11" fill="url(#dokuGrad)"/>
   <rect x="11.25" y="9.5" width="17.5" height="21" rx="3.4" fill="#ffffff" fill-opacity="0.97"/>
-  <rect x="14.75" y="14.5" width="10.5" height="1.9" rx="0.95" fill="#1F3E78"/>
-  <rect x="14.75" y="18.7" width="10.5" height="1.9" rx="0.95" fill="#325EAE"/>
-  <rect x="14.75" y="22.9" width="6.75" height="1.9" rx="0.95" fill="#5284E0"/>
+  <rect x="14.75" y="14.5" width="10.5" height="1.9" rx="0.95" fill="#2026BE"/>
+  <rect x="14.75" y="18.7" width="10.5" height="1.9" rx="0.95" fill="#4750E0"/>
+  <rect x="14.75" y="22.9" width="6.75" height="1.9" rx="0.95" fill="#6E76EE"/>
 </svg>
