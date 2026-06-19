@@ -62,7 +62,8 @@ Regras da sessão:
 === HISTÓRIA DE USUÁRIO *(opcional — do PROMPT HU / ServiceNow)* ===
 [cole aqui o conteúdo de modules/_backlog/[chave].md — a história que originou
 esta feature. Quando presente, registre a chave do ServiceNow na seção
-`## Origem` do N3 e use os critérios de aceite como semente dos cenários.]
+`## Origem` do N3 e analise cada critério de aceite: ele vira regra de negócio,
+cenário ou ambos.]
 
 === IDENTIFICAÇÃO MANUAL *(preencher apenas no fluxo bottom-up, quando N1/N2 não existem)* ===
 Domínio: [nome do domínio]
@@ -83,15 +84,20 @@ Se uma **história de usuário** (`modules/_backlog/[chave].md`) foi colada no
 contexto, ela é a **origem** desta feature. Antes de bifurcar entre Modo A/B:
 
 - Registre a **chave do ServiceNow** para preencher a seção `## Origem` do N3.
-- Leia os **critérios de aceite** da história — eles são a **semente dos
-  `## Cenários`** (Gherkin). Reaproveite o Given/When/Then quando já vier nesse
-  formato; isso garante o elo semântico história → cenário, não só por ID.
+- **Analise cada critério de aceite** e classifique-o — ele pode virar:
+  - uma **regra de negócio**, se expressa uma **invariante** (*o quê* sempre vale);
+  - um **`## Cenário`** (Gherkin), se descreve um **comportamento observável**
+    (reaproveite o Given/When/Then quando já vier nesse formato);
+  - **ambos** — a invariante vira regra; o comportamento que a exercita vira cenário.
+
+  Isso garante o elo semântico história → spec (regra e/ou cenário), não só por ID.
 - Confirme com o usuário se esta sessão cobre **um critério, vários ou todos**
   os da história (uma história pode virar mais de uma feature).
 
 > "Esta feature tem origem na história **[STRYxxxxxxx]**. Vou registrá-la na
-> seção `## Origem` e usar os critérios de aceite como base dos cenários.
-> Esta feature cobre [todos os critérios | os critérios N, M] da história?"
+> seção `## Origem` e desdobrar cada critério de aceite em regra de negócio,
+> cenário ou ambos. Esta feature cobre [todos os critérios | os critérios N, M]
+> da história?"
 
 ---
 
