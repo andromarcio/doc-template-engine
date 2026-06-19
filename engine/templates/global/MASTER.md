@@ -91,9 +91,9 @@ História (ServiceNow STRYxxxxxxx)
 ```
 
 - **História → N3**: a chave do ServiceNow é registrada na seção `## Origem` de
-  cada feature; o elo recíproco fica em `modules/_backlog/[chave].md`. Os
-  critérios de aceite da história viram os `## Cenários` (Gherkin) do N3 —
-  rastreabilidade semântica, não só por ID.
+  cada feature; o elo recíproco fica em `modules/_backlog/[chave].md`. Cada
+  critério de aceite é analisado e vira uma regra de negócio, um `## Cenário`
+  (Gherkin) ou ambos — rastreabilidade semântica, não só por ID.
 - **N3 → código**: seção `## Implementação` do N3 (repositório + caminho) +
   coluna na tabela `Rastreabilidade` do `modules/INDEX.md`.
 - **Convenção de commit/PR** *(fecha a cadeia no git)*:

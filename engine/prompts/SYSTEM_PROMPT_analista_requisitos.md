@@ -197,7 +197,7 @@ mais de um artefato e você precisa saber o que já existe antes de criar ou alt
 **Negocial (sempre visível)**:
 - Objetivo
 - Origem: história(s) de usuário (chave do ServiceNow) que originaram a feature
-  — elo recíproco de `modules/_backlog/[chave].md`; critérios de aceite viram cenários
+  — elo recíproco de `modules/_backlog/[chave].md`; cada critério de aceite vira regra, cenário ou ambos
 - Campos: Label PO | Tipo | Obrigatório | Validação (linguagem natural)
   - Canônicos: `→ ver FIELD-DICTIONARY: [nome]`
   - **Nunca Label Dev ou campo banco aqui**

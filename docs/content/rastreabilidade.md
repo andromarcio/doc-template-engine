@@ -13,8 +13,9 @@ História (ServiceNow STRYxxxxxxx)
 ### História → N3
 
 A chave do ServiceNow é registrada na seção `## Origem` de cada feature (com elo
-recíproco em `_backlog/`). Os **critérios de aceite** da história viram os
-**`## Cenários`** (Gherkin) do N3 — rastreabilidade **semântica**, não apenas por ID.
+recíproco em `_backlog/`). Cada **critério de aceite** é analisado e vira uma
+**regra de negócio** (se for invariante), um **`## Cenário`** (Gherkin, se for
+comportamento observável) ou **ambos** — rastreabilidade **semântica**, não apenas por ID.
 
 ### N3 → código
 

@@ -37,10 +37,11 @@ O "porquê" por trás da história, em linguagem de negócio.]
 ## Critérios de aceite
 
 <!--
-  Os critérios de aceite são a semente dos `## Cenários` (Gherkin) do N3.
-  Escreva cada critério como uma condição verificável. Quando possível, use o
-  formato Given/When/Then — ele é transcrito quase 1:1 para os cenários da
-  feature, garantindo rastreabilidade semântica (não só por ID).
+  Cada critério de aceite é analisado no N3 e vira uma regra de negócio (se
+  expressa uma invariante), um `## Cenário` (Gherkin, se descreve um comportamento
+  observável) ou ambos. Escreva cada critério como uma condição verificável;
+  quando possível, use o formato Given/When/Then — o comportamento é transcrito
+  quase 1:1 para os cenários, garantindo rastreabilidade semântica (não só por ID).
 -->
 
 ```gherkin

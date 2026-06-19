@@ -25,6 +25,8 @@ Enquanto não há integração, os dados da história são **informados manualme
 
 ## Por que isso importa
 
-Os **critérios de aceite** da história viram os **cenários (Gherkin)** do N3 — ou
-seja, a história não é só um link: ela é a origem semântica dos testes. Veja como
-isso fecha a [Rastreabilidade](#/rastreabilidade).
+Cada **critério de aceite** é analisado e vira uma **regra de negócio** (se
+expressa uma invariante), um **cenário (Gherkin)** (se descreve um comportamento
+observável) ou **ambos** — ou seja, a história não é só um link: ela é a origem
+semântica das **regras** e dos **testes**. Veja como isso fecha a
+[Rastreabilidade](#/rastreabilidade).

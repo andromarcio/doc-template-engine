@@ -217,7 +217,7 @@ Após gerar, conclua:
 > **Próximo passo:** rode o **PROMPT_3A** para cada feature, colando este
 > artefato como contexto. O 3A vai:
 > - preencher a seção **`## Origem`** do N3 com `[STRYxxxxxxx]` (elo História → feature);
-> - transformar os **critérios de aceite** desta história nos **`## Cenários`** (Gherkin) da feature.
+> - desdobrar cada **critério de aceite** em **regra de negócio**, **`## Cenário`** (Gherkin) ou **ambos**, conforme expresse uma invariante, um comportamento observável, ou os dois.
 >
 > Ao implementar, referencie a história nos commits/PR:
 > `tipo(SIGLA-SFS-NN): resumo (ServiceNow STRYxxxxxxx)` — fechando a cadeia
