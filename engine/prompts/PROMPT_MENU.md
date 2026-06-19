@@ -41,6 +41,17 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 ---
 
+### 🧭 Ponto de partida — Triagem
+
+> Chegou uma necessidade (de qualquer origem) e você não sabe se já existe algo
+> documentado, nem se é caso de **alterar** o que existe ou **criar** algo novo? Comece aqui.
+
+| # | Opção | O que faz |
+|---|---|---|
+| **TR** | Triar necessidade — o que já existe? | Recebe a necessidade em texto livre, descobre o que já está documentado e recomenda a rota: **criar** (3A/2A/1A), **alterar** (4A/4B), **lote** (IV→EX) ou registrar a história antes (HU). Não cria nem altera nada — só mostra e roteia |
+
+---
+
 ### 🔄 Sistema legado (migração de sistema existente)
 
 | # | Opção | O que faz |
@@ -167,6 +178,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 
 | Opção | Insumos necessários (em ordem de coleta) |
 |---|---|
+| **TR** | 1. modules/INDEX.md *(no Claude Code é lido do disco junto com a árvore `modules/`)* · 2. A necessidade (texto livre, qualquer origem) · 3. N0 / dicionários *(opcional — afina a descoberta)* |
 | **R0** | 1. MASTER.md *(se existir)* · 2. Lista de repos (nome, URL, descrição, stack, BD, comunicações) |
 | **R1** | 1. MASTER.md · 2. modules/INDEX.md (do R0) · 3. repos/[repo].md (do R0) · 4. DATA-MODEL.md existente *(se houver)* · 5. Código: modelos · 6. Código: rotas/controllers · 7. Código: serviços · 8. Código: testes *(opcional)* · 9. Código: eventos/workers *(se houver)* |
 | **R2** | 1. MASTER.md · 2. DATA-MODEL.md existente *(se houver)* · 3. FIELD-DICTIONARY.md · 4. global/SIZING.md *(opcional, para módulo ALI/AIE)* · 5. Schema `.sql` (CREATE TABLE / CREATE TYPE / etc.) |
@@ -236,6 +248,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 
 | Opção | Executa o comportamento de |
 |---|---|
+| TR | PROMPT_TRIAGEM.md |
 | R0 | PROMPT_REPO_MAPPING.md |
 | R1 | PROMPT_REVERSE_ENGINEERING.md |
 | R2 | PROMPT_DATA_MODEL_FROM_SQL.md |
@@ -289,6 +302,11 @@ identificando a opção mais adequada:
 
 > Ex: usuário diz "quero documentar uma nova funcionalidade do meu sistema"
 > → sugerir opção **3A** (se tiver o N2 pronto) ou **2A** → **3A** (se ainda não tiver)
+>
+> Ex: usuário diz "tenho uma necessidade nova, mas não sei se já existe algo parecido
+> nem se é melhor alterar ou criar"
+> → sugerir opção **TR** (triagem): ela descobre o que já está documentado e indica a
+>   rota — alterar (4A), criar (3A) ou, se tocar vários artefatos, lote (IV→EX)
 
 ### Insumo não disponível (obrigatório)
 Se um insumo obrigatório não estiver disponível, oriente como obtê-lo:

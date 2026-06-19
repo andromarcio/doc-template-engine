@@ -136,6 +136,10 @@ Exemplos de estados por etapa:
 ## Sequência de sessões (prompts disponíveis)
 
 ```
+PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), descobre o que
+                 já está documentado e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX
+                 · registrar história HU). Não cria nem altera — só mostra e encaminha.
+     ↓
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
      ↓
 PROMPT_1A → N1 negocial aprovado pelo PO
@@ -185,6 +189,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 
 | Gatilho da sessão | Prompt a ler |
 |---|---|
+| Necessidade nova (qualquer origem): descobrir o que já existe e decidir **criar × alterar** | `PROMPT_TRIAGEM.md` |
 | CRUD padrão (cadastro): gerar N2 + N3 das 5 operações de uma vez | `PROMPT_CRUD.md` |
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
 | N1 (Domínio) negocial | `PROMPT_1A_N1_negocio.md` |

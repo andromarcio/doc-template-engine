@@ -76,13 +76,30 @@ primeiro e, a partir de várias delas, derivar o N2 e depois o N1 (ver
 ao gerar ou alterar um nível, o engine confronta e atualiza o nível imediatamente
 anterior para manter tudo consistente.
 
+### Triagem: descobrir o que já existe
+
+Uma necessidade pode chegar de inúmeras formas — uma ideia, uma reunião, um bug, uma
+mudança regulatória, uma história do ServiceNow — e tanto **de cima para baixo** quanto
+**de baixo para cima**. Antes de especificar, é preciso saber se ela **já está
+documentada**: a necessidade se resolve **alterando** algo que existe, ou é caso de
+**criar** algo novo?
+
+O prompt **`PROMPT_TRIAGEM`** (opção **TR** no menu) é a porta de entrada leve para isso.
+Recebe a necessidade em texto livre, **lê o que já está documentado** (`modules/INDEX.md`
+e a árvore `modules/` — direto do repositório no Claude Code, ou colado no fluxo
+copy-paste/CLI) e devolve um **relatório de triagem**: o que existe sobre o assunto e a
+**rota recomendada** para cada parte da necessidade — **criar** (`3A`/`2A`/`1A`),
+**alterar** (`4A`/`4B`), tratar em **lote** (`IV` → `EX`) ou **registrar a história antes**
+(`HU`). A triagem não cria nem altera nada — apenas mostra e encaminha; para um delta que
+afeta muitos artefatos de uma vez, ela própria direciona ao `PROMPT_INVESTIGADOR`.
+
 ### Ponto de entrada: história de usuário
 
-Toda evolução começa por uma **história de usuário / item de backlog** vinda do
-**ServiceNow**. O prompt **`PROMPT_BACKLOG`** (opção **HU** no menu) é o ponto de
-entrada: captura a história, mapeia quais features (N3) ela gera ou altera e cria
-o artefato em `modules/_backlog/[chave].md`. A partir daí, roda-se o `PROMPT_3A`
-para cada feature.
+Quando a necessidade já chega como uma **história de usuário / item de backlog** do
+**ServiceNow** (ou após a triagem indicar esse caminho), o intake é o prompt
+**`PROMPT_BACKLOG`** (opção **HU** no menu): captura a história, mapeia quais features
+(N3) ela gera ou altera e cria o artefato em `modules/_backlog/[chave].md`. A partir
+daí, roda-se o `PROMPT_3A` para cada feature.
 
 Enquanto não há integração, os dados da história (número, descrição e critérios
 de aceite) são **informados manualmente**; havendo um MCP do ServiceNow, basta

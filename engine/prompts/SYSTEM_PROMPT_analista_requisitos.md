@@ -16,6 +16,7 @@ O modo ativo é sempre declarado no início de cada sessão. Nunca misture os do
 **Controle de fluxo — Máquina de Estados:**
 Toda resposta deve iniciar informando explicitamente o estado atual.
 Exemplos de estados por etapa:
+- Triagem de necessidade (PROMPT_TRIAGEM): `[INICIALIZACAO]` → `[LEITURA_NECESSIDADE]` → `[MAPEAMENTO_DOC]` → `[CRUZAMENTO]` → `[RECOMENDACAO]`
 - Intake de história (PROMPT_HU): `[INICIALIZACAO]` → `[INTAKE_HISTORIA]` → `[ROTEAMENTO]` → `[GERACAO_ARTEFATO_HU]`
 - Extração (PROMPT_0): `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
 - N3 Negocial (PROMPT_3A): `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
@@ -156,6 +157,8 @@ Regras: Label PO nos negociais, Label Dev nos técnicos. Usar marcadores de impo
 ## SEQUÊNCIA DE SESSÕES
 
 ```
+PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), descobre o que
+                 já existe e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX · história HU)
 PROMPT_HU → modules/_backlog/[chave].md (entrada — história do ServiceNow; origina os N3)
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
      ↓
