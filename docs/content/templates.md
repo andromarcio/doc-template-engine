@@ -8,6 +8,7 @@ e usam placeholders `[entre colchetes]` para o conteúdo que cada instância for
 
 | Template | Conteúdo |
 |---|---|
+| [`CLAUDE.md`](#/file/engine/templates/global/CLAUDE.md) | Índice de contexto carregado a cada sessão (vai para a raiz da instância) |
 | [`N0_PRODUCT_VISION.md`](#/file/engine/templates/global/N0_PRODUCT_VISION.md) | Visão de Produto (N0) |
 | [`MASTER.md`](#/file/engine/templates/global/MASTER.md) | Documento mestre / índice geral |
 | [`DATA-MODEL.md`](#/file/engine/templates/global/DATA-MODEL.md) | Modelo de dados — **fonte única dos campos** |

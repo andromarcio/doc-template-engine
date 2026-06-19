@@ -1,6 +1,7 @@
 # MASTER.md
-> Arquivo de contexto global. Cole em toda sessão com o Claude,
-> independente do módulo ou nível que está sendo trabalhado.
+> Arquivo de contexto global, independente do módulo ou nível em trabalho.
+> No Claude Code é carregado automaticamente a cada sessão via o `CLAUDE.md` da
+> instância (ver `global/CLAUDE.md`); no fluxo copy-paste/CLI, cole-o em toda sessão.
 
 ---
 
@@ -198,6 +199,7 @@ Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 
 | Arquivo | Propósito |
 |---|---|
+| `CLAUDE.md` (raiz) | Índice de contexto carregado a cada sessão no Claude Code |
 | `global/MASTER.md` | Stack, convenções globais (este arquivo) |
 | `global/DATA-MODEL.md` | Índice de entidades + campos globais + enums |
 | `global/SIZING.md` | Convenções de contagem APF e COSMIC |
