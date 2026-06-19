@@ -1,3 +1,29 @@
+---
+# ─────────────────────────────────────────────────────────────────
+# METADADOS MACHINE-READABLE (front-matter)
+# Fonte estruturada para a exportação ao spec-kit (PROMPT_SPECKIT_EXPORT).
+# O corpo do N3 continua sendo a fonte de verdade legível; estes campos
+# apenas espelham, de forma parseável, o que já está no corpo. Mantê-los
+# em sincronia — o PASSO 0 do exporter valida a consistência.
+#   prioridade → vira P1/P2/P3 das user stories no spec.md (ordena fases).
+#   endpoints / error_codes → preenchidos no 3B (espelham ## API e ## Mapeamento de erros).
+#   data_model_ref → entidade canônica resolvida em data-models/[dominio].md.
+#   depende_de → IDs de N3 pré-requisito (ordena foundational vs. user story).
+# ─────────────────────────────────────────────────────────────────
+id: [SIGLA]-[SFS]-[NN]
+feature_set: [SIGLA]-[SFS]
+dominio: [SIGLA]
+entidade: [Entidade principal]
+prioridade: [P1 | P2 | P3]          # P1 = MVP
+mvp: [true | false]
+data_model_ref: data-models/[dominio].md#[entidade]
+endpoints: []                       # ex.: ["POST /api/v1/recurso"] — preencher no 3B
+error_codes: []                     # ex.: ["ENTIDADE_ERRO"] — preencher no 3B
+depende_de: []                      # ex.: ["SIGLA-SFS-01"]
+servicenow: [STRYxxxxxxx]
+status: rascunho                    # rascunho | especificado | em-desenvolvimento | implementado | deprecado
+---
+
 <!--
   CONVENÇÃO DE VISIBILIDADE
   ─────────────────────────────────────────────────────────────────
@@ -9,6 +35,7 @@
 
 # [Nome da Feature]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[01]`
+> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não] *(P1 = entra no incremento mínimo; ordena as user stories na exportação ao spec-kit)*
 
 ## Descrição
 [Descrição em 1-2 frases do que esta feature faz, em linguagem de negócio,
@@ -79,6 +106,14 @@ para alguém que nunca viu o sistema.]
 ---
 
 ## Cenários
+
+<!--
+  Mapeamento para o spec-kit (PROMPT_SPECKIT_EXPORT):
+  - "Caminho feliz" + "Erros de validação"  → Acceptance Scenarios da user story no spec.md
+  - "Conflitos com dados existentes" + "Estados especiais" → seção Edge Cases do spec.md
+  - "Restrições de acesso" → Acceptance Scenarios + princípio de autorização na constitution
+  Manter os 5 grupos garante cobertura completa na geração de tasks/testes.
+-->
 
 ```gherkin
 Feature: [Nome da feature em linguagem natural]
@@ -169,6 +204,24 @@ formulário em página própria, modal, botão em listagem, etc.]
 | Erro de servidor | [toast ou mensagem genérica] |
 | Sucesso | [toast, redirecionamento ou relatório] |
 | Empty state | [quando e o que exibir se não há dados] |
+
+---
+
+## Critérios de sucesso
+
+<!--
+  Resultados MENSURÁVEIS e AGNÓSTICOS DE TECNOLOGIA que comprovam que a feature
+  entrega valor. Alimentam a seção "Success Criteria" (SC-###) do spec.md na
+  exportação ao spec-kit. Derivar de: cobertura dos cenários + NFRs herdados.
+  - ✓ observável e medível: "90% dos usuários concluem o cadastro em < 2 min"
+  - ✗ não citar stack/implementação: "endpoint responde em < 200ms" é NFR técnico,
+    referencie via → ver NFR: [ID] em vez de repetir aqui.
+  Se a feature não tiver métrica própria, herde do NFR aplicável.
+-->
+
+| # | Critério mensurável | Origem |
+|---|---|---|
+| SC-01 | [resultado observável e medível em linguagem de negócio] | [cenário / `→ ver NFR: [ID]` / negócio] |
 
 ---
 

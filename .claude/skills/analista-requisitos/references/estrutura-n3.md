@@ -5,11 +5,41 @@ incluindo seções negociais e técnicas.
 
 ---
 
+## Front-matter (metadados machine-readable)
+
+Todo N3 abre com um bloco YAML que **espelha**, de forma parseável, informações que
+já estão no corpo. Serve à exportação determinística para o spec-kit
+(`PROMPT_SPECKIT_EXPORT`) — o corpo continua sendo a fonte de verdade legível.
+
+```yaml
+---
+id: [SIGLA]-[SFS]-[NN]
+feature_set: [SIGLA]-[SFS]
+dominio: [SIGLA]
+entidade: [Entidade principal]
+prioridade: [P1 | P2 | P3]          # P1 = MVP; ordena as user stories no spec.md
+mvp: [true | false]
+data_model_ref: data-models/[dominio].md#[entidade]
+endpoints: []                       # preenchido no 3B (espelha ## API)
+error_codes: []                     # preenchido no 3B (espelha ## Mapeamento de erros)
+depende_de: []                      # IDs de N3 pré-requisito (ordena fases no spec-kit)
+servicenow: [STRYxxxxxxx]
+status: rascunho                    # rascunho | especificado | em-desenvolvimento | implementado | deprecado
+---
+```
+
+- `prioridade` é coletada no **3A**; `endpoints`/`error_codes`/`data_model_ref` são
+  completados no **3B**. O `PASSO 0` do exporter valida a sincronia front-matter ↔ corpo.
+- `status: especificado` (3B aprovado) é pré-requisito para exportar.
+
+---
+
 ## Seções negociais (sempre visíveis)
 
 ```markdown
 # [Nome da Feature]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[ID do N2]`
+> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não]
 
 ## Descrição
 [uma frase em linguagem de negócio]
@@ -87,7 +117,18 @@ Scenario: [descrição]
 de sucesso e erros — seguir padrão do Design System]
 
 ---
+
+## Critérios de sucesso
+
+| # | Critério mensurável | Origem |
+|---|---|---|
+| SC-01 | [resultado observável e medível, agnóstico de tecnologia] | [cenário / → ver NFR: [ID] / negócio] |
 ```
+
+> **Mapeamento de cenários → spec.md** (na exportação): "Caminho feliz" + "Erros de
+> validação" viram *Acceptance Scenarios*; "Conflitos com dados existentes" + "Estados
+> especiais" viram *Edge Cases*; "Restrições de acesso" viram cenários + princípio de
+> autorização na *constitution*. Os "Critérios de sucesso" viram *Success Criteria (SC-###)*.
 
 ## Seções técnicas (dentro de `dev-only`)
 

@@ -10,9 +10,16 @@
 
 ## Features
 
-| Feature | Arquivo | Descrição |
-|---|---|---|
-| [Nome da Feature] | [[feature].md](./ [feature].md) | [descrição em uma linha] |
+<!--
+  A coluna Prioridade ordena as user stories na exportação ao spec-kit
+  (1 N3 = 1 user story; este Feature Set = 1 "feature" do spec-kit). P1 = incremento
+  mínimo (MVP); P2/P3 = incrementos seguintes. Mantenha coerência com o campo
+  `prioridade` do front-matter de cada N3.
+-->
+
+| Feature | Arquivo | Prioridade | Descrição |
+|---|---|---|---|
+| [Nome da Feature] | [[feature].md](./[feature].md) | [P1 / P2 / P3] | [descrição em uma linha] |
 
 ---
 

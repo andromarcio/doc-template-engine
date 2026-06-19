@@ -294,9 +294,19 @@ Após aprovação, gere o arquivo completo:
 
 > **Nota**: as seções técnicas **não existem** no N3 negocial gerado pelo PROMPT 3A — este prompt as cria e insere abaixo de `## Comportamento de tela`, dentro do bloco `<div class="dev-only">`.
 
+> **Nota (front-matter)**: atualize o bloco YAML do topo com o que foi definido aqui —
+> `endpoints` (espelha `## API`), `error_codes` (espelha `## Mapeamento de erros`),
+> `data_model_ref` (entidade confirmada), `depende_de` (N3 pré-requisito) e
+> `status: especificado`. Preserve a linha `> **Prioridade** … **MVP** …` do 3A. Esse
+> espelho é o que torna a exportação ao spec-kit (`PROMPT_SPECKIT_EXPORT`) determinística.
+
 **Estrutura obrigatória** — respeitar exatamente esta ordem e headings, sem adicionar seções ou elementos não listados:
 ```
+---                                  ← front-matter: ATUALIZAR endpoints, error_codes,
+                                        data_model_ref, depende_de, status: especificado
+---
 # [Nome]
+> **Prioridade**: P? · **MVP**: sim/não   ← preservar do 3A
 
 ## Descrição                         ← negocial
 ## Superfície                        ← negocial (Tela própria | Ação em tela)
@@ -305,6 +315,7 @@ Após aprovação, gere o arquivo completo:
 ## Campos                            ← negocial (Label PO | Tipo | Obrig. | Validação)
 ## Campos automáticos                ← negocial (Label PO | Valor | Quando)
 ## Comportamento de tela             ← negocial
+## Critérios de sucesso              ← negocial (SC-### mensuráveis)
 ## Métricas de tamanho               ← APF — preencher com a contagem do PASSO 6 (sem COSMIC)
 
 <div class="dev-only">

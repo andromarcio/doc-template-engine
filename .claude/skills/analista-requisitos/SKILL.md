@@ -204,6 +204,7 @@ PROMPT_CONTAGEM → contagem APF por escopo (feature/feature set/domínio):
                   espelha em CONTAGEM-PF.md + propaga total ao INDEX.md
      ↓
 PROMPT_SDD → documento de design para implementação
+PROMPT_SPECKIT_EXPORT → exporta N3 aprovados → workspace do spec-kit (depois: /speckit.tasks → /implement)
 PROMPT_QA  → plano de testes E2E (pós-implementação)
      ↓
 PROMPT_4A → atualização negocial de N3 existente (manutenção pontual — 1 feature)
@@ -249,6 +250,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Requisitos não-funcionais (Especificação Suplementar) | `PROMPT_NFR.md` |
 | Contagem APF (feature / feature set / domínio) | `PROMPT_CONTAGEM.md` |
 | Documento de design para implementação (SDD) | `PROMPT_SDD.md` |
+| Exportar N3 aprovados → workspace do spec-kit (rumo a código + testes) | `PROMPT_SPECKIT_EXPORT.md` |
 | Plano de testes E2E (pós-implementação) | `PROMPT_QA.md` |
 | Engenharia reversa: código/N3 → N2 | `PROMPT_N3_TO_N2.md` |
 | Engenharia reversa: N3 → N1 | `PROMPT_N3_TO_N1.md` |

@@ -26,6 +26,29 @@
 
 ---
 
+## Technical Context (normalizado para exportação ao spec-kit)
+
+<!--
+  Bloco com os MESMOS campos da seção "Technical Context" do plan.md do spec-kit.
+  O PROMPT_SPECKIT_EXPORT copia estes valores direto para o plan.md, evitando que
+  o /plan precise rederivar a stack. Performance/Constraints derivam do global/NFR.md.
+  Campos sem decisão ficam como NEEDS CLARIFICATION (o spec-kit trata isso nativamente).
+-->
+
+| Campo (spec-kit) | Valor |
+|---|---|
+| Language/Version | [ex.: TypeScript 5.x / Java 17 — ou NEEDS CLARIFICATION] |
+| Primary Dependencies | [ex.: Next.js 14, Prisma, Zod / Spring Boot, JPA] |
+| Storage | [ex.: PostgreSQL 16 / Oracle — ou N/A] |
+| Testing | [ex.: Vitest + Playwright / JUnit + RestAssured] |
+| Target Platform | [ex.: Linux server (container) / navegador] |
+| Project Type | [single / web (frontend+backend) / mobile] |
+| Performance Goals | [`→ ver NFR: DES-*` — ex.: p95 < 200ms] |
+| Constraints | [`→ ver NFR: SEG-*/REST-*` — ex.: SSO corporativo, multitenant] |
+| Scale/Scope | [ex.: N usuários, M features no Feature Set] |
+
+---
+
 ## Repositórios do sistema
 
 | Repositório | Responsabilidade |

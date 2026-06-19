@@ -310,6 +310,21 @@ Pergunte ao usuário apenas o que a derivação não responde:
 
 ---
 
+## PASSO 1.6 — Prioridade e MVP
+
+Capture a **prioridade de entrega** da feature — ela alimenta o front-matter
+(`prioridade`/`mvp`) e ordena as user stories na exportação ao spec-kit
+(1 N3 = 1 user story; P1 entra no incremento mínimo).
+
+> "Qual a prioridade de entrega desta feature dentro do Feature Set?
+> **P1** = incremento mínimo (MVP) · **P2** / **P3** = incrementos seguintes."
+
+- Em **Modo A**, sugira a prioridade pela ordem/dependências já expressas no N2 e
+  confirme. Mantenha coerência com a coluna *Prioridade* da tabela de Features do N2.
+- Registre `prioridade` e `mvp` (true se P1) para usar no PASSO 3.
+
+---
+
 ## PASSO 2 — Coleta negocial por blocos
 
 Para cada feature, percorra os blocos abaixo em ordem.
@@ -431,8 +446,24 @@ Com as respostas de todos os blocos, gere:
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
+---
+id: [ID do N2 — ex.: SIGLA-SFS-NN]
+feature_set: [SIGLA]-[SFS]
+dominio: [SIGLA]
+entidade: [Entidade principal]
+prioridade: [P1 | P2 | P3]
+mvp: [true | false]
+data_model_ref: data-models/[dominio].md#[entidade]
+endpoints: []
+error_codes: []
+depende_de: []
+servicenow: [STRYxxxxxxx ou vazio]
+status: rascunho
+---
+
 # [Nome da Feature — exatamente como consta no N2]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[ID do N2]`
+> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não]
 <!-- ID — Modo A: ID do N2 (ex: F01) | Modo B: [SIGLA]-[SFS]-[NN] ⚠️ provisório -->
 
 ## Descrição
@@ -493,12 +524,25 @@ processamento, retorno visual de sucesso e erros — seguir padrão do Design Sy
 
 ---
 
+## Critérios de sucesso
+
+| # | Critério mensurável | Origem |
+|---|---|---|
+| SC-01 | [resultado observável e medível, em linguagem de negócio] | [cenário / → ver NFR: [ID] / negócio] |
+
+---
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | Feature criada | N3 negocial gerado |
 ```
+
+**Preenchimento dos `Critérios de sucesso`**: derive 1–3 critérios **mensuráveis** e
+**agnósticos de tecnologia** a partir dos cenários e dos NFR herdados (consulte o
+`NFR.md` no contexto). Não invente métricas — se a feature não tiver métrica própria,
+referencie o NFR aplicável (`→ ver NFR: [ID]`). Apresente para confirmação do usuário.
 
 **Formato do bloco Gherkin** (seção `## Cenários`):
 ```gherkin
