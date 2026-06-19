@@ -52,6 +52,11 @@ linguagem de negócio, **sem perguntar durante a geração** (sinalize lacunas).
    existente), **refine preservando o que já está lá**: não apague o que a reunião
    não tocou; apresente adições/alterações como **proposta de mudança** e marque
    com ⚠️ qualquer ponto em que a reunião **contradiz** o artefato atual.
+9. **Regras de negócio atômicas — uma regra, uma invariante.** Ao extrair regras
+   (do N3 ou as transversais do N1), quebre as compostas: condições independentes
+   ligadas por "e" / "ou" / "além disso" viram **itens distintos**, cada um com
+   **uma única restrição verificável**. A reação do sistema ("não salva", "exibe
+   mensagem") não é regra — vai para os **Cenários**.
 
 ### Marcadores no artefato
 

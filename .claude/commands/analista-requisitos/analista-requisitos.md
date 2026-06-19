@@ -40,6 +40,53 @@ Use esta skill de dois modos:
 
 ---
 
+## Feature (N3) × Feature Set (N2) — granularidade
+
+**Funcionalidade = feature = N3**: a unidade atômica de especificação — uma
+**ação com começo, meio, fim e resultado observável**. Heurística: uma feature
+é **um verbo + uma entidade** (*cadastrar cliente*, *calcular frete*). Um
+**Feature Set (N2)** é um **substantivo/área** que agrupa features relacionadas
+(*Clientes*, *Checkout*).
+
+| Exemplo | É… |
+|---|---|
+| "Cadastro de Clientes" | Feature Set (N2) — agrupa várias ações |
+| "Cadastrar cliente", "Pesquisar cliente", "Excluir cliente" | Features (N3) — uma ação cada |
+
+**Não são features**: um campo, uma regra de negócio, uma tela (uma tela atende
+várias features) ou um requisito não-funcional (→ `global/NFR.md`).
+
+> A convenção de nome `f-[verbo]-[entidade]` (definida no `PROMPT_3A`) materializa
+> essa granularidade — o prefixo verbal é o teste prático de que você está num N3.
+
+---
+
+## O que é uma regra de negócio — e como compô-la
+
+Uma **regra de negócio** é uma **invariante**: uma restrição que o sistema
+**sempre** garante, independente de tela ou tecnologia. Responde *"o quê"* (não
+*"quão bem"* — isso é NFR) e é **verificável** — dá para escrever um cenário que
+passa ou falha por causa dela.
+
+**Atômica — uma regra, uma invariante.** Se precisar de "e" / "ou" / "além disso"
+ligando condições independentes, são **várias** regras: separe em itens distintos
+em `## Regras de negócio`. Cada item carrega exatamente uma restrição testável —
+isso é o que torna a regra rastreável, reusável (candidata a canônica) e auditável
+pelo `PROMPT_AUDIT_RULES_DEDUP`.
+
+**O que NÃO entra na regra** (e para onde vai):
+- a **reação** do sistema ("não salva", "bloqueia", "exibe mensagem") → `## Cenários` (ver regra absoluta #9)
+- o **texto** literal da mensagem → `MESSAGE-DICTIONARY`
+- *quão bem* o sistema se comporta (desempenho, segurança, auditoria, disponibilidade) → `global/NFR.md`
+- **implementação** (endpoint, índice, lib, FK) → seção técnica `dev-only`
+
+| ❌ Composta / com reação | ✅ Atômica (invariante) |
+|---|---|
+| "CPF é obrigatório, único e, se já existir, exibir erro" | "CPF é único por cliente." (obrigatoriedade vai na tabela de campos; reação e mensagem → `Cenários`) |
+| "Início ≤ Fim e não pode sobrepor vigências" | duas regras: "Data de início ≤ data de fim." · "Vigências do mesmo registro não se sobrepõem." |
+
+---
+
 ## Nomenclatura de campos — três camadas
 
 | Camada | Convenção | Exemplo | Fonte de verdade |
