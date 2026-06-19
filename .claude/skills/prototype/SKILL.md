@@ -1,4 +1,11 @@
-# Skill: /prototype
+---
+name: prototype
+description: Gera um protótipo de fluxo HTML navegável a partir de uma descrição livre, usando o design system do projeto. Use para prototipar telas e fluxos rapidamente, sem precisar de N2 ou N3.
+argument-hint: "[descrição do protótipo]"
+disable-model-invocation: true
+---
+
+# /prototype — Protótipo navegável
 
 > Gera um protótipo de fluxo HTML navegável a partir de uma descrição livre,
 > usando o design system do projeto. Nenhum N2 ou N3 é necessário.
