@@ -40,6 +40,27 @@ Use esta skill de dois modos:
 
 ---
 
+## Feature (N3) × Feature Set (N2) — granularidade
+
+**Funcionalidade = feature = N3**: a unidade atômica de especificação — uma
+**ação com começo, meio, fim e resultado observável**. Heurística: uma feature
+é **um verbo + uma entidade** (*cadastrar cliente*, *calcular frete*). Um
+**Feature Set (N2)** é um **substantivo/área** que agrupa features relacionadas
+(*Clientes*, *Checkout*).
+
+| Exemplo | É… |
+|---|---|
+| "Cadastro de Clientes" | Feature Set (N2) — agrupa várias ações |
+| "Cadastrar cliente", "Pesquisar cliente", "Excluir cliente" | Features (N3) — uma ação cada |
+
+**Não são features**: um campo, uma regra de negócio, uma tela (uma tela atende
+várias features) ou um requisito não-funcional (→ `global/NFR.md`).
+
+> A convenção de nome `f-[verbo]-[entidade]` (definida no `PROMPT_3A`) materializa
+> essa granularidade — o prefixo verbal é o teste prático de que você está num N3.
+
+---
+
 ## Nomenclatura de campos — três camadas
 
 | Camada | Convenção | Exemplo | Fonte de verdade |
