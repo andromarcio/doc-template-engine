@@ -7,7 +7,8 @@ description: >-
   criar N1/N2/N3, feature, feature set, domínio, campos de negócio, regras de negócio,
   cenários Gherkin, PROMPT_0/1A/1B/2A/3A/3B/4A/4B, FIELD-DICTIONARY,
   RULES-DICTIONARY, ERROR-DICTIONARY, MESSAGE-DICTIONARY, data-model,
-  cadastro, pesquisa, edição, exclusão, CRUD padrão, gerar CRUD, Label PO, campo canônico, regra canônica,
+  cadastro, pesquisa, edição, exclusão, CRUD padrão, gerar CRUD, wizard, assistente, processo guiado multi-etapas,
+  Label PO, campo canônico, regra canônica,
   modo PO, modo DEV, ou mencionar qualquer um dos prompts de especificação.
 ---
 
@@ -196,6 +197,7 @@ PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado
 PROMPT_2A → N2 negocial aprovado pelo PO (N2 é integralmente negocial — sem passada técnica)
      ↓
 PROMPT_CRUD → atalho: N2 + N3 negociais das 5 operações CRUD (pesquisar/cadastrar/editar/excluir/visualizar) numa sessão
+PROMPT_WIZARD → atalho: N2 + N3 negociais de um processo guiado multi-etapas (feature principal + auxiliares: retomar/acompanhar/cancelar) numa sessão
      ↓
 PROMPT_3A → N3 negocial aprovado pelo PO
 PROMPT_3B → N3 técnico + data-models/[dominio].md atualizado
@@ -238,6 +240,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 |---|---|
 | Necessidade nova (qualquer origem): descobrir o que já existe e decidir **criar × alterar** | `PROMPT_TRIAGEM.md` |
 | CRUD padrão (cadastro): gerar N2 + N3 das 5 operações de uma vez | `PROMPT_CRUD.md` |
+| Wizard / assistente (processo guiado multi-etapas): gerar N2 + N3 da feature principal e auxiliares | `PROMPT_WIZARD.md` |
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
 | N1 (Domínio) negocial | `PROMPT_1A_N1_negocio.md` |
 | N1 (Domínio) técnico + data-model | `PROMPT_1B_N1_tecnico.md` |

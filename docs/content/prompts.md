@@ -22,6 +22,17 @@ e são **auto-contidos** — não dependem de arquivos fora do `engine/`.
 | [`PROMPT_3A_N3_negocio_transcricao`](#/file/engine/prompts/PROMPT_3A_N3_negocio_transcricao.md) | N3 | Negócio (de transcrição) |
 | [`PROMPT_3B_N3_tecnico`](#/file/engine/prompts/PROMPT_3B_N3_tecnico.md) | N3 | Técnico |
 
+## Atalhos por tipo de funcionalidade
+
+Geram **N2 + N3** numa única sessão para padrões recorrentes — o `## Fluxo Principal`
+sai de um esqueleto canônico fixo (determinístico, idêntico entre features do mesmo
+tipo, independente da LLM).
+
+| Prompt | Opção | Papel |
+|---|---|---|
+| [`PROMPT_CRUD`](#/file/engine/prompts/PROMPT_CRUD.md) | CR | CRUD padrão — 5 operações (pesquisar/cadastrar/editar/excluir/visualizar) |
+| [`PROMPT_WIZARD`](#/file/engine/prompts/PROMPT_WIZARD.md) | WZ | Wizard — processo guiado multi-etapas (principal + retomar/acompanhar/cancelar) |
+
 ## Manutenção e derivação
 
 | Prompt | Papel |

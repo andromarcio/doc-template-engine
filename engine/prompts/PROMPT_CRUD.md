@@ -185,9 +185,9 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 ## Fluxo Principal
 
-[diagrama Mermaid `flowchart TD` — seguir a "Regra do Fluxo principal" do PROMPT_2A:
-nós entre aspas duplas, rótulos de seta sem aspas/barra; o diagrama é a única
-representação do fluxo, sem lista numerada acompanhante]
+[esqueleto canônico do tipo CRUD — copie o diagrama da "Regra do Fluxo principal
+(CRUD)" logo abaixo deste bloco e apenas substitua {Entidade}. Não redesenhe o grafo
+nem acompanhe de lista numerada — a estrutura é fixa para todo CRUD]
 
 ---
 
@@ -230,6 +230,29 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT CRUD |
 ```
+
+> **Regra do Fluxo principal (CRUD)** — O `## Fluxo Principal` do CRUD é um
+> **esqueleto canônico fixo**: copie o diagrama abaixo e apenas troque `{Entidade}`
+> pelo nome da entidade. **Não** redesenhe os nós nem as setas — a estrutura é a mesma
+> para todo CRUD, o que torna o fluxo determinístico e idêntico entre features do mesmo
+> tipo, independente da LLM. O diagrama é a única representação do fluxo (sem lista
+> numerada). Vale a syntax da "Regra do Fluxo principal" do PROMPT_2A: nós entre aspas
+> duplas; rótulos de seta sem aspas e sem `/`, `(` ou `)`.
+>
+> ```mermaid
+> flowchart TD
+>     A(["Usuário acessa a listagem de {Entidade}"]) --> B["Pesquisar {Entidade}"]
+>     B --> C{"Qual ação?"}
+>     C -->|Cadastrar novo| D["Cadastrar {Entidade}"]
+>     C -->|Selecionar registro| E{"Ação sobre o registro"}
+>     E -->|Visualizar| F["Visualizar {Entidade}"]
+>     E -->|Editar| G["Editar {Entidade}"]
+>     E -->|Excluir| H["Excluir {Entidade}"]
+>     D --> Z(["{Entidade} atualizada"])
+>     G --> Z
+>     H --> Z
+>     F --> Z
+> ```
 
 > **Regra das Permissões** — A seção `## Permissões por perfil` **sempre** é uma
 > **tabela Markdown** (perfis nas linhas × as cinco operações nas colunas).

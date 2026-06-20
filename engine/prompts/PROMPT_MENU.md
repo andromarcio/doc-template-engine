@@ -96,11 +96,12 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 ---
 
-### ⚡ Atalho — CRUD padrão (N2 + N3)
+### ⚡ Atalhos por tipo de funcionalidade (N2 + N3)
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
 | **CR** | CRUD padrão — N2 + N3 das 5 operações | PO + Dev | A partir da descrição da entidade e da tabela de campos, gera o N2 do Feature Set e os N3 negociais de **Pesquisar, Cadastrar, Editar, Excluir e Visualizar** numa única sessão — derivando pesquisa/edição/exclusão/visualização do cadastro |
+| **WZ** | Wizard — N2 + N3 de processo guiado multi-etapas | PO + Dev | A partir da descrição do processo e da lista ordenada de etapas, gera o N2 e o N3 da **feature principal multi-etapas** (mais auxiliares: retomar rascunho, acompanhar status, cancelar) numa única sessão |
 
 ---
 
@@ -273,6 +274,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | 1B | PROMPT_1B_N1_tecnico.md |
 | 2A | PROMPT_2A_N2_negocio.md |
 | CR | PROMPT_CRUD.md |
+| WZ | PROMPT_WIZARD.md |
 | 3A | PROMPT_3A_N3_negocio.md |
 | RT | PROMPT_TRANSCRICAO_REUNIAO.md |
 | 3B | PROMPT_3B_N3_tecnico.md |
