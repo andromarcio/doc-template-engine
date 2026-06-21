@@ -12,7 +12,8 @@
 
 ## Identificação do projeto
 
-- **Nome**: [SIGLA/Nome do sistema]
+- **Sigla**: [sigla do sistema — ex.: SGF]
+- **Nome**: [nome do sistema por extenso]
 - **Descrição**: [descrição em uma frase]
 - **Repositório de docs**: [nome-docs] (este repositório — a instância)
 
