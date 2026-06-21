@@ -37,6 +37,10 @@ O método foi desenhado para uso com as skills:
 5. git  — implementar referenciando os IDs
 ```
 
+> 💡 Para conduzir as sessões de negócio (N0 → N1 → N2 → N3), o
+> [**Guia de entrevista com o PO**](#/entrevista-po) reúne, num só lugar, todas as
+> perguntas que o analista faz — com o roteiro pronto para levar à reunião.
+
 ## Esta documentação
 
 Este site é um **template de GitHub Pages** que acompanha o engine. Para
