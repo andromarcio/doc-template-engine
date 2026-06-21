@@ -133,6 +133,21 @@ História (ServiceNow STRYxxxxxxx)
 - **No git**: commits e PR seguem a convenção
   `tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])`.
 
+### Painel de pendências: o que falta especificar
+
+Para ver **num só lugar** tudo que está pendente de especificar, o prompt
+**`PROMPT_PENDENCIAS`** (opção **PD** no menu) varre as fontes e **regenera** a seção
+`## Pendências de especificação` do `modules/INDEX.md`, separando:
+
+- **Existência** — algo é conhecido como necessário mas **ainda não tem N3** (histórias
+  do `_backlog/` a especificar, features citadas num N2 sem o `.md`, etc.);
+- **Conteúdo** — o artefato **existe**, mas tem lacunas em aberto (marcadores `⚠️`).
+
+A seção é **gerada, não mantida à mão**: a fonte de verdade continua distribuída
+(`_backlog/`, READMEs de N2, N3 com ⚠️) e o INDEX apenas **espelha** a visão — mesmo
+princípio do `CONTAGEM-PF.md`. Cada item linka de volta à fonte e traz a **rota** para
+resolvê-lo (**3A/CRUD/2A/1A** para existência, **4A/4B** para conteúdo).
+
 ## Estrutura
 
 ```

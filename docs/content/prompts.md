@@ -62,6 +62,7 @@ tipo, independente da LLM).
 | [`PROMPT_TRANSCRICAO_REUNIAO`](#/file/engine/prompts/PROMPT_TRANSCRICAO_REUNIAO.md) | Estrutura uma transcrição de reunião |
 | [`PROMPT_AUDIT_RULES_DEDUP`](#/file/engine/prompts/PROMPT_AUDIT_RULES_DEDUP.md) | Auditoria e deduplicação de regras |
 | [`PROMPT_AUDIT_TRACE_LINKS`](#/file/engine/prompts/PROMPT_AUDIT_TRACE_LINKS.md) | Auditoria dos elos história ↔ feature (consistência bidirecional) |
+| [`PROMPT_PENDENCIAS`](#/file/engine/prompts/PROMPT_PENDENCIAS.md) | Painel de pendências de especificação — consolida no `INDEX.md` (opção **PD**) |
 
 ## Engenharia reversa e dados
 
