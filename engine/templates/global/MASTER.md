@@ -46,7 +46,7 @@
 
 ### Nomenclatura
 - Rotas de API: kebab-case (ex.: `/recurso-exemplo`)
-- Tabelas/colunas do banco: [snake_case / UPPER_SNAKE_CASE] ⚠️ *(confirmar padrão da organização)*
+- Tabelas/colunas do banco: [snake_case / UPPER_SNAKE_CASE], em português ⚠️ *(confirmar padrão da organização)*
 - [demais convenções de classes, arquivos e testes conforme a stack escolhida]
 
 ### Frontend
@@ -130,20 +130,24 @@ Features são nomeadas sempre no **infinitivo**, seguindo o padrão:
 
 ---
 
-## Nomenclatura de campos — três camadas
+## Nomenclatura de entidades e campos
 
-A nomenclatura de campos segue três camadas com responsabilidades distintas.
+Entidades e campos são nomeados em **português**. A nomenclatura de campos segue
+três camadas com responsabilidades distintas.
 **A única fonte de verdade para Label Dev e campo banco é o `global/DATA-MODEL.md`.**
 Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 
 | Camada | Convenção | Exemplo | Onde aparece |
 |---|---|---|---|
+| Entidade | PascalCase singular, português | `ModeloEmail` | DATA-MODEL.md, data-models/[dominio].md (cabeçalho) |
 | Label PO | Português, title case, sem jargão | `Nome completo` | N3 (tabela de campos), Gherkin, telas |
-| Label Dev | camelCase, inglês, autoexplicativo | `fullName` | DATA-MODEL.md, código, API |
-| Campo banco | snake_case ⚠️ | `full_name` | DATA-MODEL.md, migrations, ORM |
+| Label Dev | camelCase, português, autoexplicativo | `nomeCompleto` | DATA-MODEL.md, código, API |
+| Campo banco | snake_case, português ⚠️ | `nome_completo` | DATA-MODEL.md, migrations, ORM |
 
-> ⚠️ Confirmar o padrão oficial de identificadores do banco (snake_case vs.
-> UPPER_SNAKE_CASE, inglês vs. português) antes de gerar N1/N3.
+> ⚠️ Entidades e campos são nomeados em **português**. Confirme apenas a caixa
+> dos identificadores do banco (snake_case vs. UPPER_SNAKE_CASE) antes de gerar
+> N1/N3. Em engenharia reversa de bases legadas, transcreva os identificadores
+> como estão na origem (podem estar em inglês) — não os traduza.
 
 ---
 

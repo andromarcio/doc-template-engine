@@ -78,7 +78,7 @@ Leia cada campo da tabela de campos do N3 negocial e:
 
 1. Localize no fragmento `global/data-models/[dominio].md` o Label Dev e o campo banco correspondentes
 2. Se o campo existir: confirme e prossiga
-3. Se o campo NÃO existir: proponha Label Dev e campo banco com ⚠️
+3. Se o campo NÃO existir: proponha Label Dev (camelCase) e campo banco (snake_case), ambos em português, com ⚠️
 
 Apresente o resultado:
 
