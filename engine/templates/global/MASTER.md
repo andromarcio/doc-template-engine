@@ -7,13 +7,13 @@
 
 ## Identificação do sistema
 
-- **Sigla**: [sigla do sistema — ex.: SGF]
+- **Sigla**: [sigla do sistema — 5 letras maiúsculas, ex.: SIGEF]
 - **Nome**: [nome do sistema por extenso — ex.: Sistema de Gestão de Fundos]
 - **Descrição**: [descrição em uma frase]
 - **Versão atual**: [a definir]
 - **Repositório de docs**: [nome-docs] (este repositório)
 
-> A **sigla do sistema** identifica o produto como um todo e é **distinta** da
+> A **sigla do sistema** (5 letras) identifica o produto como um todo e é **distinta** da
 > `[SIGLA]` de **domínio** (3 letras, usada nos IDs `[SIGLA]-[SFS]-[NN]`) descrita
 > na seção *Identificadores únicos* abaixo.
 
