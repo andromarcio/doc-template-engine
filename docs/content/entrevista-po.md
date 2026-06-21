@@ -109,13 +109,26 @@ E há dois pontos de entrada que **antecedem** a especificação:
 ## Globais de contexto — MASTER e dicionários
 
 O `MASTER.md` é majoritariamente **técnico** (stack, convenções de código) e se
-preenche com o dev. Do ponto de vista **negocial**, o PO só precisa cravar:
+preenche com o dev. Do ponto de vista **negocial**, o PO crava duas coisas:
 
 1. **Identidade do sistema** — Sigla (5 letras), nome por extenso e descrição em uma
    frase.
-2. **Decisões transversais com impacto de negócio** — a principal é: a exclusão é
-   **física** (some) ou **lógica** (o registro é desativado, mas o histórico é
-   preservado)? Isso muda o comportamento que o usuário percebe.
+2. **Decisões transversais com leitura de negócio** — escolhas que valem para o
+   sistema **inteiro** e que o usuário **percebe**. Não são regras de uma feature; são
+   o pano de fundo de todas. Decida cada uma uma única vez:
+
+| Decisão | Pergunta ao PO | O que o usuário percebe |
+|---|---|---|
+| **Exclusão** | Ao excluir, o registro **some** de vez ou só é **desativado** (some das telas, mas o histórico fica)? | Se dá para recuperar/auditar o que foi excluído; relatórios históricos continuam batendo |
+| **Multitenancy** | O sistema atende **várias organizações/clientes** com dados **isolados** entre si, ou é de uma só? | Um cliente nunca vê dados de outro — cada um tem seus próprios cadastros, usuários e relatórios |
+| **IDs em endereços** | Pode aparecer um número interno sequencial na URL/tela, ou usamos sempre a **chave de negócio** (ex.: código, CNPJ)? | URLs compartilháveis que não "vazam" quantos registros existem |
+| **Paginação** | Com muitos resultados, mostramos **páginas numeradas**, **"carregar mais"** ou **rolagem infinita**? E quantos por vez? | Como ele navega em listas grandes |
+
+> As demais decisões do `MASTER` — validação dupla (front + back), estratégia de chave
+> primária, tipos do banco, mensageria de eventos — são **técnicas**: decididas com o
+> dev, sem escolha de negócio. (A *validação no servidor* e a *auditoria de ações
+> críticas* já são padrão do framework; a auditoria **por feature** é perguntada no N3,
+> bloco C.)
 
 > **E os dicionários (FIELD / RULES / MESSAGE / ERROR)?** Eles são globais, mas **não
 > têm entrevista própria**: vão se preenchendo sozinhos conforme um campo ou uma regra
@@ -288,6 +301,9 @@ Para imprimir e levar para a reunião. Pule o que os dicionários já respondem.
 **Global — MASTER**
 - [ ] Sigla, nome e descrição do sistema?
 - [ ] Exclusão física ou lógica (preserva histórico)?
+- [ ] Multitenancy: várias organizações com dados isolados?
+- [ ] IDs internos podem aparecer na URL/tela, ou só chave de negócio?
+- [ ] Paginação: páginas, "carregar mais" ou rolagem? Quantos por vez?
 
 **N1 — Domínio (por área)**
 - [ ] O que a área faz / não faz (limites)?
