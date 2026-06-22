@@ -488,8 +488,18 @@ Com as respostas de todos os blocos, gere:
 
 ## Comportamento de tela
 
-[onde aparece (página própria / modal / formulário), comportamento durante
-processamento, retorno visual de sucesso e erros — seguir padrão do Design System]
+### Onde fica
+[em qual rota e componente a feature aparece: página própria, modal, botão em listagem]
+
+### Estados da tela
+
+| Estado | Comportamento |
+|---|---|
+| Loading | [o que exibir durante o processamento] |
+| Erro de validação | [como exibir erros de campo] |
+| Erro de servidor | [toast ou mensagem genérica] |
+| Sucesso | [toast, redirecionamento ou relatório] |
+| Empty state | [quando e o que exibir se não há dados] |
 
 ---
 
@@ -498,6 +508,11 @@ processamento, retorno visual de sucesso e erros — seguir padrão do Design Sy
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | Feature criada | N3 negocial gerado |
+
+---
+
+*Feature Set: [Nome] · Domínio: [Nome] · Última revisão: —*
+*Links: [N2 do Feature Set](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
 
 **Formato do bloco Gherkin** (seção `## Cenários`):

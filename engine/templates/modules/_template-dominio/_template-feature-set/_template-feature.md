@@ -72,7 +72,7 @@ para alguém que nunca viu o sistema.]
 
 1. [Regra específica desta feature em linguagem de negócio]
    → ver RULES-DICTIONARY: [nome da regra] *(se for regra canônica)*
-   → ver [N1 do domínio]: Regras transversais: [N] *(se for regra de domínio)*
+   → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
 
 2. [Regra específica]
 
@@ -146,7 +146,9 @@ Feature: [Nome da feature em linguagem natural]
 
 *[Notas sobre dependências entre campos, se houver.]*
 
-### Campos preenchidos automaticamente pelo sistema
+---
+
+## Campos automáticos
 
 | Label PO | Valor | Quando |
 |---|---|---|
@@ -339,6 +341,14 @@ logAction({
 -->
 
 **Rastreabilidade no git**: commits/PR referenciam o ID da feature e a história — `tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])`
+
+---
+
+## Changelog
+
+| Data | Autor | Tipo | Descrição |
+|---|---|---|---|
+| [AAAA-MM-DD] | [autor] | Feature criada | [descrição] |
 
 ---
 
