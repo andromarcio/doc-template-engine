@@ -140,7 +140,8 @@ preenche com o dev. Do ponto de vista **negocial**, o PO crava duas coisas:
 ## Nível 1 — Domínio (prompt `1A`)
 
 > **Insumo:** visão geral do sistema. **Entrega:** o `README.md` de cada domínio, com
-> descrição, limites, Feature Sets e regras transversais.
+> descrição, limites, Feature Sets (com link para cada N2), regras transversais e
+> integrações (leitura/escrita) com outros domínios.
 
 **Mapeamento geral (uma vez):**
 
@@ -158,8 +159,9 @@ preenche com o dev. Do ponto de vista **negocial**, o PO crava duas coisas:
    sistema funciona — cada grupo vira um Feature Set)
 3. **Regras que valem para tudo nesta área** — Existe alguma regra de negócio que se
    aplica a *tudo* dentro desta área? (ex.: "qualquer ação exige aprovação de gerente")
-4. **Relação com outras áreas** — Esta área depende de informações de outras? Outras
-   dependem desta? (em linguagem de negócio)
+4. **Integrações com outras áreas** — Esta área **consome** informações de outras
+   áreas para funcionar (leitura)? Outras áreas **criam ou alteram** dados desta área
+   (escrita)? Para cada caso: qual área e qual informação, em linguagem de negócio.
 
 > ⚠️ **Atenção ao roteamento na pergunta 3:** se a resposta descreve uma *qualidade*
 > (tempo de resposta, segurança, auditoria), isso é **NFR**, não regra transversal —
@@ -185,6 +187,10 @@ Para cada Feature Set (uma pergunta de cada vez):
 5. **Permissões** — Quem pode usar este grupo? Liste os **perfis** e, para **cada
    ação** (pesquisar, cadastrar, editar, excluir, importar, visualizar…), quais perfis
    podem executá-la.
+
+> 🛣️ **A jornada principal é o caminho de sucesso (happy path)** — descreva-a do
+> início ao fim, **só para frente**. Idas e voltas (cancelar, voltar, corrigir e tentar
+> de novo) são exceções e entram nos **cenários do N3**, não no fluxo principal do N2.
 
 > 🔑 **Permissões vivem SÓ no N2.** Esta é a **única** definição de permissões do
 > projeto. Os N3 das features **não** tratam de quem pode fazer o quê — eles herdam do
@@ -309,11 +315,11 @@ Para imprimir e levar para a reunião. Pule o que os dicionários já respondem.
 - [ ] O que a área faz / não faz (limites)?
 - [ ] Quais grupos de funcionalidade (Feature Sets)?
 - [ ] Regras que valem para a área inteira?
-- [ ] Dependências com outras áreas?
+- [ ] Integrações: o que a área lê de / escreve em outras áreas (leitura/escrita)?
 
 **N2 — Feature Set (por grupo)**
 - [ ] Quais features individuais?
-- [ ] Jornada principal (início → fim)?
+- [ ] Jornada principal (início → fim, só para frente)?
 - [ ] Dependências/ordem entre features?
 - [ ] Telas (nome, conteúdo, features atendidas)?
 - [ ] Perfis × permissão por ação?
