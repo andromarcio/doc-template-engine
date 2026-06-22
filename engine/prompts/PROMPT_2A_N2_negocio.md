@@ -166,6 +166,15 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 > O diagrama é a **única** representação do fluxo: **não** o acompanhe de uma
 > lista numerada, passo a passo ou descrição textual reexplicando os nós — a
 > seção termina no próprio bloco Mermaid.
+> **Sem caminho de volta — fluxo sempre para frente.** O fluxo principal é a
+> **jornada de sucesso (happy path)** e deve **progredir do ponto de entrada até o
+> nó terminal sem nenhuma seta que retorne a uma etapa anterior**: nada de loops,
+> "voltar", "corrigir e tentar de novo" ou reabrir um passo já percorrido. Os ramos
+> de uma decisão (`{"...?"}`) podem **divergir**, mas todas as setas **avançam em
+> direção ao fim** e os ramos **convergem para frente** — nunca apontam de volta
+> para um nó acima. Situações de retorno (cancelar, voltar à tela anterior,
+> reeditar, validação que devolve ao formulário) são **fluxos alternativos/de
+> exceção** e vivem no **N3 da feature**, não no fluxo principal do N2.
 > Converta a jornada descrita na Pergunta 2 em nós e setas:
 > - Ponto de entrada e resultado final como nós de terminal: `(["texto"])`
 > - Etapas/features como nós de processo: `["texto"]`
@@ -258,6 +267,7 @@ Antes de apresentar cada Feature Set, confira (todos os itens são obrigatórios
 - [ ] Descrição (2-3 frases) seguida da linha `**Não faz**:`
 - [ ] **Features**: 3 colunas; coluna *Feature* no formato `**Nome** <small>[SIGLA]-[SFS]-NN</small>`; link para `f-*.md`
 - [ ] **Fluxo Principal**: bloco `mermaid` `flowchart TD`, todo nó entre **aspas duplas**, sem `\n`, sem lista numerada depois
+- [ ] **Fluxo Principal sem caminho de volta**: setas só para frente; ramos de decisão convergem para o nó final; sem loops nem retorno a etapas anteriores (retornos/exceções ficam no N3)
 - [ ] **Dependências entre features** presente
 - [ ] **Telas**: 4 colunas; *Features atendidas* como `**Nome** <small>ID</small>` (múltiplas separadas por `<br>`)
 - [ ] **Permissões por perfil**: nota de fonte única + linha `Perfis:` + matriz perfil × ação (`✓`/`—`) + bullets de detalhe

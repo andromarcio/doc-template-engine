@@ -68,6 +68,10 @@ Leia todos os N3s e extraia:
 
 3. **Fluxo principal** — qual a sequência ou relação de uso entre as
    features? Derive das dependências e pré-condições descritas nos N3s.
+   É a **jornada de sucesso** e deve seguir **só para frente**, do início ao fim,
+   **sem caminho de volta** — sem loops nem setas que retornem a uma etapa
+   anterior. Retornos, cancelamentos e validações que devolvem ao passo anterior
+   são exceção e ficam nos N3, não no fluxo principal.
 
 4. **Dependências entre features** — features que exigem outra como
    pré-requisito (derive dos campos `Given` dos cenários Gherkin e das
@@ -118,7 +122,8 @@ Após aprovação, gere o arquivo completo no formato abaixo:
 
 ## Fluxo principal
 
-[diagrama ASCII derivado das dependências entre features]
+[diagrama ASCII derivado das dependências entre features — sempre para frente, do
+início ao fim, sem caminho de volta (sem loops nem retorno a etapas anteriores)]
 
 ---
 

@@ -240,8 +240,10 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 > pelo nome da entidade. **Não** redesenhe os nós nem as setas — a estrutura é a mesma
 > para todo CRUD, o que torna o fluxo determinístico e idêntico entre features do mesmo
 > tipo, independente da LLM. O diagrama é a única representação do fluxo (sem lista
-> numerada). Vale a syntax da "Regra do Fluxo principal" do PROMPT_2A: nós entre aspas
-> duplas; rótulos de seta sem aspas e sem `/`, `(` ou `)`.
+> numerada) e, como todo fluxo principal de N2, é **só para frente**: todos os ramos
+> da decisão convergem para o nó final `Z`, **sem caminho de volta** (sem loops nem
+> retorno a etapas anteriores). Vale a syntax da "Regra do Fluxo principal" do
+> PROMPT_2A: nós entre aspas duplas; rótulos de seta sem aspas e sem `/`, `(` ou `)`.
 >
 > ```mermaid
 > flowchart TD
