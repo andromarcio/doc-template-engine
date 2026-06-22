@@ -235,9 +235,11 @@ Sempre que um Feature Set (N2) for gerado ou alterado, verifique se o N1 do
 domínio (`modules/[dominio]/README.md`) e o `modules/INDEX.md` ainda refletem
 a realidade e atualize-os quando necessário:
 
-- **Feature Sets do domínio**: o Feature Set deve constar na lista de
-  Agrupamentos funcionais / Feature Sets do N1, com o ID atribuído
-  (`[SIGLA]-[SFS]`).
+- **Feature Sets do domínio (com link para o N2)**: o Feature Set deve constar
+  na tabela de Feature Sets do N1 com o ID atribuído (`[SIGLA]-[SFS]`) **e o nome
+  em link para o README do N2** — `[Nome](./[feature-set]/README.md)`. Se a
+  entrada já existir sem link (ou só em texto), converta-a no link; garanta também
+  que a linha de rodapé `*Links: ...*` do N1 aponte para este Feature Set.
 - **Regras transversais**: se o N2 revelou uma regra que vale para o domínio
   inteiro, proponha incluí-la nas Regras transversais do N1.
 - **Dependências entre domínios**: reflita no N1 e no INDEX qualquer
