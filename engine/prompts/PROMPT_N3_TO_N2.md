@@ -58,7 +58,8 @@ Leia todos os N3s e extraia:
 1. **Descrição do Feature Set** — qual problema de negócio unifica
    todas as features deste conjunto? O que está fora do escopo?
 
-2. **ID do Feature Set** — derive do ID do domínio (presente nos N3s) e atribua
+2. **ID do Feature Set** — se um N1 já existir e já trouxer o ID deste Feature Set,
+   **reutilize-o**; caso contrário, derive do ID do domínio (presente nos N3s) e atribua
    uma sigla de exatamente 3 letras maiúsculas derivada do nome do Feature Set, formando
    `[SIGLA]-[SFS]` (ex.: Usuários → `[SIGLA]-USR`), única dentro do domínio;
    confirme IDs das features já existentes nos N3s e numere eventuais N3s sem ID

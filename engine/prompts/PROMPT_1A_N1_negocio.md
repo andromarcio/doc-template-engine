@@ -64,6 +64,22 @@ uma de cada vez, aguardando minha resposta:
 > Para cada grupo: nome e uma linha do que engloba.
 > Pense em termos do que o usuário faz, não de como o sistema funciona."
 
+> **Atribua aqui o ID de cada Feature Set.** Para cada grupo identificado, proponha
+> uma **sigla de 3 letras maiúsculas** derivada do nome, formando o ID `[SIGLA]-[SFS]`
+> (ex.: no domínio `CAD`, "Fundos Geridos" → `CAD-GFG`), **única dentro do domínio**.
+> Confirme antes de seguir:
+> > "Feature Sets de **[área]** (`[SIGLA]`) e IDs propostos:
+> >
+> > | Feature Set | ID |
+> > |---|---|
+> > | [Nome] | [SIGLA]-[SFS] |
+> >
+> > Ajusto algum ou sigo?"
+>
+> Esse ID é **definitivo** e nasce no N1: o PROMPT_2A e os atalhos (CRUD/Wizard)
+> **reutilizam** essa sigla, não geram outra. Isso permite referenciar o Feature Set
+> (ex.: "vamos especificar `CAD-GFG`") antes mesmo de o N2 existir.
+
 **Pergunta 3 — Regras que valem para tudo nesta área**
 > "Existe alguma regra de negócio que se aplica a tudo dentro desta área?
 > Exemplos: 'qualquer ação exige aprovação de um gerente',
@@ -145,11 +161,11 @@ Com as respostas, gere o artefato parcial:
 
 > **Tabela de Feature Sets** — renderize cada Feature Set como
 > `**Nome** <small>[SIGLA]-[SFS]</small>` (nome em negrito + ID em `<small>`, mesmo
-> padrão das Features no N2) e ponha o link para o futuro README do N2 na coluna
-> *Arquivo de Especificação (N2)* (`./[pasta]/README.md`, criado no PROMPT_2A). O
-> **ID** `[SIGLA]-[SFS]` e a contagem de **Features** (`[N]`) são atribuídos/preenchidos
-> ao detalhar o Feature Set no PROMPT_2A. O rodapé `*Links:*` também aponta para os
-> Feature Sets do domínio.
+> padrão das Features no N2). O **ID `[SIGLA]-[SFS]` é atribuído aqui no N1** (Pergunta 2)
+> e é definitivo — o PROMPT_2A o reutiliza. O link na coluna *Arquivo de Especificação
+> (N2)* (`./[pasta]/README.md`) e a contagem de **Features** (`[N]`) só são preenchidos
+> quando o Feature Set é detalhado no PROMPT_2A. O rodapé `*Links:*` também aponta para
+> os Feature Sets do domínio.
 
 Seções deixadas em branco para o PROMPT 1B:
 - Entidades e campos
@@ -205,7 +221,7 @@ Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
 - [ ] Título exatamente `# Domínio: [Nome]`
 - [ ] Subtítulo em blockquote: `> **Nível 1** - Visão estratégica do domínio - [SIGLA]` (SIGLA de **3 letras maiúsculas** em crase, hífens `-`)
 - [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz` (tabela Descrição | Pertence a)
-- [ ] **Feature Sets**: tabela (Feature Set | Arquivo de Especificação (N2) | Descrição | Features); coluna *Feature Set* no formato `**Nome** <small>[SIGLA]-[SFS]</small>`; link para `./[pasta]/README.md` na coluna *Arquivo*; rodapé `*Links:*` apontando para os Feature Sets
+- [ ] **Feature Sets**: tabela (Feature Set | Arquivo de Especificação (N2) | Descrição | Features); coluna *Feature Set* no formato `**Nome** <small>[SIGLA]-[SFS]</small>` com o **ID já atribuído** (`[SFS]` de 3 letras, único no domínio); link para `./[pasta]/README.md` na coluna *Arquivo*; rodapé `*Links:*` apontando para os Feature Sets
 - [ ] **Regras transversais de negócio**: lista numerada de **invariantes** (o *quê* a área garante) — qualidade do sistema (desempenho/segurança/auditoria) **não** entra aqui, vai para `global/NFR.md`
 - [ ] **Integrações com outros domínios**: tabelas de Leitura e Escrita em linguagem de negócio (a coluna *Como* pode ficar para o dev confirmar no PROMPT_1B)
 - [ ] **Changelog**
