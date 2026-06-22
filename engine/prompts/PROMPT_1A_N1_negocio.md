@@ -105,9 +105,9 @@ Com as respostas, gere o artefato parcial:
 
 ## Feature Sets
 
-| Feature Set | Descrição | Features |
-|---|---|---|
-| [Nome](./[pasta]/README.md) | [descrição em uma linha] | [N] |
+| Feature Set | Arquivo de Especificação (N2) | Descrição | Features |
+|---|---|---|---|
+| **[Nome do Feature Set]** <small>[SIGLA]-[SFS]</small> | [[pasta]/README.md](./[pasta]/README.md) | [descrição em uma linha] | [N] |
 
 ---
 
@@ -143,10 +143,13 @@ Com as respostas, gere o artefato parcial:
 *Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
 
-> **Tabela de Feature Sets** — cada linha entra com o **nome em link** para o
-> futuro README do N2 (`./[pasta]/README.md`, criado no PROMPT_2A) e a contagem de
-> **Features** (`[N]` enquanto o N2 não existir; preenchida ao detalhar o Feature
-> Set no N2). O rodapé `*Links:*` também aponta para os Feature Sets do domínio.
+> **Tabela de Feature Sets** — renderize cada Feature Set como
+> `**Nome** <small>[SIGLA]-[SFS]</small>` (nome em negrito + ID em `<small>`, mesmo
+> padrão das Features no N2) e ponha o link para o futuro README do N2 na coluna
+> *Arquivo de Especificação (N2)* (`./[pasta]/README.md`, criado no PROMPT_2A). O
+> **ID** `[SIGLA]-[SFS]` e a contagem de **Features** (`[N]`) são atribuídos/preenchidos
+> ao detalhar o Feature Set no PROMPT_2A. O rodapé `*Links:*` também aponta para os
+> Feature Sets do domínio.
 
 Seções deixadas em branco para o PROMPT 1B:
 - Entidades e campos
@@ -202,7 +205,7 @@ Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
 - [ ] Título exatamente `# Domínio: [Nome]`
 - [ ] Subtítulo em blockquote: `> **Nível 1** - Visão estratégica do domínio - [SIGLA]` (SIGLA de **3 letras maiúsculas** em crase, hífens `-`)
 - [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz` (tabela Descrição | Pertence a)
-- [ ] **Feature Sets**: tabela (Feature Set | Descrição | Features) com o **nome em link** para o README do N2 (`./[pasta]/README.md`) e rodapé `*Links:*` apontando para os Feature Sets
+- [ ] **Feature Sets**: tabela (Feature Set | Arquivo de Especificação (N2) | Descrição | Features); coluna *Feature Set* no formato `**Nome** <small>[SIGLA]-[SFS]</small>`; link para `./[pasta]/README.md` na coluna *Arquivo*; rodapé `*Links:*` apontando para os Feature Sets
 - [ ] **Regras transversais de negócio**: lista numerada de **invariantes** (o *quê* a área garante) — qualidade do sistema (desempenho/segurança/auditoria) **não** entra aqui, vai para `global/NFR.md`
 - [ ] **Integrações com outros domínios**: tabelas de Leitura e Escrita em linguagem de negócio (a coluna *Como* pode ficar para o dev confirmar no PROMPT_1B)
 - [ ] **Changelog**

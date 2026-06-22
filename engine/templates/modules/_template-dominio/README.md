@@ -20,9 +20,9 @@
 
 ## Feature Sets
 
-| Feature Set | Descrição | Features |
-|---|---|---|
-| [Nome](./[pasta]/README.md) | [descrição em uma linha] | [N] |
+| Feature Set | Arquivo de Especificação (N2) | Descrição | Features |
+|---|---|---|---|
+| **[Nome do Feature Set]** <small>[SIGLA]-[SFS]</small> | [[pasta]/README.md](./[pasta]/README.md) | [descrição em uma linha] | [N] |
 
 ---
 

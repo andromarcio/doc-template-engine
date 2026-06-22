@@ -236,9 +236,11 @@ domínio (`modules/[dominio]/README.md`) e o `modules/INDEX.md` ainda refletem
 a realidade e atualize-os quando necessário:
 
 - **Feature Sets do domínio (com link para o N2)**: o Feature Set deve constar
-  na tabela de Feature Sets do N1 com o ID atribuído (`[SIGLA]-[SFS]`) **e o nome
-  em link para o README do N2** — `[Nome](./[feature-set]/README.md)`. Se a
-  entrada já existir sem link (ou só em texto), converta-a no link; garanta também
+  na tabela de Feature Sets do N1 renderizado como
+  `**Nome** <small>[SIGLA]-[SFS]</small>` (nome em negrito + ID em `<small>`), com o
+  link para o README do N2 na coluna *Arquivo de Especificação (N2)* —
+  `[[feature-set]/README.md](./[feature-set]/README.md)`. Se a entrada já existir em
+  outro formato (nome em link, sem ID), converta-a para este padrão; garanta também
   que a linha de rodapé `*Links: ...*` do N1 aponte para este Feature Set. Mantenha
   a contagem de **Features** dessa linha coerente com o N2.
 - **Regras transversais**: se o N2 revelou uma regra que vale para o domínio
