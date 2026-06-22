@@ -299,6 +299,7 @@ Após aprovação, gere o arquivo completo:
 # [Nome]
 
 ## Descrição                         ← negocial
+## Origem                            ← negocial (só se houver história de origem)
 ## Superfície                        ← negocial (Tela própria | Ação em tela)
 ## Regras de negócio                 ← negocial (com refs. aos dicionários)
 ## Cenários                          ← negocial (grupos negociais + marcadores)
@@ -319,7 +320,8 @@ Após aprovação, gere o arquivo completo:
 </div>
 
 ## Implementação                     ← rastreabilidade (preenchido após dev)
-## Changelog                         ← última seção; acrescentar entrada ao gerar o arquivo final
+## Changelog                         ← acrescentar entrada ao gerar o arquivo final
+*Links: [N2] · [N1] · [INDEX]*       ← rodapé (última linha, como no template)
 ```
 
 ---

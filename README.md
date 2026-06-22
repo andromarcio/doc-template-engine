@@ -32,8 +32,9 @@ todo o resto.
 As **grandes áreas funcionais** do sistema (ex.: Vendas, Suporte, Usuários). Cada
 domínio recebe uma **sigla de 3 letras** como ID (ex.: `USR`) e descreve, em
 linguagem de negócio, o que faz, **o que explicitamente não faz** (e a quem isso
-pertence), seus Feature Sets, regras transversais e dependências com outros
-domínios. É a planta do sistema: mostra como ele se divide e como as partes se
+pertence), seus Feature Sets (cada um com link para o seu N2), regras transversais
+e integrações (leitura/escrita) com outros domínios. É a planta do sistema: mostra
+como ele se divide e como as partes se
 relacionam, sem entrar em telas ou campos.
 
 ### N2 — Feature Set
@@ -41,7 +42,7 @@ relacionam, sem entrar em telas ou campos.
 Um **conjunto de funcionalidades** relacionadas dentro de um domínio (ex.: dentro
 de Vendas → Carrinho, Checkout). Herda a sigla do domínio e ganha a sua própria,
 formando o ID `[SIGLA]-[SFS]` (ex.: `USR-PRM`). Detalha a jornada principal do
-usuário (como um diagrama de fluxo), as features que o compõem, as telas
+usuário (um diagrama de fluxo só para frente, sem caminho de volta), as features que o compõem, as telas
 envolvidas e — exclusivamente neste nível — as **permissões por perfil**. É a
 ponte entre a visão de domínio (N1) e a especificação fina de cada feature (N3).
 
