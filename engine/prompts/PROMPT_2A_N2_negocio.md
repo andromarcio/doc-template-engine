@@ -37,10 +37,11 @@ Regras da sessão:
 
 ## PASSO 1 — Confirmação dos Feature Sets
 
-Leia o N1, identifique a sigla do domínio (ID do N1) e liste os Feature Sets.
-Atribua a cada Feature Set uma **sigla** de exatamente 3 letras maiúsculas derivada do seu nome,
-formando o ID `[SIGLA]-[SFS]` (ex.: Usuários → `[SIGLA]-USR`). A sigla deve ser única
-dentro do domínio; respeite IDs já existentes se o N1 já tiver Feature Sets. Pergunte:
+Leia o N1, identifique a sigla do domínio (ID do N1) e os Feature Sets. **O ID de cada
+Feature Set (`[SIGLA]-[SFS]`) já vem definido no N1** — use-o como está, **não gere
+outro**. Caso o N1 esteja desatualizado e algum Feature Set não tenha ID (ou não conste),
+atribua uma sigla de 3 letras maiúsculas única no domínio e proponha incluí-la no N1
+(PASSO 3). Pergunte:
 
 > "Identifiquei os seguintes Feature Sets no domínio **[nome]** (`[SIGLA]`):
 >
@@ -235,14 +236,13 @@ Sempre que um Feature Set (N2) for gerado ou alterado, verifique se o N1 do
 domínio (`modules/[dominio]/README.md`) e o `modules/INDEX.md` ainda refletem
 a realidade e atualize-os quando necessário:
 
-- **Feature Sets do domínio (com link para o N2)**: o Feature Set deve constar
-  na tabela de Feature Sets do N1 renderizado como
-  `**Nome** <small>[SIGLA]-[SFS]</small>` (nome em negrito + ID em `<small>`), com o
-  link para o README do N2 na coluna *Arquivo de Especificação (N2)* —
-  `[[feature-set]/README.md](./[feature-set]/README.md)`. Se a entrada já existir em
-  outro formato (nome em link, sem ID), converta-a para este padrão; garanta também
-  que a linha de rodapé `*Links: ...*` do N1 aponte para este Feature Set. Mantenha
-  a contagem de **Features** dessa linha coerente com o N2.
+- **Feature Sets do domínio (link e contagem)**: o Feature Set já consta na tabela
+  do N1 com seu ID `[SIGLA]-[SFS]` (definido no N1). **Mantenha o ID como está**; agora
+  que o N2 existe, preencha o link do README na coluna *Arquivo de Especificação (N2)* —
+  `[[feature-set]/README.md](./[feature-set]/README.md)` — e a contagem de **Features**
+  coerente com o N2, e garanta que o rodapé `*Links: ...*` do N1 aponte para este Feature
+  Set. Só se o N1 estiver desatualizado (Feature Set ausente ou sem ID), inclua-o no
+  formato `**Nome** <small>[SIGLA]-[SFS]</small>` com o ID definido no PASSO 1.
 - **Regras transversais**: se o N2 revelou uma regra que vale para o domínio
   inteiro, proponha incluí-la nas Regras transversais do N1.
 - **Dependências entre domínios**: reflita no N1 e no INDEX qualquer

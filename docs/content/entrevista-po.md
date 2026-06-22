@@ -140,7 +140,7 @@ preenche com o dev. Do ponto de vista **negocial**, o PO crava duas coisas:
 ## Nível 1 — Domínio (prompt `1A`)
 
 > **Insumo:** visão geral do sistema. **Entrega:** o `README.md` de cada domínio, com
-> descrição, limites, Feature Sets (com link para cada N2), regras transversais e
+> descrição, limites, Feature Sets (com ID `[SIGLA]-[SFS]` e link para cada N2), regras transversais e
 > integrações (leitura/escrita) com outros domínios.
 
 **Mapeamento geral (uma vez):**
@@ -156,7 +156,10 @@ preenche com o dev. Do ponto de vista **negocial**, o PO crava duas coisas:
    explicitamente **não faz** — onde termina sua responsabilidade?
 2. **Agrupamentos funcionais** — Quais são os grupos de funcionalidade dentro desta
    área? Para cada um: nome e uma linha. (pense no que o usuário faz, não em como o
-   sistema funciona — cada grupo vira um Feature Set)
+   sistema funciona — cada grupo vira um Feature Set). *O analista atribui a cada
+   Feature Set uma sigla de 3 letras → ID `[SIGLA]-[SFS]` (ex.: `CAD-GFG`), único no
+   domínio; esse ID nasce no N1 e é reutilizado pelo N2, então já dá para referenciar
+   o Feature Set antes de especificá-lo.*
 3. **Regras que valem para tudo nesta área** — Existe alguma regra de negócio que se
    aplica a *tudo* dentro desta área? (ex.: "qualquer ação exige aprovação de gerente")
 4. **Integrações com outras áreas** — Esta área **consome** informações de outras
@@ -313,7 +316,7 @@ Para imprimir e levar para a reunião. Pule o que os dicionários já respondem.
 
 **N1 — Domínio (por área)**
 - [ ] O que a área faz / não faz (limites)?
-- [ ] Quais grupos de funcionalidade (Feature Sets)?
+- [ ] Quais grupos de funcionalidade (Feature Sets) e a sigla/ID de cada um?
 - [ ] Regras que valem para a área inteira?
 - [ ] Integrações: o que a área lê de / escreve em outras áreas (leitura/escrita)?
 

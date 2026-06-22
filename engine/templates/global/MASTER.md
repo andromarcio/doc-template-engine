@@ -81,7 +81,7 @@ entre ferramentas externas (Jira, Azure DevOps, etc.).
 **Regras:**
 - A história de usuário entra pelo ServiceNow; o framework **referencia** a chave (nunca cria ID próprio para a história) e a registra na seção `## Origem` do N3
 - A sigla do domínio é definida uma única vez na criação do N1 e nunca alterada
-- A sigla do Feature Set é definida na criação do N2, é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Feature Set (ex.: Usuários → `USR`)
+- A sigla do Feature Set é definida **no N1** (ao listar os Feature Sets do domínio) e **reutilizada** pelo N2; é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Feature Set (ex.: Usuários → `USR`)
 - A numeração de Features é sequencial dentro do Feature Set e não reutilizada após exclusão
 - O ID fica no cabeçalho de cada artefato, logo abaixo da linha `**Nível X**`
 

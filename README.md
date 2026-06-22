@@ -40,8 +40,8 @@ relacionam, sem entrar em telas ou campos.
 ### N2 — Feature Set
 
 Um **conjunto de funcionalidades** relacionadas dentro de um domínio (ex.: dentro
-de Vendas → Carrinho, Checkout). Herda a sigla do domínio e ganha a sua própria,
-formando o ID `[SIGLA]-[SFS]` (ex.: `USR-PRM`). Detalha a jornada principal do
+de Vendas → Carrinho, Checkout). Seu ID `[SIGLA]-[SFS]` (ex.: `USR-PRM`) é definido
+já no N1, ao listar os Feature Sets do domínio; o N2 o reutiliza. Detalha a jornada principal do
 usuário (um diagrama de fluxo só para frente, sem caminho de volta), as features que o compõem, as telas
 envolvidas e — exclusivamente neste nível — as **permissões por perfil**. É a
 ponte entre a visão de domínio (N1) e a especificação fina de cada feature (N3).

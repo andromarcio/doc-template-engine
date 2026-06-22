@@ -30,8 +30,8 @@ produto.
 
 Os IDs encadeiam os níveis e tornam tudo rastreável:
 
-- **N1** recebe uma **sigla de 3 letras** (ex.: `USR`).
-- **N2** herda a sigla do domínio e ganha a sua (ex.: `USR-PRM`).
+- **N1** recebe uma **sigla de 3 letras** (ex.: `USR`) e **define o ID de cada Feature Set** (`[SIGLA]-[SFS]`, ex.: `USR-PRM`).
+- **N2** **reutiliza** o ID `[SIGLA]-[SFS]` já definido no N1 (ex.: `USR-PRM`).
 - **N3** recebe um número dentro do Feature Set (ex.: `USR-PRM-01`).
 
 ## Negócio e Técnico

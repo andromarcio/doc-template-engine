@@ -92,8 +92,9 @@ explícita antes de transitar de um estado de geração para o próximo.
 ## PASSO 1 — `[COLETA_ENTIDADE]`
 
 Confirme o domínio e a sigla (do N1, se fornecido; senão da identificação
-manual). Derive uma sigla de 3 letras para o Feature Set, formando o ID
-`[SIGLA]-[SFS]`. Então pergunte, em um bloco:
+manual). **Se o N1 já definir este Feature Set, reutilize o ID `[SIGLA]-[SFS]` dele**;
+caso contrário, derive uma sigla de 3 letras para o Feature Set, formando o ID
+`[SIGLA]-[SFS]` (e proponha incluí-lo no N1). Então pergunte, em um bloco:
 
 > 1. Qual o nome da entidade que será cadastrada (ex.: Fundo Gerido, Cliente)?
 > 2. Em 2-3 frases, o que este cadastro permite fazer? E o que ele
