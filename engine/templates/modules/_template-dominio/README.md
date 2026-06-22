@@ -20,13 +20,13 @@
 
 ## Feature Sets
 
-| Feature Set | Pasta | Descrição | Features |
-|---|---|---|---|
-| [Nome](./[pasta]/README.md) | `[dominio]/[pasta]/` | [descrição em uma linha] | [N] |
+| Feature Set | Descrição | Features |
+|---|---|---|
+| [Nome](./[pasta]/README.md) | [descrição em uma linha] | [N] |
 
 ---
 
-## Regras transversais do domínio
+## Regras transversais de negócio
 
 1. [Regra que se aplica a todas as features deste domínio]
 2. [Regra que se aplica a todas as features deste domínio]
@@ -78,6 +78,14 @@
 ---
 
 </div>
+
+---
+
+## Changelog
+
+| Data | Autor | Tipo | Descrição |
+|---|---|---|---|
+| [AAAA-MM-DD] | [autor] | N1 criado | [descrição] |
 
 ---
 
