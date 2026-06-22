@@ -240,8 +240,10 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 > pelo nome da entidade. **Não** redesenhe os nós nem as setas — a estrutura é a mesma
 > para todo CRUD, o que torna o fluxo determinístico e idêntico entre features do mesmo
 > tipo, independente da LLM. O diagrama é a única representação do fluxo (sem lista
-> numerada). Vale a syntax da "Regra do Fluxo principal" do PROMPT_2A: nós entre aspas
-> duplas; rótulos de seta sem aspas e sem `/`, `(` ou `)`.
+> numerada) e, como todo fluxo principal de N2, é **só para frente**: todos os ramos
+> da decisão convergem para o nó final `Z`, **sem caminho de volta** (sem loops nem
+> retorno a etapas anteriores). Vale a syntax da "Regra do Fluxo principal" do
+> PROMPT_2A: nós entre aspas duplas; rótulos de seta sem aspas e sem `/`, `(` ou `)`.
 >
 > ```mermaid
 > flowchart TD
@@ -337,9 +339,11 @@ Com as cinco features aprovadas, rode a revisão de consistência do Feature Set
 [ ] Campos e regras canônicas estão referenciados pelos dicionários?
 ```
 
-Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na lista de
-Feature Sets do N1 (e no `modules/INDEX.md`); proponha a atualização e aguarde
-aprovação antes de gravar.
+Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na tabela de
+Feature Sets do N1 (e no `modules/INDEX.md`) **com o nome em link para o README do
+N2** — `[Nome](./[feature-set]/README.md)`; se faltar a entrada ou o link, inclua-o
+(e ajuste a linha `*Links: ...*` do N1). Proponha a atualização e aguarde aprovação
+antes de gravar.
 
 Encerre:
 > "Feature Set CRUD concluído (N2 + 5 N3 negociais). Para complementar a parte

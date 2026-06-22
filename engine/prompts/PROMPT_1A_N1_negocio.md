@@ -78,9 +78,10 @@ uma de cada vez, aguardando minha resposta:
 > > "⚠️ Isto é um requisito não-funcional ([categoria]). Não entra no N1 —
 > > proponho registrá-lo no NFR.md como [ID sugerido]. Confirma?"
 
-**Pergunta 4 — Relação com outras áreas**
-> "Esta área depende de informações de outras áreas para funcionar?
-> Outras áreas dependem desta? Descreva em linguagem de negócio."
+**Pergunta 4 — Integrações com outras áreas**
+> "Esta área **consome** informações de outras áreas para funcionar (leitura)?
+> Outras áreas **criam ou alteram** dados desta área (escrita)?
+> Para cada caso: qual área e qual informação, em linguagem de negócio."
 
 Com as respostas, gere o artefato parcial:
 
@@ -96,15 +97,17 @@ Com as respostas, gere o artefato parcial:
 [2-3 frases sobre o que faz]
 
 ### O que este domínio NÃO faz
-- [o que está fora do escopo e a qual domínio pertence]
+| Descrição | Pertence a |
+|---|---|
+| [o que está fora do escopo] | [Domínio responsável] |
 
 ---
 
 ## Feature Sets
 
-| Feature Set | Descrição |
-|---|---|
-| [Nome] | [descrição em uma linha] |
+| Feature Set | Descrição | Features |
+|---|---|---|
+| [Nome](./[pasta]/README.md) | [descrição em uma linha] | [N] |
 
 ---
 
@@ -114,9 +117,17 @@ Com as respostas, gere o artefato parcial:
 
 ---
 
-## Dependências com outros domínios
+## Integrações com outros domínios
 
-[descrição negocial — sem FK, joins ou nomes técnicos]
+### Leitura — domínios que consomem dados deste domínio
+| Domínio | O que consome | Como |
+|---|---|---|
+| [Domínio] | [entidade/campo em Label PO] | [a confirmar no PROMPT_1B] |
+
+### Escrita — domínios que criam ou alteram dados deste domínio
+| Domínio | O que altera | Situação |
+|---|---|---|
+| [Domínio] | [entidade/campo em Label PO] | [quando ocorre] |
 
 ---
 
@@ -125,7 +136,17 @@ Com as respostas, gere o artefato parcial:
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N1 negocial criado | Gerado pelo PROMPT 1A |
+
+---
+
+*Última revisão: —*
+*Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
+
+> **Tabela de Feature Sets** — cada linha entra com o **nome em link** para o
+> futuro README do N2 (`./[pasta]/README.md`, criado no PROMPT_2A) e a contagem de
+> **Features** (`[N]` enquanto o N2 não existir; preenchida ao detalhar o Feature
+> Set no N2). O rodapé `*Links:*` também aponta para os Feature Sets do domínio.
 
 Seções deixadas em branco para o PROMPT 1B:
 - Entidades e campos
@@ -180,10 +201,10 @@ Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
 
 - [ ] Título exatamente `# Domínio: [Nome]`
 - [ ] Subtítulo em blockquote: `> **Nível 1** - Visão estratégica do domínio - [SIGLA]` (SIGLA de **3 letras maiúsculas** em crase, hífens `-`)
-- [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz`
-- [ ] **Feature Sets**: tabela (Feature Set | Descrição)
+- [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz` (tabela Descrição | Pertence a)
+- [ ] **Feature Sets**: tabela (Feature Set | Descrição | Features) com o **nome em link** para o README do N2 (`./[pasta]/README.md`) e rodapé `*Links:*` apontando para os Feature Sets
 - [ ] **Regras transversais de negócio**: lista numerada de **invariantes** (o *quê* a área garante) — qualidade do sistema (desempenho/segurança/auditoria) **não** entra aqui, vai para `global/NFR.md`
-- [ ] **Dependências com outros domínios** em linguagem de negócio (sem FK, joins ou nomes técnicos)
+- [ ] **Integrações com outros domínios**: tabelas de Leitura e Escrita em linguagem de negócio (a coluna *Como* pode ficar para o dev confirmar no PROMPT_1B)
 - [ ] **Changelog**
-- [ ] **Nenhuma** seção técnica (entidades, campos, integrações técnicas ficam para o **PROMPT_1B**)
+- [ ] **Nenhuma** seção técnica: entidades, campos, dependências externas e regras de acesso ficam para o **PROMPT_1B** (que também confirma a coluna *Como* das Integrações)
 - [ ] Ao fechar todos os domínios: `modules/INDEX.md` negocial atualizado e cada N1 conferido contra o N0

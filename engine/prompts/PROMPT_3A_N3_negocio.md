@@ -459,7 +459,7 @@ Com as respostas de todos os blocos, gere:
 
 1. [Regra específica desta feature]
 2. [Regra canônica] → ver RULES-DICTIONARY: [nome] (parâmetro: [valor])
-3. [Regra de domínio] → ver N1 [Domínio]: Regras transversais do domínio: [N]
+3. [Regra de domínio] → ver N1 [Domínio]: Regras transversais de negócio: [N]
 
 ---
 

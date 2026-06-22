@@ -166,6 +166,15 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 > O diagrama é a **única** representação do fluxo: **não** o acompanhe de uma
 > lista numerada, passo a passo ou descrição textual reexplicando os nós — a
 > seção termina no próprio bloco Mermaid.
+> **Sem caminho de volta — fluxo sempre para frente.** O fluxo principal é a
+> **jornada de sucesso (happy path)** e deve **progredir do ponto de entrada até o
+> nó terminal sem nenhuma seta que retorne a uma etapa anterior**: nada de loops,
+> "voltar", "corrigir e tentar de novo" ou reabrir um passo já percorrido. Os ramos
+> de uma decisão (`{"...?"}`) podem **divergir**, mas todas as setas **avançam em
+> direção ao fim** e os ramos **convergem para frente** — nunca apontam de volta
+> para um nó acima. Situações de retorno (cancelar, voltar à tela anterior,
+> reeditar, validação que devolve ao formulário) são **fluxos alternativos/de
+> exceção** e vivem no **N3 da feature**, não no fluxo principal do N2.
 > Converta a jornada descrita na Pergunta 2 em nós e setas:
 > - Ponto de entrada e resultado final como nós de terminal: `(["texto"])`
 > - Etapas/features como nós de processo: `["texto"]`
@@ -226,9 +235,12 @@ Sempre que um Feature Set (N2) for gerado ou alterado, verifique se o N1 do
 domínio (`modules/[dominio]/README.md`) e o `modules/INDEX.md` ainda refletem
 a realidade e atualize-os quando necessário:
 
-- **Feature Sets do domínio**: o Feature Set deve constar na lista de
-  Agrupamentos funcionais / Feature Sets do N1, com o ID atribuído
-  (`[SIGLA]-[SFS]`).
+- **Feature Sets do domínio (com link para o N2)**: o Feature Set deve constar
+  na tabela de Feature Sets do N1 com o ID atribuído (`[SIGLA]-[SFS]`) **e o nome
+  em link para o README do N2** — `[Nome](./[feature-set]/README.md)`. Se a
+  entrada já existir sem link (ou só em texto), converta-a no link; garanta também
+  que a linha de rodapé `*Links: ...*` do N1 aponte para este Feature Set. Mantenha
+  a contagem de **Features** dessa linha coerente com o N2.
 - **Regras transversais**: se o N2 revelou uma regra que vale para o domínio
   inteiro, proponha incluí-la nas Regras transversais do N1.
 - **Dependências entre domínios**: reflita no N1 e no INDEX qualquer
@@ -258,6 +270,7 @@ Antes de apresentar cada Feature Set, confira (todos os itens são obrigatórios
 - [ ] Descrição (2-3 frases) seguida da linha `**Não faz**:`
 - [ ] **Features**: 3 colunas; coluna *Feature* no formato `**Nome** <small>[SIGLA]-[SFS]-NN</small>`; link para `f-*.md`
 - [ ] **Fluxo Principal**: bloco `mermaid` `flowchart TD`, todo nó entre **aspas duplas**, sem `\n`, sem lista numerada depois
+- [ ] **Fluxo Principal sem caminho de volta**: setas só para frente; ramos de decisão convergem para o nó final; sem loops nem retorno a etapas anteriores (retornos/exceções ficam no N3)
 - [ ] **Dependências entre features** presente
 - [ ] **Telas**: 4 colunas; *Features atendidas* como `**Nome** <small>ID</small>` (múltiplas separadas por `<br>`)
 - [ ] **Permissões por perfil**: nota de fonte única + linha `Perfis:` + matriz perfil × ação (`✓`/`—`) + bullets de detalhe

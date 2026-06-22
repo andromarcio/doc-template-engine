@@ -133,7 +133,8 @@ funcionais (Feature Sets) · Regras transversais · Dependências entre áreas.
 ### N2 — Feature Set (estrutura do PROMPT_2A)
 `modules/[dominio]/[feature-set]/README.md`: ID · Descrição · Features (tabela) ·
 **Fluxo Principal** (bloco ` ```mermaid `, `flowchart TD`; nós entre aspas
-duplas, rótulos de seta sem aspas/sem `/`) · Dependências entre features · Telas
+duplas, rótulos de seta sem aspas/sem `/`; sempre para frente, **sem caminho de
+volta**) · Dependências entre features · Telas
 (tabela: nome, rota, features atendidas) · **Permissões por perfil** (matriz
 perfil × feature — **única** fonte de permissões; ver regra 7).
 

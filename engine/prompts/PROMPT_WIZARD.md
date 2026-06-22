@@ -283,6 +283,13 @@ principal]
 > numerada). Vale a syntax da "Regra do Fluxo principal" do PROMPT_2A: nós entre aspas
 > duplas; rótulos de seta sem aspas e sem `/`, `(` ou `)` (use "e"/"ou" no lugar da barra).
 >
+> **Exceção à regra geral de N2 ("sem caminho de volta"):** diferente dos demais
+> fluxos principais de N2, o wizard **mantém de propósito** as arestas de *voltar* e
+> o loop de validação por etapa (ex.: `V1 -->|Não| E1`, `V2 -->|Voltar| E1`,
+> `C -->|Voltar| EN`) — a navegação "voltar" entre etapas é a característica que
+> define o tipo wizard. Este é o **único** N2 em que o retorno a etapas anteriores
+> faz parte do fluxo principal.
+>
 > ```mermaid
 > flowchart TD
 >     A(["Usuário inicia {Processo}"]) --> E1["Etapa 1 — {Etapa 1}"]
@@ -392,9 +399,11 @@ Com as features aprovadas, rode a revisão de consistência do Feature Set:
 [ ] Campos e regras canônicas estão referenciados pelos dicionários?
 ```
 
-Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na lista de Feature
-Sets do N1 (e no `modules/INDEX.md`); proponha a atualização e aguarde aprovação antes
-de gravar.
+Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na tabela de
+Feature Sets do N1 (e no `modules/INDEX.md`) **com o nome em link para o README do
+N2** — `[Nome](./[feature-set]/README.md)`; se faltar a entrada ou o link, inclua-o
+(e ajuste a linha `*Links: ...*` do N1). Proponha a atualização e aguarde aprovação
+antes de gravar.
 
 Encerre:
 > "Feature Set Wizard concluído (N2 + N3 negociais). Para complementar a parte técnica e

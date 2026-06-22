@@ -156,7 +156,8 @@ código/doc.
 
 Use o template de `_template-feature-set/README.md`. Agrupe rotas/controllers
 (código) e seções (doc) em Feature Sets lógicos de negócio. Preencha a tabela
-de Features, o Fluxo principal (mermaid — 🔍 se inferido só do código),
+de Features, o Fluxo principal (mermaid — 🔍 se inferido só do código; sempre para
+frente, **sem caminho de volta** — sem loops nem retorno a etapas anteriores),
 Telas e Permissões por perfil (de middleware/guards 💻, ou da doc 📄).
 
 ### 2.4 — N3 (um por feature)
