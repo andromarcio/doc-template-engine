@@ -20,8 +20,9 @@ O conteúdo negocial já foi validado pelo PO e não deve ser alterado.
 Regras da sessão:
 - Trabalhe um domínio de cada vez.
 - Cruze todos os campos com o DATA-MODEL.md. Campos já existentes: use
-  exatamente os nomes de lá. Campos novos: proponha Label Dev (camelCase)
-  e campo banco (seguindo a convenção do MASTER.md), sinalize com ⚠️ e
+  exatamente os nomes de lá. Campos novos: proponha Label Dev (camelCase, em
+  português) e campo banco (snake_case em português, seguindo a convenção do
+  MASTER.md), sinalize com ⚠️ e
   aguarde aprovação explícita antes de continuar.
 - O N1 não lista campos detalhados — apenas nome e descrição das entidades,
   com referência ao DATA-MODEL.md. Os campos completos vivem no DATA-MODEL.md.

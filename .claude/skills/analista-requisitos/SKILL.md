@@ -88,13 +88,14 @@ pelo `PROMPT_AUDIT_RULES_DEDUP`.
 
 ---
 
-## Nomenclatura de campos — três camadas
+## Nomenclatura de entidades e campos
 
 | Camada | Convenção | Exemplo | Fonte de verdade |
 |---|---|---|---|
+| Entidade | PascalCase singular, português | `ModeloEmail` | **data-models/[dominio].md** (cabeçalho) |
 | Label PO | Português, title case | `Nome completo` | N3 (tabela de campos), Gherkin, telas |
-| Label Dev | camelCase, inglês | `fullName` | **data-models/[dominio].md** — apenas aqui |
-| Campo banco | Convenção da org | `full_name` | **data-models/[dominio].md** — apenas aqui |
+| Label Dev | camelCase, português | `nomeCompleto` | **data-models/[dominio].md** — apenas aqui |
+| Campo banco | snake_case, português | `nome_completo` | **data-models/[dominio].md** — apenas aqui |
 
 **Regra absoluta**: Label Dev e campo banco vivem SOMENTE nos arquivos de `global/data-models/`.
 Os N3 usam apenas Label PO na tabela de campos.

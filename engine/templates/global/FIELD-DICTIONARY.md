@@ -24,15 +24,15 @@
 | CPF | cpf | texto (11 dígitos) | 11 dígitos numéricos; dígitos verificadores válidos |
 | CNPJ | cnpj | texto (14 dígitos) | 14 dígitos numéricos; dígitos verificadores válidos |
 | CEP | cep | texto (8 dígitos) | 8 dígitos numéricos |
-| Telefone | phone | texto | DDD + número no formato nacional |
+| Telefone | telefone | texto | DDD + número no formato nacional |
 | E-mail | email | texto | formato de e-mail válido |
-| Senha | password | texto | política mínima de segurança |
-| Data de nascimento | birthDate | data | data no passado; idade derivável |
+| Senha | senha | texto | política mínima de segurança |
+| Data de nascimento | dataNascimento | data | data no passado; idade derivável |
 | Data futura | [contexto] | data | não anterior à data atual |
-| Valor monetário | amount | decimal | ≥ 0; 2 casas decimais |
-| Percentual | percentage | decimal | entre 0 e 100 |
-| Nome de pessoa | fullName | texto | nome e sobrenome; comprimento mínimo |
-| Razão social | legalName | texto | texto livre; comprimento mínimo |
+| Valor monetário | valor | decimal | ≥ 0; 2 casas decimais |
+| Percentual | percentual | decimal | entre 0 e 100 |
+| Nome de pessoa | nomeCompleto | texto | nome e sobrenome; comprimento mínimo |
+| Razão social | razaoSocial | texto | texto livre; comprimento mínimo |
 | URL | url | texto | formato de URL válido (http/https) |
 
 > Parâmetros sempre deixados em aberto para a feature: **obrigatoriedade** e **unicidade**.
@@ -83,7 +83,7 @@ Scenario: E-mail em formato inválido
 
 ### Senha
 
-- **Label Dev**: `password`
+- **Label Dev**: `senha`
 - **Tipo**: texto (armazenado com hash — nunca em texto puro)
 - **Validação**: política mínima (ex.: 8+ caracteres, com letra e número). Defina os parâmetros no MASTER/NFR de segurança.
 - **Em aberto (por feature)**: política exata; confirmação de senha.
@@ -99,7 +99,7 @@ Scenario: Senha abaixo da política mínima
 
 ### Valor monetário
 
-- **Label Dev**: `amount`
+- **Label Dev**: `valor`
 - **Tipo**: decimal (2 casas)
 - **Validação**: ≥ 0; no máximo 2 casas decimais.
 - **Em aberto (por feature)**: limite máximo; se aceita zero.
