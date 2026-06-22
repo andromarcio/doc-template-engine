@@ -104,9 +104,9 @@ contexto, ela é a **origem** desta feature. Antes de bifurcar entre Modo A/B:
 ### Modo A — Top-down (N2 disponível)
 
 Se o N2 foi fornecido, leia a tabela de Features do N2 e extraia **exatamente**:
-- O nome da feature (conforme consta na coluna "Feature" ou equivalente)
-- O ID já atribuído (ex: `F01`, `F02` — o que estiver definido no N2)
-- O nome do arquivo já definido (ex: `f-criar.md` — coluna "Arquivo de Especificação (N3)" ou equivalente)
+- O nome da feature (em **negrito** na coluna "Feature" do N2)
+- O ID já atribuído no formato `[SIGLA]-[SFS]-NN` (no N2 ele aparece em `<small>` ao lado do nome da feature)
+- O nome do arquivo já definido (ex: `f-cadastrar.md` — coluna "Arquivo de Especificação (N3)")
 
 **Não gere novos IDs nem novos nomes de arquivo** — use os que o N2 já define.
 Se alguma feature não tiver ID ou arquivo definido no N2, sinalize com ⚠️ e proponha seguindo o padrão das demais.

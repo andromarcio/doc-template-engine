@@ -175,11 +175,11 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 | Feature | Arquivo de Especificação (N3) | Descrição |
 |---|---|---|
-| **[SIGLA]-[SFS]-01**: Pesquisar [Entidade] | [f-pesquisar.md](f-pesquisar.md) | [uma linha] |
-| **[SIGLA]-[SFS]-02**: Cadastrar [Entidade] | [f-cadastrar.md](f-cadastrar.md) | [uma linha] |
-| **[SIGLA]-[SFS]-03**: Editar [Entidade] | [f-editar.md](f-editar.md) | [uma linha] |
-| **[SIGLA]-[SFS]-04**: Excluir [Entidade] | [f-excluir.md](f-excluir.md) | [uma linha] |
-| **[SIGLA]-[SFS]-05**: Visualizar [Entidade] | [f-visualizar.md](f-visualizar.md) | [uma linha] |
+| **Pesquisar [Entidade]** <small>[SIGLA]-[SFS]-01</small> | [f-pesquisar.md](f-pesquisar.md) | [uma linha] |
+| **Cadastrar [Entidade]** <small>[SIGLA]-[SFS]-02</small> | [f-cadastrar.md](f-cadastrar.md) | [uma linha] |
+| **Editar [Entidade]** <small>[SIGLA]-[SFS]-03</small> | [f-editar.md](f-editar.md) | [uma linha] |
+| **Excluir [Entidade]** <small>[SIGLA]-[SFS]-04</small> | [f-excluir.md](f-excluir.md) | [uma linha] |
+| **Visualizar [Entidade]** <small>[SIGLA]-[SFS]-05</small> | [f-visualizar.md](f-visualizar.md) | [uma linha] |
 
 ---
 
@@ -202,10 +202,10 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 
 | Tela | Rota sugerida | Features atendidas | Descrição |
 |---|---|---|---|
-| Pesquisa de [Entidade] | `/[dominio]/[feature-set]` | **...-01** | listagem + filtros; origem das ações |
-| Cadastrar [Entidade] | `/[dominio]/[feature-set]/novo` | **...-02** | formulário de cadastro |
-| Editar [Entidade] | `/[dominio]/[feature-set]/:id/editar` | **...-03** | mesmo formulário em modo edição |
-| Visualizar [Entidade] | `/[dominio]/[feature-set]/:id` | **...-05** | ficha somente leitura |
+| Pesquisa de [Entidade] | `/[dominio]/[feature-set]` | **Pesquisar [Entidade]** <small>[SIGLA]-[SFS]-01</small><br>**Excluir [Entidade]** <small>[SIGLA]-[SFS]-04</small> | listagem + filtros; origem das ações |
+| Cadastrar [Entidade] | `/[dominio]/[feature-set]/novo` | **Cadastrar [Entidade]** <small>[SIGLA]-[SFS]-02</small> | formulário de cadastro |
+| Editar [Entidade] | `/[dominio]/[feature-set]/:id/editar` | **Editar [Entidade]** <small>[SIGLA]-[SFS]-03</small> | mesmo formulário em modo edição |
+| Visualizar [Entidade] | `/[dominio]/[feature-set]/:id` | **Visualizar [Entidade]** <small>[SIGLA]-[SFS]-05</small> | ficha somente leitura |
 
 > Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug da
 > pasta sem o prefixo `g-`. Exclusão não tem rota (ação em tela, da listagem).
@@ -229,6 +229,10 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT CRUD |
+
+---
+
+*Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
 
 > **Regra do Fluxo principal (CRUD)** — O `## Fluxo Principal` do CRUD é um

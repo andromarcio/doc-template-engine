@@ -10,21 +10,21 @@
 
 ## Features
 
-| Feature | Arquivo | Descrição |
+| Feature | Arquivo de Especificação (N3) | Descrição |
 |---|---|---|
-| [Nome da Feature] | [[feature].md](./ [feature].md) | [descrição em uma linha] |
+| **[Nome da Feature]** <small>[SIGLA]-[SFS]-01</small> | [f-[verbo]-[entidade].md](f-[verbo]-[entidade].md) | [descrição em uma linha] |
 
 ---
 
-## Fluxo principal
+## Fluxo Principal
 
 ```mermaid
 flowchart TD
-    A([Ponto de entrada do usuário]) --> B[Feature 1]
-    B --> C{Decisão?}
-    C -->|Sim| D[Resultado]
-    C -->|Não| E[Feature 2]
-    E --> F([Resultado final])
+    A(["Ponto de entrada do usuário"]) --> B["Feature 1"]
+    B --> C{"Decisão?"}
+    C -->|Sim| D["Resultado"]
+    C -->|Não| E["Feature 2"]
+    E --> F(["Resultado final"])
     D --> F
 ```
 
@@ -32,45 +32,41 @@ flowchart TD
 
 ## Dependências entre features
 
-| Regra | Descrição |
-|---|---|
-| [Feature A] depende de [Feature B] | [por quê e como] |
+[lista descrevendo pré-requisitos e relações entre as features]
 
 ---
 
 ## Telas
 
-| Tela | Rota | Features atendidas |
-|---|---|---|
-| [Nome da tela] | `/[rota]` | [Feature 1], [Feature 2] |
+| Tela | Rota sugerida | Features atendidas | Descrição |
+|---|---|---|---|
+| [Nome da tela] | `/[rota]` | **[Nome da Feature]** <small>[SIGLA]-[SFS]-01</small> | [o que a tela mostra] |
 
 ---
 
 ## Permissões por perfil
 
-| Perfil | [Feature 1] | [Feature 2] |
-|---|---|---|
-| [perfil admin] | [o que pode] | [o que pode] |
-| [perfil agente] | [o que pode] | [o que pode] |
-| [perfil viewer] | [o que pode] | [o que pode] |
+> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de
+> perfis nem permissões — qualquer acesso novo ou diferente entra nesta matriz.
+
+Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
+
+| Perfil | [Ação 1] | [Ação 2] | [Ação 3] |
+|---|---|---|---|
+| **[Perfil A]** | ✓ | ✓ | ✓ |
+| **[Perfil B]** | ✓ | — | ✓ |
+| **[Perfil C]** | ✓ | — | — |
+
+* **[Perfil A]** — [nível de acesso em uma linha].
 
 ---
 
-## Histórias de usuário relacionadas
+## Changelog
 
-<!--
-  Consolida as histórias (ServiceNow) que motivaram as features deste Feature
-  Set. Visão de cobertura: de uma história, quais features a realizam.
-  Detalhe por feature fica na seção "Origem" de cada N3.
--->
-
-| História (ServiceNow) | Features (N3) que a realizam |
-|---|---|
-| [`STRYxxxxxxx`](../../_backlog/[chave].md) | [Feature 1], [Feature 2] |
+| Data | Autor | Tipo | Descrição |
+|---|---|---|---|
+| [AAAA-MM-DD] | [autor] | N2 criado | Gerado pelo PROMPT 2A |
 
 ---
 
----
-
-*Domínio: [Nome do Domínio] · Última revisão: —*
 *Links: [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*

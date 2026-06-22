@@ -213,10 +213,10 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 | Feature | Arquivo de Especificação (N3) | Descrição |
 |---|---|---|
-| **[SIGLA]-[SFS]-01**: [Verbo] [processo] | [f-[verbo]-[entidade].md](f-[verbo]-[entidade].md) | [uma linha — feature principal multi-etapas] |
-| **[SIGLA]-[SFS]-02**: Retomar [processo] | [f-retomar-[entidade].md](f-retomar-[entidade].md) | [uma linha — se houver] |
-| **[SIGLA]-[SFS]-03**: Acompanhar [processo] | [f-acompanhar-[entidade].md](f-acompanhar-[entidade].md) | [uma linha — se houver] |
-| **[SIGLA]-[SFS]-04**: Cancelar [processo] | [f-cancelar-[entidade].md](f-cancelar-[entidade].md) | [uma linha — se houver] |
+| **[Verbo] [processo]** <small>[SIGLA]-[SFS]-01</small> | [f-[verbo]-[entidade].md](f-[verbo]-[entidade].md) | [uma linha — feature principal multi-etapas] |
+| **Retomar [processo]** <small>[SIGLA]-[SFS]-02</small> | [f-retomar-[entidade].md](f-retomar-[entidade].md) | [uma linha — se houver] |
+| **Acompanhar [processo]** <small>[SIGLA]-[SFS]-03</small> | [f-acompanhar-[entidade].md](f-acompanhar-[entidade].md) | [uma linha — se houver] |
+| **Cancelar [processo]** <small>[SIGLA]-[SFS]-04</small> | [f-cancelar-[entidade].md](f-cancelar-[entidade].md) | [uma linha — se houver] |
 
 ---
 
@@ -241,8 +241,8 @@ principal]
 
 | Tela | Rota sugerida | Features atendidas | Descrição |
 |---|---|---|---|
-| [Processo] — Etapas 1..N | `/[dominio]/[feature-set]/novo` | **...-01** | assistente multi-etapas (uma rota, etapas internas) |
-| Acompanhar [Processo] | `/[dominio]/[feature-set]/:id` | **...-03** | status da solicitação (somente leitura) |
+| [Processo] — Etapas 1..N | `/[dominio]/[feature-set]/novo` | **[Verbo] [processo]** <small>[SIGLA]-[SFS]-01</small> | assistente multi-etapas (uma rota, etapas internas) |
+| Acompanhar [Processo] | `/[dominio]/[feature-set]/:id` | **Acompanhar [processo]** <small>[SIGLA]-[SFS]-03</small> | status da solicitação (somente leitura) |
 
 > Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug da pasta
 > sem o prefixo `g-`. O assistente vive em **uma** rota; as etapas são estados internos
@@ -267,6 +267,10 @@ principal]
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT WIZARD |
+
+---
+
+*Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
 
 > **Regra do Fluxo principal (Wizard)** — O `## Fluxo Principal` do wizard é um

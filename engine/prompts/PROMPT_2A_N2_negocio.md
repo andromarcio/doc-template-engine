@@ -107,15 +107,14 @@ Com as respostas, gere o artefato parcial:
 
 | Feature | Arquivo de Especificação (N3) | Descrição |
 |---|---|---|
-| **[ID]**: [Nome] | [[arquivo].md](./ [arquivo].md) | [descrição em uma linha] |
+| **[Nome da Feature]** <small>[SIGLA]-[SFS]-NN</small> | [f-[verbo]-[entidade].md](f-[verbo]-[entidade].md) | [descrição em uma linha] |
 
 ---
 
 ## Fluxo Principal
 
-[diagrama Mermaid — ver regra abaixo]
-
-[descrição textual numerada da jornada]
+[diagrama Mermaid — ver "Regra do Fluxo principal" abaixo. O diagrama é a única
+representação do fluxo: nada de lista numerada depois dele]
 
 ---
 
@@ -129,13 +128,24 @@ Com as respostas, gere o artefato parcial:
 
 | Tela | Rota sugerida | Features atendidas | Descrição |
 |---|---|---|---|
-| [nome] | `/[rota]` | **[ID]**: [Feature] | [descrição] |
+| [nome] | `/[rota]` | **[Nome da Feature]** <small>[SIGLA]-[SFS]-NN</small> | [descrição] |
 
 ---
 
 ## Permissões por perfil
 
-[lista por perfil: o que cada um pode fazer]
+> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de
+> perfis nem permissões — qualquer acesso novo ou diferente entra nesta matriz.
+
+Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
+
+| Perfil | [Ação 1] | [Ação 2] | [Ação 3] |
+|---|---|---|---|
+| **[Perfil A]** | ✓ | ✓ | ✓ |
+| **[Perfil B]** | ✓ | — | ✓ |
+| **[Perfil C]** | ✓ | — | — |
+
+* **[Perfil A]** — [nível de acesso em uma linha].
 
 ---
 
@@ -144,6 +154,10 @@ Com as respostas, gere o artefato parcial:
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT 2A |
+
+---
+
+*Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
 
 > **Regra do Fluxo principal** — O fluxo principal **sempre** deve ser gerado
@@ -174,6 +188,29 @@ Com as respostas, gere o artefato parcial:
 >     D --> E
 >     E --> F(["Chamado aberto"])
 > ```
+> - **Não use `\n` dentro de um nó** — quebra o parser. Mantenha o rótulo curto.
+
+> **Regra dos IDs de feature** — Atribua a cada feature um ID sequencial
+> `[SIGLA]-[SFS]-NN` na ordem da jornada. Renderize a feature **sempre** como
+> `**Nome da Feature** <small>[SIGLA]-[SFS]-NN</small>` (nome em negrito + ID em
+> `<small>`), tanto na tabela **Features** quanto na coluna **Features atendidas** das
+> **Telas** (múltiplas separadas por `<br>`). Nunca use o formato `**ID**: Nome` nem
+> uma coluna de ID separada.
+
+> **Regra das Permissões** — A seção `## Permissões por perfil` é **sempre** a
+> **matriz** perfis (linhas) × ações/features (colunas), precedida da nota de fonte
+> única e da linha `Perfis: ...`. Células: `✓` (pode) e `—` (não pode). Detalhes vão em
+> bullets **após** a tabela. Nunca use lista solta ou texto corrido.
+
+> **Conformidade estrutural (não desvie)** — O título é **sempre** `# Feature Set:
+> [Nome]`; o subtítulo é a linha de blockquote exata (hífens `-`, `Domínio: [Nome]`, ID
+> em crase) — não use em-dash, não escreva "Feature Set" no lugar do domínio nem
+> adicione linhas `> **Domínio**`/`> **Artefato**`. **Não inclua** as seções
+> `## Regras de negócio` nem `## Campos` no N2: regras que valem para o Feature Set
+> inteiro vão para as **Regras transversais do N1**; regras e campos de uma feature vão
+> para o **N3**; campos físicos, para o **data-model**. Use os títulos e o casing exatos
+> (`## Fluxo Principal`). Todas as seções são obrigatórias — não omita **Telas** nem
+> **Dependências entre features**.
 
 Após apresentar, pergunte:
 > "O N2 de [Feature Set] está correto?
@@ -209,3 +246,20 @@ Apresente as alterações propostas e peça aprovação antes de gravar:
 Após todos os Feature Sets do domínio aprovados, confirme:
 > "Todos os Feature Sets do domínio [nome] foram detalhados.
 > Para especificar as features individualmente, use o PROMPT_3A."
+
+---
+
+## Checklist de conformidade do N2
+
+Antes de apresentar cada Feature Set, confira (todos os itens são obrigatórios):
+
+- [ ] Título exatamente `# Feature Set: [Nome]`
+- [ ] Subtítulo em blockquote: `> **Nível 2** - Domínio: [Nome] - [ID]` (hífens `-`, sem em-dash, ID em crase)
+- [ ] Descrição (2-3 frases) seguida da linha `**Não faz**:`
+- [ ] **Features**: 3 colunas; coluna *Feature* no formato `**Nome** <small>[SIGLA]-[SFS]-NN</small>`; link para `f-*.md`
+- [ ] **Fluxo Principal**: bloco `mermaid` `flowchart TD`, todo nó entre **aspas duplas**, sem `\n`, sem lista numerada depois
+- [ ] **Dependências entre features** presente
+- [ ] **Telas**: 4 colunas; *Features atendidas* como `**Nome** <small>ID</small>` (múltiplas separadas por `<br>`)
+- [ ] **Permissões por perfil**: nota de fonte única + linha `Perfis:` + matriz perfil × ação (`✓`/`—`) + bullets de detalhe
+- [ ] **Changelog** + rodapé `*Links: ...*`
+- [ ] **Nenhuma** seção extra (sem `## Regras de negócio`, sem `## Campos`, sem renomear títulos)
