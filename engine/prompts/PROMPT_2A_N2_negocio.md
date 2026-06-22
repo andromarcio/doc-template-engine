@@ -239,7 +239,8 @@ a realidade e atualize-os quando necessário:
   na tabela de Feature Sets do N1 com o ID atribuído (`[SIGLA]-[SFS]`) **e o nome
   em link para o README do N2** — `[Nome](./[feature-set]/README.md)`. Se a
   entrada já existir sem link (ou só em texto), converta-a no link; garanta também
-  que a linha de rodapé `*Links: ...*` do N1 aponte para este Feature Set.
+  que a linha de rodapé `*Links: ...*` do N1 aponte para este Feature Set. Mantenha
+  a **Pasta** e a contagem de **Features** dessa linha coerentes com o N2.
 - **Regras transversais**: se o N2 revelou uma regra que vale para o domínio
   inteiro, proponha incluí-la nas Regras transversais do N1.
 - **Dependências entre domínios**: reflita no N1 e no INDEX qualquer

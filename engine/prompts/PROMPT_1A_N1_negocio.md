@@ -102,9 +102,9 @@ Com as respostas, gere o artefato parcial:
 
 ## Feature Sets
 
-| Feature Set | Descrição |
-|---|---|
-| [Nome] | [descrição em uma linha] |
+| Feature Set | Pasta | Descrição | Features |
+|---|---|---|---|
+| [Nome](./[pasta]/README.md) | `[dominio]/[pasta]/` | [descrição em uma linha] | [N] |
 
 ---
 
@@ -125,7 +125,18 @@ Com as respostas, gere o artefato parcial:
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N1 negocial criado | Gerado pelo PROMPT 1A |
+
+---
+
+*Última revisão: —*
+*Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
+
+> **Tabela de Feature Sets** — cada linha entra com o **nome em link** para o
+> futuro README do N2 (`./[pasta]/README.md`, criado no PROMPT_2A), a **Pasta**
+> (slug do Feature Set) e a contagem de **Features** (`[N]` enquanto o N2 não
+> existir; preenchida ao detalhar o Feature Set no N2). O rodapé `*Links:*` também
+> aponta para os Feature Sets do domínio.
 
 Seções deixadas em branco para o PROMPT 1B:
 - Entidades e campos
@@ -181,7 +192,7 @@ Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
 - [ ] Título exatamente `# Domínio: [Nome]`
 - [ ] Subtítulo em blockquote: `> **Nível 1** - Visão estratégica do domínio - [SIGLA]` (SIGLA de **3 letras maiúsculas** em crase, hífens `-`)
 - [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz`
-- [ ] **Feature Sets**: tabela (Feature Set | Descrição)
+- [ ] **Feature Sets**: tabela (Feature Set | Pasta | Descrição | Features) com o **nome em link** para o README do N2 (`./[pasta]/README.md`) e rodapé `*Links:*` apontando para os Feature Sets
 - [ ] **Regras transversais de negócio**: lista numerada de **invariantes** (o *quê* a área garante) — qualidade do sistema (desempenho/segurança/auditoria) **não** entra aqui, vai para `global/NFR.md`
 - [ ] **Dependências com outros domínios** em linguagem de negócio (sem FK, joins ou nomes técnicos)
 - [ ] **Changelog**
