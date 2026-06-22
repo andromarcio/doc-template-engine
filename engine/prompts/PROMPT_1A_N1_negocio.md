@@ -171,3 +171,19 @@ Ao finalizar, informe:
 > "Parte negocial do N1 concluída. Para complementar com os campos,
 > entidades e integrações técnicas, use o PROMPT_1B passando
 > cada README.md gerado aqui como contexto."
+
+---
+
+## Checklist de conformidade do N1
+
+Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
+
+- [ ] Título exatamente `# Domínio: [Nome]`
+- [ ] Subtítulo em blockquote: `> **Nível 1** - Visão estratégica do domínio - [SIGLA]` (SIGLA de **3 letras maiúsculas** em crase, hífens `-`)
+- [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz`
+- [ ] **Feature Sets**: tabela (Feature Set | Descrição)
+- [ ] **Regras transversais de negócio**: lista numerada de **invariantes** (o *quê* a área garante) — qualidade do sistema (desempenho/segurança/auditoria) **não** entra aqui, vai para `global/NFR.md`
+- [ ] **Dependências com outros domínios** em linguagem de negócio (sem FK, joins ou nomes técnicos)
+- [ ] **Changelog**
+- [ ] **Nenhuma** seção técnica (entidades, campos, integrações técnicas ficam para o **PROMPT_1B**)
+- [ ] Ao fechar todos os domínios: `modules/INDEX.md` negocial atualizado e cada N1 conferido contra o N0

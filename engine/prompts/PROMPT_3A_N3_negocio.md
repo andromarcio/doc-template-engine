@@ -582,3 +582,21 @@ Após todas as features aprovadas, bifurque conforme o modo da sessão:
 > 2. Quando tiver N3s suficientes do Feature Set, use **B2** para gerar o N2
 > 3. Com os N2s prontos, use **B1** para gerar o N1 do domínio
 > 4. Rode **AU** para verificar duplicatas de regras entre as features especificadas"
+
+---
+
+## Checklist de conformidade do N3
+
+Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
+
+- [ ] Título `# [Nome da Feature]` (exatamente como no N2) + subtítulo `> **Nível 3** - Feature Set: [Nome] — Domínio: [Nome] - [ID]`
+- [ ] `## Origem` presente **somente** se houver história de usuário (senão, omitir a seção)
+- [ ] `## Superfície`: **Tela própria** (com rota `/...`) **ou** **Ação em tela** (com a feature/tela de origem)
+- [ ] `## Regras de negócio`: itens **atômicos** (uma invariante cada); a reação do sistema e o texto da mensagem **não** entram aqui (vão para Cenários); canônicas como `→ ver RULES-DICTIONARY: [nome]`
+- [ ] `## Cenários`: Gherkin com os grupos (Caminho feliz · Erros de validação · Conflitos com dados existentes · Restrições de acesso · Estados especiais), em Label PO, com os marcadores de importação dos canônicos
+- [ ] `## Campos`: 4 colunas (Label PO | Tipo | Obrigatório | Validação) — **apenas Label PO** (nunca Label Dev nem campo banco); canônicos como `→ ver FIELD-DICTIONARY: [nome]`
+- [ ] `## Campos automáticos`: 3 colunas (Label PO | Valor | Quando)
+- [ ] `## Comportamento de tela` + `## Changelog`
+- [ ] N3 **não** trata de permissões (vivem no N2); NFR **não** vira regra de negócio
+- [ ] Campos novos (não canônicos) sinalizados para o **data-model** com ⚠️ — nunca inventados no N3
+- [ ] **Nenhuma** seção técnica (API, eventos, AuditLog, mapeamento de campos) — isso é o **PROMPT_3B**
