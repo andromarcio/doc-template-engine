@@ -91,6 +91,21 @@ Com as respostas, gere o artefato parcial:
 
 📄 `modules/[dominio]/[feature-set]/README.md` — seções negociais
 
+> ### Contrato estrutural (vinculante — verificado por `scripts/validate-doc.mjs`)
+>
+> O N2 tem **exatamente estas 7 seções `##`, nesta ordem, e nenhuma outra**:
+> `## Descrição` · `## Features` · `## Fluxo Principal` · `## Dependências entre features` · `## Telas` · `## Permissões por perfil` · `## Changelog`.
+>
+> **MUST**
+> - Título `# Feature Set: [Nome]` e subtítulo `> **Nível 2** - Domínio: [Nome] - ` + ID em crase (hífens `-`, sem em-dash).
+> - Coluna *Arquivo de Especificação (N3)* **sempre** como link markdown `[f-….md](f-….md)` — nunca texto puro.
+> - Fluxo Principal: bloco `mermaid` `flowchart TD` **acíclico** — toda seta avança até o nó final; ramos de decisão convergem para frente.
+>
+> **MUST NOT**
+> - Acrescentar **qualquer** seção, subtítulo ou tabela fora da lista de 7 acima (ex.: "Categorias", "Tipos", "Naturezas", "Regras de negócio", "Campos"). Informação de categoria/tipo/natureza de uma entidade vai na **Descrição** ou em **Dependências entre features** — nunca em seção própria.
+> - Setas de retorno no Mermaid (loop, "voltar", reabrir etapa já percorrida): isso é fluxo alternativo e vive no N3, não no N2.
+> - Duplicar Label Dev, campo banco, endpoints ou FKs (pertencem ao N3 / data-model).
+
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
@@ -278,3 +293,6 @@ Antes de apresentar cada Feature Set, confira (todos os itens são obrigatórios
 - [ ] **Permissões por perfil**: nota de fonte única + linha `Perfis:` + matriz perfil × ação (`✓`/`—`) + bullets de detalhe
 - [ ] **Changelog** + rodapé `*Links: ...*`
 - [ ] **Nenhuma** seção extra (sem `## Regras de negócio`, sem `## Campos`, sem renomear títulos)
+
+> **Gate determinístico** — após gravar o N2, rode `node scripts/validate-doc.mjs <arquivo>`.
+> O artefato só é considerado conforme quando o validador retorna `✓` (sai com código 0).

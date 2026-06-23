@@ -16,6 +16,28 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-06-23
+
+### Added
+- `scripts/validate-doc.mjs` — validador determinístico de conformidade estrutural
+  de N1/N2/N3, com detecção automática de nível pelo subtítulo `**Nível X**`. Gate
+  independente do modelo/harness que gerou o artefato. Regras calibradas contra os
+  artefatos reais:
+  - **N2** (integralmente negocial, prompt único 2A): lista FECHADA de 7 seções +
+    ordem, título/subtítulo, links N3, Mermaid `flowchart TD` acíclico (sem caminho
+    de volta) e matriz de permissões.
+  - **N1 / N3** (compostos por múltiplos prompts): seções OBRIGATÓRIAS presentes +
+    proibições — no N3, reprova vazamento de camada técnica (Label Dev / campo banco)
+    na tabela `## Campos`. O caractere separador do subtítulo (- vs —) não é enforçado.
+
+### Changed
+- `PROMPT_2A_N2_negocio.md`: bloco "Contrato estrutural (vinculante)" colado ao
+  template (lista fechada de 7 seções, MUST/MUST NOT, destino para info de
+  categoria/tipo) e item de checklist apontando o gate `validate-doc.mjs`. Reforça
+  a conformidade para modelos menores que ignoravam as regras em prosa.
+- `PROMPT_1A_N1_negocio.md` e `PROMPT_3A_N3_negocio.md`: item de checklist apontando
+  o gate `validate-doc.mjs` com as seções obrigatórias de cada nível.
+
 ## [1.0.0] - 2026-06-23
 
 ### Added

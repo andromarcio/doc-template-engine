@@ -227,3 +227,8 @@ Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
 - [ ] **Changelog**
 - [ ] **Nenhuma** seção técnica: entidades, campos, dependências externas e regras de acesso ficam para o **PROMPT_1B** (que também confirma a coluna *Como* das Integrações)
 - [ ] Ao fechar todos os domínios: `modules/INDEX.md` negocial atualizado e cada N1 conferido contra o N0
+
+> **Gate determinístico** — após gravar o N1, rode `node scripts/validate-doc.mjs <arquivo>`.
+> Ele detecta o nível pelo subtítulo e exige as seções obrigatórias do N1 (Descrição +
+> `### O que este domínio NÃO faz`, Feature Sets, Regras transversais de negócio, Changelog).
+> O artefato só é conforme quando o validador retorna `✓` (sai com código 0).

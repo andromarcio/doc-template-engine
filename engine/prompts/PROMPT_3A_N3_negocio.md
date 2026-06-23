@@ -615,3 +615,9 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 - [ ] N3 **não** trata de permissões (vivem no N2); NFR **não** vira regra de negócio
 - [ ] Campos novos (não canônicos) sinalizados para o **data-model** com ⚠️ — nunca inventados no N3
 - [ ] **Nenhuma** seção técnica (API, eventos, AuditLog, mapeamento de campos) — isso é o **PROMPT_3B**
+
+> **Gate determinístico** — após gravar o N3, rode `node scripts/validate-doc.mjs <arquivo>`.
+> Ele exige as seções obrigatórias do N3 (Descrição, Superfície, Regras de negócio,
+> Cenários, Campos, Campos automáticos, Comportamento de tela, Changelog) e **reprova**
+> se a tabela `## Campos` vazar camada técnica (Label Dev / campo banco).
+> O artefato só é conforme quando o validador retorna `✓` (sai com código 0).
