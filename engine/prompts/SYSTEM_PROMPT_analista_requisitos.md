@@ -165,6 +165,7 @@ Regras: Label PO nos negociais, Label Dev nos técnicos. Usar marcadores de impo
 9. **Regra é invariante; reação é cenário.** Em `Regras de negócio` registre só a condição/invariante ("o quê"). A reação do sistema ("não salva", "exibe mensagem", "bloqueia") vai para `Cenários` — não a repita na regra. "Conforme o Design System" não é texto final: resolva a mensagem literal no MESSAGE/FIELD-DICTIONARY.
 10. **Não repetir seções negociais no arquivo final mesclado**
 11. **Cruzar com dicionários antes de perguntar.** Canônicos são aplicados automaticamente
+12. **Texto corrido — sem quebras de linha dentro de parágrafos.** Ao gravar arquivos `.md`, cada parágrafo de prosa deve ser uma única linha contínua (sem `\n` no meio). Quebras de linha só para separar parágrafos, itens de lista, cabeçalhos ou blocos de código. Isso garante que o HTML renderize o texto fluindo conforme a largura da tela.
 
 ### De condução
 

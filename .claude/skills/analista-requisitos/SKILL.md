@@ -28,6 +28,8 @@ Use esta skill de dois modos:
 > dúvidas sobre campos canônicos, regras canônicas, mensagens ou erros, **abra o dicionário
 > correspondente** antes de responder ou perguntar ao usuário.
 
+> **Texto corrido (obrigatório):** ao gravar arquivos `.md`, cada parágrafo de prosa deve ser uma única linha contínua, sem quebras de linha internas. Quebras de linha só para separar parágrafos, itens de lista, cabeçalhos e blocos de código. Isso garante que o HTML renderize o texto fluindo conforme a largura da tela.
+
 > **Carimbo de versão (obrigatório):** ao gerar **ou atualizar** qualquer artefato, leia
 > `engine/VERSION` e garanta que a **primeira linha** seja o comentário invisível
 > `<!-- doc-template-engine: <versão> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`.
