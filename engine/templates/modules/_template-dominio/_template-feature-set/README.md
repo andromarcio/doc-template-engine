@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # Feature Set: [Nome do Feature Set]
 > **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]`
 

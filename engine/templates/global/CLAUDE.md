@@ -52,4 +52,9 @@ import do Claude Code). Ajuste a lista ao que existir na instância:
   > descrição de forma menos agressiva. Se mesmo assim a skill não aparecer ao
   > digitar `/`, ela não foi instalada nesta instância — rode o
   > `scripts/install-skill.sh` do `doc-template-engine`.
+- **Ao gerar ou atualizar qualquer artefato**, carimbe-o: a primeira linha deve ser
+  o comentário invisível `<!-- doc-template-engine: <versão de engine/VERSION> | prompt:
+  <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`. Em updates, reescreva o carimbo (não
+  duplique). É invisível ao leitor do documento; serve para auditar com que versão do
+  framework o artefato foi produzido. Ver `engine/VERSIONING.md`.
 - [Demais convenções específicas deste projeto que valham para toda sessão.]

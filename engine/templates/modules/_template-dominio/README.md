@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 <!--
   CONVENÇÃO DE VISIBILIDADE
   Blocos <div class="dev-only"> contêm detalhes técnicos.

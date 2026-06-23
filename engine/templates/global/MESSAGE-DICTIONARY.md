@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # MESSAGE-DICTIONARY.md
 > Dicionário de **mensagens de UI** que a pessoa usuária lê — e o **baseline** de
 > validação (obrigatório, formato, sucesso, estados de tela).

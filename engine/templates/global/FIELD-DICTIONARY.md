@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # FIELD-DICTIONARY.md
 > Dicionário de **campos canônicos** — campos que se repetem em várias features
 > com a mesma semântica de validação (CPF, e-mail, telefone…).

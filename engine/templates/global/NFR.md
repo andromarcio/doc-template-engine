@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # NFR.md
 > Catálogo de **Requisitos Não-Funcionais** (Especificação Suplementar, à la RUP).
 > Reúne as **qualidades** do sistema — *quão bem* ele faz algo (desempenho,

@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # N0_PRODUCT_VISION.md
 > **Nível 0** — Visão de Produto. O documento de referência mais alto do sistema:
 > define **por que** o produto existe, para **quem** e **que valor** entrega.

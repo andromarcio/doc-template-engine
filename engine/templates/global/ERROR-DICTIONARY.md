@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # ERROR-DICTIONARY.md
 > Dicionário centralizado de códigos de erro de API.
 > Todo novo código de erro criado durante a especificação técnica (N3)

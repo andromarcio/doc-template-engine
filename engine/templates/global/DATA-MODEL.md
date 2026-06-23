@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # DATA-MODEL.md
 > **Índice e fonte de verdade** para nomenclatura e mapeamento de campos.
 > Os modelos detalhados estão fragmentados por domínio em `global/data-models/`

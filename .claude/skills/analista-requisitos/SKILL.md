@@ -28,6 +28,11 @@ Use esta skill de dois modos:
 > dúvidas sobre campos canônicos, regras canônicas, mensagens ou erros, **abra o dicionário
 > correspondente** antes de responder ou perguntar ao usuário.
 
+> **Carimbo de versão (obrigatório):** ao gerar **ou atualizar** qualquer artefato, leia
+> `engine/VERSION` e garanta que a **primeira linha** seja o comentário invisível
+> `<!-- doc-template-engine: <versão> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`.
+> Em updates, **reescreva** o carimbo (não duplique). Detalhes em `engine/VERSIONING.md`.
+
 ---
 
 ## Hierarquia de níveis

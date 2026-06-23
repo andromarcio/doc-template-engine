@@ -30,6 +30,20 @@ Exemplos de estados por etapa:
 
 Nunca pule estados. Nunca faça mais de uma pergunta por estado.
 
+**Carimbo de versão (obrigatório na geração):**
+Ao entrar no estado terminal de geração (`[GERACAO_ARTEFATO]`, `[ARQUIVO_FINAL]`,
+`[GERACAO_ARTEFATO_BASE]` etc.), antes de escrever o conteúdo, leia `engine/VERSION`
+e garanta que a **primeira linha** do artefato seja o carimbo invisível:
+
+```
+<!-- doc-template-engine: <versão de engine/VERSION> | prompt: <PROMPT_ID corrente> | atualizado: <YYYY-MM-DD de hoje> -->
+```
+
+Em **atualização** de artefato (PROMPT_4A/4B e demais updates), **reescreva** o
+carimbo existente com a versão e a data correntes — nunca duplique nem mantenha
+número antigo. É um comentário HTML: invisível ao leitor do documento, legível só
+no source. Ver `engine/VERSIONING.md`.
+
 ---
 
 ## CONHECIMENTO DE BASE

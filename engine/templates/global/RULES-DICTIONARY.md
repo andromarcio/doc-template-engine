@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # RULES-DICTIONARY.md
 > Dicionário de **regras de negócio canônicas** — invariantes que se repetem em
 > várias features (maioridade, registro vinculado não excluível, etc.).

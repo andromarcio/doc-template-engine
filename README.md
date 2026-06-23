@@ -234,13 +234,37 @@ importa o contexto mínimo (`global/MASTER.md`, `global/N0_PRODUCT_VISION.md`,
 lidos **sob demanda** pela skill `analista-requisitos`, que carrega esse índice na
 abertura da sessão.
 
+## Versionamento
+
+O framework é versionado em [`VERSION`](VERSION) (SemVer) com histórico em
+[`CHANGELOG.md`](CHANGELOG.md). A cada evolução do engine, faça o *bump* de `VERSION`
+e registre a mudança no changelog.
+
+Todo artefato gerado **ou atualizado** pelos prompts recebe um **carimbo de versão
+invisível** na primeira linha — um comentário HTML que não aparece no documento
+renderizado (PDF/HTML/preview do GitHub), só no source `.md`:
+
+```
+<!-- doc-template-engine: 1.0.0 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
+```
+
+Assim dá para auditar com que versão do framework cada artefato foi produzido, sem
+poluir o que o leitor de negócio vê. A regra completa está em
+[`engine/VERSIONING.md`](engine/VERSIONING.md); no fluxo copy-paste/CLI, o helper
+[`scripts/stamp.sh`](scripts/stamp.sh) insere/atualiza o carimbo de forma determinística:
+
+```bash
+./scripts/stamp.sh ../simpf-doc/modules/cadastro/clientes/f-cadastrar-cliente.md PROMPT_3A
+```
+
 ## Contribuindo
 
 Contribuições são bem-vindas via Pull Request. Diretrizes:
 
 - mantenha cada **prompt auto-contido** (sem depender de arquivos fora do `engine/`);
 - nos **templates**, use placeholders `[entre colchetes]` para o que a instância preenche;
-- um arquivo, um propósito — siga a convenção de nomes existente.
+- um arquivo, um propósito — siga a convenção de nomes existente;
+- toda evolução relevante faz *bump* de [`VERSION`](VERSION) + entrada no [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Licença
 
