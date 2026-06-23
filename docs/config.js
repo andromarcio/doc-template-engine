@@ -48,6 +48,7 @@ window.DOKU_CONFIG = {
         { title: "Triagem", page: "triagem", icon: "search" },
         { title: "História de usuário", page: "historia-usuario", icon: "ticket" },
         { title: "Rastreabilidade", page: "rastreabilidade", icon: "link" },
+        { title: "Esteira de checkpoints", page: "esteira-checkpoints", icon: "flow" },
       ],
     },
     {

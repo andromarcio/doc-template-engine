@@ -1,0 +1,51 @@
+name: Esteira de gates — promote
+
+# Ao integrar na main (ou sob demanda), regenera a seção "Esteira de checkpoints"
+# do modules/INDEX.md a partir do front-matter dos N3 — o INDEX é apenas o espelho.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "modules/**"
+      - "scripts/gates.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gates-promote
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    # Evita laço infinito: ignora o commit do próprio bot.
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Dependências
+        run: pip install pyyaml
+
+      - name: Regenerar esteira no INDEX.md
+        run: python scripts/gates.py promote --write
+
+      - name: Commitar se houver mudança
+        run: |
+          if [ -n "$(git status --porcelain modules/INDEX.md)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add modules/INDEX.md
+            git commit -m "chore(gates): atualiza esteira no INDEX.md [skip ci]"
+            git push
+          else
+            echo "Sem mudanças na esteira."
+          fi

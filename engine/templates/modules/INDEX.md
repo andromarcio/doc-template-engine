@@ -29,6 +29,19 @@
 
 ---
 
+<!-- GATES:INICIO -->
+## Esteira de checkpoints (gates)
+
+> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.**
+> Espelha o estado de cada feature na esteira (CP1 requisitos → CP2 modelo de dados →
+> CP3 testes → CP4 código). Regenerada a cada merge na `main` pelo workflow
+> `promote-estado.yml`, ou sob demanda com `python scripts/gates.py promote --write`.
+
+_(será preenchida na primeira execução de `scripts/gates.py promote`)_
+<!-- GATES:FIM -->
+
+---
+
 <!-- PENDENCIAS:INICIO -->
 ## Pendências de especificação
 
@@ -82,10 +95,16 @@
 
 ## Legenda de status
 
-| Ícone | Status | Descrição |
-|---|---|---|
-| 📋 | Especificado | N3 completo, aguardando desenvolvimento |
-| 🔄 | Em desenvolvimento | Implementação em andamento |
-| ✅ | Implementado | Em produção, rastreabilidade preenchida |
-| ⚠️ | Revisão necessária | Spec desatualizada em relação ao código |
-| ❌ | Deprecado | Feature removida do sistema |
+Estados da **esteira de checkpoints**, derivados dos `gates` no front-matter de cada N3.
+A próxima etapa só ocorre após a aprovação da anterior — ordem: requisitos → modelo-dados → testes → código.
+
+| Ícone | Estado | Checkpoint | Descrição |
+|---|---|---|---|
+| ✏️ | rascunho | — | N3 em elaboração, nenhum gate aprovado |
+| 📝 | requisitos-aprovados | CP1 (PO) | Requisitos validados — aguardando modelo de dados |
+| 🧱 | modelo-validado | CP2 (DBA) | Modelo físico de dados validado — aguardando testes |
+| 📋 | especificado | CP3 (QA) | **Pronto para desenvolvimento** (CP1+CP2+CP3 aprovados) |
+| 🔄 | em-desenvolvimento | — | Implementação em andamento (estado manual) |
+| ✅ | implementado | CP4 (code review) | Em produção, rastreabilidade preenchida |
+| ⚠️ | revisao-necessaria | — | Spec desatualizada em relação ao código |
+| ❌ | deprecado | — | Feature removida do sistema |

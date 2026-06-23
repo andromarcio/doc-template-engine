@@ -149,6 +149,35 @@ A seção é **gerada, não mantida à mão**: a fonte de verdade continua distr
 princípio do `CONTAGEM-PF.md`. Cada item linka de volta à fonte e traz a **rota** para
 resolvê-lo (**3A/CRUD/2A/1A** para existência, **4A/4B** para conteúdo).
 
+### Esteira de checkpoints: requisitos prontos para implementar
+
+No fluxo de desenvolvimento há **validações humanas** entre as etapas — aprovar
+requisitos, validar o **modelo físico de dados**, validar os **casos de teste** e
+revisar o **código**. A esteira de checkpoints transforma isso num fluxo
+**automatizado** em que a **próxima etapa só ocorre após a aprovação da anterior**:
+
+```
+🆕 → [CP1 requisitos · PO] → 📝 → [CP2 modelo-dados · DBA] → 🧱
+   → [CP3 testes · QA] → 📋 PRONTO P/ DEV → [CP4 código · Tech Lead] → ✅
+```
+
+Cada feature (N3) carrega a sua esteira no **front-matter** (`estado` + `gates`),
+que é a **fonte de verdade** — o `modules/INDEX.md` apenas a espelha. Três peças
+sustentam o fluxo, todas como **templates genéricos** prontos para a instância copiar:
+
+- **`scripts/gates.py`** — máquina de estados: valida transições (não pular etapas,
+  um gate por PR), deriva o `estado` e regenera a esteira no `INDEX.md`;
+- **`.github/workflows/gate-check.yml`** — status check que **bloqueia o PR** se a
+  ordem dos checkpoints for violada;
+- **`.github/workflows/promote-estado.yml`** + **`CODEOWNERS`** — o review do dono
+  do artefato (PO/DBA/QA/Tech Lead) **é** a aprovação do checkpoint; o merge espelha
+  o estado no `INDEX.md`.
+
+"Pronto para implementar?" vira **uma consulta**: `estado == especificado`
+(CP1 ∧ CP2 ∧ CP3 aprovados). Passo a passo de adoção em
+[`engine/templates/.github/README.md`](engine/templates/.github/README.md); visão
+geral na página *Esteira de checkpoints* do site.
+
 ## Estrutura
 
 ```
@@ -160,7 +189,9 @@ engine/
     │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, DESIGN-SYSTEM
     ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de usuário)
     ├── prototypes/
-    └── repos/
+    ├── repos/
+    ├── scripts/  # gates.py — máquina de estados da esteira de checkpoints
+    └── .github/  # CODEOWNERS, workflows (gate-check/promote-estado), PR template
 docs/             # site de documentação (template para GitHub Pages)
 ```
 
