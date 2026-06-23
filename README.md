@@ -194,6 +194,35 @@ Os prompts e templates são **conteúdo reutilizável**, consumidos por:
 O método foi desenhado para uso com as skills `analista-requisitos` (especificação
 N0–N3) e `apf-cpm` (Análise de Pontos de Função, IFPUG CPM 4.3.1).
 
+### Instalando a skill na instância
+
+A skill `analista-requisitos` vive **neste** repositório, em
+[`.claude/skills/`](.claude/skills/). O Claude Code (CLI, VS Code, JetBrains) só
+**descobre e aciona** skills automaticamente quando elas estão em uma destas pastas:
+
+- `<repositório-aberto>/.claude/skills/` — skills do projeto (a instância);
+- `~/.claude/skills/` — skills pessoais, válidas para todos os projetos da máquina.
+
+Portanto, **abrir o repositório da instância (ex.: `simpf-doc`) não dá acesso à
+skill** se ela não estiver fisicamente lá. Se a skill não aparece ao digitar `/` no
+chat — ou o agente conduz a especificação "na mão" sem entrar no fluxo de estados —
+é porque ela não foi instalada na instância. Instale com o script:
+
+```bash
+# a partir do checkout do doc-template-engine:
+./scripts/install-skill.sh ../simpf-doc   # instala em simpf-doc/.claude/skills/
+./scripts/install-skill.sh --user         # ou para todos os projetos (~/.claude/skills/)
+```
+
+Ou manualmente: `cp -R .claude/skills/analista-requisitos /caminho/da/instância/.claude/skills/`.
+
+Reexecute o script após atualizar a engine para propagar a versão nova da skill.
+
+> **Modelos menores (Haiku):** o auto-acionamento por descrição é menos agressivo
+> que no Sonnet/Opus. O `CLAUDE.md` da instância já instrui o agente a usar a skill
+> em sessões de especificação; ainda assim, se ela não disparar sozinha, invoque-a
+> explicitamente no chat (ex.: *"use a skill analista-requisitos"*).
+
 ### Contexto persistente do projeto
 
 Para que o agente **sempre** tenha o contexto do sistema sendo especificado — sem

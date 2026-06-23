@@ -43,6 +43,13 @@ import do Claude Code). Ajuste a lista ao que existir na instância:
 
 - A documentação gerada vai sempre para `modules/`, `global/`, `prototypes/`,
   `repos/` — **nunca** para dentro de `engine/` (somente-leitura).
-- Para especificar requisitos, use a skill `analista-requisitos` (N0–N3) e siga o
-  roteiro do prompt correspondente em `engine/prompts/`.
+- **Sempre que a sessão envolver especificação de requisitos** — N0/N1/N2/N3,
+  feature, feature set, domínio, CRUD, wizard, campos/regras de negócio, cenários
+  Gherkin, dicionários, ou qualquer `PROMPT_*` de especificação — **acione a skill
+  `analista-requisitos` antes de responder** e siga o roteiro do prompt
+  correspondente em `engine/prompts/`. Não conduza a especificação "na mão".
+  > Reforço necessário em modelos menores (ex.: Haiku), que acionam skills por
+  > descrição de forma menos agressiva. Se mesmo assim a skill não aparecer ao
+  > digitar `/`, ela não foi instalada nesta instância — rode o
+  > `scripts/install-skill.sh` do `doc-template-engine`.
 - [Demais convenções específicas deste projeto que valham para toda sessão.]
