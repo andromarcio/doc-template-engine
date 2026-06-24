@@ -9,16 +9,21 @@ Markdown cru não entrega, em cima dos artefatos que o `doc-template` já gera:
 2. **Backlinks bidirecionais** — clicar num artefato mostra *para onde ele
    aponta* **e** *quem aponta para ele* (o que o `.md` aberto sozinho não revela).
 
-> ⚠️ É um **protótipo de apresentação**. Não toca no `engine/` nem no `docs/`.
+> ⚠️ É um **protótipo de apresentação**, publicado junto do site `docs/`.
 > Os dados são de um sistema fictício ("Loja Acme"), só para o grafo ter o que mostrar.
 
 ## Como ver
 
-Sirva a pasta por HTTP (o `fetch`/módulos não funcionam via `file://`):
+- **No site publicado (GitHub Pages):** menu *Fluxo de trabalho → Mapa de
+  rastreabilidade*, ou direto em `…/rastreabilidade/`.
+- **Local, abrindo o arquivo:** dá um duplo-clique em
+  `docs/rastreabilidade/index.html` — funciona via `file://`, pois tudo é
+  carregado por `<script>`/`<link>` (sem `fetch`).
+- **Local, via servidor:**
 
 ```bash
-python3 -m http.server -d prototype/traceability 8090
-# abra http://localhost:8090
+python3 -m http.server -d docs 8090
+# abra http://localhost:8090/rastreabilidade/
 ```
 
 ## O que dá para fazer
