@@ -80,29 +80,45 @@
      ======================================================================= */
   function size() { var r = svg.getBoundingClientRect(); return { w: r.width || 900, h: r.height || 600 }; }
 
+  // raio de colisão por nó — inclui folga para o rótulo não encavalar.
+  // rótulos longos ampliam o raio (largura estimada do texto a 10px).
+  function collR(n) {
+    var base = TYPES[n.type].r;
+    var pad = (n.type === "produto" || n.type === "dominio") ? 40 : 30;
+    var halfLabel = (String(n.label).length * 5.2) / 2 + 8;
+    return Math.max(base + pad, halfLabel);
+  }
+
   function initPositions() {
     var s = size(), cx = s.w / 2, cy = s.h / 2;
-    DATA.nodes.forEach(function (n, i) {
-      var a = (i / DATA.nodes.length) * Math.PI * 2;
-      var rad = 80 + (i % 7) * 26;
-      n.x = cx + Math.cos(a) * rad + (Math.random() - 0.5) * 30;
-      n.y = cy + Math.sin(a) * rad + (Math.random() - 0.5) * 30;
+    // anéis por nível, para já começar espalhado e em camadas
+    var ringOf = { produto: 0, dominio: 1, featureset: 2, feature: 3, historia: 3.4, repo: 4.1 };
+    var perRing = {};
+    DATA.nodes.forEach(function (n) { perRing[n.type] = (perRing[n.type] || 0) + 1; });
+    var idx = {};
+    DATA.nodes.forEach(function (n) {
+      idx[n.type] = (idx[n.type] || 0);
+      var count = perRing[n.type], i = idx[n.type]++;
+      var a = (i / count) * Math.PI * 2 + (ringOf[n.type] || 0);
+      var rad = 70 + (ringOf[n.type] || 0) * 150;
+      n.x = cx + Math.cos(a) * rad + (Math.random() - 0.5) * 40;
+      n.y = cy + Math.sin(a) * rad + (Math.random() - 0.5) * 40;
       n.vx = 0; n.vy = 0;
     });
   }
 
   function createSim() {
-    var alpha = 1, alphaDecay = 0.018, alphaMin = 0.02, running = true, raf;
-    var LINK = 78, LINK_HIER = 64, CHARGE = -560, CENTER = 0.02, MAXV = 12;
+    var alpha = 1, alphaDecay = 0.010, alphaMin = 0.004, running = true, raf, settled = false;
+    var LINK = 175, LINK_HIER = 125, CHARGE = -1900, CENTER = 0.009, MAXV = 16;
 
     function tick() {
       var s = size(), cx = s.w / 2, cy = s.h / 2;
-      var nodes = DATA.nodes;
+      var nodes = DATA.nodes, i, j;
 
-      // repulsão O(n^2) — ok para dezenas de nós
-      for (var i = 0; i < nodes.length; i++) {
+      // repulsão O(n^2)
+      for (i = 0; i < nodes.length; i++) {
         var a = nodes[i];
-        for (var j = i + 1; j < nodes.length; j++) {
+        for (j = i + 1; j < nodes.length; j++) {
           var b = nodes[j];
           var dx = a.x - b.x, dy = a.y - b.y;
           var d2 = dx * dx + dy * dy || 0.01;
@@ -114,36 +130,56 @@
       }
       // molas
       DATA.edges.forEach(function (e) {
-        var a = byId[e.from], b = byId[e.to];
-        if (!a || !b) return;
-        var dx = b.x - a.x, dy = b.y - a.y;
+        var na = byId[e.from], nb = byId[e.to];
+        if (!na || !nb) return;
+        var dx = nb.x - na.x, dy = nb.y - na.y;
         var d = Math.sqrt(dx * dx + dy * dy) || 0.01;
         var rest = e.kind === "contem" ? LINK_HIER : LINK;
-        var f = ((d - rest) / d) * 0.5 * alpha;
+        var f = ((d - rest) / d) * 0.35 * alpha;
         var fx = dx * f, fy = dy * f;
-        a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+        na.vx += fx; na.vy += fy; nb.vx -= fx; nb.vy -= fy;
       });
-      // centro + integração
+      // gravidade fraca ao centro
       nodes.forEach(function (n) {
         n.vx += (cx - n.x) * CENTER * alpha;
         n.vy += (cy - n.y) * CENTER * alpha;
+      });
+      // integração de velocidade
+      nodes.forEach(function (n) {
         if (n.fx != null) { n.x = n.fx; n.vx = 0; }
         if (n.fy != null) { n.y = n.fy; n.vy = 0; }
-        n.vx = Math.max(-MAXV, Math.min(MAXV, n.vx * 0.86));
-        n.vy = Math.max(-MAXV, Math.min(MAXV, n.vy * 0.86));
+        n.vx = Math.max(-MAXV, Math.min(MAXV, n.vx * 0.85));
+        n.vy = Math.max(-MAXV, Math.min(MAXV, n.vy * 0.85));
         n.x += n.vx; n.y += n.vy;
       });
+      // COLISÃO — separa nós que se sobrepõem (chave da legibilidade)
+      for (var pass = 0; pass < 2; pass++) {
+        for (i = 0; i < nodes.length; i++) {
+          for (j = i + 1; j < nodes.length; j++) {
+            var p = nodes[i], q = nodes[j];
+            var ddx = q.x - p.x, ddy = q.y - p.y;
+            var dist = Math.sqrt(ddx * ddx + ddy * ddy) || 0.01;
+            var minD = collR(p) + collR(q);
+            if (dist < minD) {
+              var push = (minD - dist) / dist / 2;
+              var ox = ddx * push, oy = ddy * push;
+              if (p.fx == null) { p.x -= ox; p.y -= oy; }
+              if (q.fx == null) { q.x += ox; q.y += oy; }
+            }
+          }
+        }
+      }
 
       render();
       alpha = Math.max(alphaMin, alpha - alphaDecay);
       if (alpha > alphaMin && running) raf = requestAnimationFrame(tick);
-      else running = false;
+      else { running = false; if (!settled) { settled = true; fitView(); } }
     }
 
     return {
-      start: function () { running = true; alpha = 1; cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); },
-      reheat: function () { alpha = 0.8; if (!running) { running = true; raf = requestAnimationFrame(tick); } },
-      nudge: function () { if (!running) { running = true; alpha = Math.max(alpha, 0.25); raf = requestAnimationFrame(tick); } },
+      start: function () { running = true; settled = false; alpha = 1; cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); },
+      reheat: function () { settled = false; alpha = 0.7; if (!running) { running = true; raf = requestAnimationFrame(tick); } },
+      nudge: function () { if (!running) { running = true; alpha = Math.max(alpha, 0.12); raf = requestAnimationFrame(tick); } },
     };
   }
 
@@ -205,7 +241,6 @@
       }
 
       g.addEventListener("pointerdown", onNodeDown);
-      g.addEventListener("click", function (ev) { ev.stopPropagation(); if (!dragMoved) select(n.id); });
       g.addEventListener("dblclick", function (ev) { ev.stopPropagation(); openTrace(n.id); });
       gNodes.appendChild(g);
       nodeEls[n.id] = { g: g, shape: shape };
@@ -457,47 +492,52 @@
   /* =======================================================================
      Interação: pan/zoom + drag de nó
      ======================================================================= */
-  var dragNode = null, dragMoved = false, panning = false, panStart;
+  var drag = null;   // { node, moved, sx, sy }
+  var pan = null;    // { ox, oy, moved, sx, sy }
+  var THRESH = 4;
 
   function onNodeDown(ev) {
     ev.stopPropagation();
-    var id = ev.currentTarget.__id;
-    dragNode = byId[id]; dragMoved = false;
-    dragNode.fx = dragNode.x; dragNode.fy = dragNode.y;
-    svg.setPointerCapture(ev.pointerId);
+    drag = { node: byId[ev.currentTarget.__id], moved: false, sx: ev.clientX, sy: ev.clientY };
   }
+  // pointerdown no fundo do SVG (nós dão stopPropagation) → inicia pan
   svg.addEventListener("pointerdown", function (ev) {
-    if (dragNode) return;
-    panning = true; panStart = { x: ev.clientX - view.x, y: ev.clientY - view.y };
+    pan = { ox: ev.clientX - view.x, oy: ev.clientY - view.y, moved: false, sx: ev.clientX, sy: ev.clientY };
     svg.classList.add("grabbing");
   });
-  svg.addEventListener("pointermove", function (ev) {
-    if (dragNode) {
-      var p = toLocal(ev.clientX, ev.clientY);
-      dragNode.fx = p.x; dragNode.fy = p.y; dragMoved = true;
-      sim.nudge(); return;
+  window.addEventListener("pointermove", function (ev) {
+    if (drag) {
+      if (!drag.moved && Math.hypot(ev.clientX - drag.sx, ev.clientY - drag.sy) > THRESH) drag.moved = true;
+      if (drag.moved) {
+        var p = toLocal(ev.clientX, ev.clientY);
+        drag.node.fx = p.x; drag.node.fy = p.y; sim.nudge();
+      }
+      return;
     }
-    if (panning) { view.x = ev.clientX - panStart.x; view.y = ev.clientY - panStart.y; applyView(); }
+    if (pan) {
+      if (!pan.moved && Math.hypot(ev.clientX - pan.sx, ev.clientY - pan.sy) > THRESH) pan.moved = true;
+      view.x = ev.clientX - pan.ox; view.y = ev.clientY - pan.oy; applyView();
+    }
   });
   window.addEventListener("pointerup", function () {
-    if (dragNode) { dragNode.fx = null; dragNode.fy = null; dragNode = null; sim.nudge(); }
-    panning = false; svg.classList.remove("grabbing");
+    if (drag) {
+      if (!drag.moved) select(drag.node.id);                 // clique = selecionar
+      else { drag.node.fx = null; drag.node.fy = null; sim.nudge(); }  // soltar nó arrastado
+      drag = null;
+    } else if (pan) {
+      if (!pan.moved) clearSelection();                      // clique no fundo = limpar
+      pan = null;
+    }
+    svg.classList.remove("grabbing");
   });
-  svg.addEventListener("click", function () { if (!panning) {} });
   svg.addEventListener("wheel", function (ev) {
     ev.preventDefault();
     var p = toLocal(ev.clientX, ev.clientY);
-    var k = Math.max(0.35, Math.min(2.6, view.k * (ev.deltaY < 0 ? 1.12 : 0.89)));
-    // zoom centrado no cursor
+    var k = Math.max(0.25, Math.min(2.6, view.k * (ev.deltaY < 0 ? 1.12 : 0.89)));
     view.x = ev.clientX - rectLeft() - p.x * k;
     view.y = ev.clientY - rectTop() - p.y * k;
     view.k = k; applyView();
   }, { passive: false });
-  svg.addEventListener("pointerdown", function () {}, true);
-  // clique no fundo limpa seleção
-  svg.addEventListener("click", function (ev) {
-    if (ev.target === svg || ev.target === gRoot) { clearSelection(); }
-  });
 
   function rectLeft() { return svg.getBoundingClientRect().left; }
   function rectTop() { return svg.getBoundingClientRect().top; }
@@ -585,7 +625,6 @@
   buildRail();
   showEmptyDetail();
   sim = createSim();
-  sim.start();
-  setTimeout(fitView, 1400); // enquadra após assentar
+  sim.start(); // enquadra sozinho (fitView) quando a simulação assenta
   window.addEventListener("resize", function () { applyView(); });
 })();
