@@ -159,6 +159,18 @@ Com as respostas, gere o artefato parcial:
 *Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
 
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece com um **verbo
+> de responsabilidade/abrangência** — o domínio *governa uma área*: **"Concentra…"**,
+> **"Centraliza…"**, **"Responde por…"**, **"Reúne tudo relacionado a…"**, **"Governa…"**.
+> Ordene as frases assim: (1ª) o que o domínio concentra e para quem · (2ª) pelo que
+> responde (entidades/dados principais) · (3ª) quem o consome (papel transversal).
+> Exemplo (domínio **Clientes** `CLI`):
+> ```
+> ## Descrição
+> Concentra o cadastro e a gestão dos clientes da empresa, servindo como fonte única de identificação de pessoas físicas e jurídicas para os demais domínios. Responde pelos dados cadastrais, situação do cliente e seu histórico de relacionamento. É consumido por Vendas, Faturamento e Atendimento sempre que precisam identificar quem é o cliente.
+> ```
+
 > **Tabela de Feature Sets** — renderize cada Feature Set como
 > `**Nome** <small>[SIGLA]-[SFS]</small>` (nome em negrito + ID em `<small>`, mesmo
 > padrão das Features no N2). O **ID `[SIGLA]-[SFS]` é atribuído aqui no N1** (Pergunta 2)
