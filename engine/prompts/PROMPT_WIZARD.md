@@ -278,10 +278,12 @@ principal]
 > **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
 > parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
 > **capacidade que o conjunto entrega ao usuário** — como o Feature Set é um processo
-> guiado, prefira um verbo de condução: **"Conduz o [perfil], passo a passo, …"**,
-> **"Reúne as etapas de…"**, **"Permite ao [perfil] …"**. Ordene as frases assim: (1ª) o
-> que o processo conduz e em que etapas · (2ª) o que isso permite ao perfil (iniciar,
-> retomar, acompanhar, cancelar). A linha `**Não faz**:` delimita o escopo negativo.
+> guiado, prefira um verbo de condução. Em ordem de preferência: **1) "Conduz o [perfil],
+> passo a passo, …"**; **2) "Reúne as etapas de…"**; **3) "Permite ao [perfil] …"**.
+> **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível. Ordene as
+> frases assim: (1ª) o que o processo conduz e em que etapas · (2ª) o que isso permite ao
+> perfil (iniciar, retomar, acompanhar, cancelar). A linha `**Não faz**:` delimita o
+> escopo negativo.
 > Exemplo (Feature Set **Abertura de Conta** `CTA-ABR`):
 > ```
 > ## Descrição

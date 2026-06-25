@@ -161,14 +161,17 @@ Com as respostas, gere o artefato parcial:
 
 > **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
 > parágrafo em **uma única linha contínua** (sem quebras internas). Comece com um **verbo
-> de responsabilidade/abrangência** — o domínio *governa uma área*: **"Concentra…"**,
-> **"Centraliza…"**, **"Responde por…"**, **"Reúne tudo relacionado a…"**, **"Governa…"**.
-> Ordene as frases assim: (1ª) o que o domínio concentra e para quem · (2ª) pelo que
-> responde (entidades/dados principais) · (3ª) quem o consome (papel transversal).
+> de responsabilidade/abrangência** — o domínio *responde por uma área*. Em ordem de
+> preferência: **1) "Responde por…"** (accountability sobre a área — combina com a seção
+> *O que este domínio NÃO faz*); **2) "Concentra…" / "Centraliza…"** (quando o foco é ser
+> fonte única); **3) "Governa…"** (domínios de regra/política). **Evite** verbos de ação
+> operacional (*Gerencia, Administra*) — eles puxam para o N2. Ordene as frases assim:
+> (1ª) o que o domínio responde e para quem · (2ª) o que mantém (entidades/dados
+> principais) · (3ª) quem o consome (papel transversal).
 > Exemplo (domínio **Clientes** `CLI`):
 > ```
 > ## Descrição
-> Concentra o cadastro e a gestão dos clientes da empresa, servindo como fonte única de identificação de pessoas físicas e jurídicas para os demais domínios. Responde pelos dados cadastrais, situação do cliente e seu histórico de relacionamento. É consumido por Vendas, Faturamento e Atendimento sempre que precisam identificar quem é o cliente.
+> Responde por todo o cadastro e a gestão dos clientes da empresa, sendo a fonte única de identificação de pessoas físicas e jurídicas para os demais domínios. Mantém os dados cadastrais, a situação do cliente e seu histórico de relacionamento. É consumido por Vendas, Faturamento e Atendimento sempre que precisam identificar quem é o cliente.
 > ```
 
 > **Tabela de Feature Sets** — renderize cada Feature Set como

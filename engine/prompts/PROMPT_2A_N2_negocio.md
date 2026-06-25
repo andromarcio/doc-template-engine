@@ -178,9 +178,11 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 
 > **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
 > parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
-> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*:
-> **"Reúne as operações de…"**, **"Agrupa as funcionalidades que permitem…"**,
-> **"Permite ao [perfil] …"** (verbos diferentes do N1, que *concentra/governa* uma área).
+> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*.
+> Em ordem de preferência: **1) "Reúne as operações de…"** (estruturalmente exato: um
+> conjunto reúne operações, já antecipando as features); **2) "Agrupa as funcionalidades
+> que permitem…"**; **3) "Permite ao [perfil] …"** (quando o destaque é o valor para o
+> perfil). **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível.
 > Ordene as frases assim: (1ª) quais operações reúne, já antecipando as features · (2ª) o
 > que isso permite ao perfil. A linha `**Não faz**:` delimita o escopo negativo do conjunto.
 > Exemplo (Feature Set **Cadastro de Clientes** `CLI-CAD`):
