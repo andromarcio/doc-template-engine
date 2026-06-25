@@ -275,6 +275,21 @@ principal]
 *Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
 
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
+> **capacidade que o conjunto entrega ao usuário** — como o Feature Set é um processo
+> guiado, prefira um verbo de condução: **"Conduz o [perfil], passo a passo, …"**,
+> **"Reúne as etapas de…"**, **"Permite ao [perfil] …"**. Ordene as frases assim: (1ª) o
+> que o processo conduz e em que etapas · (2ª) o que isso permite ao perfil (iniciar,
+> retomar, acompanhar, cancelar). A linha `**Não faz**:` delimita o escopo negativo.
+> Exemplo (Feature Set **Abertura de Conta** `CTA-ABR`):
+> ```
+> ## Descrição
+> Conduz o cliente, passo a passo, pela abertura de uma nova conta, reunindo as etapas de identificação, envio de documentos e confirmação. Permite ao cliente iniciar a solicitação, salvá-la como rascunho, retomá-la depois e acompanhar seu andamento até a aprovação.
+>
+> **Não faz**: análise de crédito nem movimentação financeira da conta já aberta.
+> ```
+
 > **Regra do Fluxo principal (Wizard)** — O `## Fluxo Principal` do wizard é um
 > **esqueleto canônico fixo**: copie o diagrama abaixo, **instancie um nó
 > `["Etapa k — {nome}"]` por etapa real** (mantendo, para cada uma, o portão de

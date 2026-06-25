@@ -236,6 +236,21 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 *Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
 
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
+> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*:
+> **"Reúne as operações de…"**, **"Agrupa as funcionalidades que permitem…"**,
+> **"Permite ao [perfil] …"**. Ordene as frases assim: (1ª) quais operações reúne, já
+> antecipando as features · (2ª) o que isso permite ao perfil. A linha `**Não faz**:`
+> delimita o escopo negativo do conjunto.
+> Exemplo (Feature Set **Cadastro de Clientes** `CLI-CAD`):
+> ```
+> ## Descrição
+> Reúne as operações de manutenção do cadastro de clientes: incluir, pesquisar, editar, visualizar e desativar um cliente. Permite ao operador manter os dados cadastrais sempre atualizados a partir de uma única área do sistema.
+>
+> **Não faz**: análise de crédito, faturamento ou histórico de compras do cliente.
+> ```
+
 > **Regra do Fluxo principal (CRUD)** — O `## Fluxo Principal` do CRUD é um
 > **esqueleto canônico fixo**: copie o diagrama abaixo e apenas troque `{Entidade}`
 > pelo nome da entidade. **Não** redesenhe os nós nem as setas — a estrutura é a mesma
