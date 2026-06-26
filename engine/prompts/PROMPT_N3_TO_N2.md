@@ -162,6 +162,8 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Sintetizado a partir dos N3s pelo PROMPT N3→N2 |

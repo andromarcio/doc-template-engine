@@ -166,7 +166,7 @@ Atualize apenas as seções técnicas (`dev-only`) afetadas:
   O cabeçalho `## Métricas de tamanho` deve ficar **seguido diretamente pela tabela**:
   não insira texto explicativo entre eles e, se encontrar notas legadas nessa posição
   (ex.: "Registra apenas Funções de Transação…" ou aviso de contagem provisória),
-  **remova-as** — ressalvas vão no Changelog ou na memória de cálculo.
+  **remova-as** — ressalvas vão no Changelog (nova linha no topo, ordem decrescente por data) ou na memória de cálculo.
   **Havendo alteração na contagem**, atualizar também o consolidado
   `global/CONTAGEM-PF.md` (linha do PE/entidade, subtotais e Total) e propagar o
   total para `modules/INDEX.md` — ver a regra de manutenção no topo do CONTAGEM-PF.md.
@@ -183,6 +183,7 @@ Apresente apenas as seções técnicas alteradas. Pergunte:
 
 Gere o arquivo .md completo com negocial + técnico mesclados.
 Ao mesclar, acrescentar nova entrada no `## Changelog` do arquivo registrando a atualização técnica.
+A nova linha entra **no topo da tabela** (logo abaixo do cabeçalho), mantendo o changelog em **ordem decrescente por data** — a entrada mais recente sempre primeiro.
 
 Ao finalizar, informe obrigatoriamente:
 

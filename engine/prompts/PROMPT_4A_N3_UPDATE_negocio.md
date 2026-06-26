@@ -164,7 +164,9 @@ alinhadas e confirme:
 Gere a versão atualizada das seções negociais do N3 afetadas,
 evidenciando o que mudou. Se a alteração veio de uma história, adicione a linha
 correspondente à seção `## Origem` (Tipo "Alteração"). Adicione ou atualize a
-seção de changelog:
+seção de changelog. **Insira a nova linha no topo da tabela** (logo abaixo do
+cabeçalho), mantendo o changelog em **ordem decrescente por data** — a entrada
+mais recente sempre primeiro:
 
 ```markdown
 ## Changelog
@@ -172,6 +174,7 @@ seção de changelog:
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data] | [nome] | Novo campo / Regra alterada / Correção | [o que mudou e por quê] |
+| [data anterior] | … | … | … |
 ```
 
 Apresente apenas as seções alteradas (não repita o que não mudou).
@@ -196,7 +199,8 @@ Atualize os outros dois lados, espelhando a linha que entrou na `## Origem`:
 
 **1. `modules/_backlog/[chave].md`** — na seção `## Rastreabilidade — Features
 (N3) que realizam esta história`, adicione a linha desta feature se ainda não
-constar, e registre uma linha no changelog da história ("Feature alterada").
+constar, e registre uma linha no topo do changelog da história ("Feature
+alterada") — mantendo o changelog em ordem decrescente por data.
 
 **2. `modules/INDEX.md`** — garanta que existe a linha do par história↔feature na
 tabela `## Rastreabilidade: história → spec → código` (adicione se faltar;

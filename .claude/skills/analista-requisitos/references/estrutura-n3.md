@@ -178,6 +178,8 @@ Scenario: [descrição técnica — cookies, headers, HTTP status, jobs]
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data] | [autor] | Feature criada | N3 gerado |

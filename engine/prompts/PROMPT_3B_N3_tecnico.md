@@ -250,7 +250,7 @@ escreva nenhum texto entre o título e a tabela**: nada de "Registra apenas Fun�
 Transação (EE/SE/CE)…", aviso de contagem provisória ou explicação sobre ALI/AIE
 estarem no DATA-MODEL. Essas notas existem só para orientar a contagem e vivem no
 `global/SIZING.md`, não no N3 gerado. Qualquer ressalva pontual (lacuna ⚠️, contagem
-provisória) vai no **Changelog** ou na **memória de cálculo** abaixo da tabela — nunca
+provisória) vai no **Changelog** (nova linha no topo, ordem decrescente por data) ou na **memória de cálculo** abaixo da tabela — nunca
 entre o cabeçalho e a tabela.
 
 | Função de Transação | Tipo | ALR | DER | Complexidade | PF | Data |
@@ -320,7 +320,7 @@ Após aprovação, gere o arquivo completo:
 </div>
 
 ## Implementação                     ← rastreabilidade (preenchido após dev)
-## Changelog                         ← acrescentar entrada ao gerar o arquivo final
+## Changelog                         ← acrescentar entrada no topo (ordem decrescente por data) ao gerar o arquivo final
 *Links: [N2] · [N1] · [INDEX]*       ← rodapé (última linha, como no template)
 ```
 

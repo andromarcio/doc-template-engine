@@ -92,6 +92,8 @@ que justifica adotar este produto em vez de uma alternativa ou do status quo.]
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data] | [autor] | N0 criado | Visão de produto inicial |

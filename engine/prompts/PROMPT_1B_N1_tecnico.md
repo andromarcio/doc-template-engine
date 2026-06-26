@@ -112,7 +112,7 @@ Aplique a marcação de visibilidade:
 - Dentro de `<div class="dev-only">`: Entidades do domínio, Dependências externas
   e Regras de acesso consolidadas
 
-> **Nota**: ao gerar o arquivo final, acrescentar nova entrada no `## Changelog` (última seção do arquivo) registrando a adição das seções técnicas.
+> **Nota**: ao gerar o arquivo final, acrescentar nova entrada no `## Changelog` (última seção do arquivo) registrando a adição das seções técnicas. A nova linha entra **no topo da tabela** (logo abaixo do cabeçalho), mantendo o changelog em **ordem decrescente por data**.
 
 ---
 

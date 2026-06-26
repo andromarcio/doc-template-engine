@@ -505,6 +505,8 @@ Com as respostas de todos os blocos, gere:
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | Feature criada | N3 negocial gerado |
@@ -558,7 +560,8 @@ Na seção `## Rastreabilidade — Features (N3) que realizam esta história`, a
 ```
 
 Atualize também o cabeçalho `> **Especificada em (N3)**:` da história se ainda
-estiver "pendente", e acrescente uma linha ao changelog dela ("Feature especificada").
+estiver "pendente", e acrescente uma linha **no topo** do changelog dela ("Feature
+especificada") — mantendo o changelog em ordem decrescente por data.
 
 **2. Índice consolidado — `modules/INDEX.md`**
 Na tabela `## Rastreabilidade: história → spec → código`, adicione uma linha por

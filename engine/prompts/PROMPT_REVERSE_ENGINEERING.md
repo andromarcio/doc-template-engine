@@ -418,6 +418,7 @@ Body/params e respostas extraídos do controller/DTO; tipos completos → DATA-M
 ---
 
 ## Changelog
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | Claude (eng. reversa) | Feature criada | N3 rascunhado do código — requer validação |

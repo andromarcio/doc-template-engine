@@ -149,6 +149,8 @@ Com as respostas, gere o artefato parcial:
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N1 negocial criado | Gerado pelo PROMPT 1A |

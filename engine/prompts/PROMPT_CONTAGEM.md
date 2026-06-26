@@ -155,7 +155,7 @@ cabeçalho (acrescente a coluna `Data` se a tabela existente ainda não a tiver)
 
 - `Data` = a data em que a linha foi contada/atualizada (hoje, formato ISO `AAAA-MM-DD`).
 - Linha **inalterada numa recontagem** mantém a `Data` anterior (Princípio 6).
-- Registre uma entrada no `## Changelog` do N3 (tipo "Contagem"/"Recontagem").
+- Registre uma entrada no `## Changelog` do N3 (tipo "Contagem"/"Recontagem"), inserindo a nova linha **no topo da tabela** — o changelog fica em **ordem decrescente por data**.
 
 **Funções de dados → `global/data-models/[dominio].md → ## Arquivos Lógicos` (fonte de
 cálculo) e o índice `global/DATA-MODEL.md → ## Arquivos Lógicos (APF)`** (acrescente a

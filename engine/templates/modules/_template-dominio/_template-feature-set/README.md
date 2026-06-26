@@ -64,6 +64,8 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [AAAA-MM-DD] | [autor] | N2 criado | Gerado pelo PROMPT 2A |
