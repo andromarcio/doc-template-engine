@@ -33,6 +33,7 @@ NFRs são **herdados** por todas as features — não se repetem nos N3. Um N3 s
 
 | ID | Categoria | Requisito |
 |---|---|---|
+| [SEG-01](#seg-01--autorização-por-funcionalidade) | Segurança | Acesso a cada funcionalidade é controlado por perfil, no servidor |
 | [AUD-01](#aud-01--registro-de-auditoria) | Auditoria | Ações críticas ficam registradas em log de auditoria |
 
 > Categorias (prefixos FURPS+): **DES** Desempenho · **SEG** Segurança ·
@@ -48,7 +49,26 @@ NFRs são **herdados** por todas as features — não se repetem nos N3. Um N3 s
 
 ## SEG — Segurança
 
-> *(sem itens ainda)*
+### SEG-01 — Autorização por funcionalidade
+
+**Requisito**: o acesso a cada funcionalidade (Feature N3) é controlado por
+perfil e **aplicado no servidor**. A funcionalidade é o átomo de autorização,
+identificada pelo ID da Feature (`[SIGLA]-[SFS]-[NN]`); o vínculo perfil↔
+funcionalidade é dado configurável, sem alteração de código. Modelo completo em
+`global/AUTHZ.md`.
+
+**Critério de aceitação**: (a) toda requisição a um endpoint de funcionalidade é
+negada quando o perfil do usuário não tem a Feature vinculada — *nega por
+padrão*; (b) a ocultação no frontend é apenas UX e nunca a única barreira; (c) o
+perfil Administrador acessa toda Feature do Catálogo; (d) uma Feature globalmente
+desabilitada é inacessível a todos, independentemente de perfil.
+
+**Verificação**: teste negativo que chama o endpoint com perfil sem vínculo e
+espera negação; teste que confirma acesso com vínculo; teste do *kill switch*
+global; revisão de que todo endpoint de funcionalidade declara o ID da Feature.
+
+**Exceções**: autenticação/identidade no login → SSO corporativo (fora do
+sistema); registro do acesso → ver NFR AUD-01.
 
 ## CONF — Confiabilidade / Disponibilidade
 

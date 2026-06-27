@@ -16,6 +16,23 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-06-27
+
+### Added
+- `engine/templates/global/AUTHZ.md` — modelo de autorização transversal: controle
+  de acesso por **funcionalidade**, com a Feature (N3) como átomo de permissão
+  (ID estável `[SIGLA]-[SFS]-[NN]`). Cobre Catálogo de Funcionalidades (espelho do
+  N3/INDEX, populado por DML idempotente MERGE por ID), matriz perfil↔funcionalidade,
+  enforcement no front (diretiva) e no back (anotação), kill switch global, ciclo de
+  vida e decisões de arquitetura. Nega por padrão; Administrador recebe tudo.
+- `NFR.md` (template): **SEG-01 — Autorização por funcionalidade**, herdada por toda Feature.
+
+### Changed
+- `MASTER.md` (template): decisão transversal 7 (autorização) e nova linha na tabela
+  de arquivos globais de referência apontando `global/AUTHZ.md`.
+- `docs/content/templates.md`, `README.md` e `docs/content/estrutura.md`: catálogo de
+  templates `global/` passa a listar `AUTHZ.md`.
+
 ## [1.1.0] - 2026-06-23
 
 ### Added
