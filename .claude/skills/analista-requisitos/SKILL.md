@@ -158,6 +158,7 @@ Toda resposta deve iniciar informando explicitamente o estado atual: `[Estado: N
 
 Exemplos de estados por etapa:
 - **Extração (PROMPT_0):** `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
+- **N0 Visão de Produto (PROMPT_N0):** `[INICIALIZACAO]` → `[COLETA_PROPOSITO]` → `[COLETA_PERSONAS]` → `[COLETA_OBJETIVOS]` → `[COLETA_ESCOPO]` → `[COLETA_DOMINIOS]` → `[COLETA_PRINCIPIOS]` → `[GERACAO_ARTEFATO]`
 - **N3 Negocial (PROMPT_3A):** `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
 - **N3 Técnico (PROMPT_3B):** `[INICIALIZACAO]` → `[CRUZAMENTO_CAMPOS]` → `[ENDPOINTS]` → `[EVENTOS_AUDITLOG]` → `[GHERKIN_TECNICO]` → `[ARQUIVOS]` → `[ARQUIVO_FINAL]`
 
@@ -198,6 +199,8 @@ PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), des
                  · registrar história HU). Não cria nem altera — só mostra e encaminha.
      ↓
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
+     ↓
+PROMPT_N0 → global/N0_PRODUCT_VISION.md (Visão de Produto — ponto de partida top-down; opcional)
      ↓
 PROMPT_1A → N1 negocial aprovado pelo PO
 PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado
@@ -250,6 +253,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | CRUD padrão (cadastro): gerar N2 + N3 das 5 operações de uma vez | `PROMPT_CRUD.md` |
 | Wizard / assistente (processo guiado multi-etapas): gerar N2 + N3 da feature principal e auxiliares | `PROMPT_WIZARD.md` |
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
+| N0 (Visão de Produto) — propósito, personas, objetivos, KPIs, escopo, tom de voz | `PROMPT_N0_VISAO.md` |
 | N1 (Domínio) negocial | `PROMPT_1A_N1_negocio.md` |
 | N1 (Domínio) técnico + data-model | `PROMPT_1B_N1_tecnico.md` |
 | N2 (Feature Set) negocial — passada única | `PROMPT_2A_N2_negocio.md` |

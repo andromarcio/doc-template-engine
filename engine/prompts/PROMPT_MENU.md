@@ -70,10 +70,11 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 ---
 
-### 📥 Fase 0 — Preparação
+### 📥 Fase 0 — Visão e Preparação
 
 | # | Opção | O que faz |
 |---|---|---|
+| **N0** | Especificar Visão de Produto | Levanta propósito, personas, objetivos, KPIs, escopo, domínios previstos e tom de voz e gera `global/N0_PRODUCT_VISION.md` — o documento de referência mais alto e ponto de partida do fluxo **top-down** |
 | **HU** | Registrar história de usuário (ServiceNow) | Captura a história/item de backlog, mapeia as features que ela gera e cria o artefato em `_backlog/` — ponto de entrada do processo, com rastreabilidade história → spec |
 | **0** | Extrair insumos brutos | Organiza transcrições, PDFs, rascunhos e anotações em uma base estruturada para usar nas próximas fases |
 
@@ -195,6 +196,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **R3** | 1. MASTER.md *(se existir)* · 2. modules/INDEX.md + repos/[repo].md (do R0) *(ou domínio/SIGLA informados)* · 3. DATA-MODEL.md existente *(se houver)* · 4. **Documentação legada** (PDF/wiki/Word/planilha colados) · 5. **Código**: modelos · 6. Código: rotas/controllers · 7. Código: serviços · 8. Código: testes *(opcional)* · 9. Código: eventos/workers *(se houver)* |
 | **B2** | 1. N3s do Feature Set (todos) |
 | **B1** | 1. N2s do domínio (todos) · 2. modules/INDEX.md *(opcional, para mapear integrações)* · 3. N3s adicionais sem N2 *(opcional)* |
+| **N0** | 1. MASTER.md *(opcional — sigla, nome e descrição do produto; no Claude Code é lido do disco)* · 2. Descrição do produto em linguagem natural (problema, público, valor — coletada na sessão) · 3. modules/_base-conhecimento/[assunto].md *(opcional — saída do PROMPT_0)* |
 | **HU** | 1. Número da história no ServiceNow + descrição + critérios de aceite *(manual enquanto não há integração; via MCP no futuro)* · 2. modules/INDEX.md *(opcional — ajuda no roteamento)* · 3. N0_PRODUCT_VISION.md *(opcional)* |
 | **0** | 1. N0_PRODUCT_VISION.md *(opcional)* · 2. Insumos brutos (texto livre, transcrição, PDF colado) |
 | **1A** | 1. MASTER.md |
@@ -272,6 +274,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | AT | PROMPT_AUDIT_TRACE_LINKS.md |
 | PD | PROMPT_PENDENCIAS.md |
 | HU | PROMPT_BACKLOG.md |
+| N0 | PROMPT_N0_VISAO.md |
 | 0 | PROMPT_0_EXTRACTION.md |
 | 1A | PROMPT_1A_N1_negocio.md |
 | 1B | PROMPT_1B_N1_tecnico.md |

@@ -16,6 +16,29 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-06-30
+
+### Added
+- `engine/prompts/PROMPT_N0_VISAO.md` — prompt que conduz o levantamento da **Visão
+  de Produto (N0)**, fechando a lacuna do nível mais alto (antes só havia o template
+  e o N0 consumido pelos demais prompts, sem roteiro para criá-lo). Máquina de estados
+  (`[INICIALIZACAO] → [COLETA_PROPOSITO] → [COLETA_PERSONAS] → [COLETA_OBJETIVOS] →
+  [COLETA_ESCOPO] → [COLETA_DOMINIOS] → [COLETA_PRINCIPIOS] → [GERACAO_ARTEFATO]`), uma
+  pergunta por estado, carimbo de versão, checklist e gate determinístico. Gera
+  `global/N0_PRODUCT_VISION.md` e encaminha para o PROMPT_1A (que já confronta os
+  domínios contra esta visão e reaproveita as siglas propostas).
+- `scripts/validate-doc.mjs`: validação de **N0** (detecção pelo subtítulo `**Nível 0**`),
+  exigindo título `# Visão de Produto: [Nome]`, SIGLA do produto no subtítulo, as seções
+  obrigatórias da visão e as subseções `### Está dentro` / `### Está fora (não-objetivos)`.
+
+### Changed
+- `engine/templates/global/N0_PRODUCT_VISION.md`: título e subtítulo alinhados ao padrão
+  dos demais níveis (`# Visão de Produto: [Nome]` + `> **Nível 0** - Visão de Produto -
+  \`[SIGLA]\``), para que template, prompt e validador concordem.
+- `PROMPT_MENU.md` (opção **N0** na Fase 0 + insumos + mapeamento de execução),
+  `SKILL.md` (sequência e tabela de roteamento) e os docs (`n0.md`, `prompts.md`)
+  passam a registrar e rotear o novo prompt.
+
 ## [1.1.0] - 2026-06-23
 
 ### Added

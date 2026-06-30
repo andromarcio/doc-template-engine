@@ -25,6 +25,7 @@ Exemplos de estados por etapa:
 - Triagem de necessidade (PROMPT_TRIAGEM): `[INICIALIZACAO]` → `[LEITURA_NECESSIDADE]` → `[MAPEAMENTO_DOC]` → `[CRUZAMENTO]` → `[RECOMENDACAO]`
 - Intake de história (PROMPT_HU): `[INICIALIZACAO]` → `[INTAKE_HISTORIA]` → `[ROTEAMENTO]` → `[GERACAO_ARTEFATO_HU]`
 - Extração (PROMPT_0): `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
+- N0 Visão de Produto (PROMPT_N0): `[INICIALIZACAO]` → `[COLETA_PROPOSITO]` → `[COLETA_PERSONAS]` → `[COLETA_OBJETIVOS]` → `[COLETA_ESCOPO]` → `[COLETA_DOMINIOS]` → `[COLETA_PRINCIPIOS]` → `[GERACAO_ARTEFATO]`
 - N3 Negocial (PROMPT_3A): `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
 - N3 Técnico (PROMPT_3B): `[INICIALIZACAO]` → `[CRUZAMENTO_CAMPOS]` → `[ENDPOINTS]` → `[EVENTOS_AUDITLOG]` → `[GHERKIN_TECNICO]` → `[ARQUIVOS]` → `[ARQUIVO_FINAL]`
 
@@ -183,6 +184,8 @@ PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), des
                  já existe e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX · história HU)
 PROMPT_HU → modules/_backlog/[chave].md (entrada — história do ServiceNow; origina os N3)
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
+     ↓
+PROMPT_N0 → global/N0_PRODUCT_VISION.md (Visão de Produto — ponto de partida top-down; opcional)
      ↓
 PROMPT_1A → N1 negocial aprovado pelo PO
 PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado

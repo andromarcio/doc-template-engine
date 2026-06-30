@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// validate-doc.mjs — valida a conformidade estrutural de artefatos N1/N2/N3
-// gerados pelos PROMPTs 1A / 2A / 3A. Determinístico: independe do modelo/harness
+// validate-doc.mjs — valida a conformidade estrutural de artefatos N0/N1/N2/N3
+// gerados pelos PROMPTs N0 / 1A / 2A / 3A. Determinístico: independe do modelo/harness
 // que produziu o arquivo. O nível é detectado pela linha "**Nível X**" do subtítulo.
 //
 // Uso:
@@ -126,6 +126,36 @@ function requireSections(lines, names, errors) {
   }
 }
 
+const N0_SECTIONS = [
+  'Propósito',
+  'Proposta de valor',
+  'Público-alvo e personas',
+  'Objetivos do produto',
+  'Métricas de sucesso (KPIs)',
+  'Escopo',
+  'Domínios previstos (N1)',
+  'Tom de voz e princípios de experiência',
+  'Restrições e premissas',
+];
+
+function validateN0(lines, raw, errors) {
+  const title = checkCommon(lines, errors);
+  if (title && !/^# Visão de Produto: .+/.test(title.trim())) {
+    errors.push('Título deve ser "# Visão de Produto: [Nome]".');
+  }
+  const sub = lines.find((l) => l.trim().startsWith('> **Nível 0**'));
+  if (sub && !/`[A-Z]{2,6}`/.test(sub)) {
+    errors.push('Subtítulo N0 sem SIGLA do produto em crase (ex.: `SIGEF`).');
+  }
+  requireSections(lines, N0_SECTIONS, errors);
+  if (!lines.some((l) => l.trim() === '### Está dentro')) {
+    errors.push('Falta a subseção "### Está dentro" em "## Escopo".');
+  }
+  if (!lines.some((l) => l.trim() === '### Está fora (não-objetivos)')) {
+    errors.push('Falta a subseção "### Está fora (não-objetivos)" em "## Escopo".');
+  }
+}
+
 function validateN1(lines, raw, errors) {
   const title = checkCommon(lines, errors);
   if (title && !/^# Domínio: .+/.test(title.trim())) errors.push('Título deve ser "# Domínio: [Nome]".');
@@ -209,13 +239,14 @@ function validate(file) {
   const raw = readFileSync(file, 'utf8');
   const lines = raw.split(/\r?\n/);
 
-  const levelLine = lines.find((l) => /> \*\*Nível [123]\*\*/.test(l));
-  const level = levelLine ? levelLine.match(/Nível ([123])/)[1] : null;
+  const levelLine = lines.find((l) => /> \*\*Nível [0123]\*\*/.test(l));
+  const level = levelLine ? levelLine.match(/Nível ([0123])/)[1] : null;
 
-  if (level === '1') validateN1(lines, raw, errors);
+  if (level === '0') validateN0(lines, raw, errors);
+  else if (level === '1') validateN1(lines, raw, errors);
   else if (level === '2') validateN2(lines, raw, errors);
   else if (level === '3') validateN3(lines, raw, errors);
-  else errors.push('Nível não detectado (falta o subtítulo "> **Nível 1|2|3**").');
+  else errors.push('Nível não detectado (falta o subtítulo "> **Nível 0|1|2|3**").');
 
   return { level, errors };
 }
