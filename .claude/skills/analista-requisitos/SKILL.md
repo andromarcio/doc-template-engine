@@ -31,7 +31,7 @@ Use esta skill de dois modos:
 > **Texto corrido (obrigatório):** ao gravar arquivos `.md`, cada parágrafo de prosa deve ser uma única linha contínua, sem quebras de linha internas. Quebras de linha só para separar parágrafos, itens de lista, cabeçalhos e blocos de código. Isso garante que o HTML renderize o texto fluindo conforme a largura da tela.
 
 > **Carimbo de versão (obrigatório):** ao gerar **ou atualizar** qualquer artefato, leia
-> `engine/VERSION` e garanta que a **primeira linha** seja o comentário invisível
+> `VERSION` (na raiz do engine) e garanta que a **primeira linha** seja o comentário invisível
 > `<!-- doc-template-engine: <versão> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`.
 > Em updates, **reescreva** o carimbo (não duplique). Detalhes em `engine/VERSIONING.md`.
 
@@ -104,8 +104,7 @@ pelo `PROMPT_AUDIT_RULES_DEDUP`.
 | Label Dev | camelCase, português | `nomeCompleto` | **data-models/[dominio].md** — apenas aqui |
 | Campo banco | snake_case, português | `nome_completo` | **data-models/[dominio].md** — apenas aqui |
 
-**Regra absoluta**: Label Dev e campo banco vivem SOMENTE nos arquivos de `global/data-models/`.
-Os N3 usam apenas Label PO na tabela de campos.
+**Regra absoluta — fonte única de definição de banco**: **toda** definição física do banco de dados — entidade/tabela, Label Dev (camelCase), campo banco (snake_case), tipo SQL, chave estrangeira (FK), índice, restrição de unicidade e enum de banco — vive **exclusivamente** nos fragmentos `global/data-models/[dominio].md` (detalhe) e em `global/DATA-MODEL.md` (índice). Nenhum outro artefato — N0, N1, N2, N3, SDD, protótipo, contagem — **redefine** essas informações: todos as **consomem por referência** (`→ ver DATA-MODEL.md: Entidade [Nome]`). Definição de banco nova ou alterada entra **primeiro** no DATA-MODEL (com aprovação ⚠️) e só então é citada em outro lugar. Os N3 usam apenas Label PO na tabela de campos; os prompts técnicos referenciam o data-model — nunca copiam tipos, FK ou índices.
 
 ### Traduções no Modo PO
 

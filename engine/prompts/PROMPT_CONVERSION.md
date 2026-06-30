@@ -173,7 +173,9 @@ Use o template `_template-feature.md` **na íntegra**, incluindo os blocos
   fonte mais confiável de comportamento) e marque 🔍 nos cenários inferidos
   só do controller. Mensagens de erro: texto **literal** (resolver no
   ERROR/MESSAGE-DICTIONARY), nunca "conforme o Design System".
-- **Campos**: só Label PO + regras de negócio (técnico fica no DATA-MODEL).
+- **Campos**: a tabela do N3 tem só Label PO, Tipo (negocial), Obrigatório e
+  Validação. Campo banco, Label Dev, tipo SQL, FK e índice **não** entram no N3 —
+  vivem só no DATA-MODEL; o N3 referencia (`→ ver DATA-MODEL.md: Entidade [Nome]`).
 - **Comportamento de tela**: se só houver backend, marque ❓ "requer análise
   do frontend ou do PO" — não invente.
 - **Métricas de tamanho**: deixar o esqueleto e marcar ❓ "preencher após

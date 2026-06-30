@@ -51,7 +51,7 @@ um comentário HTML:
 Ao chegar no estado terminal de geração de artefato (`[GERACAO_ARTEFATO]`,
 `[ARQUIVO_FINAL]`, `[GERACAO_ARTEFATO_BASE]` etc.), **antes de escrever o conteúdo**:
 
-1. Leia a versão vigente em `engine/VERSION`.
+1. Leia a versão vigente em `VERSION` (na raiz do engine).
 2. Garanta que a **primeira linha** do artefato seja o carimbo, preenchido com a
    versão lida, o ID do prompt corrente e a data de hoje.
 3. Em **atualização** de artefato existente (PROMPT_4A/4B e demais updates):

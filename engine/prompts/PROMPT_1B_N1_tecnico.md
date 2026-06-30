@@ -26,6 +26,9 @@ Regras da sessão:
   aguarde aprovação explícita antes de continuar.
 - O N1 não lista campos detalhados — apenas nome e descrição das entidades,
   com referência ao DATA-MODEL.md. Os campos completos vivem no DATA-MODEL.md.
+- **Fonte única de definição de banco**: campo banco, tipo SQL, FK, índice,
+  restrição de unicidade e enum vivem **só** no DATA-MODEL. O N1 **nunca** os
+  redefine — apenas referencia (`→ ver DATA-MODEL.md: Entidade [Nome]`).
 - Sinalize suposições com ⚠️.
 
 ---

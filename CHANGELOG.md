@@ -38,6 +38,25 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 - `PROMPT_MENU.md` (opção **N0** na Fase 0 + insumos + mapeamento de execução),
   `SKILL.md` (sequência e tabela de roteamento) e os docs (`n0.md`, `prompts.md`)
   passam a registrar e rotear o novo prompt.
+- **Fonte única de definição de banco — endurecimento.** Regra ampliada e tornada
+  explícita em `SKILL.md`, `SYSTEM_PROMPT_analista_requisitos.md` e no cabeçalho do
+  template `DATA-MODEL.md`: **toda** definição física (entidade, Label Dev, campo banco,
+  tipo SQL, FK, índice, restrição de unicidade, enum) vive **só** no DATA-MODEL; todo
+  outro artefato **referencia** (`→ ver DATA-MODEL.md`), nunca redefine. Reforço pontual
+  em `PROMPT_1B`, `PROMPT_3B` (relacionamentos de seleção/combobox vão ao DATA-MODEL, não
+  ao N3), `PROMPT_4B`, `PROMPT_CONVERSION` e `PROMPT_REVERSE_ENGINEERING` (coluna *Tipo*
+  do N3 é negocial, não tipo SQL).
+- `PROMPT_SDD.md`: seção **3 (Modelo de dados)** reescrita — antes redefinia o schema
+  físico (ERD com PK/FK/tipos, tabela de colunas com constraints/índices, `CREATE
+  INDEX/TYPE`, lista de migrations), criando uma segunda fonte de verdade. Agora
+  **referencia** o DATA-MODEL e guarda só conteúdo de design: entidades no escopo,
+  relacionamentos em nível de arquitetura e **estratégia/ordem** de migração (sem DDL).
+
+### Fixed
+- Referências ao arquivo de versão corrigidas de `engine/VERSION` para `VERSION` (o
+  arquivo vive na **raiz** do engine, como o README e o `stamp.sh` já assumiam) em
+  `SKILL.md`, `SYSTEM_PROMPT_analista_requisitos.md`, `engine/VERSIONING.md` e o template
+  `CLAUDE.md` — o agente seguia um caminho inexistente ao carimbar artefatos.
 
 ## [1.1.0] - 2026-06-23
 

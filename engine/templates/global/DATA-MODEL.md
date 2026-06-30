@@ -5,8 +5,12 @@
 > para otimizar o contexto enviado ao LLM — cole apenas o fragmento do
 > domínio que está sendo trabalhado, não o arquivo inteiro.
 >
-> Os N3 referenciam com: `→ ver DATA-MODEL.md: Entidade [Nome]`
-> Os N3 **nunca** duplicam Label Dev ou campo banco em suas tabelas.
+> **Fonte única de definição de banco.** Toda definição física — entidade/tabela,
+> Label Dev, campo banco, tipo SQL, FK, índice, restrição de unicidade e enum —
+> vive **exclusivamente** aqui (índice) e nos fragmentos `global/data-models/`.
+> Qualquer outro artefato (N0–N3, SDD, protótipo, contagem) **referencia**, nunca
+> redefine: `→ ver DATA-MODEL.md: Entidade [Nome]`. Os N3 usam só Label PO e
+> **nunca** duplicam Label Dev, campo banco, tipo ou FK em suas tabelas.
 
 ---
 

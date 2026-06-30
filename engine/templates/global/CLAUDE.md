@@ -53,7 +53,7 @@ import do Claude Code). Ajuste a lista ao que existir na instância:
   > digitar `/`, ela não foi instalada nesta instância — rode o
   > `scripts/install-skill.sh` do `doc-template-engine`.
 - **Ao gerar ou atualizar qualquer artefato**, carimbe-o: a primeira linha deve ser
-  o comentário invisível `<!-- doc-template-engine: <versão de engine/VERSION> | prompt:
+  o comentário invisível `<!-- doc-template-engine: <versão de VERSION> | prompt:
   <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`. Em updates, reescreva o carimbo (não
   duplique). É invisível ao leitor do documento; serve para auditar com que versão do
   framework o artefato foi produzido. Ver `engine/VERSIONING.md`.

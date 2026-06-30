@@ -151,7 +151,10 @@ Se houver campos novos aprovados, liste-os para adição ao fragmento do domíni
 **[Estado: GERACAO_TECNICA]**
 
 Atualize apenas as seções técnicas (`dev-only`) afetadas:
-- Mapeamento de campos: atualizar referência ao data-models se entidade mudou
+- Mapeamento de campos: atualizar **apenas a referência** ao data-models se a
+  entidade mudou (`→ ver DATA-MODEL.md: Entidade [Nome]`). Tipo SQL, campo banco,
+  FK e índices são alterados **no DATA-MODEL**, nunca reescritos no N3 — mantenha-os
+  sincronizados lá.
 - Cenários técnicos adicionais: adicionar/remover conforme mudanças
 - Mapeamento de erros: verificar no ERROR-DICTIONARY.md; propor novos com ⚠️
 - API: atualizar endpoints afetados (body, response, erros)
