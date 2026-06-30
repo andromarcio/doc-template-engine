@@ -30,6 +30,11 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 - `scripts/validate-doc.mjs`: validação de **N0** (detecção pelo subtítulo `**Nível 0**`),
   exigindo título `# Visão de Produto: [Nome]`, SIGLA do produto no subtítulo, as seções
   obrigatórias da visão e as subseções `### Está dentro` / `### Está fora (não-objetivos)`.
+- `engine/templates/modules/_base-conhecimento/_template-base-conhecimento.md` — template
+  da **base de conhecimento** (insumo gerado pelo PROMPT_0). Antes a estrutura só existia
+  embutida no `PROMPT_0_EXTRACTION.md`; agora há um arquivo de referência (espelho do
+  esqueleto, com comentários explicativos), análogo ao `_backlog/_template-historia.md`.
+  O `PROMPT_0` passou a apontar para ele (linha *Modelo de estrutura* + ponteiro no PASSO 5).
 
 ### Changed
 - `engine/templates/global/N0_PRODUCT_VISION.md`: título e subtítulo alinhados ao padrão

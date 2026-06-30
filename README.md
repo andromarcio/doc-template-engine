@@ -158,7 +158,8 @@ engine/
 └── templates/    # esqueletos de documentação
     ├── global/   # N0, MASTER, DATA-MODEL, NFR, dicionários (FIELD/RULES/
     │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, DESIGN-SYSTEM
-    ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de usuário)
+    ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de
+    │             # usuário · _base-conhecimento: insumos extraídos pelo PROMPT_0)
     ├── prototypes/
     └── repos/
 docs/             # site de documentação (template para GitHub Pages)
