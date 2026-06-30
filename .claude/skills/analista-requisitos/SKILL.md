@@ -270,6 +270,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Migração em lote (doc + código → N1/N2/N3) | `PROMPT_CONVERSION.md` |
 | Mapeamento de repositório | `PROMPT_REPO_MAPPING.md` |
 | Data-model a partir de SQL | `PROMPT_DATA_MODEL_FROM_SQL.md` |
+| Revisar a conformidade de **um** artefato (N0–N3/data-model) e apontar o que corrigir | `PROMPT_REVIEW.md` |
 | Auditoria/dedup de regras de negócio | `PROMPT_AUDIT_RULES_DEDUP.md` |
 | Auditoria de elos história ↔ feature (caminho inverso história → features) | `PROMPT_AUDIT_TRACE_LINKS.md` |
 | Painel consolidado do que **falta especificar** (existência + lacunas ⚠️) → seção gerada no `INDEX.md` | `PROMPT_PENDENCIAS.md` |

@@ -56,6 +56,7 @@ tipo, independente da LLM).
 
 | Prompt | Papel |
 |---|---|
+| [`PROMPT_REVIEW`](#/file/engine/prompts/PROMPT_REVIEW.md) | Revisão de conformidade de um artefato (N0–N3/data-model) — aponta o que corrigir (opção **RV**) |
 | [`PROMPT_CONTAGEM`](#/file/engine/prompts/PROMPT_CONTAGEM.md) | Contagem de Pontos de Função (APF) |
 | [`PROMPT_NFR`](#/file/engine/prompts/PROMPT_NFR.md) | Requisitos não-funcionais |
 | [`PROMPT_QA`](#/file/engine/prompts/PROMPT_QA.md) | Geração/validação de QA |

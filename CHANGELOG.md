@@ -35,6 +35,15 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   embutida no `PROMPT_0_EXTRACTION.md`; agora há um arquivo de referência (espelho do
   esqueleto, com comentários explicativos), análogo ao `_backlog/_template-historia.md`.
   O `PROMPT_0` passou a apontar para ele (linha *Modelo de estrutura* + ponteiro no PASSO 5).
+- `engine/prompts/PROMPT_REVIEW.md` (opção **RV**) — revisor de conformidade de **um**
+  artefato (N0–N3 ou data-model). Fecha a lacuna entre o gate determinístico
+  (`validate-doc.mjs`, só estrutura), os self-checklists embutidos nos geradores (rodam
+  na geração, não sob demanda) e as auditorias transversais. Detecta o nível, roda o gate
+  e faz a **revisão semântica** (altitude negocial × técnica, regra = invariante e não
+  reação, fonte única de banco, referências canônicas, mensagens literais, NFR, ⚠️
+  pendentes, consistência entre níveis), devolvendo achados priorizados (🔴/🟡/🔵) com
+  correção sugerida e rota — **sem editar** o artefato. Registrado em `PROMPT_MENU`,
+  `SKILL.md` e `docs/prompts.md`.
 
 ### Changed
 - `engine/templates/global/N0_PRODUCT_VISION.md`: título e subtítulo alinhados ao padrão

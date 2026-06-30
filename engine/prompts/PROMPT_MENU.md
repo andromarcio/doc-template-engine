@@ -120,6 +120,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
+| **RV** | Revisar artefato (conformidade) | Analista / Tech Lead | Recebe **um** N0/N1/N2/N3/data-model, roda o gate determinístico e a revisão semântica (altitude, regra=invariante, fonte única de banco, canônicos, ⚠️) e devolve os itens a corrigir com severidade e rota — **não edita** |
 | **AU** | Deduplicar regras de negócio | Analista / Tech Lead | Varre N3s e detecta regras duplicadas, sobrepostas ou contraditórias entre features |
 | **AT** | Auditar elos história ↔ feature | Analista / Tech Lead | Varre `## Origem` dos N3, `## Rastreabilidade` das histórias e o `INDEX.md`; detecta elos unilaterais, ausências no índice e órfãos — garante que o caminho inverso (história → features) está consistente |
 | **PD** | Painel de pendências (o que falta especificar) | Analista / PO / Tech Lead | Varre `_backlog/`, READMEs de N2 e os N3 (⚠️) e **regenera** a seção `## Pendências de especificação` do `INDEX.md` — separando **existência** (falta N3) de **conteúdo** (lacunas em aberto), cada item com a rota para resolver |
@@ -206,6 +207,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **3A** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. N1 *(opcional no bottom-up)* · 6. N2 *(opcional no bottom-up)* |
 | **RT** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. MESSAGE-DICTIONARY.md · 6. Artefatos existentes N1/N2/N3 *(opcional — habilita atualização)* · 7. Transcrição da reunião |
 | **3B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 negocial aprovado |
+| **RV** | 1. O artefato a revisar (caminho no Claude Code, ou colado) · 2. global/DATA-MODEL.md + dicionários (FIELD/RULES/ERROR/MESSAGE) + N0/N1/N2 vizinhos *(sob demanda, para cruzamento)* |
 | **AU** | 1. RULES-DICTIONARY.md · 2. Trechos de regras transversais dos N1s relevantes · 3. N3s a varrer |
 | **AT** | 1. modules/INDEX.md *(no Claude Code é lido do disco)* · 2. Histórias em `modules/_backlog/*.md` (com a seção `## Rastreabilidade`) · 3. N3s a varrer (com a seção `## Origem`) |
 | **PD** | 1. modules/INDEX.md *(no Claude Code é lido do disco junto com a árvore `modules/`)* · 2. READMEs dos Feature Sets (N2) · 3. Histórias em `modules/_backlog/*.md` · 4. modules/_triagem/*.md *(opcional)* |
@@ -270,6 +272,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | R3 | PROMPT_CONVERSION.md |
 | B2 | PROMPT_N3_TO_N2.md |
 | B1 | PROMPT_N3_TO_N1.md |
+| RV | PROMPT_REVIEW.md |
 | AU | PROMPT_AUDIT_RULES_DEDUP.md |
 | AT | PROMPT_AUDIT_TRACE_LINKS.md |
 | PD | PROMPT_PENDENCIAS.md |
