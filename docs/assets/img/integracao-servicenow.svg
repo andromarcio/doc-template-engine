@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 760" font-family="Inter, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arwB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2026be"/>
+    </marker>
+    <marker id="arwA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1160" height="760" rx="18" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="1159" height="759" rx="18" fill="none" stroke="#ebedf1"/>
+
+  <!-- Título -->
+  <text x="580" y="42" text-anchor="middle" font-size="21" font-weight="800" fill="#14161c">Os dois mundos: framework (Git) ↔ ServiceNow</text>
+  <text x="580" y="64" text-anchor="middle" font-size="12.5" fill="#64748b">Git é dono da definição, do ID, do status e da PF · ServiceNow é dono dos elos história↔feature, dos defeitos e dos testes</text>
+
+  <!-- Divisor -->
+  <line x1="580" y1="92" x2="580" y2="628" stroke="#dfe2e8" stroke-width="1.5" stroke-dasharray="3 6"/>
+
+  <!-- Pílulas de cabeçalho -->
+  <rect x="150" y="86" width="270" height="30" rx="15" fill="#eef0ff"/>
+  <text x="285" y="106" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2026be">FRAMEWORK · Git / GitHub</text>
+  <rect x="720" y="86" width="280" height="30" rx="15" fill="#eef2f6"/>
+  <text x="860" y="106" text-anchor="middle" font-size="12.5" font-weight="700" fill="#475569">SERVICENOW</text>
+
+  <!-- ===================== LADO FRAMEWORK ===================== -->
+  <!-- L1 artefatos N3 -->
+  <rect x="150" y="140" width="270" height="66" rx="12" fill="#f6f7f9" stroke="#dfe2e8"/>
+  <text x="285" y="167" text-anchor="middle" font-size="14" font-weight="700" fill="#14161c">Artefatos N3 (.md)</text>
+  <text x="285" y="187" text-anchor="middle" font-size="11" fill="#64748b">modules/ — ## Origem · ## Implementação · status · PF</text>
+
+  <!-- L2 gerador -->
+  <rect x="165" y="250" width="240" height="60" rx="12" fill="#eef0ff" stroke="#c9ccf6"/>
+  <text x="285" y="276" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2026be">generate-trace-index.mjs</text>
+  <text x="285" y="295" text-anchor="middle" font-size="11" fill="#5a61c9">varre os .md — roda no CI</text>
+
+  <!-- L3a features.json -->
+  <rect x="150" y="352" width="200" height="64" rx="12" fill="#ffffff" stroke="#2026be" stroke-width="1.6"/>
+  <text x="250" y="379" text-anchor="middle" font-size="13" font-weight="700" fill="#14161c">features.json</text>
+  <text x="250" y="398" text-anchor="middle" font-size="10.5" fill="#64748b">catálogo p/ ServiceNow</text>
+
+  <!-- L3b data.js -->
+  <rect x="368" y="352" width="180" height="64" rx="12" fill="#ffffff" stroke="#dfe2e8"/>
+  <text x="458" y="379" text-anchor="middle" font-size="13" font-weight="700" fill="#14161c">data.js</text>
+  <text x="458" y="398" text-anchor="middle" font-size="10.5" fill="#64748b">mapa (grafo)</text>
+
+  <!-- setas framework -->
+  <line x1="285" y1="206" x2="285" y2="248" stroke="#64748b" stroke-width="1.6" marker-end="url(#arw)"/>
+  <line x1="285" y1="310" x2="255" y2="350" stroke="#64748b" stroke-width="1.6" marker-end="url(#arw)"/>
+  <line x1="285" y1="310" x2="450" y2="350" stroke="#64748b" stroke-width="1.6" marker-end="url(#arw)"/>
+
+  <!-- ===================== LADO SERVICENOW ===================== -->
+  <!-- R1 catálogo u_feature (hub) -->
+  <rect x="720" y="140" width="280" height="70" rx="12" fill="#eef2f6" stroke="#cbd3dd" stroke-width="1.6"/>
+  <text x="860" y="167" text-anchor="middle" font-size="14" font-weight="700" fill="#14161c">Catálogo de features · u_feature</text>
+  <text x="860" y="187" text-anchor="middle" font-size="10.5" fill="#64748b">feature_id · nome · domínio · status · PF · spec_url</text>
+  <text x="860" y="202" text-anchor="middle" font-size="10" fill="#94a3b8" font-style="italic">populado a partir do git — não editado à mão</text>
+
+  <!-- R2 história -->
+  <rect x="730" y="256" width="260" height="60" rx="12" fill="#fdf1e0" stroke="#f0cf9a"/>
+  <text x="860" y="281" text-anchor="middle" font-size="13.5" font-weight="700" fill="#b45309">História (Story)</text>
+  <text x="860" y="300" text-anchor="middle" font-size="11" fill="#a16207">▸ campo "Features impactadas" (m2m)</text>
+
+  <!-- R3a defeitos -->
+  <rect x="620" y="352" width="220" height="58" rx="12" fill="#ffffff" stroke="#dfe2e8"/>
+  <text x="730" y="377" text-anchor="middle" font-size="13" font-weight="700" fill="#14161c">Defeitos</text>
+  <text x="730" y="395" text-anchor="middle" font-size="10.5" fill="#64748b">referenciam a feature</text>
+
+  <!-- R3b testes -->
+  <rect x="880" y="352" width="220" height="58" rx="12" fill="#ffffff" stroke="#dfe2e8"/>
+  <text x="990" y="377" text-anchor="middle" font-size="13" font-weight="700" fill="#14161c">Casos de teste</text>
+  <text x="990" y="395" text-anchor="middle" font-size="10.5" fill="#64748b">referenciam a feature</text>
+
+  <!-- R4 relatórios -->
+  <rect x="680" y="448" width="360" height="52" rx="12" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <text x="860" y="472" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15803d">Relatórios por feature</text>
+  <text x="860" y="489" text-anchor="middle" font-size="10.5" fill="#16a34a">taxa de defeitos · PF · cobertura de teste</text>
+
+  <!-- ligações internas SN (referenciam o catálogo) -->
+  <line x1="860" y1="256" x2="860" y2="212" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arw)"/>
+  <line x1="730" y1="352" x2="820" y2="212" stroke="#cbd3dd" stroke-width="1.3" marker-end="url(#arw)"/>
+  <line x1="990" y1="352" x2="900" y2="212" stroke="#cbd3dd" stroke-width="1.3" marker-end="url(#arw)"/>
+  <line x1="860" y1="410" x2="860" y2="446" stroke="#bbf7d0" stroke-width="1.4" marker-end="url(#arw)"/>
+
+  <!-- ===================== PONTES ENTRE OS MUNDOS ===================== -->
+  <!-- ① git → SN : features.json alimenta o catálogo -->
+  <path d="M350 372 C 520 372, 560 175, 718 175" fill="none" stroke="#2026be" stroke-width="2.6" marker-end="url(#arwB)"/>
+  <rect x="430" y="238" width="292" height="42" rx="10" fill="#eef0ff" stroke="#c9ccf6"/>
+  <text x="576" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2026be">① git → ServiceNow  (uma via, automática)</text>
+  <text x="576" y="271" text-anchor="middle" font-size="10.5" fill="#5a61c9">Scheduled Import / Table API — upsert por feature_id</text>
+
+  <!-- ② SN → git : elos história↔feature lidos de volta -->
+  <path d="M730 286 C 560 286, 545 470, 422 470" fill="none" stroke="#d97706" stroke-width="2.4" stroke-dasharray="6 5" marker-end="url(#arwA)"/>
+  <rect x="392" y="500" width="376" height="42" rx="10" fill="#fdf1e0" stroke="#f0cf9a"/>
+  <text x="580" y="518" text-anchor="middle" font-size="11.5" font-weight="700" fill="#b45309">② ServiceNow → git  (leitura dos elos)</text>
+  <text x="580" y="533" text-anchor="middle" font-size="10.5" fill="#a16207">MCP/API lê "Features impactadas" → ## Origem · auditoria AT concilia</text>
+
+  <!-- ===================== CHAVE DE JUNÇÃO ===================== -->
+  <rect x="330" y="648" width="500" height="60" rx="14" fill="#2026be"/>
+  <text x="580" y="674" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">Chave de junção:  SIGLA-SFS-NN</text>
+  <text x="580" y="694" text-anchor="middle" font-size="11" fill="#c9ccf6">o mesmo ID identifica a feature nos dois mundos — é o que costura tudo</text>
+</svg>
