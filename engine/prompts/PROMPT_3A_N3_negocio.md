@@ -32,7 +32,9 @@ Regras da sessão:
   RULES-DICTIONARY automaticamente sem perguntar sobre o comportamento.
 - Perguntar apenas o que os dicionários deixam em aberto (parâmetros).
 - Sinalize suposições com ⚠️.
-- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. A pasta do Feature Set usa o prefixo `g-`. Padrão: `modules/[dominio]/g-[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen.
+- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. Padrão de caminho: `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Aqui `[feature-set]` é o **nome exato da pasta do Feature Set** — a mesma onde já vive o `README.md` do N2 (ver **DESTINO** abaixo); não invente outra pasta nem acrescente/remova prefixo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen.
+
+> **DESTINO DO ARQUIVO (obrigatório — não erre a pasta).** O N3 é gravado na **mesma pasta** do `README.md` do Feature Set (o N2): `modules/[dominio]/[feature-set]/`. **Localize** essa pasta pelo `modules/INDEX.md` / pelo N2 — **não a invente** nem crie uma paralela com nome diferente. O arquivo **nunca** vai para a raiz do repositório, `global/`, `engine/`, outro domínio ou outro Feature Set. Se o Feature Set ainda não tem pasta (bottom-up), crie-a com o **mesmo nome** que o N2 usa (ou usará) para o `README.md`. Em caso de dúvida sobre a pasta, **pergunte antes de gravar**.
 
 ---
 
@@ -426,7 +428,7 @@ atende várias features, isso será consolidado na seção **Telas** do N2.
 
 Com as respostas de todos os blocos, gere:
 
-📄 `modules/[dominio]/[feature-set]/[arquivo-do-N2]` — usar o nome de arquivo **exatamente como definido** na tabela de Features do N2 (Modo A), ou derivar do nome da feature em kebab-case (Modo B)
+📄 `modules/[dominio]/[feature-set]/[arquivo-do-N2]` — **na mesma pasta do `README.md` do N2** (ver DESTINO acima; nunca na raiz, `global/`, `engine/` ou outro domínio). Usar o nome de arquivo **exatamente como definido** na tabela de Features do N2 (Modo A), ou derivar do nome da feature em kebab-case (Modo B)
 
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 

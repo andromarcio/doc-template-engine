@@ -293,7 +293,7 @@ Apresente apenas as seções técnicas geradas. Pergunte:
 
 Após aprovação, gere o arquivo completo:
 
-📄 `modules/[dominio]/g-[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` — versão completa (usar o mesmo nome de arquivo gerado pelo PROMPT 3A; padrão: `f-` + verbo + entidade singular + adjetivo qualificador quando houver, em kebab-case)
+📄 `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` — **o mesmo arquivo gerado pelo PROMPT 3A, na mesma pasta** (o N3 técnico é uma mescla no arquivo existente, não um novo arquivo). `[feature-set]` é a pasta do Feature Set (onde vive o `README.md` do N2); nunca grave na raiz, `global/`, `engine/` ou outro domínio. Use o mesmo nome de arquivo do 3A (`f-` + verbo + entidade singular + adjetivo qualificador quando houver, em kebab-case).
 
 > **Nota**: as seções técnicas **não existem** no N3 negocial gerado pelo PROMPT 3A — este prompt as cria e insere abaixo de `## Comportamento de tela`, dentro do bloco `<div class="dev-only">`.
 

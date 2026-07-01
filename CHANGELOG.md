@@ -94,6 +94,22 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   arquivo vive na **raiz** do engine, como o README e o `stamp.sh` já assumiam) em
   `SKILL.md`, `SYSTEM_PROMPT_analista_requisitos.md`, `engine/VERSIONING.md` e o template
   `CLAUDE.md` — o agente seguia um caminho inexistente ao carimbar artefatos.
+- **Feature (N3) gravada na pasta errada — contradição de convenção.** Os prompts
+  divergiam sobre a pasta do Feature Set: `PROMPT_3A` (regra) e `3B` diziam
+  `modules/[dominio]/g-[feature-set]/…`, enquanto `2A`/`CRUD`/`WIZARD` (que criam a
+  pasta) usavam `modules/[dominio]/[feature-set]/…` — pastas diferentes. Modelos
+  menores (ex.: Haiku) seguiam o sinal contraditório e gravavam o N3 no lugar errado.
+  Correção: `[feature-set]` passa a ter **um único significado** (o nome exato da pasta
+  do Feature Set, com ou sem prefixo — a mesma do `README.md` do N2); a forma
+  `g-[feature-set]` foi removida de `3A`/`3B`. Cada gerador de N3 (`3A`, `3B`, `CRUD`,
+  `WIZARD`) ganhou um bloco **DESTINO** explícito: o N3 vai na **mesma pasta** do N2,
+  localizada pelo INDEX/N2 — nunca na raiz, `global/`, `engine/`, outro domínio ou
+  outro Feature Set; em dúvida, perguntar antes de gravar.
+- `scripts/validate-doc.mjs`: **guarda de localização** determinística — o tipo detectado
+  precisa bater com a pasta (N3 → `modules/<dom>/<fs>/f-*.md`; N1/N2 → `README.md`;
+  N0/DATA-MODEL → `global/`). Pega o arquivo gerado no diretório errado. Agnóstico ao
+  prefixo da pasta do Feature Set (`g-` ou não); isenta `engine/` e caminhos fora da
+  instância.
 
 ## [1.1.0] - 2026-06-23
 

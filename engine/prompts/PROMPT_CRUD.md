@@ -299,6 +299,8 @@ do PASSO 2 e siga **exatamente** a estrutura negocial do PROMPT_3A (PASSO 3):
 Descrição · Superfície · Regras de negócio · Cenários · Campos · Campos
 automáticos · Comportamento de tela · Changelog.
 
+> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste CRUD vão na **mesma pasta** do `README.md` do Feature Set: `modules/[dominio]/[feature-set]/`. `[feature-set]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Feature Set. Se em dúvida, pergunte antes de gravar.
+
 📄 `modules/[dominio]/[feature-set]/f-cadastrar.md` (ID `[SIGLA]-[SFS]-02`)
 
 - **Superfície**: Tela própria — Cadastrar [Entidade] (`/[dominio]/[feature-set]/novo`), acessada da Pesquisa.

@@ -21,6 +21,10 @@
 //     canônico (Label PO | Label Dev | Campo banco | Tipo SQL | Obrigatório | Notas) e
 //     não pode repetir os campos globais implícitos. Caixa (snake_case/camelCase) NÃO é
 //     enforçada aqui — fica para a revisão semântica (PROMPT_REVIEW).
+//   - LOCALIZAÇÃO: o tipo detectado precisa bater com a pasta (N3 → modules/<dom>/<fs>/
+//     f-*.md; N1/N2 → README.md; N0/DATA-MODEL → global/). Pega o caso do arquivo gerado
+//     na pasta errada. Agnóstico ao prefixo da pasta do Feature Set (g- ou sem g-).
+//     Isenta o engine/ (templates com nomes de placeholder) e caminhos fora da instância.
 
 import { readFileSync } from 'node:fs';
 
@@ -316,6 +320,31 @@ function validateDataModel(lines, raw, kind, errors) {
   }
 }
 
+// Local esperado por tipo de artefato (g-/sem-g- agnóstico: a pasta do Feature Set é
+// [^/]+, com ou sem prefixo). Ancoradas ao FIM do caminho.
+const LOCATION_RULES = {
+  N0: { re: /(^|\/)global\/N0_PRODUCT_VISION\.md$/, hint: 'global/N0_PRODUCT_VISION.md' },
+  N1: { re: /(^|\/)modules\/[^/]+\/README\.md$/, hint: 'modules/[dominio]/README.md' },
+  N2: { re: /(^|\/)modules\/[^/]+\/[^/]+\/README\.md$/, hint: 'modules/[dominio]/[feature-set]/README.md' },
+  N3: { re: /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/, hint: 'modules/[dominio]/[feature-set]/f-….md' },
+  DM: { re: /(^|\/)global\/data-models\/[^/]+\.md$/, hint: 'global/data-models/[dominio].md' },
+  'DM-idx': { re: /(^|\/)global\/DATA-MODEL\.md$/, hint: 'global/DATA-MODEL.md' },
+};
+
+// Guarda determinística de LOCALIZAÇÃO: o tipo do artefato precisa bater com a pasta.
+// Só se aplica a artefatos de instância (caminho sob modules/ ou global/) e ISENTA o
+// motor (engine/ — onde ficam os templates com nomes de placeholder).
+function checkLocation(file, tag, errors) {
+  const path = file.replace(/\\/g, '/');
+  if (/(^|\/)engine\//.test(path)) return; // templates do engine — isentos
+  const instanceScoped = /(^|\/)(modules|global)\//.test(path);
+  if (!instanceScoped) return; // arquivo avulso/scratchpad — valida só o conteúdo
+  const rule = LOCATION_RULES[tag];
+  if (rule && !rule.re.test(path)) {
+    errors.push(`Artefato ${tag} em local inesperado: esperado \`${rule.hint}\` (o arquivo não está na pasta correta).`);
+  }
+}
+
 function validate(file) {
   const errors = [];
   const raw = readFileSync(file, 'utf8');
@@ -334,6 +363,7 @@ function validate(file) {
   else errors.push('Tipo não detectado (falta o subtítulo "> **Nível 0|1|2|3**" ou o título "# Data Model: …").');
 
   const tag = level ? `N${level}` : dmKind ? (dmKind === 'index' ? 'DM-idx' : 'DM') : '??';
+  if (tag !== '??') checkLocation(file, tag, errors);
   return { tag, errors };
 }
 
