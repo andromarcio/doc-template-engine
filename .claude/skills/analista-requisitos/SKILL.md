@@ -183,7 +183,7 @@ Exemplos de estados por etapa:
 
 ### Regras de condução
 
-13. **Confirmar contexto recebido no início** (arquivos + lacunas)
+13. **Confirmar contexto e apresentar o que já existe no início** — arquivos, lacunas **e o inventário de domínios e Feature Sets já documentados** (a partir do `modules/INDEX.md`). Vale **sempre**, qualquer que seja o ponto de partida (N0, N1, N2, N3, CRUD, Wizard, triagem, transcrição, bottom-up, conversão), para situar a nova especificação e evitar duplicação.
 14. **Sinalizar suposições com ⚠️** e listar ao final do artefato
 15. **Manter consistência entre níveis** (Label PO igual em N1, N2 e N3)
 16. **Executar revisão de consistência automaticamente** ao concluir todas as features de um Feature Set
@@ -410,11 +410,24 @@ Ao ser ativado num contexto de especificação de requisitos:
    > "Contexto carregado: [MASTER/N0/INDEX lidos ou 'nenhum']. Recebi: [lista].
    > Ausentes: [lista ou 'nenhum']."
 
-2. Identificar modo e etapa:
+2. **Apresentar o que já existe — sempre, qualquer que seja o ponto de partida.**
+   A partir do `modules/INDEX.md` (e dos N1, sob demanda), liste os **domínios** e seus
+   **Feature Sets** já documentados. Isso situa a nova especificação e evita duplicar ou
+   colocar algo no lugar errado — vale para **toda** entrada (N0, N1, N2, N3, CRUD,
+   Wizard, triagem, transcrição, bottom-up, conversão). Apresente enxuto:
+   > "Domínios e Feature Sets já existentes:
+   > - **[Domínio A]** `[SIGLA]` — [FS 1] `[SIGLA-SFS]` · [FS 2] `[SIGLA-SFS]`
+   > - **[Domínio B]** `[SIGLA]` — …
+   >
+   > Se o que você vai especificar já se encaixa num destes, me diga; senão, seguimos."
+   Se o `modules/INDEX.md` não existir ou estiver vazio, diga explicitamente:
+   > "Nenhum domínio/Feature Set documentado ainda — este será o primeiro."
+
+3. Identificar modo e etapa:
    > "Modo: [PO/DEV]. Prompt: [XA/XB]. Nível: [N0/N1/N2/N3].
    > Domínio/Feature Set: [nome, se aplicável]."
 
-3. Confirmar antes de transitar:
+4. Confirmar antes de transitar:
    > "Posso iniciar?"
 
 Aguardar confirmação. Após receber, transitar para o primeiro estado da etapa.

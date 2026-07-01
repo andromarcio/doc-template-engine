@@ -58,7 +58,6 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   vida e decisões de arquitetura. Nega por padrão; Administrador recebe tudo.
 - `NFR.md` (template): **SEG-01 — Autorização por funcionalidade**, herdada por toda Feature.
 
-
 ### Changed
 - `engine/templates/global/N0_PRODUCT_VISION.md`: título e subtítulo alinhados ao padrão
   dos demais níveis (`# Visão de Produto: [Nome]` + `> **Nível 0** - Visão de Produto -
@@ -83,6 +82,12 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   de arquivos globais de referência apontando `global/AUTHZ.md`.
 - `docs/content/templates.md`, `README.md` e `docs/content/estrutura.md`: catálogo de
   templates `global/` passa a listar `AUTHZ.md`.
+- **Abertura de sessão — inventário obrigatório.** Na abertura de **qualquer** sessão de
+  especificação (independente do ponto de partida — N0, N1, N2, N3, CRUD, Wizard,
+  triagem, transcrição, bottom-up, conversão), o agente passa a **sempre apresentar os
+  domínios e Feature Sets já existentes** (do `modules/INDEX.md`), para situar a nova
+  spec e evitar duplicação. Explicitado em `SKILL.md` e `SYSTEM_PROMPT` (passo de
+  abertura + regra de condução) e no template `CLAUDE.md` de instância.
 
 ### Fixed
 - Referências ao arquivo de versão corrigidas de `engine/VERSION` para `VERSION` (o

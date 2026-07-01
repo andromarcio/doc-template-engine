@@ -52,6 +52,10 @@ import do Claude Code). Ajuste a lista ao que existir na instância:
   > descrição de forma menos agressiva. Se mesmo assim a skill não aparecer ao
   > digitar `/`, ela não foi instalada nesta instância — rode o
   > `scripts/install-skill.sh` do `doc-template-engine`.
+- **Na abertura de qualquer sessão de especificação**, apresente primeiro os
+  **domínios e Feature Sets já existentes** (do `modules/INDEX.md`) — sempre, qualquer
+  que seja o ponto de partida — para situar a nova especificação e evitar duplicar ou
+  colocar algo no domínio/Feature Set errado.
 - **Ao gerar ou atualizar qualquer artefato**, carimbe-o: a primeira linha deve ser
   o comentário invisível `<!-- doc-template-engine: <versão de VERSION> | prompt:
   <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`. Em updates, reescreva o carimbo (não
