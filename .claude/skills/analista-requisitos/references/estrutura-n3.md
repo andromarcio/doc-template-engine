@@ -9,7 +9,7 @@ incluindo seções negociais e técnicas.
 
 ```markdown
 # [Nome da Feature]
-> **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[ID do N2]`
+> **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
 
 ## Descrição
 [uma frase em linguagem de negócio]

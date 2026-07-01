@@ -119,7 +119,7 @@ Pergunte:
 >
 > | Feature | ID | Arquivo |
 > |---|---|---|
-> | [nome exato do N2] | [ID do N2] | [arquivo do N2] |
+> | [nome exato do N2] | [SIGLA]-[SFS]-NN | [arquivo do N2] |
 >
 > Qual delas deseja especificar primeiro?"
 
@@ -434,8 +434,8 @@ Com as respostas de todos os blocos, gere:
 
 ```
 # [Nome da Feature — exatamente como consta no N2]
-> **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[ID do N2]`
-<!-- ID — Modo A: ID do N2 (ex: F01) | Modo B: [SIGLA]-[SFS]-[NN] ⚠️ provisório -->
+> **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
+<!-- Este é o CÓDIGO DA FEATURE (SIGLA do domínio + SFS do Feature Set + NN sequencial da feature, ex.: `CAD-CLI-01`) — NÃO o ID do Feature Set (`CAD-CLI`). Modo A: copie o código EXATO que a feature tem na tabela de Features do N2 (aparece em `<small>SIGLA-SFS-NN</small>`). Modo B (bottom-up): atribua provisório e ⚠️ confirme via B2. Nunca omita o `-NN`. -->
 
 ## Descrição
 [uma frase em linguagem de negócio]
@@ -609,7 +609,7 @@ Após todas as features aprovadas, bifurque conforme o modo da sessão:
 
 Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 
-- [ ] Título `# [Nome da Feature]` (exatamente como no N2) + subtítulo `> **Nível 3** - Feature Set: [Nome] — Domínio: [Nome] - [ID]`
+- [ ] Título `# [Nome da Feature]` (exatamente como no N2) + subtítulo `> **Nível 3** - Feature Set: [Nome] — Domínio: [Nome] - [SIGLA]-[SFS]-NN` (o **código da feature** em crase, com o `-NN` — nunca só o ID do Feature Set)
 - [ ] `## Origem` presente **somente** se houver história de usuário (senão, omitir a seção)
 - [ ] `## Superfície`: **Tela própria** (com rota `/...`) **ou** **Ação em tela** (com a feature/tela de origem)
 - [ ] `## Regras de negócio`: itens **atômicos** (uma invariante cada); a reação do sistema e o texto da mensagem **não** entram aqui (vão para Cenários); canônicas como `→ ver RULES-DICTIONARY: [nome]`

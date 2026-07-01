@@ -108,6 +108,15 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   **pasta do Feature Set sem prefixo** (`modules/[dominio]/[feature-set]/`); os exemplos
   e protótipos que ainda usavam `g-` (`g-fundos-geridos`) foram alinhados, e as notas de
   rota de `CRUD`/`WIZARD` deixaram de citar o antigo prefixo.
+- **Código da feature ausente/errado no subtítulo do N3.** O `PROMPT_3A` gerava o
+  subtítulo com o placeholder ambíguo `` `[ID do N2]` `` (e um comentário "ex.: F01"),
+  levando o modelo — sobretudo o Haiku — a escrever o ID do Feature Set (`CAD-CLI`) ou
+  a omitir o código, em vez do **código da feature** `SIGLA-SFS-NN` (`CAD-CLI-01`).
+  Corrigido para `` `[SIGLA]-[SFS]-[NN]` `` com comentário explícito (é o código da
+  feature, com o `-NN`, copiado da tabela de Features do N2; nunca só o ID do Feature
+  Set), alinhando `PROMPT_3A`, a tabela de confirmação, o checklist e a referência
+  `estrutura-n3.md` ao que CONVERSION/REVERSE/o template e o `validate-doc.mjs` já
+  exigiam (o gate reprova subtítulo N3 sem `SIGLA-SFS-NN`).
 - `scripts/validate-doc.mjs`: **guarda de localização** determinística — o tipo detectado
   precisa bater com a pasta (N3 → `modules/<dom>/<fs>/f-*.md`; N1/N2 → `README.md`;
   N0/DATA-MODEL → `global/`). Pega o arquivo gerado no diretório errado. Agnóstico ao
