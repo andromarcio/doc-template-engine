@@ -31,7 +31,7 @@ Use esta skill de dois modos:
 > **Texto corrido (obrigatório):** ao gravar arquivos `.md`, cada parágrafo de prosa deve ser uma única linha contínua, sem quebras de linha internas. Quebras de linha só para separar parágrafos, itens de lista, cabeçalhos e blocos de código. Isso garante que o HTML renderize o texto fluindo conforme a largura da tela.
 
 > **Carimbo de versão (obrigatório):** ao gerar **ou atualizar** qualquer artefato, leia
-> `engine/VERSION` e garanta que a **primeira linha** seja o comentário invisível
+> `VERSION` (na raiz do engine) e garanta que a **primeira linha** seja o comentário invisível
 > `<!-- doc-template-engine: <versão> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`.
 > Em updates, **reescreva** o carimbo (não duplique). Detalhes em `engine/VERSIONING.md`.
 
@@ -104,8 +104,7 @@ pelo `PROMPT_AUDIT_RULES_DEDUP`.
 | Label Dev | camelCase, português | `nomeCompleto` | **data-models/[dominio].md** — apenas aqui |
 | Campo banco | snake_case, português | `nome_completo` | **data-models/[dominio].md** — apenas aqui |
 
-**Regra absoluta**: Label Dev e campo banco vivem SOMENTE nos arquivos de `global/data-models/`.
-Os N3 usam apenas Label PO na tabela de campos.
+**Regra absoluta — fonte única de definição de banco**: **toda** definição física do banco de dados — entidade/tabela, Label Dev (camelCase), campo banco (snake_case), tipo SQL, chave estrangeira (FK), índice, restrição de unicidade e enum de banco — vive **exclusivamente** nos fragmentos `global/data-models/[dominio].md` (detalhe) e em `global/DATA-MODEL.md` (índice). Nenhum outro artefato — N0, N1, N2, N3, SDD, protótipo, contagem — **redefine** essas informações: todos as **consomem por referência** (`→ ver DATA-MODEL.md: Entidade [Nome]`). Definição de banco nova ou alterada entra **primeiro** no DATA-MODEL (com aprovação ⚠️) e só então é citada em outro lugar. Os N3 usam apenas Label PO na tabela de campos; os prompts técnicos referenciam o data-model — nunca copiam tipos, FK ou índices.
 
 ### Traduções no Modo PO
 
@@ -158,6 +157,7 @@ Toda resposta deve iniciar informando explicitamente o estado atual: `[Estado: N
 
 Exemplos de estados por etapa:
 - **Extração (PROMPT_0):** `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
+- **N0 Visão de Produto (PROMPT_N0):** `[INICIALIZACAO]` → `[COLETA_PROPOSITO]` → `[COLETA_PERSONAS]` → `[COLETA_OBJETIVOS]` → `[COLETA_ESCOPO]` → `[COLETA_DOMINIOS]` → `[COLETA_PRINCIPIOS]` → `[GERACAO_ARTEFATO]`
 - **N3 Negocial (PROMPT_3A):** `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
 - **N3 Técnico (PROMPT_3B):** `[INICIALIZACAO]` → `[CRUZAMENTO_CAMPOS]` → `[ENDPOINTS]` → `[EVENTOS_AUDITLOG]` → `[GHERKIN_TECNICO]` → `[ARQUIVOS]` → `[ARQUIVO_FINAL]`
 
@@ -198,6 +198,8 @@ PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), des
                  · registrar história HU). Não cria nem altera — só mostra e encaminha.
      ↓
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
+     ↓
+PROMPT_N0 → global/N0_PRODUCT_VISION.md (Visão de Produto — ponto de partida top-down; opcional)
      ↓
 PROMPT_1A → N1 negocial aprovado pelo PO
 PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado
@@ -250,6 +252,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | CRUD padrão (cadastro): gerar N2 + N3 das 5 operações de uma vez | `PROMPT_CRUD.md` |
 | Wizard / assistente (processo guiado multi-etapas): gerar N2 + N3 da feature principal e auxiliares | `PROMPT_WIZARD.md` |
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
+| N0 (Visão de Produto) — propósito, personas, objetivos, KPIs, escopo, tom de voz | `PROMPT_N0_VISAO.md` |
 | N1 (Domínio) negocial | `PROMPT_1A_N1_negocio.md` |
 | N1 (Domínio) técnico + data-model | `PROMPT_1B_N1_tecnico.md` |
 | N2 (Feature Set) negocial — passada única | `PROMPT_2A_N2_negocio.md` |
@@ -267,6 +270,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Migração em lote (doc + código → N1/N2/N3) | `PROMPT_CONVERSION.md` |
 | Mapeamento de repositório | `PROMPT_REPO_MAPPING.md` |
 | Data-model a partir de SQL | `PROMPT_DATA_MODEL_FROM_SQL.md` |
+| Revisar a conformidade de **um** artefato (N0–N3/data-model) e apontar o que corrigir | `PROMPT_REVIEW.md` |
 | Auditoria/dedup de regras de negócio | `PROMPT_AUDIT_RULES_DEDUP.md` |
 | Auditoria de elos história ↔ feature (caminho inverso história → features) | `PROMPT_AUDIT_TRACE_LINKS.md` |
 | Painel consolidado do que **falta especificar** (existência + lacunas ⚠️) → seção gerada no `INDEX.md` | `PROMPT_PENDENCIAS.md` |

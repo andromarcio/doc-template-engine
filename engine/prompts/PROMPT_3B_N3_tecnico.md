@@ -94,7 +94,10 @@ Campos NOVOS (requerem aprovação e adição ao fragmento global/data-models/[d
 
 **Campos de seleção (`seleção → [Entidade]` no N3):** além do cruzamento acima,
 para cada campo de seleção confirme ou proponha a linha correspondente em
-**DATA-MODEL.md → Relacionamentos de seleção (comboboxes)**:
+**DATA-MODEL.md → Relacionamentos de seleção (comboboxes)**. Essa linha (FK,
+campo-valor, campo-label, endpoint, filtro) é **definição de banco**: ela vai
+**para o DATA-MODEL**, nunca para o N3. No N3 a seção técnica só referencia
+(`→ ver DATA-MODEL.md: Entidade [Nome]`) — não reescreva a FK nem o endpoint lá.
 
 ```
 Relacionamentos de seleção a registrar no DATA-MODEL.md:

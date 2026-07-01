@@ -25,6 +25,7 @@ Exemplos de estados por etapa:
 - Triagem de necessidade (PROMPT_TRIAGEM): `[INICIALIZACAO]` → `[LEITURA_NECESSIDADE]` → `[MAPEAMENTO_DOC]` → `[CRUZAMENTO]` → `[RECOMENDACAO]`
 - Intake de história (PROMPT_HU): `[INICIALIZACAO]` → `[INTAKE_HISTORIA]` → `[ROTEAMENTO]` → `[GERACAO_ARTEFATO_HU]`
 - Extração (PROMPT_0): `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
+- N0 Visão de Produto (PROMPT_N0): `[INICIALIZACAO]` → `[COLETA_PROPOSITO]` → `[COLETA_PERSONAS]` → `[COLETA_OBJETIVOS]` → `[COLETA_ESCOPO]` → `[COLETA_DOMINIOS]` → `[COLETA_PRINCIPIOS]` → `[GERACAO_ARTEFATO]`
 - N3 Negocial (PROMPT_3A): `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
 - N3 Técnico (PROMPT_3B): `[INICIALIZACAO]` → `[CRUZAMENTO_CAMPOS]` → `[ENDPOINTS]` → `[EVENTOS_AUDITLOG]` → `[GHERKIN_TECNICO]` → `[ARQUIVOS]` → `[ARQUIVO_FINAL]`
 
@@ -32,11 +33,11 @@ Nunca pule estados. Nunca faça mais de uma pergunta por estado.
 
 **Carimbo de versão (obrigatório na geração):**
 Ao entrar no estado terminal de geração (`[GERACAO_ARTEFATO]`, `[ARQUIVO_FINAL]`,
-`[GERACAO_ARTEFATO_BASE]` etc.), antes de escrever o conteúdo, leia `engine/VERSION`
-e garanta que a **primeira linha** do artefato seja o carimbo invisível:
+`[GERACAO_ARTEFATO_BASE]` etc.), antes de escrever o conteúdo, leia `VERSION`
+(na raiz do engine) e garanta que a **primeira linha** do artefato seja o carimbo invisível:
 
 ```
-<!-- doc-template-engine: <versão de engine/VERSION> | prompt: <PROMPT_ID corrente> | atualizado: <YYYY-MM-DD de hoje> -->
+<!-- doc-template-engine: <versão de VERSION> | prompt: <PROMPT_ID corrente> | atualizado: <YYYY-MM-DD de hoje> -->
 ```
 
 Em **atualização** de artefato (PROMPT_4A/4B e demais updates), **reescreva** o
@@ -66,8 +67,7 @@ no source. Ver `engine/VERSIONING.md`.
 | Label Dev | camelCase, português | `nomeCompleto` | **data-models/[dominio].md** — apenas aqui |
 | Campo banco | snake_case, português | `nome_completo` | **data-models/[dominio].md** — apenas aqui |
 
-**Regra absoluta**: Label Dev e campo banco vivem SOMENTE nos arquivos de `global/data-models/`.
-Os N3 usam apenas Label PO na tabela de campos.
+**Regra absoluta — fonte única de definição de banco**: **toda** definição física do banco de dados — entidade/tabela, Label Dev (camelCase), campo banco (snake_case), tipo SQL, chave estrangeira (FK), índice, restrição de unicidade e enum de banco — vive **exclusivamente** nos fragmentos `global/data-models/[dominio].md` (detalhe) e em `global/DATA-MODEL.md` (índice). Nenhum outro artefato — N0, N1, N2, N3, SDD, protótipo, contagem — **redefine** essas informações: todos as **consomem por referência** (`→ ver DATA-MODEL.md: Entidade [Nome]`). Definição de banco nova ou alterada entra **primeiro** no DATA-MODEL (com aprovação ⚠️) e só então é citada em outro lugar. Os N3 usam apenas Label PO na tabela de campos; os prompts técnicos referenciam o data-model — nunca copiam tipos, FK ou índices.
 
 No **Modo PO**: jamais mencione Label Dev, campo banco, endpoint, FK, migration,
 enum, camelCase, snake_case, uuid, lib, framework, JSON, HTTP, status code,
@@ -183,6 +183,8 @@ PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), des
                  já existe e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX · história HU)
 PROMPT_HU → modules/_backlog/[chave].md (entrada — história do ServiceNow; origina os N3)
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
+     ↓
+PROMPT_N0 → global/N0_PRODUCT_VISION.md (Visão de Produto — ponto de partida top-down; opcional)
      ↓
 PROMPT_1A → N1 negocial aprovado pelo PO
 PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado
