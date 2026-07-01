@@ -95,7 +95,7 @@ Se não detectar (falta subtítulo), registre como **achado bloqueante** e siga.
 
 **[Estado: GATE_DETERMINISTICO]**
 
-Para N0–N3, rode o validador de estrutura e capture o resultado:
+Para N0–N3 **e** data-model (índice ou fragmento), rode o validador e capture o resultado:
 
 ```
 node scripts/validate-doc.mjs <caminho-do-artefato>
@@ -104,9 +104,11 @@ node scripts/validate-doc.mjs <caminho-do-artefato>
 - `✓` → registre "gate estrutural: aprovado".
 - `✗` → **cada violação vira um achado 🔴 bloqueante** (estrutura é pré-requisito).
 
-> No fluxo copy-paste (sem rodar o script), aplique manualmente o **Checklist de
-> conformidade** do nível (no prompt gerador correspondente: N0→PROMPT_N0, N1→1A,
-> N2→2A, N3→3A/3B). Para DATA-MODEL não há gate determinístico — só revisão semântica.
+> O validador cobre também o data-model: no fragmento, exige anotação ALI/AIE por
+> entidade, o cabeçalho canônico da tabela de campos e que os campos globais implícitos
+> não sejam repetidos. No fluxo copy-paste (sem rodar o script), aplique manualmente o
+> **Checklist de conformidade** do nível (N0→PROMPT_N0, N1→1A, N2→2A, N3→3A/3B) ou os
+> checks de data-model do PASSO 4.
 
 ---
 

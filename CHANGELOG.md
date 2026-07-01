@@ -30,6 +30,12 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 - `scripts/validate-doc.mjs`: validação de **N0** (detecção pelo subtítulo `**Nível 0**`),
   exigindo título `# Visão de Produto: [Nome]`, SIGLA do produto no subtítulo, as seções
   obrigatórias da visão e as subseções `### Está dentro` / `### Está fora (não-objetivos)`.
+- `scripts/validate-doc.mjs`: validação do **DATA-MODEL** (antes só N0–N3). Detecta pelo
+  título `# DATA-MODEL.md` (índice — checa as seções-âncora) ou `# Data Model:` (fragmento
+  de domínio — exige anotação ALI/AIE por entidade, o cabeçalho canônico `Label PO | Label
+  Dev | Campo banco | Tipo SQL | Obrigatório | Notas` e que os campos globais implícitos
+  não sejam repetidos; a seção `## Arquivos Lógicos deste domínio`). Tags de saída `[DM]` /
+  `[DM-idx]`. Caixa (snake_case/camelCase) fica para a revisão semântica do `PROMPT_REVIEW`.
 - `engine/templates/modules/_base-conhecimento/_template-base-conhecimento.md` — template
   da **base de conhecimento** (insumo gerado pelo PROMPT_0). Antes a estrutura só existia
   embutida no `PROMPT_0_EXTRACTION.md`; agora há um arquivo de referência (espelho do
