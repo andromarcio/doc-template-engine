@@ -13,7 +13,7 @@
 > conferência e snippets canônicos — para alinhar o resultado entre diferentes
 > LLMs. Inclui header completo (regra 20), botões de ação derivados do "Fluxo
 > Principal" do N2 (regra 19) e arquivo único por N2 (regra 21).
-> Referência: `prototypes/cadastro/g-fundos-geridos/flow.html`.
+> Referência: `prototypes/cadastro/fundos-geridos/flow.html`.
 
 ---
 

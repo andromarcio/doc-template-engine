@@ -208,8 +208,8 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 | Editar [Entidade] | `/[dominio]/[feature-set]/:id/editar` | **Editar [Entidade]** <small>[SIGLA]-[SFS]-03</small> | mesmo formulário em modo edição |
 | Visualizar [Entidade] | `/[dominio]/[feature-set]/:id` | **Visualizar [Entidade]** <small>[SIGLA]-[SFS]-05</small> | ficha somente leitura |
 
-> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug da
-> pasta sem o prefixo `g-`. Exclusão não tem rota (ação em tela, da listagem).
+> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug (kebab)
+> da pasta do Feature Set. Exclusão não tem rota (ação em tela, da listagem).
 
 ---
 

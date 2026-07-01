@@ -104,7 +104,10 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   `g-[feature-set]` foi removida de `3A`/`3B`. Cada gerador de N3 (`3A`, `3B`, `CRUD`,
   `WIZARD`) ganhou um bloco **DESTINO** explícito: o N3 vai na **mesma pasta** do N2,
   localizada pelo INDEX/N2 — nunca na raiz, `global/`, `engine/`, outro domínio ou
-  outro Feature Set; em dúvida, perguntar antes de gravar.
+  outro Feature Set; em dúvida, perguntar antes de gravar. Convenção confirmada:
+  **pasta do Feature Set sem prefixo** (`modules/[dominio]/[feature-set]/`); os exemplos
+  e protótipos que ainda usavam `g-` (`g-fundos-geridos`) foram alinhados, e as notas de
+  rota de `CRUD`/`WIZARD` deixaram de citar o antigo prefixo.
 - `scripts/validate-doc.mjs`: **guarda de localização** determinística — o tipo detectado
   precisa bater com a pasta (N3 → `modules/<dom>/<fs>/f-*.md`; N1/N2 → `README.md`;
   N0/DATA-MODEL → `global/`). Pega o arquivo gerado no diretório errado. Agnóstico ao

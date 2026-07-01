@@ -246,8 +246,8 @@ principal]
 | [Processo] — Etapas 1..N | `/[dominio]/[feature-set]/novo` | **[Verbo] [processo]** <small>[SIGLA]-[SFS]-01</small> | assistente multi-etapas (uma rota, etapas internas) |
 | Acompanhar [Processo] | `/[dominio]/[feature-set]/:id` | **Acompanhar [processo]** <small>[SIGLA]-[SFS]-03</small> | status da solicitação (somente leitura) |
 
-> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug da pasta
-> sem o prefixo `g-`. O assistente vive em **uma** rota; as etapas são estados internos
+> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug (kebab) da
+> pasta do Feature Set. O assistente vive em **uma** rota; as etapas são estados internos
 > da tela, não rotas distintas.
 
 ---
