@@ -176,6 +176,7 @@ Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 4. **Validação**: no frontend e no backend — nunca confiar apenas no client.
 5. **Auditoria**: ações críticas sempre registradas em log de auditoria.
 6. **Eventos internos**: [mensageria / chamadas diretas] ⚠️
+7. **Autorização**: acesso por **funcionalidade** (Feature = átomo de permissão), aplicado no servidor; vínculo perfil↔funcionalidade é dado configurável, nega por padrão — ver `global/AUTHZ.md` e `global/NFR.md` → SEG-01.
 
 ---
 
@@ -217,4 +218,5 @@ Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 | `global/MESSAGE-DICTIONARY.md` | Mensagens de UI genéricas + baseline de validação |
 | `global/ERROR-DICTIONARY.md` | Fonte única de códigos de erro |
 | `global/API-PATTERNS.md` | Padrões de API |
+| `global/AUTHZ.md` | Modelo de autorização — controle de acesso por funcionalidade (Feature = átomo de permissão) |
 | `global/DESIGN-SYSTEM.md` | Padrões de UI |

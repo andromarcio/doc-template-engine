@@ -50,6 +50,14 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   pendentes, consistência entre níveis), devolvendo achados priorizados (🔴/🟡/🔵) com
   correção sugerida e rota — **sem editar** o artefato. Registrado em `PROMPT_MENU`,
   `SKILL.md` e `docs/prompts.md`.
+- `engine/templates/global/AUTHZ.md` — modelo de autorização transversal: controle
+  de acesso por **funcionalidade**, com a Feature (N3) como átomo de permissão
+  (ID estável `[SIGLA]-[SFS]-[NN]`). Cobre Catálogo de Funcionalidades (espelho do
+  N3/INDEX, populado por DML idempotente MERGE por ID), matriz perfil↔funcionalidade,
+  enforcement no front (diretiva) e no back (anotação), kill switch global, ciclo de
+  vida e decisões de arquitetura. Nega por padrão; Administrador recebe tudo.
+- `NFR.md` (template): **SEG-01 — Autorização por funcionalidade**, herdada por toda Feature.
+
 
 ### Changed
 - `engine/templates/global/N0_PRODUCT_VISION.md`: título e subtítulo alinhados ao padrão
@@ -71,6 +79,10 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   INDEX/TYPE`, lista de migrations), criando uma segunda fonte de verdade. Agora
   **referencia** o DATA-MODEL e guarda só conteúdo de design: entidades no escopo,
   relacionamentos em nível de arquitetura e **estratégia/ordem** de migração (sem DDL).
+- `MASTER.md` (template): decisão transversal 7 (autorização) e nova linha na tabela
+  de arquivos globais de referência apontando `global/AUTHZ.md`.
+- `docs/content/templates.md`, `README.md` e `docs/content/estrutura.md`: catálogo de
+  templates `global/` passa a listar `AUTHZ.md`.
 
 ### Fixed
 - Referências ao arquivo de versão corrigidas de `engine/VERSION` para `VERSION` (o

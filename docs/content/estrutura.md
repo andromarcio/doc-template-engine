@@ -6,7 +6,7 @@ engine/
 │                 # NFR, protótipos, engenharia reversa, QA, conversão, etc.
 └── templates/    # esqueletos de documentação
     ├── global/   # N0, MASTER, DATA-MODEL, NFR, dicionários (FIELD/RULES/
-    │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, DESIGN-SYSTEM
+    │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, AUTHZ, DESIGN-SYSTEM
     ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de usuário)
     ├── prototypes/
     └── repos/
