@@ -12,6 +12,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai me ajudar a escrever a **Visão de Produto (N0)** — o documento de referência mais alto do sistema, que define **por que** o produto existe, para **quem** e **que valor** entrega. É um documento **integralmente negocial**: foque na dor real do usuário ou do negócio, não na solução técnica. Não mencione tabelas, campos de banco, endpoints, telas ou tecnologias.
 
 O N0 dá a **direção**; ele **não detalha funcionalidades**. Os níveis N1–N3 serão confrontados contra ele depois. Mantenha-o enxuto e estratégico.
