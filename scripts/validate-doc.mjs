@@ -26,7 +26,8 @@
 //     na pasta errada. Agnóstico ao prefixo da pasta do Feature Set (g- ou sem g-).
 //     Isenta o engine/ (templates com nomes de placeholder) e caminhos fora da instância.
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
 
 const trunc = (s) => (s.length > 60 ? `${s.slice(0, 60)}…` : s).trim();
 
@@ -345,6 +346,59 @@ function checkLocation(file, tag, errors) {
   }
 }
 
+// --- Cross-artifact: ID duplicado na mesma instância (determinístico) -------
+// IDs (SIGLA / SIGLA-SFS / SIGLA-SFS-NN) são únicos e nunca reutilizados. Este
+// check varre a instância (modules/ + global/) e reprova se o ID deste artefato
+// já aparece em outro. Isenta o engine/ (templates com IDs de placeholder).
+function artifactId(lines) {
+  const line = lines.find((l) => /> \*\*Nível [0-3]\*\*/.test(l));
+  if (!line) return null;
+  const m = line.match(/`([A-Z]{2,3}(?:-[A-Z]{3})?(?:-\d{2})?)`/);
+  return m ? m[1] : null;
+}
+function instanceRoot(file) {
+  let dir = dirname(resolve(file));
+  for (let i = 0; i < 15; i++) {
+    if (existsSync(join(dir, 'modules')) || existsSync(join(dir, 'global'))) return dir;
+    const up = dirname(dir);
+    if (up === dir) break;
+    dir = up;
+  }
+  return null;
+}
+function collectMd(dir, out) {
+  let entries;
+  try { entries = readdirSync(dir); } catch { return; }
+  for (const name of entries) {
+    if (name === 'node_modules' || name === '.git' || name === 'engine') continue;
+    const p = join(dir, name);
+    let st;
+    try { st = statSync(p); } catch { continue; }
+    if (st.isDirectory()) collectMd(p, out);
+    else if (name.endsWith('.md')) out.push(p);
+  }
+}
+function checkDuplicateId(file, id, errors) {
+  const abs = resolve(file).replace(/\\/g, '/');
+  if (/(^|\/)engine\//.test(abs) || !id) return; // templates isentos / sem ID detectável
+  const root = instanceRoot(file);
+  if (!root) return;
+  const found = [];
+  for (const d of ['modules', 'global']) collectMd(join(root, d), found);
+  const clashes = [];
+  for (const f of found) {
+    if (resolve(f).replace(/\\/g, '/') === abs) continue;
+    try {
+      if (artifactId(readFileSync(f, 'utf8').split(/\r?\n/)) === id) {
+        clashes.push(resolve(f).replace(/\\/g, '/').replace(`${root.replace(/\\/g, '/')}/`, ''));
+      }
+    } catch { /* arquivo ilegível — ignora */ }
+  }
+  if (clashes.length) {
+    errors.push(`ID "${id}" duplicado — já usado em: ${clashes.join(', ')} (IDs são únicos e não se reutilizam).`);
+  }
+}
+
 function validate(file) {
   const errors = [];
   const raw = readFileSync(file, 'utf8');
@@ -364,6 +418,7 @@ function validate(file) {
 
   const tag = level ? `N${level}` : dmKind ? (dmKind === 'index' ? 'DM-idx' : 'DM') : '??';
   if (tag !== '??') checkLocation(file, tag, errors);
+  if (['1', '2', '3'].includes(level)) checkDuplicateId(file, artifactId(lines), errors);
   return { tag, errors };
 }
 
