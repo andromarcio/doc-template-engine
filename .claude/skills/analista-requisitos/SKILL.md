@@ -37,6 +37,17 @@ Use esta skill de dois modos:
 
 ---
 
+## Protocolo obrigatório de sessão (F1 preflight · F2 autovalidação)
+
+Vale para **todo** prompt de especificação (N0, 1A/1B, 2A/2B, 3A/3B, 4A/4B, CRUD, WIZARD):
+
+- **Antes de gerar (F1 — verificar o que já existe):** rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **Contexto verificado** — o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Nunca especifique sem esse confronto; nunca duplique ID/pasta existente.
+- **Depois de gravar (F2 — não fugir do padrão):** rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e rode de novo até sair `✓`**. Nunca declare concluído com o validador reprovando. Fez algo diferente do que o prompt define? Corrija para o padrão.
+
+> No Claude Code isso é **enforçado automaticamente** pelos hooks em `.claude/settings.json` → `scripts/hooks/spec-guard.mjs`: `UserPromptSubmit` injeta o preflight; `PostToolUse` roda o validador a cada gravação e devolve os desvios ao modelo. Portão determinístico, independente do modelo (resolve o caso do Haiku). No modo copiar-colar, o mesmo protocolo está embutido nos prompts (PASSO 0 + gate de autovalidação).
+
+---
+
 ## Hierarquia de níveis
 
 | Nível | Nome | Arquivo | Conteúdo |

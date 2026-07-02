@@ -74,6 +74,30 @@ Feature(s) a especificar: [nome da feature — ou lista separada por vírgula]
 
 ---
 
+## PASSO 0 — Preflight obrigatório de contexto
+
+> **Não gere nada antes de concluir este passo.** Especificar sem verificar o que já existe foi a falha recorrente — elimine-a de forma sistemática.
+
+1. Levante o **estado atual** de forma determinística (Claude Code / CLI):
+   ```
+   node scripts/preflight-spec.mjs [dominio] [feature-set]
+   ```
+   Ele lista o N0, os domínios (N1), os Feature Sets (N2) e as Features (N3) já existentes, com seus IDs e o **próximo NN livre** do Feature Set. No modo copiar-colar (sem acesso ao disco), leia manualmente o `global/N0_PRODUCT_VISION.md`, o `modules/INDEX.md`, o N1 do domínio e o N2 do Feature Set colados no contexto.
+
+2. Apresente ao usuário o bloco **Contexto verificado** — antes de qualquer coleta ou geração:
+
+   > **Contexto verificado**
+   > - Domínio: `[SIGLA]` [existe? / novo] · Feature Set: `[ID]` [existe? / novo] · próximo NN livre: `[SIGLA-SFS-NN]`
+   > - Features já existentes no Feature Set: [lista de IDs] → esta feature **é nova** ou **já existe**?
+   > - Regras/campos já canônicos aplicáveis: [FIELD/RULES-DICTIONARY: …] — **referenciar, não reescrever**
+   > - Cabe no escopo do N0 e do N1? [sim / ⚠️ divergência: …]
+
+3. Se a feature, o ID ou a pasta **já existem**, **não duplique**: confirme com o usuário se o caso é **edição** (PROMPT_4A) em vez de criação. Se o domínio/Feature Set ainda não existe (bottom-up), sinalize antes de criar pasta nova.
+
+Só avance para o PASSO 1 após apresentar o **Contexto verificado**.
+
+---
+
 ## PASSO 1 — Detecção do modo e confirmação das features
 
 Verifique os insumos recebidos e bifurque:
@@ -621,8 +645,19 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 - [ ] Campos novos (não canônicos) sinalizados para o **data-model** com ⚠️ — nunca inventados no N3
 - [ ] **Nenhuma** seção técnica (API, eventos, AuditLog, mapeamento de campos) — isso é o **PROMPT_3B**
 
-> **Gate determinístico** — após gravar o N3, rode `node scripts/validate-doc.mjs <arquivo>`.
+> **Gate determinístico de autovalidação (obrigatório — F2)** — após gravar o N3, rode:
+> ```
+> node scripts/validate-doc.mjs <arquivo>
+> ```
 > Ele exige as seções obrigatórias do N3 (Descrição, Superfície, Regras de negócio,
 > Cenários, Campos, Campos automáticos, Comportamento de tela, Changelog) e **reprova**
 > se a tabela `## Campos` vazar camada técnica (Label Dev / campo banco).
-> O artefato só é conforme quando o validador retorna `✓` (sai com código 0).
+>
+> Se o validador **reprovar**: **apresente os desvios apontados**, **corrija o arquivo** e
+> **rode de novo** — repita até sair `✓` (código 0). **Nunca** declare a feature concluída
+> com o validador reprovando. Se você produziu algo fora do que este prompt define, o
+> caminho é **corrigir para o padrão**, não seguir adiante.
+>
+> No Claude Code este gate é **automático e model-agnostic**: o hook `PostToolUse`
+> (`scripts/hooks/spec-guard.mjs`) roda o validador a cada gravação e devolve os desvios
+> para correção — vale para qualquer modelo (Haiku, Sonnet, etc.).
