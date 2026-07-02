@@ -37,6 +37,7 @@ const TARGETS = [
   'PROMPT_4B_N3_UPDATE_tecnico',
   'PROMPT_CRUD',
   'PROMPT_WIZARD',
+  'PROMPT_DATA_MODEL_negocio',
 ];
 
 const dir = join(process.cwd(), 'engine', 'prompts');

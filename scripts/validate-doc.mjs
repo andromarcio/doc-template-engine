@@ -321,6 +321,32 @@ function validateDataModel(lines, raw, kind, errors) {
   }
 }
 
+// Variante NEGOCIAL do data-model (usada pelo doc-template-engine-caixa): só a parte
+// das ENTIDADES, sem a camada física de banco. Detectada pelo marcador
+// "> **Modelo de entidades (negocial)**". Valida a estrutura reduzida e PROÍBE
+// vazamento físico (Label Dev / Campo banco / Tipo SQL).
+function validateDataModelNegocial(lines, raw, kind, errors) {
+  if (kind === 'index') {
+    requireSections(lines, ['Modelos por domínio'], errors);
+  } else {
+    const NON_ENTITY = new Set(['Relacionamentos', 'Enums', 'Changelog']);
+    const headings = lines.filter((l) => /^## /.test(l)).map((l) => l.replace(/^##\s+/, '').trim());
+    const entities = headings.filter((h) => !NON_ENTITY.has(h));
+    if (!entities.length) errors.push('Fragmento negocial sem nenhuma entidade ("## [Entidade]").');
+    for (const ent of entities) {
+      const header = tableHeader(lines, ent);
+      if (!header) { errors.push(`Entidade "${ent}" sem tabela de atributos.`); continue; }
+      if (!header.some((c) => /label po/i.test(c) || /atributo/i.test(c))) {
+        errors.push(`Tabela da entidade "${ent}" sem a coluna "Label PO"/"Atributo".`);
+      }
+    }
+  }
+  // Anti-vazamento físico: o modelo negocial NÃO carrega nomes de banco.
+  if (/\bcampo banco\b/i.test(raw)) errors.push('Modelo negocial vaza camada física: "Campo banco" — nomes de banco vivem só no data-model técnico.');
+  if (/\btipo sql\b/i.test(raw)) errors.push('Modelo negocial vaza camada física: "Tipo SQL".');
+  if (/\blabel dev\b/i.test(raw)) errors.push('Modelo negocial vaza camada física: "Label Dev".');
+}
+
 // Local esperado por tipo de artefato (g-/sem-g- agnóstico: a pasta do Feature Set é
 // [^/]+, com ou sem prefixo). Ancoradas ao FIM do caminho.
 const LOCATION_RULES = {
@@ -413,7 +439,10 @@ function validate(file) {
   else if (level === '1') validateN1(lines, raw, errors);
   else if (level === '2') validateN2(lines, raw, errors);
   else if (level === '3') validateN3(lines, raw, errors);
-  else if (dmKind) validateDataModel(lines, raw, dmKind, errors);
+  else if (dmKind) {
+    if (/Modelo de entidades \(negocial\)/.test(raw)) validateDataModelNegocial(lines, raw, dmKind, errors);
+    else validateDataModel(lines, raw, dmKind, errors);
+  }
   else errors.push('Tipo não detectado (falta o subtítulo "> **Nível 0|1|2|3**" ou o título "# Data Model: …").');
 
   const tag = level ? `N${level}` : dmKind ? (dmKind === 'index' ? 'DM-idx' : 'DM') : '??';
