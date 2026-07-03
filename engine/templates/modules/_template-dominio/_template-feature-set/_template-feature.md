@@ -149,6 +149,15 @@ Feature: [Nome da feature em linguagem natural]
 
 ---
 
+## Colunas do resultado
+<!-- Apenas para features de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em features que NÃO são de busca, OMITA esta seção. -->
+
+| Coluna (Label PO) | Origem | Ordenação |
+|---|---|---|
+| [campo exibido] | cadastro / entidade relacionada / derivado | padrão ↑ / ordenável / — |
+
+---
+
 ## Campos automáticos
 
 | Label PO | Valor | Quando |

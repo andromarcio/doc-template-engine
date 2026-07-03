@@ -226,7 +226,17 @@ function validateN2(lines, raw, errors) {
   }
 }
 
-function validateN3(lines, raw, errors) {
+// Feature de pesquisa/listagem? Detecta pelo verbo do título ou pelo prefixo do arquivo
+// (verbos de busca no framework: pesquisar, listar, consultar, buscar).
+function isSearchFeature(lines, file) {
+  const title = (lines.find((l) => l.trim().startsWith('# ')) || '').replace(/^#\s*/, '').trim();
+  const verb = (title.split(/\s+/)[0] || '').toLowerCase();
+  const byTitle = /^(pesquisar|listar|consultar|buscar)$/.test(verb);
+  const byFile = /(^|\/)f-(pesquisar|listar|consultar|buscar)-/.test(String(file || '').replace(/\\/g, '/').toLowerCase());
+  return byTitle || byFile;
+}
+
+function validateN3(lines, raw, errors, file) {
   checkCommon(lines, errors);
   const sub = lines.find((l) => l.trim().startsWith('> **Nível 3**'));
   if (sub && !/`[A-Z]{3}-[A-Z]{3}-\d{2}`/.test(sub)) errors.push('Subtítulo N3 sem ID `SIGLA-SFS-NN` em crase.');
@@ -241,6 +251,18 @@ function validateN3(lines, raw, errors) {
     if (!header.some((c) => /label po/i.test(c))) errors.push('Tabela "## Campos" sem a coluna "Label PO".');
     if (header.some((c) => /label dev/i.test(c) || /banco/i.test(c))) {
       errors.push('Tabela "## Campos" vaza camada técnica (Label Dev / campo banco) — proibido no N3.');
+    }
+  }
+  // Gate de resultado: feature de pesquisa/listagem exige a tabela das colunas do resultado.
+  if (isSearchFeature(lines, file)) {
+    if (!lines.some((l) => l.trim() === '## Colunas do resultado')) {
+      errors.push('Feature de pesquisa/listagem sem a seção "## Colunas do resultado" (tabela dos campos exibidos no resultado da busca).');
+    } else {
+      const rh = tableHeader(lines, 'Colunas do resultado');
+      if (!rh) errors.push('Seção "## Colunas do resultado" sem tabela.');
+      else if (!rh.some((c) => /coluna|label po/i.test(c))) {
+        errors.push('Tabela "## Colunas do resultado" sem a coluna "Coluna (Label PO)".');
+      }
     }
   }
 }
@@ -438,7 +460,7 @@ function validate(file) {
   if (level === '0') validateN0(lines, raw, errors);
   else if (level === '1') validateN1(lines, raw, errors);
   else if (level === '2') validateN2(lines, raw, errors);
-  else if (level === '3') validateN3(lines, raw, errors);
+  else if (level === '3') validateN3(lines, raw, errors, file);
   else if (dmKind) {
     if (/Modelo de entidades \(negocial\)/.test(raw)) validateDataModelNegocial(lines, raw, dmKind, errors);
     else validateDataModel(lines, raw, dmKind, errors);

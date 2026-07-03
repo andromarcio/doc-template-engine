@@ -240,6 +240,8 @@ Apresente a proposta ao usuário:
 > Algum filtro deve ser removido ou adicionado?
 > Alguma coluna deve ser removida, adicionada ou reordenada?"
 
+> **Persistência (obrigatório):** as colunas confirmadas viram a seção `## Colunas do resultado` no artefato (logo após `## Campos`), com a tabela `Coluna (Label PO) | Origem | Ordenação`. Não basta propor — tem de constar no `.md`. O validador **exige** essa seção para features de pesquisa/listagem (`Pesquisar`/`Listar`/`Consultar`/`Buscar`).
+
 Após confirmação, **pule o BLOCO B** no PASSO 2 — os campos já estão derivados.
 Prossiga a partir do BLOCO C (Regras de negócio), focando nas regras
 específicas da pesquisa (ex: carga inicial, ordenação padrão, limite de registros).
@@ -508,6 +510,15 @@ Com as respostas de todos os blocos, gere:
 |---|---|---|---|
 | [nome em português] | [tipo] | sim/não/automático | [regra em linguagem natural] |
 | [campo canônico] | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
+
+---
+
+## Colunas do resultado
+<!-- Apenas para features de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em features que NÃO são de busca, OMITA esta seção. -->
+
+| Coluna (Label PO) | Origem | Ordenação |
+|---|---|---|
+| [campo exibido] | cadastro / entidade relacionada / derivado | padrão ↑ / ordenável / — |
 
 ---
 

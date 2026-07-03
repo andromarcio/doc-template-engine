@@ -142,7 +142,7 @@ o Feature Set inteiro:
 > 8. **Permissões** (fonte única do projeto): quais **perfis** existem e, para
 >    **cada operação** (pesquisar, cadastrar, editar, excluir, visualizar), quais
 >    perfis podem executá-la? Descreva em linguagem de negócio.
-> 9. **Pesquisa**: há ordenação padrão, carga inicial (ex.: últimos N registros)
+> 9. **Pesquisa**: quais **colunas aparecem no resultado** (viram a seção obrigatória `## Colunas do resultado`); há ordenação padrão, carga inicial (ex.: últimos N registros)
 >    ou limite de resultados?
 > 10. Esta entidade precisa ficar registrada no **histórico de auditoria**? (sim/não —
 >     servirá para o 3B preencher a seção AuditLog; não vira regra de negócio)
