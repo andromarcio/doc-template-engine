@@ -96,6 +96,8 @@ Com as respostas, gere o artefato parcial:
 
 📄 `modules/[dominio]/[feature-set]/README.md` — seções negociais
 
+> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+
 > ### Contrato estrutural (vinculante — verificado por `scripts/validate-doc.mjs`)
 >
 > O N2 tem **exatamente estas 7 seções `##`, nesta ordem, e nenhuma outra**:

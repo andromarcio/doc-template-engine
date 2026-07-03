@@ -205,6 +205,8 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 📄 `modules/[dominio]/[feature-set]/README.md`
 
+> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+
 ```
 # Feature Set: [Nome do Feature Set]
 > **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]`

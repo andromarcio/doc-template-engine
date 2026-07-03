@@ -82,7 +82,7 @@ Receba um **código de escopo** e determine o nível:
 | Formato informado | Nível | O que entra na contagem |
 |---|---|---|
 | `f-<slug>` ou ID de feature (ex.: `CAD-GFG-03`) ou caminho de um `f-*.md` | **Feature** | 1 N3 (transações dessa feature) + funções de dados do **domínio** dela |
-| `g-<slug>` ou prefixo de feature set | **Feature Set** | todas as features `f-*` do `g-` + funções de dados do **domínio** |
+| nome da pasta do Feature Set (ex.: `contratos`), ID `SIGLA-SFS` (ex.: `CTR-FAB`) ou caminho de um `README.md` de N2 | **Feature Set** | todas as features `f-*` da pasta do Feature Set + funções de dados do **domínio** |
 | nome do módulo (ex.: `contagem-metricas`) | **Domínio** | todos os feature sets do módulo + todas as funções de dados do domínio |
 
 - Liste os N3 que entram no escopo e o **domínio** ao qual pertencem. Se o código for

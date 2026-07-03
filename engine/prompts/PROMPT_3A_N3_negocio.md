@@ -459,6 +459,8 @@ Com as respostas de todos os blocos, gere:
 
 📄 `modules/[dominio]/[feature-set]/[arquivo-do-N2]` — **na mesma pasta do `README.md` do N2** (ver DESTINO acima; nunca na raiz, `global/`, `engine/` ou outro domínio). Usar o nome de arquivo **exatamente como definido** na tabela de Features do N2 (Modo A), ou derivar do nome da feature em kebab-case (Modo B)
 
+> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
