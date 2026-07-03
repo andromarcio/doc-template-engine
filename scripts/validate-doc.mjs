@@ -265,6 +265,12 @@ function validateN3(lines, raw, errors, file) {
       }
     }
   }
+  // Gate de fidelidade: se a Superfície declara "Fidelidade ao protótipo: obrigatória",
+  // precisa apontar o caminho do protótipo (prototypes/… ou um link .html).
+  const fid = lines.find((l) => /fidelidade ao prot[óo]tipo/i.test(l));
+  if (fid && /obrigat[óo]ri/i.test(fid) && !/(prototypes\/|\.html)/i.test(fid)) {
+    errors.push('Fidelidade ao protótipo "obrigatória" sem o caminho do protótipo (aponte o arquivo em `prototypes/…`).');
+  }
 }
 
 // Campos globais implícitos — não devem ser repetidos nas tabelas de entidade.

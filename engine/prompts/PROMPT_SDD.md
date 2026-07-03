@@ -20,6 +20,8 @@ seguir diretamente para implementar.
 
 ### Regras de geração
 
+> **Fidelidade ao protótipo:** para telas cuja feature (N3) declara `Fidelidade ao protótipo: obrigatória`, o design **referencia o protótipo aprovado** (`prototypes/…`) como fonte de verdade do layout, componentes e estados — não reinterprete a tela pelo texto; desvio vira decisão 🏛️ e exige aprovação.
+
 1. **Referência, não repetição.** Sempre que uma regra ou campo já
    estiver definido nas specs, referencie o artefato de origem em vez
    de copiar o conteúdo. Use a notação: `→ ver [arquivo]: [seção]`

@@ -488,6 +488,9 @@ Com as respostas de todos os blocos, gere:
 
 **[Tela própria | Ação em tela]** — [se tela própria: rota `/...`; se ação em tela: origem: [Feature/Tela]]
 
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[feature-set]/[feature]/[estado].html`]
+<!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo. A fidelidade "obrigatória" é checada pelo validador. -->
+
 ---
 
 ## Regras de negócio
