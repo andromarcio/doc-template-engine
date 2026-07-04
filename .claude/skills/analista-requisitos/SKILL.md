@@ -79,7 +79,7 @@ várias features) ou um requisito não-funcional (→ `global/NFR.md`).
 > essa granularidade — o prefixo verbal é o teste prático de que você está num N3.
 
 > **Definição canônica e testável**: `engine/FEATURE-DEFINITION.md` é a fonte única do
-> que é (e não é) uma feature — critérios objetivos FD-1…FD-7, vocabulário de verbos
+> que é (e não é) uma feature — critérios objetivos FD-1…FD-8, vocabulário de verbos
 > canônicos e termos bloqueados na posição do verbo. O gate determinístico
 > `scripts/validate-feature-semantics.mjs` verifica os critérios automatizáveis em todo
 > N3 gravado (roda junto com o `validate-doc.mjs` no hook). Em dúvida de granularidade,

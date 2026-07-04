@@ -471,7 +471,7 @@ Com as respostas de todos os blocos, gere:
 <!-- Este é o CÓDIGO DA FEATURE (SIGLA do domínio + SFS do Feature Set + NN sequencial da feature, ex.: `CAD-CLI-01`) — NÃO o ID do Feature Set (`CAD-CLI`). Modo A: copie o código EXATO que a feature tem na tabela de Features do N2 (aparece em `<small>SIGLA-SFS-NN</small>`). Modo B (bottom-up): atribua provisório e ⚠️ confirme via B2. Nunca omita o `-NN`. -->
 
 ## Descrição
-[uma frase em linguagem de negócio]
+[1-2 frases de negócio que declaram a ENTREGA — única, tangível e negocial (FEATURE-DEFINITION.md, FD-8). Fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]." Sem "etc."/"de forma eficiente", sem termo técnico, sem repetir a descrição de outra feature]
 
 ---
 
@@ -657,6 +657,7 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 - [ ] Título `# [Nome da Feature]` (exatamente como no N2) + subtítulo `> **Nível 3** - Feature Set: [Nome] — Domínio: [Nome] - [SIGLA]-[SFS]-NN` (o **código da feature** em crase, com o `-NN` — nunca só o ID do Feature Set)
 - [ ] `## Origem` presente **somente** se houver história de usuário (senão, omitir a seção)
 - [ ] `## Superfície`: **Tela própria** (com rota `/...`) **ou** **Ação em tela** (com a feature/tela de origem)
+- [ ] `## Descrição`: 1-2 frases declarando a **entrega** (única, tangível, negocial) — sem placeholder, sem termos vagos ("etc.", "de forma eficiente") ou técnicos, sem duplicar a descrição de outro N3
 - [ ] `## Regras de negócio`: itens **atômicos** (uma invariante cada); a reação do sistema e o texto da mensagem **não** entram aqui (vão para Cenários); canônicas como `→ ver RULES-DICTIONARY: [nome]`
 - [ ] `## Cenários`: Gherkin com os grupos (Caminho feliz · Erros de validação · Conflitos com dados existentes · Restrições de acesso · Estados especiais), em Label PO, com os marcadores de importação dos canônicos
 - [ ] `## Campos`: 4 colunas (Label PO | Tipo | Obrigatório | Validação) — **apenas Label PO** (nunca Label Dev nem campo banco); canônicos como `→ ver FIELD-DICTIONARY: [nome]`
@@ -675,10 +676,11 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 > Regras de negócio, Cenários, Campos, Campos automáticos, Comportamento de tela,
 > Changelog) e **reprova** se a tabela `## Campos` vazar camada técnica (Label Dev /
 > campo banco). O segundo (semântico) verifica se o artefato **é mesmo uma feature**
-> segundo a definição canônica (`engine/FEATURE-DEFINITION.md`, critérios FD-1…FD-7):
+> segundo a definição canônica (`engine/FEATURE-DEFINITION.md`, critérios FD-1…FD-8):
 > verbo no infinitivo catalogado, título com a mesma ação, atomicidade (um verbo só),
 > nenhum termo de agrupador/nominalização/NFR na posição do verbo, todo cenário com
-> `Então/Then` e regras sem cauda de reação.
+> `Então/Then`, regras sem cauda de reação e Descrição declarando a entrega (sem
+> placeholder, sem termos vagos/técnicos, sem duplicar a descrição de outro N3).
 >
 > Se algum validador **reprovar**: **apresente os desvios apontados**, **corrija o arquivo** e
 > **rode de novo** — repita até ambos saírem `✓` (código 0). **Nunca** declare a feature concluída

@@ -27,8 +27,12 @@
 //         com Então/Then; coerência entidade↔título/descrição (aviso)
 //   FD-7  regras são invariantes: nenhum item de ## Regras de negócio carrega reação
 //         do sistema ("não salva", "exibe mensagem", "conforme o Design System")
+//   FD-8  Descrição declara a ENTREGA: sem placeholder, 1–2 frases, sem termos vagos
+//         ("etc.", "de forma eficiente") ou técnicos (tabela do FEATURE-DEFINITION),
+//         menção a uma ação do vocabulário (aviso se ausente) e não duplicada — varre
+//         os demais N3 da instância: descrição idêntica reprova; quase idêntica avisa
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, resolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -91,9 +95,14 @@ function loadVocabulary(sampleFile) {
   if (!blockRows || !blockRows.length) {
     return { error: `Seção "## Termos bloqueados na posição do verbo" ausente/vazia em ${defFile}.` };
   }
+  const descRows = tableFirstCells(lines, 'Termos proibidos na Descrição');
+  if (!descRows || !descRows.length) {
+    return { error: `Seção "## Termos proibidos na Descrição" ausente/vazia em ${defFile}.` };
+  }
   const verbs = new Set(verbRows.map((c) => norm(c[0])));
   const blocked = new Map(blockRows.map((c) => [norm(c[0]), { what: c[1] || '?', where: c[2] || '?' }]));
-  return { verbs, blocked, defFile };
+  const descBlocked = new Map(descRows.map((c) => [norm(c[0]), { tipo: c[1] || '?', hint: c[2] || '?' }]));
+  return { verbs, blocked, descBlocked, defFile };
 }
 
 // ------------------------------------------------------------------- helpers
@@ -147,6 +156,60 @@ function gherkinScenarios(sectionLines) {
   return scenarios;
 }
 
+// Radical de um verbo p/ casar flexões e nominalizações na Descrição
+// ("cadastrar" → "cadastr" casa "cadastro/cadastra"; "pagar" → "paga" casa "pagamento").
+const stemOf = (v) => (v.length >= 7 ? v.slice(0, -2) : v.slice(0, -1));
+
+// Texto corrido da seção ## Descrição (sem separadores/vazias).
+function descriptionText(lines) {
+  const slice = sectionSlice(lines, 'Descrição');
+  if (!slice) return null;
+  return slice.map((l) => l.trim()).filter((l) => l && l !== '---').join(' ');
+}
+
+// Palavras de conteúdo p/ comparação de descrições (sem acento, sem stopwords).
+const DESC_STOPWORDS = new Set([
+  'que', 'para', 'com', 'uma', 'dos', 'das', 'este', 'esta', 'esse', 'essa', 'seu', 'sua',
+  'ser', 'sao', 'nao', 'mais', 'pelo', 'pela', 'por', 'aos', 'sem', 'apos', 'quando',
+  'como', 'todos', 'todas', 'cada', 'novo', 'nova', 'seus', 'suas', 'permite', 'permitir',
+  'possibilita', 'sistema', 'usuario', 'usuarios', 'feature', 'dado', 'dados',
+]);
+const contentWords = (text) =>
+  new Set(norm(text).split(/[^a-z0-9]+/).filter((w) => w.length >= 3 && !DESC_STOPWORDS.has(w)));
+
+function jaccard(a, b) {
+  if (!a.size || !b.size) return 0;
+  let inter = 0;
+  for (const w of a) if (b.has(w)) inter++;
+  return inter / (a.size + b.size - inter);
+}
+
+// Demais N3 da instância (modules/**/f-*.md), p/ o check de descrição duplicada.
+function siblingN3s(file) {
+  let root = dirname(resolve(file));
+  for (let i = 0; i < 15; i++) {
+    if (existsSync(join(root, 'modules'))) break;
+    const up = dirname(root);
+    if (up === root) return [];
+    root = up;
+  }
+  if (!existsSync(join(root, 'modules'))) return [];
+  const out = [];
+  (function walk(dir) {
+    let entries;
+    try { entries = readdirSync(dir); } catch { return; }
+    for (const name of entries) {
+      if (name === 'node_modules' || name === '.git' || name === 'engine') continue;
+      const p = join(dir, name);
+      let st;
+      try { st = statSync(p); } catch { continue; }
+      if (st.isDirectory()) walk(p);
+      else if (/^f-.+\.md$/.test(name) && resolve(p) !== resolve(file)) out.push(p);
+    }
+  })(join(root, 'modules'));
+  return out;
+}
+
 // ------------------------------------------------------------------ validação
 function validate(file, vocab) {
   const errors = [];
@@ -157,7 +220,7 @@ function validate(file, vocab) {
   // Só N3 (detecção idêntica ao validate-doc). Outros artefatos passam batido.
   if (!lines.some((l) => /> \*\*Nível 3\*\*/.test(l))) return { skip: true, errors, warnings };
 
-  const { verbs, blocked } = vocab;
+  const { verbs, blocked, descBlocked } = vocab;
 
   // --- FD-1/FD-4 — nome do arquivo -------------------------------------------
   const base = basename(file);
@@ -260,6 +323,46 @@ function validate(file, vocab) {
       errors.push(
         `[FD-7] Regra carrega REAÇÃO do sistema ("${trunc(line)}") — regra é invariante ("o quê"); a reação (mensagem/bloqueio) vira cenário em "## Cenários".`,
       );
+    }
+  }
+
+  // --- FD-8 — Descrição declara a entrega --------------------------------------
+  // (seção ausente é reprovada pelo validate-doc; aqui validamos o CONTEÚDO)
+  const desc = descriptionText(lines);
+  if (desc !== null) {
+    const dNorm = norm(desc);
+    const dLen = dNorm.replace(/[^a-z0-9 ]/g, '').trim().length;
+    if (/\[[^\]]{3,}\]/.test(desc)) {
+      errors.push('[FD-8] Descrição ainda com placeholder de template — escreva o contrato de entrega em 1–2 frases de negócio.');
+    } else if (dLen < 30) {
+      errors.push('[FD-8] Descrição vazia ou curta demais para declarar uma entrega — diga o que a feature entrega quando concluída (fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]").');
+    } else {
+      for (const [term, meta] of descBlocked) {
+        const re = new RegExp(`\\b${term.replace(/[.*+?^$()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        if (re.test(dNorm)) {
+          errors.push(`[FD-8] Descrição usa termo ${meta.tipo} "${term}" — ${meta.hint}.`);
+        }
+      }
+      if (dNorm.length > 350) {
+        warnings.push('[FD-8] Descrição longa (mais que ~2 frases) — sinal de escopo demais ou de mistura com regras/cenários; a entrega cabe em 1–2 frases.');
+      }
+      if (![...verbs].some((v) => dNorm.includes(stemOf(v)))) {
+        warnings.push('[FD-8] Descrição não menciona nenhuma ação do vocabulário canônico — confirme que ela declara o que a feature ENTREGA (não uma intenção).');
+      }
+      // Entrega ÚNICA: descrição idêntica à de outro N3 reprova; quase idêntica avisa.
+      const mine = contentWords(desc);
+      const flat = dNorm.replace(/\s+/g, ' ').trim();
+      for (const other of siblingN3s(file)) {
+        let otherDesc;
+        try { otherDesc = descriptionText(stripHtmlComments(readFileSync(other, 'utf8')).split(/\r?\n/)); } catch { continue; }
+        if (!otherDesc) continue;
+        const rel = other.replace(/\\/g, '/').split('/modules/').pop();
+        if (norm(otherDesc).replace(/\s+/g, ' ').trim() === flat) {
+          errors.push(`[FD-8] Descrição IDÊNTICA à de modules/${rel} — a entrega de cada feature é única; ou é duplicata, ou a descrição é genérica demais.`);
+        } else if (jaccard(mine, contentWords(otherDesc)) >= 0.8) {
+          warnings.push(`[FD-8] Descrição quase idêntica à de modules/${rel} — confirme que as duas features entregam coisas diferentes (e que a descrição diz qual é a diferença).`);
+        }
+      }
     }
   }
 

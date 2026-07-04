@@ -6,9 +6,10 @@
 > não redefina "feature" em outro lugar; referencie aqui.
 >
 > ⚠️ **Contrato máquina-legível**: as tabelas das seções
-> `## Vocabulário de verbos canônicos` e `## Termos bloqueados na posição do verbo`
-> são **lidas programaticamente** pelo validador. Não renomeie esses títulos de seção
-> nem mude o formato das tabelas (primeira coluna = termo).
+> `## Vocabulário de verbos canônicos`, `## Termos bloqueados na posição do verbo` e
+> `## Termos proibidos na Descrição` são **lidas programaticamente** pelo validador.
+> Não renomeie esses títulos de seção nem mude o formato das tabelas
+> (primeira coluna = termo).
 
 ---
 
@@ -51,6 +52,7 @@ para revisão humana (`PROMPT_REVIEW`).
 | FD-5 | **Não é outro artefato** | Não é campo, regra, tela, mensagem ou NFR nomeado como feature (ver tabela de bloqueados e encaminhamentos) | Automática + humana |
 | FD-6 | **Resultado observável** | `## Cenários` tem pelo menos um cenário Gherkin e **todo** cenário tem `Então/Then` | Automática (presença) + humana (qualidade) |
 | FD-7 | **Regras são invariantes** | Nenhum item de `## Regras de negócio` carrega reação do sistema ("não salva", "exibe mensagem", "conforme o Design System") — reação é cenário | Automática (padrões) + humana |
+| FD-8 | **Descrição declara a entrega** | `## Descrição` diz, em 1–2 frases de negócio, **o que a feature entrega** — sem placeholder, sem termo vago ("etc.", "de forma eficiente"), sem termo técnico, sem copiar a descrição de outra feature | Automática (padrões + duplicidade) + humana (sentido de negócio) |
 
 ## Teste rápido (para o analista, antes de abrir o PROMPT_3A)
 
@@ -293,6 +295,76 @@ da terceira coluna. (Grafia sem acento — a comparação normaliza acentos.)
 | `refatoracao` | técnico | fora do escopo de N3 |
 | `suporte` | área/agrupador | Domínio (N1) ou Feature Set (N2) |
 
+## Descrição — o contrato de entrega (FD-8)
+
+A `## Descrição` do N3 é o **contrato de entrega** da feature: em **1–2 frases de
+negócio**, para alguém que nunca viu o sistema, ela responde *"o que eu ganho quando
+esta feature estiver pronta?"*. Três qualidades, na linguagem do analista:
+
+- **Tangível** — nomeia a **ação e o resultado**, não uma intenção. Se a frase não
+  contém nenhum verbo de ação (só "facilita", "melhora", "otimiza"), não há entrega.
+- **Única** — em dois sentidos: a feature entrega **uma** coisa (se a descrição precisa
+  de "e também…", provavelmente são duas features — ver FD-3); e a entrega é **dela**
+  (duas features com a mesma descrição são a mesma feature duplicada ou uma descrição
+  genérica demais).
+- **Negocial** — linguagem de negócio pura (Modo PO): nada de endpoint, API, banco,
+  JSON. E alguém de negócio reconhece valor na frase — este último julgamento é humano.
+
+**Fórmula sugerida** (não obrigatória, mas resolve 90% dos casos):
+
+> *"Permite que [ator] [ação] [entidade], [resultado/efeito observável]."*
+
+| ❌ Não passa | Por quê | ✅ Passa |
+|---|---|---|
+| "Cadastro de clientes." | não é frase de entrega — é o nome de um agrupador | "Permite registrar um novo cliente com seus dados básicos, deixando-o disponível para os demais processos." |
+| "Facilita a gestão de contratos de forma eficiente." | intenção vaga, sem ação nem resultado | "Permite suspender um contrato vigente, interrompendo as cobranças até a reativação." |
+| "Endpoint que grava o cliente na tabela `clients`." | técnico — Modo PO não fala de endpoint/tabela | "Permite registrar um novo cliente…" (o técnico vai para o `dev-only`/3B) |
+| (mesma descrição em dois N3) | a entrega não é única — ou é duplicata, ou é genérica | cada N3 descreve **a sua** entrega |
+
+## Termos proibidos na Descrição
+
+Termos que reprovam a Descrição no gate (comparação sem acento, palavra/frase
+inteira). `vago` = não declara entrega tangível; `tecnico` = vaza camada técnica no
+Modo PO.
+
+| Termo | Tipo | Orientação |
+|---|---|---|
+| `etc` | vago | liste o que entra — ou corte; "etc." esconde escopo |
+| `entre outros` | vago | idem: escopo escondido |
+| `entre outras` | vago | idem: escopo escondido |
+| `e afins` | vago | idem: escopo escondido |
+| `e assim por diante` | vago | idem: escopo escondido |
+| `diversas funcionalidades` | vago | cada funcionalidade é uma feature — nomeie a desta |
+| `varias funcionalidades` | vago | cada funcionalidade é uma feature — nomeie a desta |
+| `de forma eficiente` | vago | eficiência é NFR (`global/NFR.md`); a descrição diz a entrega |
+| `de maneira eficiente` | vago | idem |
+| `de forma agil` | vago | idem |
+| `de forma rapida` | vago | idem (se for requisito de tempo, é NFR) |
+| `de forma facil` | vago | facilidade é NFR/UX; a descrição diz a entrega |
+| `de forma simples` | vago | idem |
+| `melhorar a experiencia` | vago | intenção, não entrega — diga o que muda para o usuário |
+| `otimizar o processo` | vago | intenção, não entrega — diga o que a feature faz |
+| `facilitar o dia a dia` | vago | intenção, não entrega |
+| `endpoint` | tecnico | Modo PO: "operação de API" — e só no `dev-only`/3B |
+| `api` | tecnico | camada técnica — `dev-only`/3B |
+| `backend` | tecnico | camada técnica — `dev-only`/3B |
+| `frontend` | tecnico | camada técnica — `dev-only`/3B |
+| `banco de dados` | tecnico | Modo PO: a estrutura física vive no data-model |
+| `sql` | tecnico | camada técnica — data-model |
+| `json` | tecnico | camada técnica — `dev-only`/3B |
+| `http` | tecnico | camada técnica — `dev-only`/3B |
+| `payload` | tecnico | camada técnica — `dev-only`/3B |
+| `request` | tecnico | camada técnica — `dev-only`/3B |
+| `webhook` | tecnico | Modo PO: "notificação automática entre sistemas" |
+| `microsservico` | tecnico | camada técnica — SDD |
+| `microservico` | tecnico | camada técnica — SDD |
+| `uuid` | tecnico | Modo PO: "identificador único" |
+| `enum` | tecnico | Modo PO: "lista de opções" |
+| `cache` | tecnico | camada técnica — `dev-only`/3B |
+| `deploy` | tecnico | fora do escopo do N3 |
+| `migration` | tecnico | Modo PO: "estrutura do banco de dados" — e no data-model |
+| `crud` | tecnico | nomeie a ação desta feature; o conjunto é o N2 (`PROMPT_CRUD`) |
+
 ## Como estender o vocabulário
 
 - **Verbo legítimo que não está na tabela** (ex.: um verbo específico do domínio do
@@ -313,12 +385,17 @@ node scripts/validate-feature-semantics.mjs <modules/.../f-….md>
 Roda também automaticamente no hook `PostToolUse` (`scripts/hooks/spec-guard.mjs`) a
 cada N3 gravado, junto com o gate estrutural (`validate-doc.mjs`).
 
-**Coberto deterministicamente** (independe de LLM): FD-1 a FD-7 conforme a tabela de
+**Coberto deterministicamente** (independe de LLM): FD-1 a FD-8 conforme a tabela de
 critérios — verbo no infinitivo catalogado, título coerente com o arquivo, atomicidade
 (um verbo só), termos bloqueados (agrupador/nominalização/artefato/NFR), presença de
-cenário com `Então/Then` em todos os cenários e regras sem cauda de reação.
+cenário com `Então/Then` em todos os cenários, regras sem cauda de reação e Descrição
+com entrega declarada: sem placeholder, tamanho de 1–2 frases, sem termos vagos ou
+técnicos (tabela acima), com menção a uma ação do vocabulário (aviso quando ausente) e
+**não duplicada** — o gate varre os demais N3 da instância e reprova descrição idêntica
+(quase idêntica gera aviso).
 
 **Não coberto** (fica para `PROMPT_REVIEW` e revisão humana): se a ação tem valor de
-negócio real, se a entidade escolhida é a correta, se a granularidade está boa além da
+negócio real ("faz sentido negocialmente" — o gate garante a **forma** da entrega, não
+o seu valor), se a entidade escolhida é a correta, se a granularidade está boa além da
 heurística (ex.: duas features que só fazem sentido juntas), e a qualidade dos
 cenários (um `Então` genérico passa no gate, mas não na revisão).

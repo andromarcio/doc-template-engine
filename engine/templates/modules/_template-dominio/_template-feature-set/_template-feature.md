@@ -12,7 +12,18 @@
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[01]`
 
 ## Descrição
-[Descrição em 1-2 frases do que esta feature faz, em linguagem de negócio,
+
+<!--
+  O CONTRATO DE ENTREGA da feature (FEATURE-DEFINITION.md, FD-8): 1-2 frases de
+  negócio, para alguém que nunca viu o sistema, respondendo "o que eu ganho quando
+  esta feature estiver pronta?". Entrega ÚNICA (uma coisa, e desta feature — não
+  copie a descrição de outra), TANGÍVEL (ação + resultado, não intenção: nada de
+  "facilita/otimiza/melhora a experiência", "etc.", "de forma eficiente") e
+  NEGOCIAL (sem endpoint/API/banco — Modo PO).
+  Fórmula sugerida: "Permite que [ator] [ação] [entidade], [resultado observável]."
+-->
+
+[Descrição em 1-2 frases do que esta feature ENTREGA, em linguagem de negócio,
 para alguém que nunca viu o sistema.]
 
 ---

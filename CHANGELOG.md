@@ -39,6 +39,20 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   em todo N3 gravado (estrutural + semântico) e devolve os desvios combinados ao
   modelo. `PROMPT_3A`, o skill `analista-requisitos` (protocolo F2 e seção de
   granularidade) e `docs/content/n3.md` passam a referenciar a definição canônica.
+- **FD-8 — Descrição como contrato de entrega**: `engine/FEATURE-DEFINITION.md` ganha
+  a seção "Descrição — o contrato de entrega" (a descrição do N3 declara **o que a
+  feature entrega** — única, tangível e negocial, com fórmula sugerida e exemplos
+  ❌/✅) e a tabela máquina-legível `## Termos proibidos na Descrição` (termos **vagos**
+  que escondem a entrega — "etc.", "de forma eficiente", "melhorar a experiência" — e
+  termos **técnicos** que violam o Modo PO — endpoint, API, SQL, JSON…). O
+  `validate-feature-semantics.mjs` passa a validar o conteúdo da Descrição:
+  placeholder de template e descrição curta demais reprovam; termo vago/técnico
+  reprova com a orientação da tabela; descrição **idêntica** à de outro N3 da
+  instância reprova (entrega não é única) e quase idêntica (Jaccard ≥ 0.8) gera
+  aviso; descrição sem nenhuma ação do vocabulário e descrição com mais de ~2 frases
+  geram aviso. Template do N3 e `PROMPT_3A` (esqueleto da Descrição + checklist)
+  atualizados com a orientação. O julgamento de **valor** ("faz sentido
+  negocialmente") permanece explícito como não-automatizável (PROMPT_REVIEW/humano).
 
 ## [1.2.0] - 2026-06-30
 
