@@ -11,6 +11,8 @@ Markdown cru não entrega, em cima dos artefatos que o `doc-template` já gera:
 
 > ⚠️ É um **protótipo de apresentação**, publicado junto do site `docs/`.
 > Os dados são de um sistema fictício ("Loja Acme"), só para o grafo ter o que mostrar.
+> Numa **instância real**, o `data.js` é **gerado** a partir dos artefatos:
+> `node scripts/build-trace-data.mjs -o docs/rastreabilidade/data.js`.
 
 ## Como ver
 
