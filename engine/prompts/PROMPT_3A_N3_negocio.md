@@ -18,7 +18,7 @@
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
 > 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
 Você vai especificar features do ponto de vista de negócio.
@@ -37,7 +37,7 @@ Regras da sessão:
   RULES-DICTIONARY automaticamente sem perguntar sobre o comportamento.
 - Perguntar apenas o que os dicionários deixam em aberto (parâmetros).
 - Sinalize suposições com ⚠️.
-- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. Padrão de caminho: `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Aqui `[feature-set]` é o **nome exato da pasta do Feature Set** — a mesma onde já vive o `README.md` do N2 (ver **DESTINO** abaixo); não invente outra pasta nem acrescente/remova prefixo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen.
+- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. Padrão de caminho: `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Aqui `[feature-set]` é o **nome exato da pasta do Feature Set** — a mesma onde já vive o `README.md` do N2 (ver **DESTINO** abaixo); não invente outra pasta nem acrescente/remova prefixo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen. O **verbo** deve constar do vocabulário canônico de `engine/FEATURE-DEFINITION.md` (a definição testável do que é uma feature); termo na posição do verbo que denuncia não-feature ("cadastro", "gestão", "painel", nominalizações como "aprovação") é **reprovado** pelo gate semântico, e verbo legítimo ainda não catalogado gera **aviso** — proponha adicioná-lo à tabela do FEATURE-DEFINITION.
 
 > **DESTINO DO ARQUIVO (obrigatório — não erre a pasta).** O N3 é gravado na **mesma pasta** do `README.md` do Feature Set (o N2): `modules/[dominio]/[feature-set]/`. **Localize** essa pasta pelo `modules/INDEX.md` / pelo N2 — **não a invente** nem crie uma paralela com nome diferente. O arquivo **nunca** vai para a raiz do repositório, `global/`, `engine/`, outro domínio ou outro Feature Set. Se o Feature Set ainda não tem pasta (bottom-up), crie-a com o **mesmo nome** que o N2 usa (ou usará) para o `README.md`. Em caso de dúvida sobre a pasta, **pergunte antes de gravar**.
 
@@ -669,16 +669,22 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 > **Gate determinístico de autovalidação (obrigatório — F2)** — após gravar o N3, rode:
 > ```
 > node scripts/validate-doc.mjs <arquivo>
+> node scripts/validate-feature-semantics.mjs <arquivo>
 > ```
-> Ele exige as seções obrigatórias do N3 (Descrição, Superfície, Regras de negócio,
-> Cenários, Campos, Campos automáticos, Comportamento de tela, Changelog) e **reprova**
-> se a tabela `## Campos` vazar camada técnica (Label Dev / campo banco).
+> O primeiro (estrutura) exige as seções obrigatórias do N3 (Descrição, Superfície,
+> Regras de negócio, Cenários, Campos, Campos automáticos, Comportamento de tela,
+> Changelog) e **reprova** se a tabela `## Campos` vazar camada técnica (Label Dev /
+> campo banco). O segundo (semântico) verifica se o artefato **é mesmo uma feature**
+> segundo a definição canônica (`engine/FEATURE-DEFINITION.md`, critérios FD-1…FD-7):
+> verbo no infinitivo catalogado, título com a mesma ação, atomicidade (um verbo só),
+> nenhum termo de agrupador/nominalização/NFR na posição do verbo, todo cenário com
+> `Então/Then` e regras sem cauda de reação.
 >
-> Se o validador **reprovar**: **apresente os desvios apontados**, **corrija o arquivo** e
-> **rode de novo** — repita até sair `✓` (código 0). **Nunca** declare a feature concluída
-> com o validador reprovando. Se você produziu algo fora do que este prompt define, o
+> Se algum validador **reprovar**: **apresente os desvios apontados**, **corrija o arquivo** e
+> **rode de novo** — repita até ambos saírem `✓` (código 0). **Nunca** declare a feature concluída
+> com um validador reprovando. Se você produziu algo fora do que este prompt define, o
 > caminho é **corrigir para o padrão**, não seguir adiante.
 >
-> No Claude Code este gate é **automático e model-agnostic**: o hook `PostToolUse`
-> (`scripts/hooks/spec-guard.mjs`) roda o validador a cada gravação e devolve os desvios
-> para correção — vale para qualquer modelo (Haiku, Sonnet, etc.).
+> No Claude Code estes gates são **automáticos e model-agnostic**: o hook `PostToolUse`
+> (`scripts/hooks/spec-guard.mjs`) roda os dois validadores a cada gravação e devolve os
+> desvios para correção — vale para qualquer modelo (Haiku, Sonnet, etc.).

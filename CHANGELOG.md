@@ -16,6 +16,30 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+### Added
+- `engine/FEATURE-DEFINITION.md` — **definição canônica e testável do que é uma
+  feature (N3)**: uma ação de negócio com começo, meio, fim e resultado observável,
+  nomeada por um verbo no infinitivo + uma entidade. Materializa a definição em
+  **critérios objetivos FD-1…FD-7**, um **vocabulário de verbos canônicos** e uma
+  tabela de **termos bloqueados na posição do verbo** (agrupadores como "cadastro"/
+  "gestão", nominalizações como "aprovação", artefatos como "tela"/"relatório" e NFRs
+  como "desempenho"), cada um com o encaminhamento correto (N2, PROMPT_CRUD, data-model,
+  NFR.md etc.). As duas tabelas são **máquina-legíveis**: são a fonte única consumida
+  pelo validador — estender o vocabulário é editar a tabela, não código.
+- `scripts/validate-feature-semantics.mjs` — **gate semântico determinístico de N3**
+  (sem LLM; independe do modelo que produziu o artefato). Verifica se o que foi
+  nomeado como feature **é mesmo uma feature**: verbo no infinitivo catalogado (verbo
+  legítimo não catalogado → aviso, não erro), título contando a mesma ação do arquivo,
+  atomicidade (um verbo só — "gerar **e** enviar boleto" reprova), termo bloqueado na
+  posição do verbo (reprova com o encaminhamento da tabela), todo cenário Gherkin com
+  `Então/Then` (resultado observável) e regras de negócio sem cauda de reação
+  ("não salva", "exibe mensagem", "conforme o Design System" → a reação é cenário).
+  Complementa o `validate-doc.mjs`: lá estrutura, aqui semântica.
+- `scripts/hooks/spec-guard.mjs`: o hook `PostToolUse` agora roda **os dois gates**
+  em todo N3 gravado (estrutural + semântico) e devolve os desvios combinados ao
+  modelo. `PROMPT_3A`, o skill `analista-requisitos` (protocolo F2 e seção de
+  granularidade) e `docs/content/n3.md` passam a referenciar a definição canônica.
+
 ## [1.2.0] - 2026-06-30
 
 ### Added

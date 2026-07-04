@@ -42,9 +42,9 @@ Use esta skill de dois modos:
 Vale para **todo** prompt de especificação (N0, 1A/1B, 2A/2B, 3A/3B, 4A/4B, CRUD, WIZARD):
 
 - **Antes de gerar (F1 — verificar o que já existe):** rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **Contexto verificado** — o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Nunca especifique sem esse confronto; nunca duplique ID/pasta existente.
-- **Depois de gravar (F2 — não fugir do padrão):** rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e rode de novo até sair `✓`**. Nunca declare concluído com o validador reprovando. Fez algo diferente do que o prompt define? Corrija para o padrão.
+- **Depois de gravar (F2 — não fugir do padrão):** rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) e, quando o artefato for um **N3**, também `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e rode de novo até sair `✓`**. Nunca declare concluído com um validador reprovando. Fez algo diferente do que o prompt define? Corrija para o padrão.
 
-> No Claude Code isso é **enforçado automaticamente** pelos hooks em `.claude/settings.json` → `scripts/hooks/spec-guard.mjs`: `UserPromptSubmit` injeta o preflight; `PostToolUse` roda o validador a cada gravação e devolve os desvios ao modelo. Portão determinístico, independente do modelo (resolve o caso do Haiku). No modo copiar-colar, o mesmo protocolo está embutido nos prompts (PASSO 0 + gate de autovalidação).
+> No Claude Code isso é **enforçado automaticamente** pelos hooks em `.claude/settings.json` → `scripts/hooks/spec-guard.mjs`: `UserPromptSubmit` injeta o preflight; `PostToolUse` roda os validadores (estrutural + semântico de N3) a cada gravação e devolve os desvios ao modelo. Portão determinístico, independente do modelo (resolve o caso do Haiku). No modo copiar-colar, o mesmo protocolo está embutido nos prompts (PASSO 0 + gate de autovalidação).
 
 ---
 
@@ -77,6 +77,13 @@ várias features) ou um requisito não-funcional (→ `global/NFR.md`).
 
 > A convenção de nome `f-[verbo]-[entidade]` (definida no `PROMPT_3A`) materializa
 > essa granularidade — o prefixo verbal é o teste prático de que você está num N3.
+
+> **Definição canônica e testável**: `engine/FEATURE-DEFINITION.md` é a fonte única do
+> que é (e não é) uma feature — critérios objetivos FD-1…FD-7, vocabulário de verbos
+> canônicos e termos bloqueados na posição do verbo. O gate determinístico
+> `scripts/validate-feature-semantics.mjs` verifica os critérios automatizáveis em todo
+> N3 gravado (roda junto com o `validate-doc.mjs` no hook). Em dúvida de granularidade,
+> consulte esse arquivo antes de perguntar ao usuário.
 
 ---
 
