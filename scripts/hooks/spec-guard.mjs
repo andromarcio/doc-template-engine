@@ -2,11 +2,14 @@
 // spec-guard.mjs — hook do Claude Code que dá "dentes" ao protocolo de especificação.
 // Um único script serve dois eventos (despacha por hook_event_name):
 //
-//   • PostToolUse  (Write|Edit|MultiEdit) → F2: roda o validador estrutural no artefato
-//     recém-gravado; se reprovar, devolve os desvios ao modelo (exit 2) para ele corrigir
-//     até sair ✓. Model-agnostic: quem enforça é o harness, não o texto do prompt.
-//     F3: em artefatos de rastreabilidade (N3, _backlog/, INDEX.md) roda também o
-//     audit-trace-links — elo história↔feature só fecha quando os TRÊS lugares concordam.
+//   • PostToolUse  (Write|Edit|MultiEdit) → roda os gates no artefato recém-gravado e
+//     devolve TODOS os desvios combinados ao modelo (exit 2) para ele corrigir até sair ✓.
+//     Model-agnostic: quem enforça é o harness, não o texto do prompt.
+//       F2 — estrutura (validate-doc) em artefatos de nível (N0–N3, data-model);
+//            + gate SEMÂNTICO (validate-feature-semantics) em N3: o artefato nomeado
+//            como feature é mesmo uma feature? (engine/FEATURE-DEFINITION.md, FD-1…FD-8)
+//       F3 — rastreabilidade (audit-trace-links) em N3, _backlog/ e INDEX.md:
+//            elo história↔feature só fecha quando os TRÊS lugares concordam.
 //
 //   • UserPromptSubmit → F1: ao detectar intenção de especificar, injeta no contexto um
 //     lembrete obrigatório de rodar o preflight e confrontar o que já existe ANTES de gerar.
@@ -21,8 +24,8 @@ import { existsSync, readFileSync } from 'node:fs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const VALIDATOR = join(HERE, '..', 'validate-doc.mjs'); // scripts/validate-doc.mjs
-const TRACE_AUDIT = join(HERE, '..', 'audit-trace-links.mjs'); // scripts/audit-trace-links.mjs
 const SEM_VALIDATOR = join(HERE, '..', 'validate-feature-semantics.mjs'); // gate semântico de N3
+const TRACE_AUDIT = join(HERE, '..', 'audit-trace-links.mjs'); // scripts/audit-trace-links.mjs
 const N3_PATTERN = /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/;
 
 // Só validamos artefatos de nível (N0–N3, DATA-MODEL). INDEX, _backlog, prompts,
@@ -33,12 +36,12 @@ const ARTIFACT_PATTERNS = [
   /(^|\/)global\/data-models\/[^/]+\.md$/,
   /(^|\/)modules\/[^/]+\/README\.md$/,               // N1
   /(^|\/)modules\/[^/]+\/[^/]+\/README\.md$/,          // N2
-  /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/,         // N3
+  N3_PATTERN,                                          // N3
 ];
 
 // Artefatos que participam do elo história↔feature — gravou um deles, o elo é auditado.
 const TRACE_PATTERNS = [
-  /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/,         // N3 (## Origem)
+  N3_PATTERN,                                          // N3 (## Origem)
   /(^|\/)modules\/_backlog\/[^/_][^/]*\.md$/,          // história (## Rastreabilidade)
   /(^|\/)modules\/INDEX\.md$/,                          // tabela consolidada
 ];
@@ -58,38 +61,10 @@ function main() {
     const path = String(file).replace(/\\/g, '/');
     if (/(^|\/)engine\//.test(path)) return 0;               // templates do motor — isentos
 
-    // F2 — estrutura do artefato de nível (N0–N3, data-model).
-    if (ARTIFACT_PATTERNS.some((re) => re.test(path)) && existsSync(VALIDATOR)) {
-      const r = spawnSync('node', [VALIDATOR, file], { encoding: 'utf8' });
-      if (r.status && r.status !== 0) {
-        const detail = `${r.stdout || ''}${r.stderr || ''}`.trim();
-        process.stderr.write(
-          'GATE DE ESTRUTURA (validate-doc) reprovou o artefato recém-gravado.\n' +
-          'Corrija os desvios abaixo e reescreva o arquivo até o validador sair ✓ ' +
-          '(node scripts/validate-doc.mjs <arquivo>). Não declare a etapa concluída antes disso.\n\n' +
-          detail + '\n',
-        );
-        return 2; // feedback ao modelo (não bloqueia a escrita já feita, mas força a correção)
-      }
-    }
-
-    // F3 — consistência dos elos história↔feature nas três fontes.
-    if (TRACE_PATTERNS.some((re) => re.test(path)) && existsSync(TRACE_AUDIT)) {
-      const a = spawnSync('node', [TRACE_AUDIT, '--root', dirname(file), '--file', file], { encoding: 'utf8' });
-      if (a.status && a.status !== 0 && a.status !== 2) {
-        const detail = `${a.stdout || ''}${a.stderr || ''}`.trim();
-        process.stderr.write(
-          'GATE DE RASTREABILIDADE (audit-trace-links) encontrou elos inconsistentes envolvendo este artefato.\n' +
-          'Se esta gravação faz parte de uma passada em andamento (3A/4A), termine de fechar o elo nos TRÊS\n' +
-          'lugares (## Origem do N3 + ## Rastreabilidade da história + linha do INDEX.md) — o gate sai ✓ ao final.\n' +
-          'Não declare a etapa concluída com elo unilateral.\n\n' +
-          detail + '\n',
-        );
-        return 2;
-      }
-    if (!ARTIFACT_PATTERNS.some((re) => re.test(path))) return 0; // não é artefato de nível
     const problems = [];
-    if (existsSync(VALIDATOR)) {                             // validador ausente → fail-open
+
+    // F2 — estrutura do artefato de nível (N0–N3, data-model). Validador ausente → fail-open.
+    if (ARTIFACT_PATTERNS.some((re) => re.test(path)) && existsSync(VALIDATOR)) {
       const r = spawnSync('node', [VALIDATOR, file], { encoding: 'utf8' });
       if (r.status && r.status !== 0) {
         problems.push(
@@ -100,8 +75,9 @@ function main() {
         );
       }
     }
+
     // Gate SEMÂNTICO de N3: o artefato nomeado como feature é mesmo uma feature?
-    // (definição canônica: engine/FEATURE-DEFINITION.md, critérios FD-1…FD-7)
+    // (definição canônica: engine/FEATURE-DEFINITION.md, critérios FD-1…FD-8)
     if (N3_PATTERN.test(path) && existsSync(SEM_VALIDATOR)) {
       const s = spawnSync('node', [SEM_VALIDATOR, file], { encoding: 'utf8' });
       if (s.status && s.status !== 0) {
@@ -113,6 +89,22 @@ function main() {
         );
       }
     }
+
+    // F3 — consistência dos elos história↔feature nas três fontes.
+    // exit 2 do audit = erro de uso, não achado → fail-open.
+    if (TRACE_PATTERNS.some((re) => re.test(path)) && existsSync(TRACE_AUDIT)) {
+      const a = spawnSync('node', [TRACE_AUDIT, '--root', dirname(file), '--file', file], { encoding: 'utf8' });
+      if (a.status && a.status !== 0 && a.status !== 2) {
+        problems.push(
+          'GATE DE RASTREABILIDADE (audit-trace-links) encontrou elos inconsistentes envolvendo este artefato.\n' +
+          'Se esta gravação faz parte de uma passada em andamento (3A/4A), termine de fechar o elo nos TRÊS\n' +
+          'lugares (## Origem do N3 + ## Rastreabilidade da história + linha do INDEX.md) — o gate sai ✓ ao final.\n' +
+          'Não declare a etapa concluída com elo unilateral.\n\n' +
+          `${a.stdout || ''}${a.stderr || ''}`.trim(),
+        );
+      }
+    }
+
     if (problems.length) {
       process.stderr.write(problems.join('\n\n') + '\nNão declare a etapa concluída antes de todos os gates saírem ✓.\n');
       return 2; // feedback ao modelo (não bloqueia a escrita já feita, mas força a correção)

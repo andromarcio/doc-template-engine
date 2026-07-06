@@ -16,6 +16,18 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-07-04
+
+### Fixed
+- `scripts/hooks/spec-guard.mjs` — a resolução de conflito do merge da 1.3.0
+  ("aceitar ambos") concatenou as duas versões do bloco `PostToolUse` e deixou o
+  arquivo com **erro de sintaxe**; como o guard é fail-open, todos os gates ficaram
+  **silenciosamente desativados**. Reescrito unificando os três gates no acumulador
+  `problems[]` (F2 estrutura + semântico de N3 + F3 rastreabilidade), com os desvios
+  devolvidos juntos numa única resposta ao modelo. A seção 1.3.0 do CHANGELOG foi
+  reorganizada pelo mesmo motivo (o bloco de FEATURE-DEFINITION, vindo de
+  `[Unreleased]` da main, entrou como segundo `### Added` no meio da versão).
+
 ## [1.3.0] - 2026-07-04
 
 Integridade de rastreabilidade por **enforcement determinístico** (não só disciplina
@@ -55,20 +67,6 @@ todo estado novo fica **nos próprios `.md`** (portátil com `git clone`).
   (copiar para `.github/workflows/`): jobs `estrutura` (validate-doc),
   `rastreabilidade` (audit + suspect) e `aprovacao` (trailers no push à main).
   Com branch protection, elo unilateral não entra na main.
-
-### Changed
-- `scripts/hooks/spec-guard.mjs` — novo gate **F3**: ao gravar N3, história
-  (`_backlog/`) ou `INDEX.md`, roda o `audit-trace-links` escopado no artefato e
-  devolve os elos inconsistentes ao modelo (exit 2), lembrando a regra de fechar o
-  elo nos três lugares na mesma passada.
-- Templates `_template-feature.md` (## Origem), `_backlog/_template-historia.md`
-  (## Rastreabilidade) e `modules/INDEX.md` — comentários documentando os carimbos
-  `trace-verified` e os gates que cobrem cada seção.
-- `docs/content/rastreabilidade.md` — seções novas "Aprovações no git (trailer
-  `Approved-by`)" e "Gates determinísticos de integridade";
-  `docs/content/mapa-rastreabilidade.md` e `docs/rastreabilidade/README.md` apontam
-  o gerador real do `data.js`.
-### Added
 - `engine/FEATURE-DEFINITION.md` — **definição canônica e testável do que é uma
   feature (N3)**: uma ação de negócio com começo, meio, fim e resultado observável,
   nomeada por um verbo no infinitivo + uma entidade. Materializa a definição em
@@ -87,10 +85,6 @@ todo estado novo fica **nos próprios `.md`** (portátil com `git clone`).
   `Então/Then` (resultado observável) e regras de negócio sem cauda de reação
   ("não salva", "exibe mensagem", "conforme o Design System" → a reação é cenário).
   Complementa o `validate-doc.mjs`: lá estrutura, aqui semântica.
-- `scripts/hooks/spec-guard.mjs`: o hook `PostToolUse` agora roda **os dois gates**
-  em todo N3 gravado (estrutural + semântico) e devolve os desvios combinados ao
-  modelo. `PROMPT_3A`, o skill `analista-requisitos` (protocolo F2 e seção de
-  granularidade) e `docs/content/n3.md` passam a referenciar a definição canônica.
 - **FD-8 — Descrição como contrato de entrega**: `engine/FEATURE-DEFINITION.md` ganha
   a seção "Descrição — o contrato de entrega" (a descrição do N3 declara **o que a
   feature entrega** — única, tangível e negocial, com fórmula sugerida e exemplos
@@ -105,6 +99,23 @@ todo estado novo fica **nos próprios `.md`** (portátil com `git clone`).
   geram aviso. Template do N3 e `PROMPT_3A` (esqueleto da Descrição + checklist)
   atualizados com a orientação. O julgamento de **valor** ("faz sentido
   negocialmente") permanece explícito como não-automatizável (PROMPT_REVIEW/humano).
+
+### Changed
+- `scripts/hooks/spec-guard.mjs` — o `PostToolUse` passa a rodar **três gates** e a
+  devolver os desvios **combinados** ao modelo (exit 2): **F2** estrutura
+  (validate-doc, artefatos de nível) + gate **semântico** de N3
+  (validate-feature-semantics, FD-1…FD-8) + **F3** rastreabilidade
+  (audit-trace-links escopado no artefato, ao gravar N3, história de `_backlog/`
+  ou `INDEX.md`, lembrando a regra de fechar o elo nos três lugares na mesma
+  passada). `PROMPT_3A`, o skill `analista-requisitos` (protocolo F2 e seção de
+  granularidade) e `docs/content/n3.md` passam a referenciar a definição canônica.
+- Templates `_template-feature.md` (## Origem), `_backlog/_template-historia.md`
+  (## Rastreabilidade) e `modules/INDEX.md` — comentários documentando os carimbos
+  `trace-verified` e os gates que cobrem cada seção.
+- `docs/content/rastreabilidade.md` — seções novas "Aprovações no git (trailer
+  `Approved-by`)" e "Gates determinísticos de integridade";
+  `docs/content/mapa-rastreabilidade.md` e `docs/rastreabilidade/README.md` apontam
+  o gerador real do `data.js`.
 
 ## [1.2.0] - 2026-06-30
 
