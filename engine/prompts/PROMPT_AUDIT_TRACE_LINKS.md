@@ -11,6 +11,16 @@
 > ou quando suspeitar que o caminho inverso "quais features uma história impactou?"
 > está incompleto)
 >
+> **Gate determinístico primeiro**: a metade ESTRUTURAL desta auditoria (elos
+> unilaterais, pares fora do INDEX, status divergente, referências quebradas) é
+> provada por script — `node scripts/audit-trace-links.mjs` — que também roda no
+> hook de gravação e no CI (`engine/templates/ci/spec-guard.yml`). Rode-o ANTES:
+> se sair ✗, os achados dele são o ponto de partida do PASSO 4. Este prompt
+> continua responsável pelo que o script não alcança: a parte SEMÂNTICA (o elo
+> faz sentido? os critérios cobertos batem com a história?) e a negociação dos
+> patches. Elos cujo ALVO mudou após a verificação são acusados por
+> `node scripts/suspect-links.mjs` (carimbos `trace-verified`).
+>
 > **Próximo passo**: aplicar os patches sugeridos para que todo par história↔feature
 > apareça nos **três lugares**: `## Origem` do N3, `## Rastreabilidade` da história e
 > a tabela consolidada do `INDEX.md`

@@ -63,6 +63,13 @@ para alguém que nunca viu o sistema.]
   `modules/_backlog/[chave].md`. Relação M:N: uma feature pode atender a
   várias histórias; uma história pode gerar várias features.
   A chave do ServiceNow é a fonte de verdade — não inventar IDs aqui.
+
+  CARIMBO DE VERIFICAÇÃO (elo suspeito): após fechar/rever o elo, rode
+  `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui
+  um comentário `<!- - trace-verified: STRY… @ fingerprint - ->` por história.
+  Se a história mudar depois disso, `suspect-links` acusa o elo como suspeito
+  (e `--mark` sinaliza ⚠️ no INDEX.md). Não editar os carimbos à mão.
+  A consistência dos três lugares é provada por `scripts/audit-trace-links.mjs`.
 -->
 
 | História (ServiceNow) | Tipo | Critérios cobertos |

@@ -28,9 +28,15 @@ Markdown não dá é a **visão navegável** disso. Este mapa fecha essa lacuna:
 ## Como isto se torna real
 
 O mapa consome um único arquivo, `rastreabilidade/data.js` — um **índice de
-rastreabilidade**. No protótipo ele é escrito à mão; no produto, seria
-**gerado** por um passo de build (no mesmo workflow do GitHub Pages) que varre os
-artefatos da instância:
+rastreabilidade**. No protótipo publicado aqui ele é escrito à mão (Loja Acme);
+numa **instância**, ele é **gerado** pelo passo de build que já existe:
+
+```bash
+node scripts/build-trace-data.mjs -o docs/rastreabilidade/data.js
+```
+
+Rode-o no mesmo workflow que publica o GitHub Pages (ou sob demanda) e o mapa
+passa a refletir os artefatos reais. O mapeamento:
 
 | Origem no `.md` | Vira no grafo |
 |---|---|

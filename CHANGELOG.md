@@ -16,6 +16,58 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-07-04
+
+Integridade de rastreabilidade por **enforcement determinístico** (não só disciplina
+auditável): a consistência dos elos é provada por script no hook, sob demanda e no CI;
+todo estado novo fica **nos próprios `.md`** (portátil com `git clone`).
+
+### Added
+- `scripts/audit-trace-links.mjs` — gate determinístico da consistência dos elos
+  história↔feature nos **três lugares** (`## Origem` do N3 + `## Rastreabilidade` da
+  história + tabela do `INDEX.md`). Acusa elo unilateral 🔴, par fora do INDEX 🟠,
+  linha do INDEX sem respaldo, status divergente 🟡 (tolera o ⚠️ gravado pelo
+  `suspect-links --mark`) e referência quebrada ⚠️; histórias sem feature e features
+  sem `## Origem` são informativos ⚫. `--file` restringe aos pares que tocam um
+  artefato (modo hook). É a metade ESTRUTURAL do `PROMPT_AUDIT_TRACE_LINKS`, que
+  passa a focar a parte semântica (nota adicionada ao prompt).
+- `scripts/suspect-links.mjs` — **suspect links** em texto plano: `--stamp` grava,
+  na seção do elo, carimbos invisíveis `<!-- trace-verified: ALVO @ fingerprint -->`
+  com o fingerprint (sha256 truncado) do conteúdo do artefato do outro lado,
+  ignorando os próprios carimbos (carimbar A↔B não invalida B↔A). Se o alvo mudar
+  depois, o relatório acusa o elo como suspeito (exit 1) e `--mark` persiste
+  ⚠️ Revisão necessária na linha do `INDEX.md`. Elo sem carimbo é informativo
+  (instâncias legadas não reprovam). Independe do git (usa-o só para enriquecer a
+  mensagem com o último commit do alvo).
+- `scripts/build-trace-data.mjs` — o "passo de build" prometido pelo mapa de
+  rastreabilidade: gera o `data.js` (nós N0/domínio/feature set/feature/história/
+  repositório; arestas `contem`/`origina`/`implementa`/`integra`; status e PF do
+  `INDEX.md`) varrendo os artefatos reais da instância. O protótipo em
+  `docs/rastreabilidade/` deixa de ser só simulação.
+- `scripts/check-approval-trailers.mjs` + convenção **`Approved-by:`** — a trilha de
+  aprovação registrada no próprio git (trailer no rodapé do merge/squash commit),
+  portátil entre forges. Exige o trailer nos commits que entram na main tocando
+  `modules/`/`global/` (merge commits por padrão; `--all` para fluxo squash;
+  `--range A..B` para o intervalo de um push).
+- `scripts/lib/trace-index.mjs` — modelo compartilhado das três fontes do elo,
+  consumido pelos três scripts acima.
+- `engine/templates/ci/spec-guard.yml` — workflow de CI para as instâncias
+  (copiar para `.github/workflows/`): jobs `estrutura` (validate-doc),
+  `rastreabilidade` (audit + suspect) e `aprovacao` (trailers no push à main).
+  Com branch protection, elo unilateral não entra na main.
+
+### Changed
+- `scripts/hooks/spec-guard.mjs` — novo gate **F3**: ao gravar N3, história
+  (`_backlog/`) ou `INDEX.md`, roda o `audit-trace-links` escopado no artefato e
+  devolve os elos inconsistentes ao modelo (exit 2), lembrando a regra de fechar o
+  elo nos três lugares na mesma passada.
+- Templates `_template-feature.md` (## Origem), `_backlog/_template-historia.md`
+  (## Rastreabilidade) e `modules/INDEX.md` — comentários documentando os carimbos
+  `trace-verified` e os gates que cobrem cada seção.
+- `docs/content/rastreabilidade.md` — seções novas "Aprovações no git (trailer
+  `Approved-by`)" e "Gates determinísticos de integridade";
+  `docs/content/mapa-rastreabilidade.md` e `docs/rastreabilidade/README.md` apontam
+  o gerador real do `data.js`.
 ### Added
 - `engine/FEATURE-DEFINITION.md` — **definição canônica e testável do que é uma
   feature (N3)**: uma ação de negócio com começo, meio, fim e resultado observável,

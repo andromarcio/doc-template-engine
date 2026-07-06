@@ -23,6 +23,14 @@
   Uma feature pode ter mais de uma história; uma história, mais de uma feature.
   PF e CFP: preencher após PROMPT_3B. Ver critérios em global/SIZING.md.
   Totais vigentes excluem features ❌ Deprecadas.
+
+  GATES DETERMINÍSTICOS desta tabela:
+  - `node scripts/audit-trace-links.mjs` prova que cada par história↔feature está
+    nos TRÊS lugares (## Origem do N3 + ## Rastreabilidade da história + esta linha)
+    — roda no hook de gravação e no CI (engine/templates/ci/spec-guard.yml).
+  - `node scripts/suspect-links.mjs --mark` troca o Status para ⚠️ Revisão necessária
+    quando o outro lado do elo mudou depois da última verificação (carimbos
+    trace-verified). O ⚠️ gravado por ele é tolerado pelo audit até a reverificação.
 -->
 
 **Total vigente: — PF · — CFP** *(dimensionamento pendente — preencher via PROMPT_3B; critérios em `global/SIZING.md`)*
