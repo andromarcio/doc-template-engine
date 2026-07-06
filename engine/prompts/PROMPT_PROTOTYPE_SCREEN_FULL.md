@@ -34,9 +34,9 @@ de comportamento descritas no N3.
    e use as classes `.dsc-*` (CAIXA DS, espelham o DESIGN-SYSTEM.md). Ajuste os
    `../` conforme a profundidade do arquivo. Não redefina tokens nem recrie
    componentes inline; apenas o JS pontual de interação pode ficar inline.
-   Em especial, `.prototype-badge` já vem estilizado pelo `sakai.css` — não
-   recrie essa regra nem reposicione o badge (sem `top/right/bottom/left` soltos
-   nele), senão ele estica e vira um bloco gigante sobre a tela.
+   Em especial, `.dsc-proto-badge` já vem estilizado pelo `ds.css` (flutua no
+   canto) — não recrie essa regra nem reposicione o badge (sem
+   `top/right/bottom/left` soltos nele), senão ele vira um bloco sobre a tela.
 
 3. **Um arquivo por estado**: não misture estados em um único arquivo.
    `form.html` mostra apenas o estado de formulário.
@@ -46,7 +46,7 @@ de comportamento descritas no N3.
    exatamente aos listados na tabela de campos do N3, usando o Label PO
    como texto do label na tela. Os tipos de input devem refletir o tipo
    do campo (texto → `<input type="text">`, data → date picker, lista de
-   opções fixa → `p-select`, sim/não → toggle, arquivo → file input).
+   opções fixa → `.dsc-select`, sim/não → `.dsc-switch`, arquivo → file input).
 
    **Telas de pesquisa/listagem** (campos marcados com sufixo no Label PO):
    - Cada campo **`(filtro)`** vira **um input no card de filtros** — um por campo,
@@ -58,13 +58,13 @@ de comportamento descritas no N3.
      ficar de fora, corrija antes de entregar.
 
    **Campos de seleção (`seleção → [Entidade]`)**: renderize como combobox
-   `p-select`, nunca como input de texto. As opções são registros de outra
+   `.dsc-select`, nunca como input de texto. As opções são registros de outra
    entidade, não valores fixos:
    - O texto de cada opção é o **campo-label** definido em DATA-MODEL.md →
      Relacionamentos de seleção (ex: razão social, nome) — preencha com 3–5
      opções fictícias realistas da entidade origem.
    - Se a Validação do campo disser **autocomplete por [campo]**, mantenha o
-     `p-select` mas anote no painel de notas que em produção é busca conforme
+     `.dsc-select` mas anote no painel de notas que em produção é busca conforme
      o usuário digita (a biblioteca não tem componente de autocomplete dedicado).
    - Sempre anote no painel de notas a **origem real** das opções
      (`GET /api/v1/[recurso]?search=`) e o **filtro de origem** aplicado
@@ -239,6 +239,7 @@ Gere um estado por vez. Após gerar, pergunte se aprova antes de avançar.
 
     <!-- Sidebar: menu agrupado, item ativo com .is-active -->
     <aside class="dsc-sidebar">
+      <div class="dsc-sidebar-backdrop" onclick="dscToggleMenu()"></div>
       <div class="dsc-sidebar-brand"><span class="dsc-brand-mark">C</span> Sistema</div>
       <ul class="dsc-menu">
         <li class="dsc-menu-section">[Feature Set]</li>
@@ -289,52 +290,8 @@ Gere um estado por vez. Após gerar, pergunte se aprova antes de avançar.
         </div>
       </main>
     </div>
-
-  <!-- Sidebar flutuante: menu agrupado, item ativo com .active-route -->
-  <aside class="layout-sidebar">
-    <ul class="layout-menu">
-      <li>
-        <span class="layout-menuitem-root-text">[Feature Set]</span>
-        <ul><li><a class="active-route" href="#">[Feature]</a></li></ul>
-      </li>
-    </ul>
-  </aside>
-
-  <div class="layout-main-container">
-    <main class="layout-main">
-      <nav class="p-breadcrumb">
-        <a href="#">Início</a><span class="p-breadcrumb-sep">›</span>
-        <span class="p-breadcrumb-current">[Feature]</span>
-      </nav>
-
-      <div class="page-header">
-        <h1 class="page-title">[Título descritivo — nunca vago]</h1>
-        <p class="page-subtitle">[Subtítulo opcional]</p>
-      </div>
-
-      <div class="card">
-        <!-- conteúdo do estado específico, usando classes da biblioteca:
-             p-field / p-inputtext / p-select / p-button / p-datatable / p-tag
-             p-skeleton (loading) · p-empty-state (empty) · p-error-state (error)
-             p-message / p-dialog / p-toast
-             Linha de filtro/ação horizontal (campos + botões lado a lado): use
-             display:flex; align-items:flex-end e ZERE a margem inferior dos
-             .p-field dessa linha (o .p-field tem margin-bottom:1rem) — senão a
-             base dos campos fica ~1rem acima da base dos botões.
-             Ícones de ação na coluna "Ações" da tabela (ver/editar/ativar/excluir):
-             use SEMPRE a MESMA variante nos quatro — `p-button p-button-text
-             p-button-sm p-button-icon-only` (sem borda). Não misture
-             p-button-secondary (com borda) com p-button-text na mesma linha. -->
-      </div>
-
-      <div class="prototype-notes">
-        <strong>📋 Notas — [Estado]:</strong>
-        <ul>
-          <li>[comportamento não representável visualmente]</li>
-        </ul>
-      </div>
-    </main>
   </div>
+
   <script>
     // ☰: abre/fecha o drawer do menu (sidebar oculta por padrão)
     function dscToggleMenu() {

@@ -16,9 +16,24 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
-## [1.4.1] - 2026-07-06
+## [1.5.0] - 2026-07-06
 
-Correções de consistência entre as peças após a consolidação das branches na `main`.
+Consolidação pós-merge: correções de consistência entre as peças e entrega de
+faltantes que as referências do engine já assumiam como existentes.
+
+### Added
+- `engine/templates/prototypes/_biblioteca-ds/` — a biblioteca de componentes
+  (`.dsc-*`, CAIXA DS) que o `DESIGN-SYSTEM.md`, os prompts de protótipo
+  (6A–6D) e a skill `/prototype` referenciavam como "pronta", mas que **nunca
+  foi versionada** (nenhum commit da história a adicionou — todo protótipo
+  gerado nascia com o link de CSS quebrado). Entregue como implementação de
+  referência materializada da spec já documentada (tokens, breakpoints e grid
+  do `DESIGN-SYSTEM.md` + classes canônicas dos esqueletos dos prompts):
+  `ds.css`, `tokens.css`, `README.md` (contrato + catálogo de classes),
+  `index.html` (catálogo navegável) e `shell-responsive.html` (demo do
+  drawer/grid). Tema escuro via `app-dark`. Validada visualmente em headless
+  Chromium (claro/escuro, drawer, breakpoints) — confira os tokens com o
+  Figma da sua instância.
 
 ### Changed
 - `PROMPT_MENU.md` — a Fase 6 ganha as opções **6C** (protótipo de fluxo
@@ -42,6 +57,23 @@ Correções de consistência entre as peças após a consolidação das branches
 - Site (`docs/content/entrevista-po.md`) — duas âncoras intra-página usavam hash
   simples (`#secao`), que o roteador interpreta como página e derrubava o conteúdo
   ("Página não encontrada"); corrigidas para o formato do app (`#/pagina#secao`).
+- Esqueletos dos `PROMPT_PROTOTYPE_{FLOW,SCREEN}_FULL` — removido um bloco
+  morto de design system anterior (classes `layout-*`/`p-*` do PrimeNG, com
+  IDs `screen-*` duplicados), deixado por resolução de merge "aceitar ambos";
+  o `</div>` de fechamento do `.dsc-app`, engolido na mesma resolução, voltou;
+  e o drawer ganhou o `.dsc-sidebar-backdrop` — igualando o esqueleto canônico
+  da skill `/prototype`.
+- `PROMPT_PROTOTYPE_{FLOW,SCREEN}_COMPONENT` (opções 6C/6D) — migrados de uma
+  geração ainda anterior: linkavam `_biblioteca/sakai.css` (sakai-ng) e
+  geravam markup inteiro em classes `p-*`/`layout-*`, que não existem na
+  biblioteca do engine. Esqueletos e regras reescritos para
+  `_biblioteca-ds/ds.css` e classes `.dsc-*` (`dsc-component-only`,
+  `dsc-screen`, `dsc-proto-badge`, `dsc-toast`, `dsc-modal`…), alinhados aos
+  FULL. Resquícios de `p-select`/`.prototype-badge` nos textos de regra dos
+  FULL e da skill `/prototype` também corrigidos.
+- `DESIGN-SYSTEM.md` — o exemplo de tela de pesquisa apontava para
+  `prototypes/exemplo-clientes/…`, que nunca existiu; agora aponta para o
+  catálogo da `_biblioteca-ds`.
 - `gate-check.yml` (kit `.github` das instâncias) — o job ganhou
   `name: Esteira de gates — check`: o branch protection casa pelo nome do
   *check run* (= nome do job), e sem o `name:` o check publicado chamava-se

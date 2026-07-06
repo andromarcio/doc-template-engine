@@ -40,9 +40,9 @@ seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
    A navegação entre telas usa `.dsc-screen` / `.dsc-screen.is-active` (já na biblioteca).
    Apenas o JS de navegação vai inline.
    **Não redefina classes da biblioteca em CSS inline.** Em especial,
-   `.prototype-badge` já vem estilizado pelo `sakai.css` — não recrie essa regra
-   nem reposicione o badge (não use `top/right/bottom/left` soltos nele), senão
-   ele estica e vira um bloco gigante sobre a tela.
+   `.dsc-proto-badge` já vem estilizado pelo `ds.css` (flutua no canto) — não
+   recrie essa regra nem reposicione o badge (não use `top/right/bottom/left`
+   soltos nele), senão ele vira um bloco sobre a tela.
 
 3. **Navegação funcional**: os botões e links que levam de uma tela para outra
    devem funcionar — implementar como troca de `display: block/none` entre
@@ -265,6 +265,7 @@ Após aprovação do mapa, gere o arquivo `flow.html` com:
 
     <!-- Sidebar (comum a todas as telas) -->
     <aside class="dsc-sidebar">
+      <div class="dsc-sidebar-backdrop" onclick="dscToggleMenu()"></div>
       <div class="dsc-sidebar-brand"><span class="dsc-brand-mark">C</span> Sistema</div>
       <ul class="dsc-menu">
         <li class="dsc-menu-section">[Feature Set]</li>
@@ -317,44 +318,6 @@ Após aprovação do mapa, gere o arquivo `flow.html` com:
 
       </main>
     </div>
-
-  <!-- Sidebar flutuante (comum a todas as telas) -->
-  <aside class="layout-sidebar">
-    <ul class="layout-menu">
-      <li><span class="layout-menuitem-root-text">[Feature Set]</span>
-        <ul>
-          <li><a class="active-route" href="#" onclick="showScreen('screen-list')">[Tela 1]</a></li>
-          <li><a href="#" onclick="showScreen('screen-detail')">[Tela 2]</a></li>
-        </ul>
-      </li>
-    </ul>
-  </aside>
-
-  <div class="layout-main-container">
-    <main class="layout-main">
-
-      <!-- Tela 1: Listagem (visível por padrão) -->
-      <div id="screen-list" class="screen active">
-        <nav class="p-breadcrumb"><span class="p-breadcrumb-current">[Tela 1]</span></nav>
-        <div class="card"><!-- filtro (opcional) + tabela p-datatable com dados fictícios realistas.
-             Em linha de filtro horizontal (campos + botões): display:flex; align-items:flex-end
-             e ZERE a margem inferior dos .p-field dessa linha (o .p-field tem margin-bottom:1rem),
-             senão a base dos campos fica ~1rem acima da base dos botões.
-             Ícones de ação na coluna "Ações" (ver/editar/ativar/excluir): use SEMPRE a MESMA
-             variante nos quatro — p-button p-button-text p-button-sm p-button-icon-only (sem
-             borda). Não misture p-button-secondary (com borda) com p-button-text na mesma linha. --></div>
-      </div>
-
-      <!-- Tela 2: Detalhe -->
-      <div id="screen-detail" class="screen">
-        <nav class="p-breadcrumb">
-          <a href="#" onclick="showScreen('screen-list')">[Tela 1]</a>
-          <span class="p-breadcrumb-sep">›</span><span class="p-breadcrumb-current">[Tela 2]</span>
-        </nav>
-        <div class="card"><!-- detalhe do registro --></div>
-      </div>
-
-    </main>
   </div>
 
   <!-- Modal: usa dsc-modal-mask / dsc-modal da biblioteca -->

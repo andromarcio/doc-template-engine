@@ -220,7 +220,7 @@ Sequência: **cabeçalho de página → card de filtros → resultados → pagin
 - **Filtros** em `.dsc-card` com `.dsc-row` (12 col); **3–4 campos por linha** (`.dsc-col-4`/`.dsc-col-3`). Incluir **um input para cada campo marcado `(filtro)`** no N3 — nunca resumir nem omitir filtros. Ações **Limpar** (chromeless) + **Pesquisar** (primário) à direita do card.
 - **Resultados** em `.dsc-table` com toolbar (contagem + ações), **status em `.dsc-tag`**, ações na **última coluna**, **paginação no rodapé** (`.dsc-table-footer`).
 - Estados obrigatórios: loading (skeleton), empty (`.dsc-state`/`.dsc-table-empty`), error.
-- Exemplo: [`prototypes/exemplo-clientes/cadastro/pesquisar-clientes/`](../prototypes/exemplo-clientes/cadastro/pesquisar-clientes/).
+- Componentes prontos para montar essa tela (filtros, tabela, tags, paginação, estados): ver o catálogo da biblioteca — [`_biblioteca-ds/index.html`](../prototypes/_biblioteca-ds/index.html).
 
 ### Formulário de cadastro
 
