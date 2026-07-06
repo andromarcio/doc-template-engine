@@ -74,6 +74,7 @@ tipo, independente da LLM).
 | [`PROMPT_DATA_MODEL_FROM_SQL`](#/file/engine/prompts/PROMPT_DATA_MODEL_FROM_SQL.md) | Modelo de dados a partir de SQL |
 | [`PROMPT_CONVERSION`](#/file/engine/prompts/PROMPT_CONVERSION.md) | Conversão entre formatos |
 | [`PROMPT_SDD`](#/file/engine/prompts/PROMPT_SDD.md) | Documento de desenho de solução |
+| [`PROMPT_SPECKIT_EXPORT`](#/file/engine/prompts/PROMPT_SPECKIT_EXPORT.md) | Exporta N3 aprovados (`estado: especificado`) → workspace do GitHub spec-kit (opção **SK**) |
 
 ## Protótipos
 

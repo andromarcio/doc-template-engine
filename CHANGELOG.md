@@ -55,6 +55,24 @@ faltantes que as referências do engine já assumiam como existentes.
   pós-merge, somente-leitura (`contents: read`). PR template, README do kit,
   README raiz e a página *Esteira de checkpoints* acompanham o novo fluxo.
 
+- `PROMPT_MENU.md` — o inventário fecha com o menu: **SK** (Fase 5 —
+  Implementação) expõe o `PROMPT_SPECKIT_EXPORT` e **NF** (seção Requisitos
+  não-funcionais) expõe o `PROMPT_NFR`, ambos com insumos e mapeamento
+  opção→arquivo; `docs/content/prompts.md` ganha a linha do
+  `PROMPT_SPECKIT_EXPORT`. No `SKILL.md`, o intake de história
+  (`PROMPT_BACKLOG`, opção HU) entra na tabela de roteamento e no diagrama de
+  sequência, e a linha do protocolo deixa de citar "2A/2B" (o 2B é tombstone).
+
+### Deprecated
+- `PROMPT_DATA_MODEL_negocio.md` — **aposentado** (vira tombstone, como o 2B).
+  Foi escrito para a variante negocial-apenas (`doc-template-engine-caixa`,
+  que mantém a cópia própria) e vazou para cá sem nunca ser integrado ao
+  menu/skill — era órfão total. Neste engine o modelo de dados segue com
+  `PROMPT_1B`/`PROMPT_3B`/`PROMPT_DATA_MODEL_FROM_SQL`; o template
+  `_template-dominio-negocio.md` e a validação negocial do `validate-doc.mjs`
+  continuam disponíveis. O `apply-spec-protocol.mjs` agora reconhece
+  tombstones (`## ⚠️`) e os pula sem alarde.
+
 ### Fixed
 - `SYSTEM_PROMPT_analista_requisitos.md` — o intake de história citava `PROMPT_HU`,
   nome que não existe; corrigido para `PROMPT_BACKLOG` (o prompt real da opção HU),
@@ -67,6 +85,9 @@ faltantes que as referências do engine já assumiam como existentes.
 - Site (`docs/content/entrevista-po.md`) — duas âncoras intra-página usavam hash
   simples (`#secao`), que o roteador interpreta como página e derrubava o conteúdo
   ("Página não encontrada"); corrigidas para o formato do app (`#/pagina#secao`).
+- Site (`docs/content/esteira-checkpoints.md`) — a legenda listava 6 dos 8
+  estados da esteira; entram `⚠️ revisao-necessaria` e `❌ deprecado`,
+  alinhando com `gates.py` e com a legenda do `INDEX.md`.
 - Esqueletos dos `PROMPT_PROTOTYPE_{FLOW,SCREEN}_FULL` — removido um bloco
   morto de design system anterior (classes `layout-*`/`p-*` do PrimeNG, com
   IDs `screen-*` duplicados), deixado por resolução de merge "aceitar ambos";

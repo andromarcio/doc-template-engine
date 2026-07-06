@@ -46,6 +46,7 @@ for (const base of TARGETS) {
   const file = join(dir, `${base}.md`);
   if (!existsSync(file)) { continue; } // não existe neste repo — pula em silêncio
   let content = readFileSync(file, 'utf8');
+  if (/^## ⚠️/m.test(content)) { report.push(`skip  ${base}.md (tombstone — prompt aposentado)`); continue; }
   if (content.includes(SENTINEL)) { report.push(`skip  ${base}.md (já tem o protocolo)`); continue; }
   if (!content.includes(ANCHOR)) { report.push(`⚠ AUSÊNCIA de âncora em ${base}.md (não inserido)`); continue; }
   content = content.replace(ANCHOR, (m) => `${m}\n\n${CALLOUT}`);

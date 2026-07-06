@@ -144,6 +144,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 |---|---|---|---|
 | **5A** | Gerar SDD | Dev | Gera Software Design Document com arquitetura, pseudocódigo e sequência de implementação |
 | **5B** | Gerar plano de testes (QA) | QA | Gera plano de testes E2E ou scripts Playwright/Cypress/Cucumber a partir do N3 |
+| **SK** | Exportar para o spec-kit | Dev | Exporta os N3 aprovados (`estado: especificado`) de um Feature Set para o workspace do GitHub spec-kit (`spec.md`, `plan.md`, `data-model.md`, `contracts/`) — rumo a código + testes |
 
 ---
 
@@ -152,6 +153,14 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
 | **CT** | Contar/recontar PF por escopo | Dev / Analista de Métricas | Conta os Pontos de Função (APF / IFPUG CPM 4.3.1) de uma **feature**, **feature set** ou **domínio** numa única passada; grava na fonte (N3 + DATA-MODEL) e, após confirmação, espelha em `CONTAGEM-PF.md` e propaga o total ao `INDEX.md` |
+
+---
+
+### 🧱 Requisitos não-funcionais (NFR)
+
+| # | Opção | Audiência | O que faz |
+|---|---|---|---|
+| **NF** | Adicionar/ajustar NFR | Arquiteto / Dev / Analista | Atualiza o catálogo `global/NFR.md` (Especificação Suplementar): coleta o requisito não-funcional via questionário e devolve o catálogo completo atualizado |
 
 ---
 
@@ -224,6 +233,8 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **6C** | 1. DESIGN-SYSTEM.md · 2. N2 do Feature Set |
 | **6D** | 1. DESIGN-SYSTEM.md · 2. N3 da feature |
 | **CT** | 1. **Código do escopo** (feature `f-`/ID, feature set `g-`, ou nome do módulo/domínio) · 2. N3(s) do escopo · 3. global/SIZING.md · 4. global/DATA-MODEL.md + data-models/[dominio].md · 5. global/ALI-AIE-MAP.md · 6. global/CONTAGEM-PF.md *(para atualizar o consolidado)* |
+| **NF** | 1. global/NFR.md atual (completo) · 2. Dados do requisito (coletados no questionário do prompt) |
+| **SK** | 1. Diretório de saída (raiz do projeto já inicializado com o spec-kit) · 2. MASTER.md · 3. API-PATTERNS.md · 4. NFR.md · 5. DESIGN-SYSTEM.md · 6. Dicionários (ERROR/FIELD/RULES/MESSAGE) · 7. DATA-MODEL (fragmento do domínio) · 8. N2 do Feature Set · 9. N3s técnicos com `estado: especificado` |
 
 ---
 
@@ -300,6 +311,8 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | 6C | PROMPT_PROTOTYPE_FLOW_COMPONENT.md |
 | 6D | PROMPT_PROTOTYPE_SCREEN_COMPONENT.md |
 | CT | PROMPT_CONTAGEM.md |
+| NF | PROMPT_NFR.md |
+| SK | PROMPT_SPECKIT_EXPORT.md |
 | IV | PROMPT_INVESTIGADOR.md |
 | EX | PROMPT_EXECUTOR.md |
 

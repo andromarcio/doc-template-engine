@@ -33,6 +33,8 @@ já produz:
 | 📋 | especificado | CP3 ok — **pronto para desenvolvimento** |
 | 🔄 | em-desenvolvimento | implementação em andamento (manual) |
 | ✅ | implementado | CP4 ok |
+| ⚠️ | revisao-necessaria | spec desatualizada em relação ao código (manual) |
+| ❌ | deprecado | feature removida do sistema (manual) |
 
 ## Fonte de verdade: o front-matter do N3
 
