@@ -276,7 +276,6 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | N1 (Domínio) técnico + data-model | `PROMPT_1B_N1_tecnico.md` |
 | N2 (Feature Set) negocial — passada única | `PROMPT_2A_N2_negocio.md` |
 | N3 (Feature) negocial | `PROMPT_3A_N3_negocio.md` |
-| N3 negocial a partir de transcrição de reunião | `PROMPT_3A_N3_negocio_transcricao.md` |
 | N3 (Feature) técnico + data-model | `PROMPT_3B_N3_tecnico.md` |
 | Atualizar N3 existente — negocial (manutenção) | `PROMPT_4A_N3_UPDATE_negocio.md` |
 | Atualizar N3 existente — técnico (manutenção) | `PROMPT_4B_N3_UPDATE_tecnico.md` |
@@ -297,7 +296,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Investigar delta → classificar artefatos (create/modify/keep) | `PROMPT_INVESTIGADOR.md` |
 | Executar alterações aprovadas em lote | `PROMPT_EXECUTOR.md` |
 | Protótipo (fluxo / tela) | `PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md` |
-| Transcrição de reunião | `PROMPT_TRANSCRICAO_REUNIAO.md` |
+| Transcrição de reunião → gera/atualiza N1/N2/N3 negociais | `PROMPT_TRANSCRICAO_REUNIAO.md` |
 | Visão geral do fluxo / menu | `PROMPT_MENU.md` |
 
 **No Claude Code (com ferramentas de arquivo):** escreva os artefatos direto no disco no destino

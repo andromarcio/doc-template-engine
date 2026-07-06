@@ -16,6 +16,23 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-07-06
+
+Correções de consistência entre as peças após a consolidação das branches na `main`.
+
+### Fixed
+- `SYSTEM_PROMPT_analista_requisitos.md` — o intake de história citava `PROMPT_HU`,
+  nome que não existe; corrigido para `PROMPT_BACKLOG` (o prompt real da opção HU),
+  nas duas ocorrências (máquina de estados e diagrama do fluxo).
+- Roteamento da transcrição de reunião — o `SKILL.md` ainda roteava "N3 negocial a
+  partir de transcrição" para o descontinuado `PROMPT_3A_N3_negocio_transcricao.md`
+  (tombstone); a linha morta saiu e a rota única aponta para o substituto
+  `PROMPT_TRANSCRICAO_REUNIAO.md`. As páginas do site (`prompts.md`, `n3.md`)
+  deixaram de listar o prompt descontinuado como ativo.
+- Site (`docs/content/entrevista-po.md`) — duas âncoras intra-página usavam hash
+  simples (`#secao`), que o roteador interpreta como página e derrubava o conteúdo
+  ("Página não encontrada"); corrigidas para o formato do app (`#/pagina#secao`).
+
 ## [1.4.0] - 2026-07-06
 
 **Esteira de checkpoints (gates)**: o ciclo de vida de cada N3 (requisitos →
