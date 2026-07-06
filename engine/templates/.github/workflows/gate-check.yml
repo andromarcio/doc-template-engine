@@ -13,6 +13,11 @@ permissions:
 
 jobs:
   check:
+    # O branch protection casa pelo nome do CHECK RUN (= nome do job, não do
+    # workflow). Este name é a string exata que o README/CODEOWNERS mandam
+    # selecionar em "Require status checks to pass" — não renomear sem
+    # atualizar os dois.
+    name: Esteira de gates — check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

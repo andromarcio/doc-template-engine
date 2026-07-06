@@ -42,6 +42,11 @@ Correções de consistência entre as peças após a consolidação das branches
 - Site (`docs/content/entrevista-po.md`) — duas âncoras intra-página usavam hash
   simples (`#secao`), que o roteador interpreta como página e derrubava o conteúdo
   ("Página não encontrada"); corrigidas para o formato do app (`#/pagina#secao`).
+- `gate-check.yml` (kit `.github` das instâncias) — o job ganhou
+  `name: Esteira de gates — check`: o branch protection casa pelo nome do
+  *check run* (= nome do job), e sem o `name:` o check publicado chamava-se
+  apenas `check` — a string que o README/CODEOWNERS mandam selecionar em
+  *Require status checks to pass* não existia.
 - `build-trace-data.mjs` — alinhado ao comportamento do `generate-trace-index.mjs`
   nos dois pontos em que os geradores do grafo divergiam: **(1)** feature set sem
   README de N2 (fluxo bottom-up legítimo: N3 antes de N2) agora vira nó — pela
