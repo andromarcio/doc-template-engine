@@ -22,10 +22,13 @@
   /* paleta de tipos de nó */
   --t-produto: #191d94; --t-dominio: #2026be; --t-featureset: #6e76ee;
   --t-historia: #d97706; --t-repo: #475569;
+  /* nível de código (Fase A) */
+  --t-classe: #0e7490; --t-metodo: #0891b2;
   /* status de feature */
   --s-spec: #2563eb; --s-dev: #d97706; --s-impl: #16a34a; --s-revisao: #dc2626; --s-deprecado: #94a3b8;
   /* tipos de elo */
   --e-contem: #c2c7d2; --e-origina: #e0902a; --e-implementa: #16a34a; --e-integra: #8b5cf6;
+  --e-declara: #9aa4b2; --e-chama: #0891b2;
 
   --radius-sm: 8px; --radius: 12px; --radius-lg: 16px;
   --shadow-sm: 0 1px 2px rgba(16,18,27,.05), 0 1px 3px rgba(16,18,27,.07);
@@ -39,7 +42,8 @@
   --border: #23262f; --border-strong: #2c303b;
   --primary: #6067e6; --primary-strong: #9197f4; --primary-soft: rgba(96,104,230,.22); --link: #98a0ff;
   --t-produto: #9197f4; --t-dominio: #6067e6; --t-featureset: #8b92f0; --t-repo: #94a3b8;
-  --e-contem: #3a3f4b;
+  --t-classe: #38bdf8; --t-metodo: #22d3ee;
+  --e-contem: #3a3f4b; --e-declara: #454c59; --e-chama: #22d3ee;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.4); --shadow: 0 10px 30px rgba(0,0,0,.5);
 }
 
@@ -147,6 +151,9 @@ code, .mono { font-family: var(--font-mono); }
 .edge.kind-origina { stroke: var(--e-origina); stroke-width: 2.2; }
 .edge.kind-implementa { stroke: var(--e-implementa); stroke-width: 2; stroke-dasharray: 5 5; }
 .edge.kind-integra { stroke: var(--e-integra); stroke-width: 2; stroke-dasharray: 2 5; }
+.edge.kind-declara { stroke: var(--e-declara); stroke-width: 1.4; }
+.edge.kind-chama { stroke: var(--e-chama); stroke-width: 1.8; marker-end: url(#arrowChama); }
+.arrow-chama { fill: var(--e-chama); }
 .edge.dim { opacity: .07; }
 .edge.hot { opacity: 1; stroke-width: 3.4; }
 
@@ -154,6 +161,11 @@ code, .mono { font-family: var(--font-mono); }
 .node circle, .node rect { stroke: var(--bg); stroke-width: 2.5; transition: opacity .18s; }
 .node text { font-family: var(--font-sans); font-size: 10px; font-weight: 600; fill: var(--text-strong); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; pointer-events: none; }
 .node .sub { font-size: 8px; font-weight: 500; fill: var(--text-muted); }
+/* nível de código: rótulo em mono, como o dev lê */
+.node.type-classe > text:not(.sub), .node.type-metodo > text:not(.sub) {
+  font-family: var(--font-mono); font-weight: 500; font-size: 9px;
+}
+.node .expand-hint { fill: var(--primary); font-weight: 700; }
 .node.dim { opacity: .18; }
 .node.sel circle, .node.sel rect { stroke: var(--primary); stroke-width: 3.5; }
 .node.hot circle, .node.hot rect { stroke-width: 3.5; }
@@ -163,6 +175,8 @@ code, .mono { font-family: var(--font-mono); }
 /* ---------- Detail panel ---------- */
 .detail { border-left: 1px solid var(--border); background: var(--bg-elev); overflow-y: auto; }
 .detail__empty { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 40px 34px; color: var(--text-muted); }
+/* o display:flex acima venceria o atributo [hidden] do user-agent */
+.detail__empty[hidden] { display: none; }
 .detail__empty svg { width: 40px; height: 40px; color: var(--text-faint); }
 .detail__empty p { font-size: 13px; max-width: 240px; }
 

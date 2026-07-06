@@ -18,7 +18,7 @@
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
 > 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
 Você vai especificar features do ponto de vista de negócio.
@@ -37,7 +37,7 @@ Regras da sessão:
   RULES-DICTIONARY automaticamente sem perguntar sobre o comportamento.
 - Perguntar apenas o que os dicionários deixam em aberto (parâmetros).
 - Sinalize suposições com ⚠️.
-- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. Padrão de caminho: `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Aqui `[feature-set]` é o **nome exato da pasta do Feature Set** — a mesma onde já vive o `README.md` do N2 (ver **DESTINO** abaixo); não invente outra pasta nem acrescente/remova prefixo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen.
+- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. Padrão de caminho: `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Aqui `[feature-set]` é o **nome exato da pasta do Feature Set** — a mesma onde já vive o `README.md` do N2 (ver **DESTINO** abaixo); não invente outra pasta nem acrescente/remova prefixo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen. O **verbo** deve constar do vocabulário canônico de `engine/FEATURE-DEFINITION.md` (a definição testável do que é uma feature); termo na posição do verbo que denuncia não-feature ("cadastro", "gestão", "painel", nominalizações como "aprovação") é **reprovado** pelo gate semântico, e verbo legítimo ainda não catalogado gera **aviso** — proponha adicioná-lo à tabela do FEATURE-DEFINITION.
 
 > **DESTINO DO ARQUIVO (obrigatório — não erre a pasta).** O N3 é gravado na **mesma pasta** do `README.md` do Feature Set (o N2): `modules/[dominio]/[feature-set]/`. **Localize** essa pasta pelo `modules/INDEX.md` / pelo N2 — **não a invente** nem crie uma paralela com nome diferente. O arquivo **nunca** vai para a raiz do repositório, `global/`, `engine/`, outro domínio ou outro Feature Set. Se o Feature Set ainda não tem pasta (bottom-up), crie-a com o **mesmo nome** que o N2 usa (ou usará) para o `README.md`. Em caso de dúvida sobre a pasta, **pergunte antes de gravar**.
 
@@ -343,6 +343,21 @@ Pergunte ao usuário apenas o que a derivação não responde:
 
 ---
 
+## PASSO 1.6 — Prioridade e MVP
+
+Capture a **prioridade de entrega** da feature — ela alimenta o front-matter
+(`prioridade`/`mvp`) e ordena as user stories na exportação ao spec-kit
+(1 N3 = 1 user story; P1 entra no incremento mínimo).
+
+> "Qual a prioridade de entrega desta feature dentro do Feature Set?
+> **P1** = incremento mínimo (MVP) · **P2** / **P3** = incrementos seguintes."
+
+- Em **Modo A**, sugira a prioridade pela ordem/dependências já expressas no N2 e
+  confirme. Mantenha coerência com a coluna *Prioridade* da tabela de Features do N2.
+- Registre `prioridade` e `mvp` (true se P1) para usar no PASSO 3.
+
+---
+
 ## PASSO 2 — Coleta negocial por blocos
 
 Para cada feature, percorra os blocos abaixo em ordem.
@@ -466,12 +481,29 @@ Com as respostas de todos os blocos, gere:
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
+---
+id: [ID do N2 — ex.: SIGLA-SFS-NN]
+feature_set: [SIGLA]-[SFS]
+dominio: [SIGLA]
+entidade: [Entidade principal]
+prioridade: [P1 | P2 | P3]
+mvp: [true | false]
+data_model_ref: data-models/[dominio].md#[entidade]
+endpoints: []
+error_codes: []
+depende_de: []
+servicenow: [STRYxxxxxxx ou vazio]
+status: rascunho
+---
+
 # [Nome da Feature — exatamente como consta no N2]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
 <!-- Este é o CÓDIGO DA FEATURE (SIGLA do domínio + SFS do Feature Set + NN sequencial da feature, ex.: `CAD-CLI-01`) — NÃO o ID do Feature Set (`CAD-CLI`). Modo A: copie o código EXATO que a feature tem na tabela de Features do N2 (aparece em `<small>SIGLA-SFS-NN</small>`). Modo B (bottom-up): atribua provisório e ⚠️ confirme via B2. Nunca omita o `-NN`. -->
+> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não]
+<!-- ID — Modo A: ID do N2 (ex: F01) | Modo B: [SIGLA]-[SFS]-[NN] ⚠️ provisório -->
 
 ## Descrição
-[uma frase em linguagem de negócio]
+[1-2 frases de negócio que declaram a ENTREGA — única, tangível e negocial (FEATURE-DEFINITION.md, FD-8). Fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]." Sem "etc."/"de forma eficiente", sem termo técnico, sem repetir a descrição de outra feature]
 
 ---
 
@@ -550,6 +582,14 @@ Com as respostas de todos os blocos, gere:
 
 ---
 
+## Critérios de sucesso
+
+| # | Critério mensurável | Origem |
+|---|---|---|
+| SC-01 | [resultado observável e medível, em linguagem de negócio] | [cenário / → ver NFR: [ID] / negócio] |
+
+---
+
 ## Changelog
 
 <!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
@@ -563,6 +603,11 @@ Com as respostas de todos os blocos, gere:
 *Feature Set: [Nome] · Domínio: [Nome] · Última revisão: —*
 *Links: [N2 do Feature Set](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
+
+**Preenchimento dos `Critérios de sucesso`**: derive 1–3 critérios **mensuráveis** e
+**agnósticos de tecnologia** a partir dos cenários e dos NFR herdados (consulte o
+`NFR.md` no contexto). Não invente métricas — se a feature não tiver métrica própria,
+referencie o NFR aplicável (`→ ver NFR: [ID]`). Apresente para confirmação do usuário.
 
 **Formato do bloco Gherkin** (seção `## Cenários`):
 ```gherkin
@@ -657,6 +702,7 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 - [ ] Título `# [Nome da Feature]` (exatamente como no N2) + subtítulo `> **Nível 3** - Feature Set: [Nome] — Domínio: [Nome] - [SIGLA]-[SFS]-NN` (o **código da feature** em crase, com o `-NN` — nunca só o ID do Feature Set)
 - [ ] `## Origem` presente **somente** se houver história de usuário (senão, omitir a seção)
 - [ ] `## Superfície`: **Tela própria** (com rota `/...`) **ou** **Ação em tela** (com a feature/tela de origem)
+- [ ] `## Descrição`: 1-2 frases declarando a **entrega** (única, tangível, negocial) — sem placeholder, sem termos vagos ("etc.", "de forma eficiente") ou técnicos, sem duplicar a descrição de outro N3
 - [ ] `## Regras de negócio`: itens **atômicos** (uma invariante cada); a reação do sistema e o texto da mensagem **não** entram aqui (vão para Cenários); canônicas como `→ ver RULES-DICTIONARY: [nome]`
 - [ ] `## Cenários`: Gherkin com os grupos (Caminho feliz · Erros de validação · Conflitos com dados existentes · Restrições de acesso · Estados especiais), em Label PO, com os marcadores de importação dos canônicos
 - [ ] `## Campos`: 4 colunas (Label PO | Tipo | Obrigatório | Validação) — **apenas Label PO** (nunca Label Dev nem campo banco); canônicos como `→ ver FIELD-DICTIONARY: [nome]`
@@ -669,16 +715,23 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 > **Gate determinístico de autovalidação (obrigatório — F2)** — após gravar o N3, rode:
 > ```
 > node scripts/validate-doc.mjs <arquivo>
+> node scripts/validate-feature-semantics.mjs <arquivo>
 > ```
-> Ele exige as seções obrigatórias do N3 (Descrição, Superfície, Regras de negócio,
-> Cenários, Campos, Campos automáticos, Comportamento de tela, Changelog) e **reprova**
-> se a tabela `## Campos` vazar camada técnica (Label Dev / campo banco).
+> O primeiro (estrutura) exige as seções obrigatórias do N3 (Descrição, Superfície,
+> Regras de negócio, Cenários, Campos, Campos automáticos, Comportamento de tela,
+> Changelog) e **reprova** se a tabela `## Campos` vazar camada técnica (Label Dev /
+> campo banco). O segundo (semântico) verifica se o artefato **é mesmo uma feature**
+> segundo a definição canônica (`engine/FEATURE-DEFINITION.md`, critérios FD-1…FD-8):
+> verbo no infinitivo catalogado, título com a mesma ação, atomicidade (um verbo só),
+> nenhum termo de agrupador/nominalização/NFR na posição do verbo, todo cenário com
+> `Então/Then`, regras sem cauda de reação e Descrição declarando a entrega (sem
+> placeholder, sem termos vagos/técnicos, sem duplicar a descrição de outro N3).
 >
-> Se o validador **reprovar**: **apresente os desvios apontados**, **corrija o arquivo** e
-> **rode de novo** — repita até sair `✓` (código 0). **Nunca** declare a feature concluída
-> com o validador reprovando. Se você produziu algo fora do que este prompt define, o
+> Se algum validador **reprovar**: **apresente os desvios apontados**, **corrija o arquivo** e
+> **rode de novo** — repita até ambos saírem `✓` (código 0). **Nunca** declare a feature concluída
+> com um validador reprovando. Se você produziu algo fora do que este prompt define, o
 > caminho é **corrigir para o padrão**, não seguir adiante.
 >
-> No Claude Code este gate é **automático e model-agnostic**: o hook `PostToolUse`
-> (`scripts/hooks/spec-guard.mjs`) roda o validador a cada gravação e devolve os desvios
-> para correção — vale para qualquer modelo (Haiku, Sonnet, etc.).
+> No Claude Code estes gates são **automáticos e model-agnostic**: o hook `PostToolUse`
+> (`scripts/hooks/spec-guard.mjs`) roda os dois validadores a cada gravação e devolve os
+> desvios para correção — vale para qualquer modelo (Haiku, Sonnet, etc.).

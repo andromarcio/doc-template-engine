@@ -22,6 +22,8 @@ import { existsSync, readFileSync } from 'node:fs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const VALIDATOR = join(HERE, '..', 'validate-doc.mjs'); // scripts/validate-doc.mjs
 const TRACE_AUDIT = join(HERE, '..', 'audit-trace-links.mjs'); // scripts/audit-trace-links.mjs
+const SEM_VALIDATOR = join(HERE, '..', 'validate-feature-semantics.mjs'); // gate semântico de N3
+const N3_PATTERN = /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/;
 
 // Só validamos artefatos de nível (N0–N3, DATA-MODEL). INDEX, _backlog, prompts,
 // scripts, README de projeto etc. passam batido. Padrões espelham LOCATION_RULES do validador.
@@ -85,6 +87,35 @@ function main() {
         );
         return 2;
       }
+    if (!ARTIFACT_PATTERNS.some((re) => re.test(path))) return 0; // não é artefato de nível
+    const problems = [];
+    if (existsSync(VALIDATOR)) {                             // validador ausente → fail-open
+      const r = spawnSync('node', [VALIDATOR, file], { encoding: 'utf8' });
+      if (r.status && r.status !== 0) {
+        problems.push(
+          'GATE DE ESTRUTURA (validate-doc) reprovou o artefato recém-gravado.\n' +
+          'Corrija os desvios abaixo e reescreva o arquivo até o validador sair ✓ ' +
+          '(node scripts/validate-doc.mjs <arquivo>).\n\n' +
+          `${r.stdout || ''}${r.stderr || ''}`.trim(),
+        );
+      }
+    }
+    // Gate SEMÂNTICO de N3: o artefato nomeado como feature é mesmo uma feature?
+    // (definição canônica: engine/FEATURE-DEFINITION.md, critérios FD-1…FD-7)
+    if (N3_PATTERN.test(path) && existsSync(SEM_VALIDATOR)) {
+      const s = spawnSync('node', [SEM_VALIDATOR, file], { encoding: 'utf8' });
+      if (s.status && s.status !== 0) {
+        problems.push(
+          'GATE SEMÂNTICO (validate-feature-semantics) reprovou: o artefato não passa na ' +
+          'definição canônica de feature (engine/FEATURE-DEFINITION.md). Corrija os critérios ' +
+          'FD abaixo e reescreva até sair ✓ (node scripts/validate-feature-semantics.mjs <arquivo>).\n\n' +
+          `${s.stdout || ''}${s.stderr || ''}`.trim(),
+        );
+      }
+    }
+    if (problems.length) {
+      process.stderr.write(problems.join('\n\n') + '\nNão declare a etapa concluída antes de todos os gates saírem ✓.\n');
+      return 2; // feedback ao modelo (não bloqueia a escrita já feita, mas força a correção)
     }
     return 0;
   }

@@ -8,6 +8,12 @@ Markdown cru não entrega, em cima dos artefatos que o `doc-template` já gera:
    integrações `domínio ↔ domínio`, desenhada e navegável.
 2. **Backlinks bidirecionais** — clicar num artefato mostra *para onde ele
    aponta* **e** *quem aponta para ele* (o que o `.md` aberto sozinho não revela).
+3. **Nível de código expandível (Fase A)** — os nós de repositório se expandem
+   em **classes**, e as classes em **métodos**, com o grafo de chamadas
+   `método → método` (elo `chama`, com seta) e a âncora fina
+   `feature → classe/método` (elo `implementa`, vindo de
+   `@RequiresFeature`/`*appFeature`). Tudo **sob demanda**: recolhido por
+   padrão, o grafo continua legível e a simulação nunca vê milhares de nós.
 
 > ⚠️ É um **protótipo de apresentação**, publicado junto do site `docs/`.
 > Os dados são de um sistema fictício ("Loja Acme"), só para o grafo ter o que mostrar.
@@ -33,6 +39,9 @@ python3 -m http.server -d docs 8090
 - **Clicar** num nó → realça vizinhos (1 salto) e abre o painel de relações + backlinks.
 - **Duplo-clique numa história** (ou botão *⛓ Modo rastro*) → realça a **cadeia
   completa** história → spec → código.
+- **Duplo-clique num repositório ou classe** (ou botão *⊞ Expandir* no painel)
+  → abre o nível de código: classes, métodos e as chamadas entre eles.
+  Buscar ou clicar numa relação de um nó recolhido expande o caminho sozinho.
 - **Filtrar camadas** na lateral (esconder histórias, código, etc.).
 - **Buscar** por ID, nome ou texto (tecla `/`).
 - **Arrastar** nós, **roda** para zoom, arrastar o fundo para mover, *⤢ Ajustar* para reenquadrar.
@@ -66,6 +75,25 @@ artefatos da instância e **emitiria `data.js`** a partir do que já existe:
 Ou seja: **nada de banco novo nem de reescrever specs** — a informação já está nos
 artefatos; o build só a projeta num formato que o grafo consome. É exatamente a
 mesma matéria-prima da auditoria `PROMPT_AUDIT_TRACE_LINKS`, só que visual.
+
+### E o nível de código (classes/métodos)?
+
+A Fase A demonstra a UX com dados fictícios. Para virar real (Fase B), cada
+repositório de código rodaria no próprio CI um passo de **análise estática**
+(JavaParser/Spoon para Java, ts-morph para TypeScript) que emitiria um
+fragmento com:
+
+| Origem no código | Vira no grafo |
+|---|---|
+| varredura de classes | nó `classe` + aresta `repo → classe` (`contem`) |
+| métodos de cada classe | nó `metodo` + aresta `classe → método` (`declara`) |
+| chamadas estáticas | aresta `método → método` (`chama`) |
+| `@RequiresFeature("SIGLA-SFS-NN")` / `*appFeature="ID"` | aresta `feature → classe/método` (`implementa`) |
+
+O build do site só mescla os fragmentos no `data.js`. Limites conhecidos (por
+isso o grafo é ferramenta de **navegação**, não gate de auditoria): DI/reflexão
+escondem chamadas dinâmicas, e a fronteira front→back (componente → endpoint
+HTTP) fica para uma Fase C.
 
 O harness `check.mjs` (no scratchpad da sessão) valida a integridade do índice
 (arestas órfãs, ids únicos, toda história rastreável até N3) — a semente de um

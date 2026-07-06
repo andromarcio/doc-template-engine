@@ -42,9 +42,9 @@ Use esta skill de dois modos:
 Vale para **todo** prompt de especificação (N0, 1A/1B, 2A/2B, 3A/3B, 4A/4B, CRUD, WIZARD):
 
 - **Antes de gerar (F1 — verificar o que já existe):** rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **Contexto verificado** — o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Nunca especifique sem esse confronto; nunca duplique ID/pasta existente.
-- **Depois de gravar (F2 — não fugir do padrão):** rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e rode de novo até sair `✓`**. Nunca declare concluído com o validador reprovando. Fez algo diferente do que o prompt define? Corrija para o padrão.
+- **Depois de gravar (F2 — não fugir do padrão):** rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) e, quando o artefato for um **N3**, também `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e rode de novo até sair `✓`**. Nunca declare concluído com um validador reprovando. Fez algo diferente do que o prompt define? Corrija para o padrão.
 
-> No Claude Code isso é **enforçado automaticamente** pelos hooks em `.claude/settings.json` → `scripts/hooks/spec-guard.mjs`: `UserPromptSubmit` injeta o preflight; `PostToolUse` roda o validador a cada gravação e devolve os desvios ao modelo. Portão determinístico, independente do modelo (resolve o caso do Haiku). No modo copiar-colar, o mesmo protocolo está embutido nos prompts (PASSO 0 + gate de autovalidação).
+> No Claude Code isso é **enforçado automaticamente** pelos hooks em `.claude/settings.json` → `scripts/hooks/spec-guard.mjs`: `UserPromptSubmit` injeta o preflight; `PostToolUse` roda os validadores (estrutural + semântico de N3) a cada gravação e devolve os desvios ao modelo. Portão determinístico, independente do modelo (resolve o caso do Haiku). No modo copiar-colar, o mesmo protocolo está embutido nos prompts (PASSO 0 + gate de autovalidação).
 
 ---
 
@@ -77,6 +77,13 @@ várias features) ou um requisito não-funcional (→ `global/NFR.md`).
 
 > A convenção de nome `f-[verbo]-[entidade]` (definida no `PROMPT_3A`) materializa
 > essa granularidade — o prefixo verbal é o teste prático de que você está num N3.
+
+> **Definição canônica e testável**: `engine/FEATURE-DEFINITION.md` é a fonte única do
+> que é (e não é) uma feature — critérios objetivos FD-1…FD-8, vocabulário de verbos
+> canônicos e termos bloqueados na posição do verbo. O gate determinístico
+> `scripts/validate-feature-semantics.mjs` verifica os critérios automatizáveis em todo
+> N3 gravado (roda junto com o `validate-doc.mjs` no hook). Em dúvida de granularidade,
+> consulte esse arquivo antes de perguntar ao usuário.
 
 ---
 
@@ -228,6 +235,7 @@ PROMPT_CONTAGEM → contagem APF por escopo (feature/feature set/domínio):
                   espelha em CONTAGEM-PF.md + propaga total ao INDEX.md
      ↓
 PROMPT_SDD → documento de design para implementação
+PROMPT_SPECKIT_EXPORT → exporta N3 aprovados → workspace do spec-kit (depois: /speckit.tasks → /implement)
 PROMPT_QA  → plano de testes E2E (pós-implementação)
      ↓
 PROMPT_4A → atualização negocial de N3 existente (manutenção pontual — 1 feature)
@@ -275,6 +283,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Requisitos não-funcionais (Especificação Suplementar) | `PROMPT_NFR.md` |
 | Contagem APF (feature / feature set / domínio) | `PROMPT_CONTAGEM.md` |
 | Documento de design para implementação (SDD) | `PROMPT_SDD.md` |
+| Exportar N3 aprovados → workspace do spec-kit (rumo a código + testes) | `PROMPT_SPECKIT_EXPORT.md` |
 | Plano de testes E2E (pós-implementação) | `PROMPT_QA.md` |
 | Engenharia reversa: código/N3 → N2 | `PROMPT_N3_TO_N2.md` |
 | Engenharia reversa: N3 → N1 | `PROMPT_N3_TO_N1.md` |
