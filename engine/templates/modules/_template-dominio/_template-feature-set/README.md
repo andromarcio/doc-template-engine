@@ -11,9 +11,9 @@
 
 ## Features
 
-| Feature | Arquivo de Especificação (N3) | Descrição |
+| Feature | Arquivo de Especificação (N3) | Prioridade | Descrição |
 |---|---|---|
-| **[Nome da Feature]** <small>[SIGLA]-[SFS]-01</small> | [f-[verbo]-[entidade].md](f-[verbo]-[entidade].md) | [descrição em uma linha] |
+| **[Nome da Feature]** <small>[SIGLA]-[SFS]-01</small> | [f-[verbo]-[entidade].md](f-[verbo]-[entidade].md) | **[P1 / P2 / P3]** | [descrição em uma linha] |
 
 ---
 
@@ -63,6 +63,8 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 ---
 
 ## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|

@@ -14,6 +14,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai detalhar os Feature Sets de um domínio do ponto de vista de negócio.
 Foque em fluxos, jornadas e regras — sem mencionar endpoints, FKs ou libs.
 
@@ -91,6 +96,8 @@ Com as respostas, gere o artefato parcial:
 
 📄 `modules/[dominio]/[feature-set]/README.md` — seções negociais
 
+> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+
 > ### Contrato estrutural (vinculante — verificado por `scripts/validate-doc.mjs`)
 >
 > O N2 tem **exatamente estas 7 seções `##`, nesta ordem, e nenhuma outra**:
@@ -167,6 +174,8 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT 2A |
@@ -175,6 +184,23 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 
 *Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
+
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
+> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*.
+> Em ordem de preferência: **1) "Reúne as operações de…"** (estruturalmente exato: um
+> conjunto reúne operações, já antecipando as features); **2) "Agrupa as funcionalidades
+> que permitem…"**; **3) "Permite ao [perfil] …"** (quando o destaque é o valor para o
+> perfil). **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível.
+> Ordene as frases assim: (1ª) quais operações reúne, já antecipando as features · (2ª) o
+> que isso permite ao perfil. A linha `**Não faz**:` delimita o escopo negativo do conjunto.
+> Exemplo (Feature Set **Cadastro de Clientes** `CLI-CAD`):
+> ```
+> ## Descrição
+> Reúne as operações de manutenção do cadastro de clientes: incluir, pesquisar, editar, visualizar e desativar um cliente. Permite ao operador manter os dados cadastrais sempre atualizados a partir de uma única área do sistema.
+>
+> **Não faz**: análise de crédito, faturamento ou histórico de compras do cliente.
+> ```
 
 > **Regra do Fluxo principal** — O fluxo principal **sempre** deve ser gerado
 > como um diagrama **Mermaid** (bloco ` ```mermaid `), usando `flowchart TD`.

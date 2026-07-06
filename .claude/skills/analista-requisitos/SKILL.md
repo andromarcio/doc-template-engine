@@ -31,9 +31,20 @@ Use esta skill de dois modos:
 > **Texto corrido (obrigatório):** ao gravar arquivos `.md`, cada parágrafo de prosa deve ser uma única linha contínua, sem quebras de linha internas. Quebras de linha só para separar parágrafos, itens de lista, cabeçalhos e blocos de código. Isso garante que o HTML renderize o texto fluindo conforme a largura da tela.
 
 > **Carimbo de versão (obrigatório):** ao gerar **ou atualizar** qualquer artefato, leia
-> `engine/VERSION` e garanta que a **primeira linha** seja o comentário invisível
+> `VERSION` (na raiz do engine) e garanta que a **primeira linha** seja o comentário invisível
 > `<!-- doc-template-engine: <versão> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`.
 > Em updates, **reescreva** o carimbo (não duplique). Detalhes em `engine/VERSIONING.md`.
+
+---
+
+## Protocolo obrigatório de sessão (F1 preflight · F2 autovalidação)
+
+Vale para **todo** prompt de especificação (N0, 1A/1B, 2A/2B, 3A/3B, 4A/4B, CRUD, WIZARD):
+
+- **Antes de gerar (F1 — verificar o que já existe):** rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **Contexto verificado** — o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Nunca especifique sem esse confronto; nunca duplique ID/pasta existente.
+- **Depois de gravar (F2 — não fugir do padrão):** rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) e, quando o artefato for um **N3**, também `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e rode de novo até sair `✓`**. Nunca declare concluído com um validador reprovando. Fez algo diferente do que o prompt define? Corrija para o padrão.
+
+> No Claude Code isso é **enforçado automaticamente** pelos hooks em `.claude/settings.json` → `scripts/hooks/spec-guard.mjs`: `UserPromptSubmit` injeta o preflight; `PostToolUse` roda os validadores (estrutural + semântico de N3) a cada gravação e devolve os desvios ao modelo. Portão determinístico, independente do modelo (resolve o caso do Haiku). No modo copiar-colar, o mesmo protocolo está embutido nos prompts (PASSO 0 + gate de autovalidação).
 
 ---
 
@@ -66,6 +77,13 @@ várias features) ou um requisito não-funcional (→ `global/NFR.md`).
 
 > A convenção de nome `f-[verbo]-[entidade]` (definida no `PROMPT_3A`) materializa
 > essa granularidade — o prefixo verbal é o teste prático de que você está num N3.
+
+> **Definição canônica e testável**: `engine/FEATURE-DEFINITION.md` é a fonte única do
+> que é (e não é) uma feature — critérios objetivos FD-1…FD-8, vocabulário de verbos
+> canônicos e termos bloqueados na posição do verbo. O gate determinístico
+> `scripts/validate-feature-semantics.mjs` verifica os critérios automatizáveis em todo
+> N3 gravado (roda junto com o `validate-doc.mjs` no hook). Em dúvida de granularidade,
+> consulte esse arquivo antes de perguntar ao usuário.
 
 ---
 
@@ -104,8 +122,7 @@ pelo `PROMPT_AUDIT_RULES_DEDUP`.
 | Label Dev | camelCase, português | `nomeCompleto` | **data-models/[dominio].md** — apenas aqui |
 | Campo banco | snake_case, português | `nome_completo` | **data-models/[dominio].md** — apenas aqui |
 
-**Regra absoluta**: Label Dev e campo banco vivem SOMENTE nos arquivos de `global/data-models/`.
-Os N3 usam apenas Label PO na tabela de campos.
+**Regra absoluta — fonte única de definição de banco**: **toda** definição física do banco de dados — entidade/tabela, Label Dev (camelCase), campo banco (snake_case), tipo SQL, chave estrangeira (FK), índice, restrição de unicidade e enum de banco — vive **exclusivamente** nos fragmentos `global/data-models/[dominio].md` (detalhe) e em `global/DATA-MODEL.md` (índice). Nenhum outro artefato — N0, N1, N2, N3, SDD, protótipo, contagem — **redefine** essas informações: todos as **consomem por referência** (`→ ver DATA-MODEL.md: Entidade [Nome]`). Definição de banco nova ou alterada entra **primeiro** no DATA-MODEL (com aprovação ⚠️) e só então é citada em outro lugar. Os N3 usam apenas Label PO na tabela de campos; os prompts técnicos referenciam o data-model — nunca copiam tipos, FK ou índices.
 
 ### Traduções no Modo PO
 
@@ -158,6 +175,7 @@ Toda resposta deve iniciar informando explicitamente o estado atual: `[Estado: N
 
 Exemplos de estados por etapa:
 - **Extração (PROMPT_0):** `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
+- **N0 Visão de Produto (PROMPT_N0):** `[INICIALIZACAO]` → `[COLETA_PROPOSITO]` → `[COLETA_PERSONAS]` → `[COLETA_OBJETIVOS]` → `[COLETA_ESCOPO]` → `[COLETA_DOMINIOS]` → `[COLETA_PRINCIPIOS]` → `[GERACAO_ARTEFATO]`
 - **N3 Negocial (PROMPT_3A):** `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
 - **N3 Técnico (PROMPT_3B):** `[INICIALIZACAO]` → `[CRUZAMENTO_CAMPOS]` → `[ENDPOINTS]` → `[EVENTOS_AUDITLOG]` → `[GHERKIN_TECNICO]` → `[ARQUIVOS]` → `[ARQUIVO_FINAL]`
 
@@ -183,7 +201,7 @@ Exemplos de estados por etapa:
 
 ### Regras de condução
 
-13. **Confirmar contexto recebido no início** (arquivos + lacunas)
+13. **Confirmar contexto e apresentar o que já existe no início** — arquivos, lacunas **e o inventário de domínios e Feature Sets já documentados** (a partir do `modules/INDEX.md`). Vale **sempre**, qualquer que seja o ponto de partida (N0, N1, N2, N3, CRUD, Wizard, triagem, transcrição, bottom-up, conversão), para situar a nova especificação e evitar duplicação.
 14. **Sinalizar suposições com ⚠️** e listar ao final do artefato
 15. **Manter consistência entre níveis** (Label PO igual em N1, N2 e N3)
 16. **Executar revisão de consistência automaticamente** ao concluir todas as features de um Feature Set
@@ -198,6 +216,8 @@ PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), des
                  · registrar história HU). Não cria nem altera — só mostra e encaminha.
      ↓
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
+     ↓
+PROMPT_N0 → global/N0_PRODUCT_VISION.md (Visão de Produto — ponto de partida top-down; opcional)
      ↓
 PROMPT_1A → N1 negocial aprovado pelo PO
 PROMPT_1B → N1 técnico + data-models/[dominio].md atualizado
@@ -215,6 +235,7 @@ PROMPT_CONTAGEM → contagem APF por escopo (feature/feature set/domínio):
                   espelha em CONTAGEM-PF.md + propaga total ao INDEX.md
      ↓
 PROMPT_SDD → documento de design para implementação
+PROMPT_SPECKIT_EXPORT → exporta N3 aprovados → workspace do spec-kit (depois: /speckit.tasks → /implement)
 PROMPT_QA  → plano de testes E2E (pós-implementação)
      ↓
 PROMPT_4A → atualização negocial de N3 existente (manutenção pontual — 1 feature)
@@ -250,6 +271,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | CRUD padrão (cadastro): gerar N2 + N3 das 5 operações de uma vez | `PROMPT_CRUD.md` |
 | Wizard / assistente (processo guiado multi-etapas): gerar N2 + N3 da feature principal e auxiliares | `PROMPT_WIZARD.md` |
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
+| N0 (Visão de Produto) — propósito, personas, objetivos, KPIs, escopo, tom de voz | `PROMPT_N0_VISAO.md` |
 | N1 (Domínio) negocial | `PROMPT_1A_N1_negocio.md` |
 | N1 (Domínio) técnico + data-model | `PROMPT_1B_N1_tecnico.md` |
 | N2 (Feature Set) negocial — passada única | `PROMPT_2A_N2_negocio.md` |
@@ -261,12 +283,14 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Requisitos não-funcionais (Especificação Suplementar) | `PROMPT_NFR.md` |
 | Contagem APF (feature / feature set / domínio) | `PROMPT_CONTAGEM.md` |
 | Documento de design para implementação (SDD) | `PROMPT_SDD.md` |
+| Exportar N3 aprovados → workspace do spec-kit (rumo a código + testes) | `PROMPT_SPECKIT_EXPORT.md` |
 | Plano de testes E2E (pós-implementação) | `PROMPT_QA.md` |
 | Engenharia reversa: código/N3 → N2 | `PROMPT_N3_TO_N2.md` |
 | Engenharia reversa: N3 → N1 | `PROMPT_N3_TO_N1.md` |
 | Migração em lote (doc + código → N1/N2/N3) | `PROMPT_CONVERSION.md` |
 | Mapeamento de repositório | `PROMPT_REPO_MAPPING.md` |
 | Data-model a partir de SQL | `PROMPT_DATA_MODEL_FROM_SQL.md` |
+| Revisar a conformidade de **um** artefato (N0–N3/data-model) e apontar o que corrigir | `PROMPT_REVIEW.md` |
 | Auditoria/dedup de regras de negócio | `PROMPT_AUDIT_RULES_DEDUP.md` |
 | Auditoria de elos história ↔ feature (caminho inverso história → features) | `PROMPT_AUDIT_TRACE_LINKS.md` |
 | Painel consolidado do que **falta especificar** (existência + lacunas ⚠️) → seção gerada no `INDEX.md` | `PROMPT_PENDENCIAS.md` |
@@ -406,11 +430,24 @@ Ao ser ativado num contexto de especificação de requisitos:
    > "Contexto carregado: [MASTER/N0/INDEX lidos ou 'nenhum']. Recebi: [lista].
    > Ausentes: [lista ou 'nenhum']."
 
-2. Identificar modo e etapa:
+2. **Apresentar o que já existe — sempre, qualquer que seja o ponto de partida.**
+   A partir do `modules/INDEX.md` (e dos N1, sob demanda), liste os **domínios** e seus
+   **Feature Sets** já documentados. Isso situa a nova especificação e evita duplicar ou
+   colocar algo no lugar errado — vale para **toda** entrada (N0, N1, N2, N3, CRUD,
+   Wizard, triagem, transcrição, bottom-up, conversão). Apresente enxuto:
+   > "Domínios e Feature Sets já existentes:
+   > - **[Domínio A]** `[SIGLA]` — [FS 1] `[SIGLA-SFS]` · [FS 2] `[SIGLA-SFS]`
+   > - **[Domínio B]** `[SIGLA]` — …
+   >
+   > Se o que você vai especificar já se encaixa num destes, me diga; senão, seguimos."
+   Se o `modules/INDEX.md` não existir ou estiver vazio, diga explicitamente:
+   > "Nenhum domínio/Feature Set documentado ainda — este será o primeiro."
+
+3. Identificar modo e etapa:
    > "Modo: [PO/DEV]. Prompt: [XA/XB]. Nível: [N0/N1/N2/N3].
    > Domínio/Feature Set: [nome, se aplicável]."
 
-3. Confirmar antes de transitar:
+4. Confirmar antes de transitar:
    > "Posso iniciar?"
 
 Aguardar confirmação. Após receber, transitar para o primeiro estado da etapa.

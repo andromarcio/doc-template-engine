@@ -19,7 +19,9 @@
     featureset: { label: "Feature Sets (N2)",     color: "var(--t-featureset)", shape: "circle", r: 12 },
     feature:    { label: "Features (N3)",         color: "var(--s-spec)", shape: "circle", r: 10, byStatus: true },
     historia:   { label: "Histórias",             color: "var(--t-historia)", shape: "rect", r: 11 },
-    repo:       { label: "Código",                color: "var(--t-repo)", shape: "rect", r: 11 },
+    repo:       { label: "Repositórios",          color: "var(--t-repo)", shape: "rect", r: 11 },
+    classe:     { label: "Classes",               color: "var(--t-classe)", shape: "rect", r: 9 },
+    metodo:     { label: "Métodos",               color: "var(--t-metodo)", shape: "circle", r: 6 },
   };
   var STATUS = {
     spec:      { label: "Especificado", icon: "📋", color: "var(--s-spec)" },
@@ -33,6 +35,8 @@
     origina:    { label: "origina", style: "", color: "var(--e-origina)" },
     implementa: { label: "implementa", style: "dashed", color: "var(--e-implementa)" },
     integra:    { label: "integra", style: "dotted", color: "var(--e-integra)" },
+    declara:    { label: "declara", style: "", color: "var(--e-declara)" },
+    chama:      { label: "chama", style: "", color: "var(--e-chama)" },
   };
 
   function nodeColor(n) {
@@ -52,6 +56,34 @@
     adj[e.to].in.push(e);
   });
 
+  /* ---------- nível de código: expandir/recolher sob demanda ----------
+     Classes e métodos só entram no grafo (e na física) quando o pai está
+     expandido — é o que mantém o protótipo legível e a simulação O(n²)
+     viável num sistema real (nunca há milhares de nós visíveis). */
+  var expanded = {};       // id (repo|classe) -> true se expandido
+  function parentOf(n) {
+    return n.type === "classe" ? n.repo : n.type === "metodo" ? n.classe : null;
+  }
+  var children = {};
+  DATA.nodes.forEach(function (n) {
+    var p = parentOf(n);
+    if (p) (children[p] = children[p] || []).push(n);
+  });
+  function expandable(n) { return !!children[n.id]; }
+  function isActive(n) {
+    var p = parentOf(n);
+    if (!p) return true;
+    return !!expanded[p] && isActive(byId[p]);
+  }
+  var active = { nodes: [], edges: [] };
+  function computeActive() {
+    var ok = {};
+    active.nodes = DATA.nodes.filter(function (n) {
+      var a = isActive(n); if (a) ok[n.id] = true; return a;
+    });
+    active.edges = DATA.edges.filter(function (e) { return ok[e.from] && ok[e.to]; });
+  }
+
   /* ---------- estado ---------- */
   var hidden = {};         // type -> true se camada oculta
   var selected = null;     // id selecionado
@@ -60,6 +92,18 @@
 
   /* ---------- DOM ---------- */
   var svg = document.getElementById("graph");
+  // seta do elo "chama" (método → método) — direção importa no call graph
+  var defs = el("defs");
+  var mk = el("marker");
+  mk.setAttribute("id", "arrowChama");
+  mk.setAttribute("viewBox", "0 0 10 10");
+  mk.setAttribute("refX", "8"); mk.setAttribute("refY", "5");
+  mk.setAttribute("markerWidth", "5.5"); mk.setAttribute("markerHeight", "5.5");
+  mk.setAttribute("orient", "auto-start-reverse");
+  var mkPath = el("path");
+  mkPath.setAttribute("d", "M 0 0 L 10 5 L 0 10 z");
+  mkPath.setAttribute("class", "arrow-chama");
+  mk.appendChild(mkPath); defs.appendChild(mk); svg.appendChild(defs);
   var gRoot = el("g");      // transform (zoom/pan)
   var gEdges = el("g");
   var gNodes = el("g");
@@ -92,7 +136,7 @@
   function initPositions() {
     var s = size(), cx = s.w / 2, cy = s.h / 2;
     // anéis por nível, para já começar espalhado e em camadas
-    var ringOf = { produto: 0, dominio: 1, featureset: 2, feature: 3, historia: 3.4, repo: 4.1 };
+    var ringOf = { produto: 0, dominio: 1, featureset: 2, feature: 3, historia: 3.4, repo: 4.1, classe: 4.9, metodo: 5.6 };
     var perRing = {};
     DATA.nodes.forEach(function (n) { perRing[n.type] = (perRing[n.type] || 0) + 1; });
     var idx = {};
@@ -109,11 +153,11 @@
 
   function createSim() {
     var alpha = 1, alphaDecay = 0.010, alphaMin = 0.004, running = true, raf, settled = false;
-    var LINK = 175, LINK_HIER = 125, CHARGE = -1900, CENTER = 0.009, MAXV = 16;
+    var LINK = 175, LINK_HIER = 125, LINK_CODE = 95, CHARGE = -1900, CENTER = 0.009, MAXV = 16;
 
     function tick() {
       var s = size(), cx = s.w / 2, cy = s.h / 2;
-      var nodes = DATA.nodes, i, j;
+      var nodes = active.nodes, i, j;
 
       // repulsão O(n^2)
       for (i = 0; i < nodes.length; i++) {
@@ -129,12 +173,12 @@
         }
       }
       // molas
-      DATA.edges.forEach(function (e) {
+      active.edges.forEach(function (e) {
         var na = byId[e.from], nb = byId[e.to];
         if (!na || !nb) return;
         var dx = nb.x - na.x, dy = nb.y - na.y;
         var d = Math.sqrt(dx * dx + dy * dy) || 0.01;
-        var rest = e.kind === "contem" ? LINK_HIER : LINK;
+        var rest = e.kind === "declara" ? LINK_CODE : e.kind === "contem" ? LINK_HIER : LINK;
         var f = ((d - rest) / d) * 0.35 * alpha;
         var fx = dx * f, fy = dy * f;
         na.vx += fx; na.vy += fy; nb.vx -= fx; nb.vy -= fy;
@@ -192,7 +236,7 @@
     gEdges.innerHTML = ""; gNodes.innerHTML = "";
     nodeEls = {}; edgeEls = [];
 
-    DATA.edges.forEach(function (e) {
+    active.edges.forEach(function (e) {
       var line = el("line");
       line.setAttribute("class", "edge kind-" + e.kind);
       line.__edge = e;
@@ -200,7 +244,7 @@
       edgeEls.push({ e: e, line: line });
     });
 
-    DATA.nodes.forEach(function (n) {
+    active.nodes.forEach(function (n) {
       var g = el("g");
       g.setAttribute("class", "node type-" + n.type);
       g.__id = n.id;
@@ -239,9 +283,21 @@
         sub.textContent = n.id;
         g.appendChild(sub);
       }
+      if (expandable(n)) {
+        var hint = el("text");
+        hint.setAttribute("class", "sub expand-hint");
+        hint.setAttribute("text-anchor", "middle");
+        hint.setAttribute("dy", t.r + 24);
+        hint.textContent = expanded[n.id] ? "⊟ recolher"
+          : "⊞ " + children[n.id].length + (n.type === "repo" ? " classes" : " métodos");
+        g.appendChild(hint);
+      }
 
       g.addEventListener("pointerdown", onNodeDown);
-      g.addEventListener("dblclick", function (ev) { ev.stopPropagation(); openTrace(n.id); });
+      g.addEventListener("dblclick", function (ev) {
+        ev.stopPropagation();
+        if (expandable(n)) toggleExpand(n.id); else openTrace(n.id);
+      });
       gNodes.appendChild(g);
       nodeEls[n.id] = { g: g, shape: shape };
     });
@@ -250,10 +306,18 @@
   function render() {
     edgeEls.forEach(function (o) {
       var a = byId[o.e.from], b = byId[o.e.to];
+      var x2 = b.x, y2 = b.y;
+      if (o.e.kind === "chama") {
+        // encurta a linha até a borda do nó-alvo, senão a seta fica escondida
+        var dx = b.x - a.x, dy = b.y - a.y;
+        var d = Math.sqrt(dx * dx + dy * dy) || 1;
+        var cut = TYPES[b.type].r + 5;
+        x2 = b.x - (dx / d) * cut; y2 = b.y - (dy / d) * cut;
+      }
       o.line.setAttribute("x1", a.x); o.line.setAttribute("y1", a.y);
-      o.line.setAttribute("x2", b.x); o.line.setAttribute("y2", b.y);
+      o.line.setAttribute("x2", x2); o.line.setAttribute("y2", y2);
     });
-    DATA.nodes.forEach(function (n) {
+    active.nodes.forEach(function (n) {
       var ne = nodeEls[n.id];
       if (ne) ne.g.setAttribute("transform", "translate(" + n.x + "," + n.y + ")");
     });
@@ -281,7 +345,7 @@
     var keep = null;
     if (selected) keep = traceMode ? traceSet(selected) : highlightSet(selected);
 
-    DATA.nodes.forEach(function (n) {
+    active.nodes.forEach(function (n) {
       var ne = nodeEls[n.id]; if (!ne) return;
       var off = hidden[n.type];
       ne.g.style.display = off ? "none" : "";
@@ -298,7 +362,48 @@
     });
   }
 
+  /* ---------- expandir/recolher nível de código ---------- */
+  function seedNear(parent, kids) {
+    kids.forEach(function (k) {
+      k.x = parent.x + (Math.random() - 0.5) * 90;
+      k.y = parent.y + (Math.random() - 0.5) * 90;
+      k.vx = 0; k.vy = 0;
+    });
+  }
+  function refreshGraph() {
+    computeActive();
+    buildSvg();
+    paintStates();
+    render();
+    sim.reheat();
+  }
+  function toggleExpand(id) {
+    var n = byId[id];
+    expanded[id] = !expanded[id];
+    if (expanded[id]) seedNear(n, children[id]);
+    if (selected && !isActive(byId[selected])) {
+      // o nó selecionado foi recolhido junto com o pai
+      selected = null; traceMode = false;
+      document.getElementById("btnTrace").classList.remove("is-active");
+      document.getElementById("selectionCap").textContent = "nada selecionado";
+      showEmptyDetail();
+    }
+    refreshGraph();
+    if (selected) renderDetail(selected); // atualiza o rótulo do botão ⊞/⊟
+  }
+  function revealPath(id) {
+    // expande os ancestrais para o nó aparecer (busca / clique numa relação)
+    var chain = [], p = parentOf(byId[id]);
+    while (p) { chain.unshift(p); p = parentOf(byId[p]); }
+    var changed = false;
+    chain.forEach(function (pid) {
+      if (!expanded[pid]) { expanded[pid] = true; seedNear(byId[pid], children[pid]); changed = true; }
+    });
+    if (changed) refreshGraph();
+  }
+
   function select(id) {
+    if (byId[id] && !isActive(byId[id])) revealPath(id);
     selected = id;
     document.getElementById("selectionCap").textContent = id ? id + " · " + byId[id].label : "nada selecionado";
     paintStates();
@@ -360,6 +465,11 @@
     html += '<a class="btn btn--ghost" href="' + esc(openHref) + '" target="_blank" rel="noopener">' +
             (isExternal ? "Abrir repo ↗" : "Abrir .md ↗") + "</a>";
     html += '<a class="btn btn--ghost" href="#" data-focus="' + esc(id) + '">Centralizar</a>';
+    if (expandable(n)) {
+      html += '<a class="btn btn--ghost" href="#" data-expand="' + esc(id) + '">' +
+        (expanded[id] ? "⊟ Recolher" : "⊞ Expandir " + children[id].length +
+          (n.type === "repo" ? " classes" : " métodos")) + "</a>";
+    }
     html += "</div>";
 
     // Aponta para (saídas)
@@ -375,6 +485,8 @@
     });
     var focus = $body.querySelector("[data-focus]");
     if (focus) focus.addEventListener("click", function (ev) { ev.preventDefault(); centerOn(id); });
+    var expBtn = $body.querySelector("[data-expand]");
+    if (expBtn) expBtn.addEventListener("click", function (ev) { ev.preventDefault(); toggleExpand(id); });
   }
 
   function relGroup(title, edges, endKey, isBacklink) {
@@ -452,7 +564,8 @@
   function stat(v, l) { return '<div class="stat"><b>' + v + "</b><span>" + esc(l) + "</span></div>"; }
   function edgeDesc(k) {
     return ({ contem: "contém (hierarquia)", origina: "origina (história→N3)",
-      implementa: "implementa (N3→código)", integra: "integra (domínio↔domínio)" })[k];
+      implementa: "implementa (N3→código)", integra: "integra (domínio↔domínio)",
+      declara: "declara (classe→método)", chama: "chama (método→método)" })[k];
   }
 
   /* =======================================================================
@@ -555,7 +668,7 @@
   }
 
   function fitView() {
-    var xs = DATA.nodes.filter(function(n){return !hidden[n.type];});
+    var xs = active.nodes.filter(function(n){return !hidden[n.type];});
     if (!xs.length) return;
     var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     xs.forEach(function (n) { minX = Math.min(minX, n.x); minY = Math.min(minY, n.y); maxX = Math.max(maxX, n.x); maxY = Math.max(maxY, n.y); });
@@ -611,7 +724,7 @@
     return c + "22";
   }
   function typeIcon(t) {
-    var m = { produto: "◆ ", dominio: "● ", featureset: "○ ", feature: "• ", historia: "▣ ", repo: "▢ " };
+    var m = { produto: "◆ ", dominio: "● ", featureset: "○ ", feature: "• ", historia: "▣ ", repo: "▢ ", classe: "▤ ", metodo: "ƒ " };
     return m[t] || "";
   }
   function fwdIcon() { return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'; }
@@ -621,6 +734,7 @@
      Boot
      ======================================================================= */
   initPositions();
+  computeActive();
   buildSvg();
   buildRail();
   showEmptyDetail();

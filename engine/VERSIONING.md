@@ -51,7 +51,7 @@ um comentário HTML:
 Ao chegar no estado terminal de geração de artefato (`[GERACAO_ARTEFATO]`,
 `[ARQUIVO_FINAL]`, `[GERACAO_ARTEFATO_BASE]` etc.), **antes de escrever o conteúdo**:
 
-1. Leia a versão vigente em `engine/VERSION`.
+1. Leia a versão vigente em `VERSION` (na raiz do engine).
 2. Garanta que a **primeira linha** do artefato seja o carimbo, preenchido com a
    versão lida, o ID do prompt corrente e a data de hoje.
 3. Em **atualização** de artefato existente (PROMPT_4A/4B e demais updates):
@@ -69,3 +69,21 @@ Recebem carimbo **todos** os artefatos produzidos por um `PROMPT_*`: specs N0/N1
 dicionários (FIELD/RULES/ERROR/MESSAGE), data-models, contagem de PF, NFR, SDD,
 backlog e protótipos. Arquivos de configuração da instância (ex.: `MASTER.md`
 preenchido) seguem a mesma regra quando gerados por prompt.
+
+---
+
+## 5. Governança multi-repositório (canônico × instâncias)
+
+O `doc-template-engine` é a **fonte única da verdade** de prompts, templates, skills e
+scripts. As instâncias (`simpf-doc`, `desenvolve-ai`, `sifof-doc`, …) **consomem** o
+engine; o `doc-template-engine-caixa` é a **variante negocial reduzida** (só a parte de
+negócio — sem os prompts/artefatos técnicos).
+
+- **Evolução nasce no canônico** e é replicada às demais, respeitando o escopo de cada
+  uma (o `-caixa` recebe só o que é negocial).
+- **Autoridade do canônico:** havendo divergência (*drift*) de um arquivo do engine entre
+  repositórios, o canônico prevalece.
+- **Reconciliar ao tocar:** **não** faça *overwrite* em massa dos consumidores. Ao editar
+  um arquivo do engine num consumidor, primeiro **sincronize-o do canônico** e só então
+  aplique a mudança. Isso preserva conteúdo local intencional (ex.: a redução do `-caixa`;
+  prompts próprios da esteira SIESA no `desenvolve-ai`).

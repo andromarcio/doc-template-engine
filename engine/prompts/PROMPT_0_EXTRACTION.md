@@ -1,5 +1,6 @@
 # PROMPT 0 — Extração de Insumos Desestruturados
 
+> **Modelo de estrutura**: `engine/templates/modules/_base-conhecimento/_template-base-conhecimento.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: PO / Analista de Requisitos
 > **Insumo necessário**: transcrições de reuniões, manuais, PDFs, notas
 > soltas, prints de protótipos, regras de negócio informais
@@ -136,8 +137,14 @@ que o PO usará como contexto ao rodar os PROMPTS 1A, 2A e 3A.
 `modules/_base-conhecimento/` se ainda não existir). Esse diretório guarda os
 insumos de extração que alimentam os N1/N2/N3 — não é um domínio do sistema.
 
+Use a estrutura abaixo (espelho do template
+`engine/templates/modules/_base-conhecimento/_template-base-conhecimento.md`):
+
 ```markdown
 # Base de Conhecimento Extraída: [Assunto Central]
+> **Origem**: insumos desestruturados (transcrições, PDFs, e-mails, rascunhos, prints)
+> **Gerado por**: PROMPT_0 (Extração de Insumos Desestruturados)
+> **Status**: 🧱 Insumo bruto — ainda não especificado
 
 ## Visão Geral e Atores
 - ...

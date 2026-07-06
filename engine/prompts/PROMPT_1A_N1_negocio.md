@@ -13,6 +13,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai me ajudar a mapear os domínios do sistema do ponto de vista
 de negócio. Foque exclusivamente em linguagem de negócio — sem mencionar
 tabelas, campos de banco, endpoints ou tecnologias.
@@ -149,6 +154,8 @@ Com as respostas, gere o artefato parcial:
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N1 negocial criado | Gerado pelo PROMPT 1A |
@@ -158,6 +165,21 @@ Com as respostas, gere o artefato parcial:
 *Última revisão: —*
 *Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
+
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece com um **verbo
+> de responsabilidade/abrangência** — o domínio *responde por uma área*. Em ordem de
+> preferência: **1) "Responde por…"** (accountability sobre a área — combina com a seção
+> *O que este domínio NÃO faz*); **2) "Concentra…" / "Centraliza…"** (quando o foco é ser
+> fonte única); **3) "Governa…"** (domínios de regra/política). **Evite** verbos de ação
+> operacional (*Gerencia, Administra*) — eles puxam para o N2. Ordene as frases assim:
+> (1ª) o que o domínio responde e para quem · (2ª) o que mantém (entidades/dados
+> principais) · (3ª) quem o consome (papel transversal).
+> Exemplo (domínio **Clientes** `CLI`):
+> ```
+> ## Descrição
+> Responde por todo o cadastro e a gestão dos clientes da empresa, sendo a fonte única de identificação de pessoas físicas e jurídicas para os demais domínios. Mantém os dados cadastrais, a situação do cliente e seu histórico de relacionamento. É consumido por Vendas, Faturamento e Atendimento sempre que precisam identificar quem é o cliente.
+> ```
 
 > **Tabela de Feature Sets** — renderize cada Feature Set como
 > `**Nome** <small>[SIGLA]-[SFS]</small>` (nome em negrito + ID em `<small>`, mesmo

@@ -64,6 +64,12 @@ Scenario: [resultado esperado em linguagem de negócio]
   feature pode atender a várias histórias. Preencher conforme a especificação
   (PROMPT_3A) e a implementação avançam. O elo recíproco fica na seção
   `## Origem` de cada N3.
+
+  CARIMBO DE VERIFICAÇÃO (elo suspeito): após fechar/rever o elo, rode
+  `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui
+  um comentário `<!- - trace-verified: [ID da feature] @ fingerprint - ->` por
+  feature. Se o N3 mudar depois disso, `suspect-links` acusa o elo como suspeito.
+  Não editar os carimbos à mão.
 -->
 
 | Feature (N3) | Domínio · Feature Set | Status |
@@ -73,6 +79,8 @@ Scenario: [resultado esperado em linguagem de negócio]
 ---
 
 ## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|

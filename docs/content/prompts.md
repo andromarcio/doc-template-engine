@@ -11,10 +11,11 @@ e são **auto-contidos** — não dependem de arquivos fora do `engine/`.
 | [`SYSTEM_PROMPT_analista_requisitos`](#/file/engine/prompts/SYSTEM_PROMPT_analista_requisitos.md) | Prompt de sistema do analista de requisitos (fluxo IV → EX) |
 | [`PROMPT_MENU`](#/file/engine/prompts/PROMPT_MENU.md) | Índice operacional — lista todas as opções |
 
-## Especificação por nível (N1 → N3)
+## Especificação por nível (N0 → N3)
 
 | Prompt | Nível | Passada |
 |---|---|---|
+| [`PROMPT_N0_VISAO`](#/file/engine/prompts/PROMPT_N0_VISAO.md) | N0 | Negócio (passada única) |
 | [`PROMPT_1A_N1_negocio`](#/file/engine/prompts/PROMPT_1A_N1_negocio.md) | N1 | Negócio |
 | [`PROMPT_1B_N1_tecnico`](#/file/engine/prompts/PROMPT_1B_N1_tecnico.md) | N1 | Técnico |
 | [`PROMPT_2A_N2_negocio`](#/file/engine/prompts/PROMPT_2A_N2_negocio.md) | N2 | Negócio (passada única) |
@@ -55,6 +56,7 @@ tipo, independente da LLM).
 
 | Prompt | Papel |
 |---|---|
+| [`PROMPT_REVIEW`](#/file/engine/prompts/PROMPT_REVIEW.md) | Revisão de conformidade de um artefato (N0–N3/data-model) — aponta o que corrigir (opção **RV**) |
 | [`PROMPT_CONTAGEM`](#/file/engine/prompts/PROMPT_CONTAGEM.md) | Contagem de Pontos de Função (APF) |
 | [`PROMPT_NFR`](#/file/engine/prompts/PROMPT_NFR.md) | Requisitos não-funcionais |
 | [`PROMPT_QA`](#/file/engine/prompts/PROMPT_QA.md) | Geração/validação de QA |

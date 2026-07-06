@@ -204,6 +204,8 @@ Scenario: [resultado esperado]
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | História registrada | Intake a partir do ServiceNow |

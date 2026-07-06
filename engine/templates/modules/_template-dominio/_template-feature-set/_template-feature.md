@@ -1,4 +1,42 @@
 <!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+---
+# ─────────────────────────────────────────────────────────────────
+# METADADOS MACHINE-READABLE (front-matter)
+# Fonte estruturada para a exportação ao spec-kit (PROMPT_SPECKIT_EXPORT).
+# O corpo do N3 continua sendo a fonte de verdade legível; estes campos
+# apenas espelham, de forma parseável, o que já está no corpo. Mantê-los
+# em sincronia — o PASSO 0 do exporter valida a consistência.
+#   prioridade → vira P1/P2/P3 das user stories no spec.md (ordena fases).
+#   endpoints / error_codes → preenchidos no 3B (espelham ## API e ## Mapeamento de erros).
+#   data_model_ref → entidade canônica resolvida em data-models/[dominio].md.
+#   depende_de → IDs de N3 pré-requisito (ordena foundational vs. user story).
+# ─────────────────────────────────────────────────────────────────
+id: [SIGLA]-[SFS]-[NN]
+feature_set: [SIGLA]-[SFS]
+dominio: [SIGLA]
+entidade: [Entidade principal]
+prioridade: [P1 | P2 | P3]          # P1 = MVP
+mvp: [true | false]
+data_model_ref: data-models/[dominio].md#[entidade]
+endpoints: []                       # ex.: ["POST /api/v1/recurso"] — preencher no 3B
+error_codes: []                     # ex.: ["ENTIDADE_ERRO"] — preencher no 3B
+depende_de: []                      # ex.: ["SIGLA-SFS-01"]
+servicenow: [STRYxxxxxxx]
+# ── Esteira de checkpoints (gates) ───────────────────────────────
+# Fonte de verdade do ciclo de vida desta feature, validada por scripts/gates.py.
+# 'estado' é DERIVADO dos gates (não editar à mão): rascunho → requisitos-aprovados
+# → modelo-validado → especificado → implementado. Manuais: em-desenvolvimento,
+# revisao-necessaria, deprecado.
+# Ordem dos checkpoints (não pule etapas): requisitos → modelo-dados → testes → codigo.
+# Ao aprovar um gate: aprovado: true e preencha 'por' e 'em' (AAAA-MM-DD).
+estado: rascunho
+gates:
+  requisitos:   { aprovado: false, por: "", em: "", pr: "" }   # CP1 — PO/Negócio (3A)
+  modelo-dados: { aprovado: false, por: "", em: "", pr: "" }   # CP2 — DBA/Arquiteto (DATA-MODEL/3B)
+  testes:       { aprovado: false, por: "", em: "", pr: "" }   # CP3 — QA (5B)
+  codigo:       { aprovado: false, por: "", em: "", pr: "" }   # CP4 — Tech Lead (code review)
+---
+
 <!--
   CONVENÇÃO DE VISIBILIDADE
   ─────────────────────────────────────────────────────────────────
@@ -10,9 +48,21 @@
 
 # [Nome da Feature]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[01]`
+> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não] *(P1 = entra no incremento mínimo; ordena as user stories na exportação ao spec-kit)*
 
 ## Descrição
-[Descrição em 1-2 frases do que esta feature faz, em linguagem de negócio,
+
+<!--
+  O CONTRATO DE ENTREGA da feature (FEATURE-DEFINITION.md, FD-8): 1-2 frases de
+  negócio, para alguém que nunca viu o sistema, respondendo "o que eu ganho quando
+  esta feature estiver pronta?". Entrega ÚNICA (uma coisa, e desta feature — não
+  copie a descrição de outra), TANGÍVEL (ação + resultado, não intenção: nada de
+  "facilita/otimiza/melhora a experiência", "etc.", "de forma eficiente") e
+  NEGOCIAL (sem endpoint/API/banco — Modo PO).
+  Fórmula sugerida: "Permite que [ator] [ação] [entidade], [resultado observável]."
+-->
+
+[Descrição em 1-2 frases do que esta feature ENTREGA, em linguagem de negócio,
 para alguém que nunca viu o sistema.]
 
 ---
@@ -25,6 +75,13 @@ para alguém que nunca viu o sistema.]
   `modules/_backlog/[chave].md`. Relação M:N: uma feature pode atender a
   várias histórias; uma história pode gerar várias features.
   A chave do ServiceNow é a fonte de verdade — não inventar IDs aqui.
+
+  CARIMBO DE VERIFICAÇÃO (elo suspeito): após fechar/rever o elo, rode
+  `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui
+  um comentário `<!- - trace-verified: STRY… @ fingerprint - ->` por história.
+  Se a história mudar depois disso, `suspect-links` acusa o elo como suspeito
+  (e `--mark` sinaliza ⚠️ no INDEX.md). Não editar os carimbos à mão.
+  A consistência dos três lugares é provada por `scripts/audit-trace-links.mjs`.
 -->
 
 | História (ServiceNow) | Tipo | Critérios cobertos |
@@ -50,6 +107,9 @@ para alguém que nunca viu o sistema.]
 -->
 
 **[Tela própria | Ação em tela]** — [se tela própria: rota `/...`; se ação em tela: origem: [Feature/Tela] (`/rota`)]
+
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[feature-set]/[feature]/[estado].html`]
+<!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo. A fidelidade "obrigatória" é checada pelo validador. -->
 
 ---
 
@@ -80,6 +140,14 @@ para alguém que nunca viu o sistema.]
 ---
 
 ## Cenários
+
+<!--
+  Mapeamento para o spec-kit (PROMPT_SPECKIT_EXPORT):
+  - "Caminho feliz" + "Erros de validação"  → Acceptance Scenarios da user story no spec.md
+  - "Conflitos com dados existentes" + "Estados especiais" → seção Edge Cases do spec.md
+  - "Restrições de acesso" → Acceptance Scenarios + princípio de autorização na constitution
+  Manter os 5 grupos garante cobertura completa na geração de tasks/testes.
+-->
 
 ```gherkin
 Feature: [Nome da feature em linguagem natural]
@@ -149,6 +217,15 @@ Feature: [Nome da feature em linguagem natural]
 
 ---
 
+## Colunas do resultado
+<!-- Apenas para features de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em features que NÃO são de busca, OMITA esta seção. -->
+
+| Coluna (Label PO) | Origem | Ordenação |
+|---|---|---|
+| [campo exibido] | cadastro / entidade relacionada / derivado | padrão ↑ / ordenável / — |
+
+---
+
 ## Campos automáticos
 
 | Label PO | Valor | Quando |
@@ -172,6 +249,24 @@ formulário em página própria, modal, botão em listagem, etc.]
 | Erro de servidor | [toast ou mensagem genérica] |
 | Sucesso | [toast, redirecionamento ou relatório] |
 | Empty state | [quando e o que exibir se não há dados] |
+
+---
+
+## Critérios de sucesso
+
+<!--
+  Resultados MENSURÁVEIS e AGNÓSTICOS DE TECNOLOGIA que comprovam que a feature
+  entrega valor. Alimentam a seção "Success Criteria" (SC-###) do spec.md na
+  exportação ao spec-kit. Derivar de: cobertura dos cenários + NFRs herdados.
+  - ✓ observável e medível: "90% dos usuários concluem o cadastro em < 2 min"
+  - ✗ não citar stack/implementação: "endpoint responde em < 200ms" é NFR técnico,
+    referencie via → ver NFR: [ID] em vez de repetir aqui.
+  Se a feature não tiver métrica própria, herde do NFR aplicável.
+-->
+
+| # | Critério mensurável | Origem |
+|---|---|---|
+| SC-01 | [resultado observável e medível em linguagem de negócio] | [cenário / `→ ver NFR: [ID]` / negócio] |
 
 ---
 
@@ -331,7 +426,10 @@ logAction({
 |---|---|---|---|
 | [endpoint/componente/job] | [repo] | [caminho no repo] | `main` |
 
-**Status**: `[ ] Especificado` · `[ ] Em desenvolvimento` · `[ ] Implementado` · `[ ] Deprecado`
+**Status**: definido pela **esteira de checkpoints** no front-matter (`estado` + `gates`)
+no topo deste arquivo — não duplicar aqui. `📋 especificado` = pronto para desenvolvimento
+(CP1+CP2+CP3 aprovados); `✅ implementado` = CP4 (code review) aprovado. Para sinalizar
+trabalho em andamento, declare `estado: em-desenvolvimento`. Ver `docs` da esteira de gates.
 
 <!--
   Elo spec → código. Para que a cadeia História → N3 → código fique completa,
@@ -346,6 +444,8 @@ logAction({
 ---
 
 ## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|

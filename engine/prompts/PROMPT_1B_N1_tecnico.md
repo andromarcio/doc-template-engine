@@ -14,6 +14,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai complementar o N1 negocial com as definições técnicas do domínio.
 O conteúdo negocial já foi validado pelo PO e não deve ser alterado.
 
@@ -26,6 +31,9 @@ Regras da sessão:
   aguarde aprovação explícita antes de continuar.
 - O N1 não lista campos detalhados — apenas nome e descrição das entidades,
   com referência ao DATA-MODEL.md. Os campos completos vivem no DATA-MODEL.md.
+- **Fonte única de definição de banco**: campo banco, tipo SQL, FK, índice,
+  restrição de unicidade e enum vivem **só** no DATA-MODEL. O N1 **nunca** os
+  redefine — apenas referencia (`→ ver DATA-MODEL.md: Entidade [Nome]`).
 - Sinalize suposições com ⚠️.
 
 ---
@@ -112,7 +120,7 @@ Aplique a marcação de visibilidade:
 - Dentro de `<div class="dev-only">`: Entidades do domínio, Dependências externas
   e Regras de acesso consolidadas
 
-> **Nota**: ao gerar o arquivo final, acrescentar nova entrada no `## Changelog` (última seção do arquivo) registrando a adição das seções técnicas.
+> **Nota**: ao gerar o arquivo final, acrescentar nova entrada no `## Changelog` (última seção do arquivo) registrando a adição das seções técnicas. A nova linha entra **no topo da tabela** (logo abaixo do cabeçalho), mantendo o changelog em **ordem decrescente por data**.
 
 ---
 

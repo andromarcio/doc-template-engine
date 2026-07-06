@@ -23,9 +23,30 @@
   Uma feature pode ter mais de uma história; uma história, mais de uma feature.
   PF e CFP: preencher após PROMPT_3B. Ver critérios em global/SIZING.md.
   Totais vigentes excluem features ❌ Deprecadas.
+
+  GATES DETERMINÍSTICOS desta tabela:
+  - `node scripts/audit-trace-links.mjs` prova que cada par história↔feature está
+    nos TRÊS lugares (## Origem do N3 + ## Rastreabilidade da história + esta linha)
+    — roda no hook de gravação e no CI (engine/templates/ci/spec-guard.yml).
+  - `node scripts/suspect-links.mjs --mark` troca o Status para ⚠️ Revisão necessária
+    quando o outro lado do elo mudou depois da última verificação (carimbos
+    trace-verified). O ⚠️ gravado por ele é tolerado pelo audit até a reverificação.
 -->
 
 **Total vigente: — PF · — CFP** *(dimensionamento pendente — preencher via PROMPT_3B; critérios em `global/SIZING.md`)*
+
+---
+
+<!-- GATES:INICIO -->
+## Esteira de checkpoints (gates)
+
+> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.**
+> Espelha o estado de cada feature na esteira (CP1 requisitos → CP2 modelo de dados →
+> CP3 testes → CP4 código). Regenerada a cada merge na `main` pelo workflow
+> `promote-estado.yml`, ou sob demanda com `python scripts/gates.py promote --write`.
+
+_(será preenchida na primeira execução de `scripts/gates.py promote`)_
+<!-- GATES:FIM -->
 
 ---
 
@@ -82,10 +103,16 @@
 
 ## Legenda de status
 
-| Ícone | Status | Descrição |
-|---|---|---|
-| 📋 | Especificado | N3 completo, aguardando desenvolvimento |
-| 🔄 | Em desenvolvimento | Implementação em andamento |
-| ✅ | Implementado | Em produção, rastreabilidade preenchida |
-| ⚠️ | Revisão necessária | Spec desatualizada em relação ao código |
-| ❌ | Deprecado | Feature removida do sistema |
+Estados da **esteira de checkpoints**, derivados dos `gates` no front-matter de cada N3.
+A próxima etapa só ocorre após a aprovação da anterior — ordem: requisitos → modelo-dados → testes → código.
+
+| Ícone | Estado | Checkpoint | Descrição |
+|---|---|---|---|
+| ✏️ | rascunho | — | N3 em elaboração, nenhum gate aprovado |
+| 📝 | requisitos-aprovados | CP1 (PO) | Requisitos validados — aguardando modelo de dados |
+| 🧱 | modelo-validado | CP2 (DBA) | Modelo físico de dados validado — aguardando testes |
+| 📋 | especificado | CP3 (QA) | **Pronto para desenvolvimento** (CP1+CP2+CP3 aprovados) |
+| 🔄 | em-desenvolvimento | — | Implementação em andamento (estado manual) |
+| ✅ | implementado | CP4 (code review) | Em produção, rastreabilidade preenchida |
+| ⚠️ | revisao-necessaria | — | Spec desatualizada em relação ao código |
+| ❌ | deprecado | — | Feature removida do sistema |

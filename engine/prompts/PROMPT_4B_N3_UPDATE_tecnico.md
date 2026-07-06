@@ -16,6 +16,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai complementar a atualização do N3 negocial com as definições técnicas.
 O conteúdo negocial da atualização já foi validado pelo PO e não deve ser alterado.
 
@@ -151,7 +156,10 @@ Se houver campos novos aprovados, liste-os para adição ao fragmento do domíni
 **[Estado: GERACAO_TECNICA]**
 
 Atualize apenas as seções técnicas (`dev-only`) afetadas:
-- Mapeamento de campos: atualizar referência ao data-models se entidade mudou
+- Mapeamento de campos: atualizar **apenas a referência** ao data-models se a
+  entidade mudou (`→ ver DATA-MODEL.md: Entidade [Nome]`). Tipo SQL, campo banco,
+  FK e índices são alterados **no DATA-MODEL**, nunca reescritos no N3 — mantenha-os
+  sincronizados lá.
 - Cenários técnicos adicionais: adicionar/remover conforme mudanças
 - Mapeamento de erros: verificar no ERROR-DICTIONARY.md; propor novos com ⚠️
 - API: atualizar endpoints afetados (body, response, erros)
@@ -166,7 +174,7 @@ Atualize apenas as seções técnicas (`dev-only`) afetadas:
   O cabeçalho `## Métricas de tamanho` deve ficar **seguido diretamente pela tabela**:
   não insira texto explicativo entre eles e, se encontrar notas legadas nessa posição
   (ex.: "Registra apenas Funções de Transação…" ou aviso de contagem provisória),
-  **remova-as** — ressalvas vão no Changelog ou na memória de cálculo.
+  **remova-as** — ressalvas vão no Changelog (nova linha no topo, ordem decrescente por data) ou na memória de cálculo.
   **Havendo alteração na contagem**, atualizar também o consolidado
   `global/CONTAGEM-PF.md` (linha do PE/entidade, subtotais e Total) e propagar o
   total para `modules/INDEX.md` — ver a regra de manutenção no topo do CONTAGEM-PF.md.
@@ -183,6 +191,7 @@ Apresente apenas as seções técnicas alteradas. Pergunte:
 
 Gere o arquivo .md completo com negocial + técnico mesclados.
 Ao mesclar, acrescentar nova entrada no `## Changelog` do arquivo registrando a atualização técnica.
+A nova linha entra **no topo da tabela** (logo abaixo do cabeçalho), mantendo o changelog em **ordem decrescente por data** — a entrada mais recente sempre primeiro.
 
 Ao finalizar, informe obrigatoriamente:
 

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-// validate-doc.mjs — valida a conformidade estrutural de artefatos N1/N2/N3
-// gerados pelos PROMPTs 1A / 2A / 3A. Determinístico: independe do modelo/harness
-// que produziu o arquivo. O nível é detectado pela linha "**Nível X**" do subtítulo.
+// validate-doc.mjs — valida a conformidade estrutural de artefatos N0/N1/N2/N3 e do
+// DATA-MODEL (índice global + fragmentos de domínio). Determinístico: independe do
+// modelo/harness que produziu o arquivo. N0–N3 são detectados pela linha "**Nível X**"
+// do subtítulo; o data-model, pelo título "# DATA-MODEL.md" (índice) ou "# Data Model:"
+// (fragmento).
 //
 // Uso:
 //   node scripts/validate-doc.mjs <arquivo.md> [outro.md …]
@@ -15,8 +17,17 @@
 //     seções OBRIGATÓRIAS presentes + proibições, não lista fechada.
 //   - O caractere separador do subtítulo (- vs —) NÃO é enforçado (cosmético e
 //     inconsistente no acervo); valida-se só "**Nível X**" + ID em crase.
+//   - DATA-MODEL (fragmento): cada entidade exige anotação ALI/AIE + o cabeçalho
+//     canônico (Label PO | Label Dev | Campo banco | Tipo SQL | Obrigatório | Notas) e
+//     não pode repetir os campos globais implícitos. Caixa (snake_case/camelCase) NÃO é
+//     enforçada aqui — fica para a revisão semântica (PROMPT_REVIEW).
+//   - LOCALIZAÇÃO: o tipo detectado precisa bater com a pasta (N3 → modules/<dom>/<fs>/
+//     f-*.md; N1/N2 → README.md; N0/DATA-MODEL → global/). Pega o caso do arquivo gerado
+//     na pasta errada. Agnóstico ao prefixo da pasta do Feature Set (g- ou sem g-).
+//     Isenta o engine/ (templates com nomes de placeholder) e caminhos fora da instância.
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
 
 const trunc = (s) => (s.length > 60 ? `${s.slice(0, 60)}…` : s).trim();
 
@@ -126,6 +137,36 @@ function requireSections(lines, names, errors) {
   }
 }
 
+const N0_SECTIONS = [
+  'Propósito',
+  'Proposta de valor',
+  'Público-alvo e personas',
+  'Objetivos do produto',
+  'Métricas de sucesso (KPIs)',
+  'Escopo',
+  'Domínios previstos (N1)',
+  'Tom de voz e princípios de experiência',
+  'Restrições e premissas',
+];
+
+function validateN0(lines, raw, errors) {
+  const title = checkCommon(lines, errors);
+  if (title && !/^# Visão de Produto: .+/.test(title.trim())) {
+    errors.push('Título deve ser "# Visão de Produto: [Nome]".');
+  }
+  const sub = lines.find((l) => l.trim().startsWith('> **Nível 0**'));
+  if (sub && !/`[A-Z]{2,6}`/.test(sub)) {
+    errors.push('Subtítulo N0 sem SIGLA do produto em crase (ex.: `SIGEF`).');
+  }
+  requireSections(lines, N0_SECTIONS, errors);
+  if (!lines.some((l) => l.trim() === '### Está dentro')) {
+    errors.push('Falta a subseção "### Está dentro" em "## Escopo".');
+  }
+  if (!lines.some((l) => l.trim() === '### Está fora (não-objetivos)')) {
+    errors.push('Falta a subseção "### Está fora (não-objetivos)" em "## Escopo".');
+  }
+}
+
 function validateN1(lines, raw, errors) {
   const title = checkCommon(lines, errors);
   if (title && !/^# Domínio: .+/.test(title.trim())) errors.push('Título deve ser "# Domínio: [Nome]".');
@@ -185,7 +226,17 @@ function validateN2(lines, raw, errors) {
   }
 }
 
-function validateN3(lines, raw, errors) {
+// Feature de pesquisa/listagem? Detecta pelo verbo do título ou pelo prefixo do arquivo
+// (verbos de busca no framework: pesquisar, listar, consultar, buscar).
+function isSearchFeature(lines, file) {
+  const title = (lines.find((l) => l.trim().startsWith('# ')) || '').replace(/^#\s*/, '').trim();
+  const verb = (title.split(/\s+/)[0] || '').toLowerCase();
+  const byTitle = /^(pesquisar|listar|consultar|buscar)$/.test(verb);
+  const byFile = /(^|\/)f-(pesquisar|listar|consultar|buscar)-/.test(String(file || '').replace(/\\/g, '/').toLowerCase());
+  return byTitle || byFile;
+}
+
+function validateN3(lines, raw, errors, file) {
   checkCommon(lines, errors);
   const sub = lines.find((l) => l.trim().startsWith('> **Nível 3**'));
   if (sub && !/`[A-Z]{3}-[A-Z]{3}-\d{2}`/.test(sub)) errors.push('Subtítulo N3 sem ID `SIGLA-SFS-NN` em crase.');
@@ -202,6 +253,204 @@ function validateN3(lines, raw, errors) {
       errors.push('Tabela "## Campos" vaza camada técnica (Label Dev / campo banco) — proibido no N3.');
     }
   }
+  // Gate de resultado: feature de pesquisa/listagem exige a tabela das colunas do resultado.
+  if (isSearchFeature(lines, file)) {
+    if (!lines.some((l) => l.trim() === '## Colunas do resultado')) {
+      errors.push('Feature de pesquisa/listagem sem a seção "## Colunas do resultado" (tabela dos campos exibidos no resultado da busca).');
+    } else {
+      const rh = tableHeader(lines, 'Colunas do resultado');
+      if (!rh) errors.push('Seção "## Colunas do resultado" sem tabela.');
+      else if (!rh.some((c) => /coluna|label po/i.test(c))) {
+        errors.push('Tabela "## Colunas do resultado" sem a coluna "Coluna (Label PO)".');
+      }
+    }
+  }
+  // Gate de fidelidade: se a Superfície declara "Fidelidade ao protótipo: obrigatória",
+  // precisa apontar o caminho do protótipo (prototypes/… ou um link .html).
+  const fid = lines.find((l) => /fidelidade ao prot[óo]tipo/i.test(l));
+  if (fid && /obrigat[óo]ri/i.test(fid) && !/(prototypes\/|\.html)/i.test(fid)) {
+    errors.push('Fidelidade ao protótipo "obrigatória" sem o caminho do protótipo (aponte o arquivo em `prototypes/…`).');
+  }
+}
+
+// Campos globais implícitos — não devem ser repetidos nas tabelas de entidade.
+const DM_GLOBAL_FIELDS = new Set(['id', 'organization_id', 'created_at', 'updated_at', 'deleted_at']);
+// Cabeçalho canônico da tabela de campos de uma entidade no fragmento.
+const DM_ENTITY_HEADER = ['Label PO', 'Label Dev', 'Campo banco', 'Tipo SQL', 'Obrigatório', 'Notas'];
+
+// Detecta se o arquivo é um data-model (índice global ou fragmento de domínio).
+function dataModelKind(titleLine) {
+  if (!titleLine) return null;
+  const t = titleLine.trim();
+  if (/^# DATA-MODEL\.md\b/.test(t)) return 'index';
+  if (/^# Data Model:/.test(t)) return 'fragment';
+  return null;
+}
+
+function validateDataModel(lines, raw, kind, errors) {
+  if (kind === 'index') {
+    // Índice: só as seções-âncora obrigatórias (a estrutura completa varia por instância).
+    requireSections(
+      lines,
+      ['Convenção de nomenclatura', 'Campos globais (presentes em todas as tabelas)', 'Modelos por domínio'],
+      errors,
+    );
+    return;
+  }
+
+  // Fragmento de domínio (global/data-models/[dominio].md).
+  const headings = [];
+  lines.forEach((l, i) => {
+    if (/^## /.test(l)) headings.push({ name: l.replace(/^##\s+/, '').trim(), idx: i });
+  });
+  const isLogical = (name) => /^Arquivos Lógicos/i.test(name);
+  const entities = headings.filter((h) => !isLogical(h.name));
+
+  if (!entities.length) errors.push('Nenhuma entidade (seção "## [Entidade]") encontrada no fragmento.');
+  if (!headings.some((h) => isLogical(h.name))) {
+    errors.push('Falta a seção "## Arquivos Lógicos deste domínio" (contagem ALI/AIE).');
+  }
+
+  for (const ent of entities) {
+    const next = headings.find((h) => h.idx > ent.idx);
+    const slice = lines.slice(ent.idx + 1, next ? next.idx : lines.length);
+
+    // Anotação de ALI/AIE logo abaixo do título da entidade.
+    if (!slice.some((l) => /^>\s*\*\*(ALI|AIE):/.test(l.trim()))) {
+      errors.push(`Entidade "${ent.name}" sem anotação de ALI/AIE ("> **ALI: …**").`);
+    }
+
+    // Tabela de campos com o cabeçalho canônico.
+    const headerRow = slice.map((l) => l.trim()).find((l) => l.startsWith('|'));
+    if (!headerRow) {
+      errors.push(`Entidade "${ent.name}" sem tabela de campos.`);
+      continue;
+    }
+    const cells = splitRow(headerRow);
+    const missing = DM_ENTITY_HEADER.filter((c) => !cells.some((x) => x.toLowerCase() === c.toLowerCase()));
+    if (missing.length) {
+      errors.push(`Tabela da entidade "${ent.name}" sem coluna(s): ${missing.map((s) => `"${s}"`).join(', ')}.`);
+    }
+
+    // Campos globais implícitos não podem ser listados na entidade.
+    const bancoIdx = cells.findIndex((x) => /campo banco/i.test(x));
+    if (bancoIdx >= 0) {
+      const dataRows = slice
+        .map((l) => l.trim())
+        .filter((l) => l.startsWith('|') && !/^\|[\s:|-]+\|$/.test(l))
+        .slice(1);
+      for (const row of dataRows) {
+        const banco = (splitRow(row)[bancoIdx] || '').trim().toLowerCase();
+        if (DM_GLOBAL_FIELDS.has(banco)) {
+          errors.push(`Entidade "${ent.name}" repete o campo global "${banco}" (id/organization_id/created_at/updated_at/deleted_at são implícitos — não listar).`);
+        }
+      }
+    }
+  }
+}
+
+// Variante NEGOCIAL do data-model (usada pelo doc-template-engine-caixa): só a parte
+// das ENTIDADES, sem a camada física de banco. Detectada pelo marcador
+// "> **Modelo de entidades (negocial)**". Valida a estrutura reduzida e PROÍBE
+// vazamento físico (Label Dev / Campo banco / Tipo SQL).
+function validateDataModelNegocial(lines, raw, kind, errors) {
+  if (kind === 'index') {
+    requireSections(lines, ['Modelos por domínio'], errors);
+  } else {
+    const NON_ENTITY = new Set(['Relacionamentos', 'Enums', 'Changelog']);
+    const headings = lines.filter((l) => /^## /.test(l)).map((l) => l.replace(/^##\s+/, '').trim());
+    const entities = headings.filter((h) => !NON_ENTITY.has(h));
+    if (!entities.length) errors.push('Fragmento negocial sem nenhuma entidade ("## [Entidade]").');
+    for (const ent of entities) {
+      const header = tableHeader(lines, ent);
+      if (!header) { errors.push(`Entidade "${ent}" sem tabela de atributos.`); continue; }
+      if (!header.some((c) => /label po/i.test(c) || /atributo/i.test(c))) {
+        errors.push(`Tabela da entidade "${ent}" sem a coluna "Label PO"/"Atributo".`);
+      }
+    }
+  }
+  // Anti-vazamento físico: o modelo negocial NÃO carrega nomes de banco.
+  if (/\bcampo banco\b/i.test(raw)) errors.push('Modelo negocial vaza camada física: "Campo banco" — nomes de banco vivem só no data-model técnico.');
+  if (/\btipo sql\b/i.test(raw)) errors.push('Modelo negocial vaza camada física: "Tipo SQL".');
+  if (/\blabel dev\b/i.test(raw)) errors.push('Modelo negocial vaza camada física: "Label Dev".');
+}
+
+// Local esperado por tipo de artefato (g-/sem-g- agnóstico: a pasta do Feature Set é
+// [^/]+, com ou sem prefixo). Ancoradas ao FIM do caminho.
+const LOCATION_RULES = {
+  N0: { re: /(^|\/)global\/N0_PRODUCT_VISION\.md$/, hint: 'global/N0_PRODUCT_VISION.md' },
+  N1: { re: /(^|\/)modules\/[^/]+\/README\.md$/, hint: 'modules/[dominio]/README.md' },
+  N2: { re: /(^|\/)modules\/[^/]+\/[^/]+\/README\.md$/, hint: 'modules/[dominio]/[feature-set]/README.md' },
+  N3: { re: /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/, hint: 'modules/[dominio]/[feature-set]/f-….md' },
+  DM: { re: /(^|\/)global\/data-models\/[^/]+\.md$/, hint: 'global/data-models/[dominio].md' },
+  'DM-idx': { re: /(^|\/)global\/DATA-MODEL\.md$/, hint: 'global/DATA-MODEL.md' },
+};
+
+// Guarda determinística de LOCALIZAÇÃO: o tipo do artefato precisa bater com a pasta.
+// Só se aplica a artefatos de instância (caminho sob modules/ ou global/) e ISENTA o
+// motor (engine/ — onde ficam os templates com nomes de placeholder).
+function checkLocation(file, tag, errors) {
+  const path = file.replace(/\\/g, '/');
+  if (/(^|\/)engine\//.test(path)) return; // templates do engine — isentos
+  const instanceScoped = /(^|\/)(modules|global)\//.test(path);
+  if (!instanceScoped) return; // arquivo avulso/scratchpad — valida só o conteúdo
+  const rule = LOCATION_RULES[tag];
+  if (rule && !rule.re.test(path)) {
+    errors.push(`Artefato ${tag} em local inesperado: esperado \`${rule.hint}\` (o arquivo não está na pasta correta).`);
+  }
+}
+
+// --- Cross-artifact: ID duplicado na mesma instância (determinístico) -------
+// IDs (SIGLA / SIGLA-SFS / SIGLA-SFS-NN) são únicos e nunca reutilizados. Este
+// check varre a instância (modules/ + global/) e reprova se o ID deste artefato
+// já aparece em outro. Isenta o engine/ (templates com IDs de placeholder).
+function artifactId(lines) {
+  const line = lines.find((l) => /> \*\*Nível [0-3]\*\*/.test(l));
+  if (!line) return null;
+  const m = line.match(/`([A-Z]{2,3}(?:-[A-Z]{3})?(?:-\d{2})?)`/);
+  return m ? m[1] : null;
+}
+function instanceRoot(file) {
+  let dir = dirname(resolve(file));
+  for (let i = 0; i < 15; i++) {
+    if (existsSync(join(dir, 'modules')) || existsSync(join(dir, 'global'))) return dir;
+    const up = dirname(dir);
+    if (up === dir) break;
+    dir = up;
+  }
+  return null;
+}
+function collectMd(dir, out) {
+  let entries;
+  try { entries = readdirSync(dir); } catch { return; }
+  for (const name of entries) {
+    if (name === 'node_modules' || name === '.git' || name === 'engine') continue;
+    const p = join(dir, name);
+    let st;
+    try { st = statSync(p); } catch { continue; }
+    if (st.isDirectory()) collectMd(p, out);
+    else if (name.endsWith('.md')) out.push(p);
+  }
+}
+function checkDuplicateId(file, id, errors) {
+  const abs = resolve(file).replace(/\\/g, '/');
+  if (/(^|\/)engine\//.test(abs) || !id) return; // templates isentos / sem ID detectável
+  const root = instanceRoot(file);
+  if (!root) return;
+  const found = [];
+  for (const d of ['modules', 'global']) collectMd(join(root, d), found);
+  const clashes = [];
+  for (const f of found) {
+    if (resolve(f).replace(/\\/g, '/') === abs) continue;
+    try {
+      if (artifactId(readFileSync(f, 'utf8').split(/\r?\n/)) === id) {
+        clashes.push(resolve(f).replace(/\\/g, '/').replace(`${root.replace(/\\/g, '/')}/`, ''));
+      }
+    } catch { /* arquivo ilegível — ignora */ }
+  }
+  if (clashes.length) {
+    errors.push(`ID "${id}" duplicado — já usado em: ${clashes.join(', ')} (IDs são únicos e não se reutilizam).`);
+  }
 }
 
 function validate(file) {
@@ -209,15 +458,25 @@ function validate(file) {
   const raw = readFileSync(file, 'utf8');
   const lines = raw.split(/\r?\n/);
 
-  const levelLine = lines.find((l) => /> \*\*Nível [123]\*\*/.test(l));
-  const level = levelLine ? levelLine.match(/Nível ([123])/)[1] : null;
+  const levelLine = lines.find((l) => /> \*\*Nível [0123]\*\*/.test(l));
+  const level = levelLine ? levelLine.match(/Nível ([0123])/)[1] : null;
+  const titleLine = lines.find((l) => l.trim().startsWith('# '));
+  const dmKind = dataModelKind(titleLine);
 
-  if (level === '1') validateN1(lines, raw, errors);
+  if (level === '0') validateN0(lines, raw, errors);
+  else if (level === '1') validateN1(lines, raw, errors);
   else if (level === '2') validateN2(lines, raw, errors);
-  else if (level === '3') validateN3(lines, raw, errors);
-  else errors.push('Nível não detectado (falta o subtítulo "> **Nível 1|2|3**").');
+  else if (level === '3') validateN3(lines, raw, errors, file);
+  else if (dmKind) {
+    if (/Modelo de entidades \(negocial\)/.test(raw)) validateDataModelNegocial(lines, raw, dmKind, errors);
+    else validateDataModel(lines, raw, dmKind, errors);
+  }
+  else errors.push('Tipo não detectado (falta o subtítulo "> **Nível 0|1|2|3**" ou o título "# Data Model: …").');
 
-  return { level, errors };
+  const tag = level ? `N${level}` : dmKind ? (dmKind === 'index' ? 'DM-idx' : 'DM') : '??';
+  if (tag !== '??') checkLocation(file, tag, errors);
+  if (['1', '2', '3'].includes(level)) checkDuplicateId(file, artifactId(lines), errors);
+  return { tag, errors };
 }
 
 const files = process.argv.slice(2);
@@ -236,7 +495,7 @@ for (const f of files) {
     failed++;
     continue;
   }
-  const tag = res.level ? `N${res.level}` : '??';
+  const tag = res.tag;
   if (res.errors.length) {
     failed++;
     console.error(`✗ [${tag}] ${f}`);

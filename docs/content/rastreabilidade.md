@@ -46,6 +46,24 @@ Commits e PR seguem a convenção:
 tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])
 ```
 
+### Aprovações no git (trailer `Approved-by`)
+
+A aprovação de uma mudança de especificação fica registrada **no próprio git**, não
+só no banco do GitHub — assim a trilha de auditoria migra junto com o repositório
+(`git clone` leva tudo). Todo commit que **entra no branch principal** tocando
+`modules/` ou `global/` carrega, no rodapé da mensagem, quem aprovou:
+
+```text
+docs(USR-CAD-02): editar cliente (ServiceNow STRY0012345)
+
+Approved-by: Ana Prod Owner <ana@acme.com>
+```
+
+- **Merge via PR** — edite a mensagem do merge/squash commit na hora do merge;
+- **mais de um aprovador** — um trailer por linha;
+- a verificação é `node scripts/check-approval-trailers.mjs` (no CI, roda no push
+  para a main sobre o intervalo enviado; em fluxo squash-merge, use `--all`).
+
 ## A tabela consolidada
 
 O `modules/INDEX.md` mantém a visão geral:
@@ -66,3 +84,59 @@ O `modules/INDEX.md` mantém a visão geral:
 
 > **PF/CFP** são preenchidos após o `PROMPT_3B`; os critérios estão em
 > `global/SIZING.md`. Os totais vigentes excluem features ❌ Deprecadas.
+
+## Gates determinísticos de integridade
+
+A consistência dos elos deixou de ser só disciplina auditável: é **provada por
+scripts** — no hook de gravação, sob demanda e no CI. A lógica mora nos scripts
+(portáteis para qualquer forge); o estado que eles produzem fica **nos próprios
+`.md`**, então a rastreabilidade migra inteira com um `git clone`.
+
+### `audit-trace-links.mjs` — elos fechados nos três lugares
+
+```bash
+node scripts/audit-trace-links.mjs            # instância inteira (exit 1 se inconsistente)
+node scripts/audit-trace-links.mjs --file <artefato.md>   # só os pares que tocam o artefato
+```
+
+Prova que cada par história↔feature está nos **três lugares** e acusa: elo
+unilateral 🔴, par fora do INDEX 🟠, linha do INDEX sem respaldo, status
+divergente 🟡 e referência quebrada ⚠️. Histórias ainda sem feature e features
+sem `## Origem` (bottom-up/legado) são informativos ⚫ — não reprovam. O hook
+`spec-guard` roda este gate a cada gravação de N3, história ou INDEX; é a
+**prevenção** que o `PROMPT_AUDIT_TRACE_LINKS` (parte semântica) complementa.
+
+### `suspect-links.mjs` — o outro lado mudou?
+
+```bash
+node scripts/suspect-links.mjs                # relatório (exit 1 se houver suspeito)
+node scripts/suspect-links.mjs --stamp        # (re)carimba os elos verificados
+node scripts/suspect-links.mjs --mark         # sinaliza ⚠️ no INDEX.md os pares suspeitos
+```
+
+Ao fechar/rever um elo, `--stamp` grava na seção do elo um carimbo invisível —
+`<!-- trace-verified: STRY0012345 @ fingerprint -->` — com o **fingerprint do
+conteúdo do artefato do outro lado** (ignorando os próprios carimbos). Se a
+história mudar depois, todo N3 que a referencia fica **suspeito** até alguém
+reverificar e re-carimbar (o `PROMPT_4A/4B` re-carimba ao atualizar). `--mark`
+persiste o ⚠️ Revisão necessária no `INDEX.md`. É o "suspect link" das
+ferramentas de gestão de requisitos, em texto plano.
+
+### `build-trace-data.mjs` — o mapa visual sai dos artefatos
+
+```bash
+node scripts/build-trace-data.mjs -o docs/rastreabilidade/data.js
+```
+
+Gera o índice do [mapa de rastreabilidade](#mapa-rastreabilidade) a partir dos
+`.md` reais — nós (N0/domínios/feature sets/features/histórias/repositórios) e
+arestas (`contem`, `origina`, `implementa`, `integra`), com status e PF vindos
+do `INDEX.md`.
+
+### No CI
+
+O template `engine/templates/ci/spec-guard.yml` (copie para
+`.github/workflows/` na instância) roda estrutura (`validate-doc`),
+rastreabilidade (`audit-trace-links` + `suspect-links`) e aprovação
+(`check-approval-trailers`) — com *branch protection* exigindo esses checks,
+elo unilateral não entra na main.

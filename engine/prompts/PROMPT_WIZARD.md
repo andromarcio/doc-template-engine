@@ -41,6 +41,11 @@ Diferença fundamental de granularidade em relação ao CRUD:
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai especificar, numa única sessão, um Feature Set do tipo **processo guiado
 (wizard)** seguindo o padrão do framework. A partir de **uma descrição do processo e
 da lista ordenada de etapas**, produza o N2 do Feature Set e o N3 negocial da
@@ -200,6 +205,8 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 📄 `modules/[dominio]/[feature-set]/README.md`
 
+> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+
 ```
 # Feature Set: [Nome do Feature Set]
 > **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]`
@@ -246,8 +253,8 @@ principal]
 | [Processo] — Etapas 1..N | `/[dominio]/[feature-set]/novo` | **[Verbo] [processo]** <small>[SIGLA]-[SFS]-01</small> | assistente multi-etapas (uma rota, etapas internas) |
 | Acompanhar [Processo] | `/[dominio]/[feature-set]/:id` | **Acompanhar [processo]** <small>[SIGLA]-[SFS]-03</small> | status da solicitação (somente leitura) |
 
-> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug da pasta
-> sem o prefixo `g-`. O assistente vive em **uma** rota; as etapas são estados internos
+> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug (kebab) da
+> pasta do Feature Set. O assistente vive em **uma** rota; as etapas são estados internos
 > da tela, não rotas distintas.
 
 ---
@@ -266,6 +273,8 @@ principal]
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT WIZARD |
@@ -274,6 +283,23 @@ principal]
 
 *Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
+
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
+> **capacidade que o conjunto entrega ao usuário** — como o Feature Set é um processo
+> guiado, prefira um verbo de condução. Em ordem de preferência: **1) "Conduz o [perfil],
+> passo a passo, …"**; **2) "Reúne as etapas de…"**; **3) "Permite ao [perfil] …"**.
+> **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível. Ordene as
+> frases assim: (1ª) o que o processo conduz e em que etapas · (2ª) o que isso permite ao
+> perfil (iniciar, retomar, acompanhar, cancelar). A linha `**Não faz**:` delimita o
+> escopo negativo.
+> Exemplo (Feature Set **Abertura de Conta** `CTA-ABR`):
+> ```
+> ## Descrição
+> Conduz o cliente, passo a passo, pela abertura de uma nova conta, reunindo as etapas de identificação, envio de documentos e confirmação. Permite ao cliente iniciar a solicitação, salvá-la como rascunho, retomá-la depois e acompanhar seu andamento até a aprovação.
+>
+> **Não faz**: análise de crédito nem movimentação financeira da conta já aberta.
+> ```
 
 > **Regra do Fluxo principal (Wizard)** — O `## Fluxo Principal` do wizard é um
 > **esqueleto canônico fixo**: copie o diagrama abaixo, **instancie um nó
@@ -333,6 +359,8 @@ Gere o N3 da **feature principal** — a fonte canônica das auxiliares. Use as 
 campos do PASSO 2 e siga **exatamente** a estrutura negocial do PROMPT_3A (PASSO 3):
 Descrição · Superfície · Regras de negócio · Cenários · Campos · Campos automáticos ·
 Comportamento de tela · Changelog.
+
+> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste wizard vão na **mesma pasta** do `README.md` do Feature Set: `modules/[dominio]/[feature-set]/`. `[feature-set]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Feature Set. Se em dúvida, pergunte antes de gravar.
 
 📄 `modules/[dominio]/[feature-set]/f-[verbo]-[entidade].md` (ID `[SIGLA]-[SFS]-01`)
 

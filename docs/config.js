@@ -50,6 +50,7 @@ window.DOKU_CONFIG = {
         { title: "Rastreabilidade", page: "rastreabilidade", icon: "link" },
         { title: "Mapa de rastreabilidade", page: "mapa-rastreabilidade", icon: "flow" },
         { title: "Integração com o ServiceNow", page: "integracao-servicenow", icon: "git" },
+        { title: "Esteira de checkpoints", page: "esteira-checkpoints", icon: "flow" },
       ],
     },
     {

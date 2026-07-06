@@ -366,13 +366,14 @@ Scenario: [extraído do tratamento de erro do código ou dos testes]
 ## Campos
 | Label PO | Tipo | Obrigatório | Validação |
 |---|---|---|---|
-| 🔍 [inferido] | [do código] | [do validator] | [do código ou ❓] |
+| 🔍 [inferido] | [tipo negocial] | [do validator] | [do código ou ❓] |
 | [campo canônico] | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
 | [vem de outra entidade] | seleção → [Entidade] | [obrig.] | 🔍 carga/filtro inferidos da query — confirmar |
 
-*Lista de opções fixa (enum no código) = `lista (A, B)`. Valor escolhido de
-outro cadastro (FK) = `seleção → [Entidade]` — o mapeamento técnico fica no
-DATA-MODEL.md.*
+*A coluna **Tipo** é o tipo **negocial** (texto, número, data, lista, seleção) —
+**não** o tipo SQL. Lista de opções fixa (enum no código) = `lista (A, B)`. Valor
+escolhido de outro cadastro (FK) = `seleção → [Entidade]`. Campo banco, Label Dev,
+tipo SQL e a FK ficam **só** no DATA-MODEL.md; o N3 nunca os reescreve.*
 
 ---
 
@@ -418,6 +419,7 @@ Body/params e respostas extraídos do controller/DTO; tipos completos → DATA-M
 ---
 
 ## Changelog
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | Claude (eng. reversa) | Feature criada | N3 rascunhado do código — requer validação |

@@ -13,11 +13,14 @@
 > conferência e snippets canônicos — para alinhar o resultado entre diferentes
 > LLMs. Inclui header completo (regra 20), botões de ação derivados do "Fluxo
 > Principal" do N2 (regra 19) e arquivo único por N2 (regra 21).
-> Referência: `prototypes/cadastro/g-fundos-geridos/flow.html`.
+> Referência: `prototypes/cadastro/fundos-geridos/flow.html`.
 
 ---
 
 ## INSTRUÇÕES PARA O CLAUDE
+
+> **Manifesto de fidelidade (obrigatório).** Ao gerar o(s) protótipo(s), registre/atualize a linha em `prototypes/INDEX.md` — caminho · N3 · **fidelidade** (lida da `## Superfície` do N3) · status **rascunho**. Na aprovação o status vira **aprovado** (quem/quando): só então a tela é contrato para a codificação. Telas `obrigatória` são verificadas na implementação pela checklist `node scripts/fidelity-checklist.mjs <pasta> <N3>`.
+
 
 Você vai gerar um protótipo de fluxo HTML para um Feature Set.
 O protótipo deve mostrar visualmente como as telas se conectam,

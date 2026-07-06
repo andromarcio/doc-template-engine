@@ -18,6 +18,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai especificar, numa única sessão, um Feature Set de **cadastro (CRUD)**
 seguindo o padrão do framework. A partir de **uma descrição da entidade e da
 tabela de campos**, produza o N2 do Feature Set e os N3 negociais das cinco
@@ -137,7 +142,7 @@ o Feature Set inteiro:
 > 8. **Permissões** (fonte única do projeto): quais **perfis** existem e, para
 >    **cada operação** (pesquisar, cadastrar, editar, excluir, visualizar), quais
 >    perfis podem executá-la? Descreva em linguagem de negócio.
-> 9. **Pesquisa**: há ordenação padrão, carga inicial (ex.: últimos N registros)
+> 9. **Pesquisa**: quais **colunas aparecem no resultado** (viram a seção obrigatória `## Colunas do resultado`); há ordenação padrão, carga inicial (ex.: últimos N registros)
 >    ou limite de resultados?
 > 10. Esta entidade precisa ficar registrada no **histórico de auditoria**? (sim/não —
 >     servirá para o 3B preencher a seção AuditLog; não vira regra de negócio)
@@ -160,6 +165,8 @@ Monte a tabela de Features na ordem da jornada e atribua IDs sequenciais
 Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 📄 `modules/[dominio]/[feature-set]/README.md`
+
+> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
 
 ```
 # Feature Set: [Nome do Feature Set]
@@ -208,8 +215,8 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 | Editar [Entidade] | `/[dominio]/[feature-set]/:id/editar` | **Editar [Entidade]** <small>[SIGLA]-[SFS]-03</small> | mesmo formulário em modo edição |
 | Visualizar [Entidade] | `/[dominio]/[feature-set]/:id` | **Visualizar [Entidade]** <small>[SIGLA]-[SFS]-05</small> | ficha somente leitura |
 
-> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug da
-> pasta sem o prefixo `g-`. Exclusão não tem rota (ação em tela, da listagem).
+> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug (kebab)
+> da pasta do Feature Set. Exclusão não tem rota (ação em tela, da listagem).
 
 ---
 
@@ -227,6 +234,8 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT CRUD |
@@ -235,6 +244,23 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 
 *Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
+
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
+> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*.
+> Em ordem de preferência: **1) "Reúne as operações de…"** (estruturalmente exato: um
+> conjunto reúne operações, já antecipando as features); **2) "Agrupa as funcionalidades
+> que permitem…"**; **3) "Permite ao [perfil] …"** (quando o destaque é o valor para o
+> perfil). **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível.
+> Ordene as frases assim: (1ª) quais operações reúne, já antecipando as features · (2ª) o
+> que isso permite ao perfil. A linha `**Não faz**:` delimita o escopo negativo do conjunto.
+> Exemplo (Feature Set **Cadastro de Clientes** `CLI-CAD`):
+> ```
+> ## Descrição
+> Reúne as operações de manutenção do cadastro de clientes: incluir, pesquisar, editar, visualizar e desativar um cliente. Permite ao operador manter os dados cadastrais sempre atualizados a partir de uma única área do sistema.
+>
+> **Não faz**: análise de crédito, faturamento ou histórico de compras do cliente.
+> ```
 
 > **Regra do Fluxo principal (CRUD)** — O `## Fluxo Principal` do CRUD é um
 > **esqueleto canônico fixo**: copie o diagrama abaixo e apenas troque `{Entidade}`
@@ -279,6 +305,8 @@ Gere o N3 de **Cadastro** — a fonte canônica das demais operações. Use os c
 do PASSO 2 e siga **exatamente** a estrutura negocial do PROMPT_3A (PASSO 3):
 Descrição · Superfície · Regras de negócio · Cenários · Campos · Campos
 automáticos · Comportamento de tela · Changelog.
+
+> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste CRUD vão na **mesma pasta** do `README.md` do Feature Set: `modules/[dominio]/[feature-set]/`. `[feature-set]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Feature Set. Se em dúvida, pergunte antes de gravar.
 
 📄 `modules/[dominio]/[feature-set]/f-cadastrar.md` (ID `[SIGLA]-[SFS]-02`)
 
