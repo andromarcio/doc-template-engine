@@ -295,7 +295,8 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Painel consolidado do que **falta especificar** (existência + lacunas ⚠️) → seção gerada no `INDEX.md` | `PROMPT_PENDENCIAS.md` |
 | Investigar delta → classificar artefatos (create/modify/keep) | `PROMPT_INVESTIGADOR.md` |
 | Executar alterações aprovadas em lote | `PROMPT_EXECUTOR.md` |
-| Protótipo (fluxo / tela) | `PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md` |
+| Protótipo (fluxo / tela) — com shell | `PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md` |
+| Protótipo componente (sem shell — Storybook/iframe/iteração rápida) | `PROMPT_PROTOTYPE_FLOW_COMPONENT.md`, `PROMPT_PROTOTYPE_SCREEN_COMPONENT.md` |
 | Transcrição de reunião → gera/atualiza N1/N2/N3 negociais | `PROMPT_TRANSCRICAO_REUNIAO.md` |
 | Visão geral do fluxo / menu | `PROMPT_MENU.md` |
 

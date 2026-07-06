@@ -20,6 +20,16 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 Correções de consistência entre as peças após a consolidação das branches na `main`.
 
+### Changed
+- `PROMPT_MENU.md` — a Fase 6 ganha as opções **6C** (protótipo de fluxo
+  componente) e **6D** (protótipos de estado componente), expondo os prompts
+  `PROMPT_PROTOTYPE_FLOW_COMPONENT.md` e `PROMPT_PROTOTYPE_SCREEN_COMPONENT.md`,
+  que existiam no inventário mas não eram alcançáveis pelo menu — o texto ainda
+  afirmava "não há prompt separado para isso". Insumos e mapeamento
+  opção→arquivo incluídos; a dica de protótipos do `SYSTEM_PROMPT` e o
+  roteamento do `SKILL.md` acompanham. A classe `dsc-component-only` segue
+  documentada para esconder o shell de um protótipo FULL já gerado.
+
 ### Fixed
 - `SYSTEM_PROMPT_analista_requisitos.md` — o intake de história citava `PROMPT_HU`,
   nome que não existe; corrigido para `PROMPT_BACKLOG` (o prompt real da opção HU),

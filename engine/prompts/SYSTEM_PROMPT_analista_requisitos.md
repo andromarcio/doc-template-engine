@@ -301,8 +301,10 @@ Ao finalizar um N3 aprovado, informar:
 > "💡 Para gerar os protótipos visuais desta feature, use:
 > - `PROMPT_PROTOTYPE_FLOW_FULL.md` — fluxo do Feature Set com shell (requer N2 aprovado)
 > - `PROMPT_PROTOTYPE_SCREEN_FULL.md` — estados da feature com shell (requer N3 aprovado)
+> - `PROMPT_PROTOTYPE_FLOW_COMPONENT.md` / `PROMPT_PROTOTYPE_SCREEN_COMPONENT.md` —
+>   as mesmas entregas **sem** sidebar/topbar/shell (embutir em Storybook/iframe ou iterar rápido)
 >
-> Para embutir sem o shell (Storybook, iframe), use a classe `dsc-component-only` no `<main>`.
+> Para esconder o shell de um protótipo FULL já gerado, use a classe `dsc-component-only` no `<main>`.
 >
 > Salvar em: `prototypes/[dominio]/[feature-set]/[feature]/`"
 
