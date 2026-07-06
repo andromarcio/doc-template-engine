@@ -170,8 +170,10 @@ sustentam o fluxo, todas como **templates genéricos** prontos para a instância
 - **`.github/workflows/gate-check.yml`** — status check que **bloqueia o PR** se a
   ordem dos checkpoints for violada;
 - **`.github/workflows/promote-estado.yml`** + **`CODEOWNERS`** — o review do dono
-  do artefato (PO/DBA/QA/Tech Lead) **é** a aprovação do checkpoint; o merge espelha
-  o estado no `INDEX.md`.
+  do artefato (PO/DBA/QA/Tech Lead) **é** a aprovação do checkpoint; o espelho do
+  `INDEX.md` viaja **no próprio PR** (`gates.py promote --write`, exigido pelo
+  gate-check) e o workflow apenas **acusa defasagem** (drift) após o merge —
+  nada é empurrado direto na `main`.
 
 "Pronto para implementar?" vira **uma consulta**: `estado == especificado`
 (CP1 ∧ CP2 ∧ CP3 aprovados). Passo a passo de adoção em

@@ -45,6 +45,16 @@ faltantes que as referências do engine já assumiam como existentes.
   roteamento do `SKILL.md` acompanham. A classe `dsc-component-only` segue
   documentada para esconder o shell de um protótipo FULL já gerado.
 
+- Esteira de checkpoints — o espelho do `INDEX.md` agora **viaja no próprio PR
+  do gate**: o `gate-check.yml` ganhou o passo "Espelho do INDEX em dia", que
+  reprova o PR se o `modules/INDEX.md` não refletir o front-matter dos N3
+  (`gates.py promote --write`), e o `promote-estado.yml` **deixou de fazer
+  `git push` direto na `main`** — com *Require a pull request before merging*
+  (a proteção que o próprio kit recomenda), aquele push era rejeitado e o
+  espelho nunca atualizava. O workflow virou uma verificação de *drift*
+  pós-merge, somente-leitura (`contents: read`). PR template, README do kit,
+  README raiz e a página *Esteira de checkpoints* acompanham o novo fluxo.
+
 ### Fixed
 - `SYSTEM_PROMPT_analista_requisitos.md` — o intake de história citava `PROMPT_HU`,
   nome que não existe; corrigido para `PROMPT_BACKLOG` (o prompt real da opção HU),

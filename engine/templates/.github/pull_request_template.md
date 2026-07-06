@@ -12,6 +12,7 @@ Qual checkpoint este PR conclui? (marque **um**)
 
 - [ ] No(s) N3 afetado(s), marquei `aprovado: true` **apenas** no gate acima e preenchi `por` e `em` (AAAA-MM-DD).
 - [ ] O checkpoint **anterior** já está aprovado na `main` (a esteira não permite pular etapas).
+- [ ] Rodei `python scripts/gates.py promote --write` e **incluí o `modules/INDEX.md` atualizado** neste PR (o gate-check reprova espelho defasado).
 - [ ] (CP2) Incluí as mudanças do `DATA-MODEL.md` neste PR, para o DBA ser revisor obrigatório.
 
 > A verificação automática **Esteira de gates — check** valida a ordem; o review
