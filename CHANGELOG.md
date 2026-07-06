@@ -97,6 +97,15 @@ faltantes que as referências do engine já assumiam como existentes.
 - Site (`docs/content/esteira-checkpoints.md`) — a legenda listava 6 dos 8
   estados da esteira; entram `⚠️ revisao-necessaria` e `❌ deprecado`,
   alinhando com `gates.py` e com a legenda do `INDEX.md`.
+- Fixtures `loja-acme` migradas para a esteira da 1.4.0 — os 5 N3 ganham
+  front-matter `estado`/`gates` (o `gates.py` finalmente tem fixture que o
+  exercite) e perdem a linha manual `**Status**:`, abolida na 1.4.0. Junto,
+  os geradores do grafo (`build-trace-data.mjs`, `generate-trace-index.mjs`
+  e `lib/trace-index.mjs`) **passam a ler o `estado` do front-matter** como
+  fonte preferencial do status — ainda liam somente a linha abolida (que
+  segue aceita como fallback legado, sem regressão nos status do mapa). O
+  `spec-guard.mjs` isenta `__fixtures__/` dos gates: editar fixtures (que
+  carregam violações intencionais de teste) não é mais bloqueado pelo hook.
 - Esqueletos dos `PROMPT_PROTOTYPE_{FLOW,SCREEN}_FULL` — removido um bloco
   morto de design system anterior (classes `layout-*`/`p-*` do PrimeNG, com
   IDs `screen-*` duplicados), deixado por resolução de merge "aceitar ambos";

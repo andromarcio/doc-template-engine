@@ -84,7 +84,27 @@ const STATUS_BY_WORD = {
   'revisão necessária': 'revisao', 'deprecado': 'deprecado',
 };
 const STATUS_BY_ICON = { '📋': 'spec', '🔄': 'dev', '✅': 'impl', '⚠️': 'revisao', '❌': 'deprecado' };
+// `estado` da esteira (front-matter, 1.4.0+) — fonte preferencial do status.
+// Estados pré-especificado caem no default 'spec'.
+const STATUS_BY_ESTADO = {
+  'especificado': 'spec', 'em-desenvolvimento': 'dev', 'implementado': 'impl',
+  'revisao-necessaria': 'revisao', 'deprecado': 'deprecado',
+};
+function estadoOf(raw) {
+  const lines = raw.split(/\r?\n/);
+  let i = 0;
+  if (lines[i] && lines[i].startsWith('<!--')) i += 1;
+  if (!lines[i] || lines[i].trim() !== '---') return null;
+  for (i += 1; i < lines.length && lines[i].trim() !== '---'; i += 1) {
+    const m = lines[i].match(/^estado:\s*([a-z-]+)/);
+    if (m) return m[1];
+  }
+  return null;
+}
 function parseStatus(raw) {
+  const estado = estadoOf(raw);
+  if (estado) return STATUS_BY_ESTADO[estado] || 'spec';
+  // Legado (pré-1.4.0): linha manual `**Status**: [x] …` no corpo do N3.
   const line = (raw.split(/\r?\n/).find((l) => /\*\*Status\*\*/.test(l)) || '');
   for (const [icon, s] of Object.entries(STATUS_BY_ICON)) if (line.includes(icon)) return s;
   // checkbox marcado: "[x] Implementado"

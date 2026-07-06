@@ -69,6 +69,14 @@ function firstParagraph(lines, section) {
 }
 
 const STATUS_BY_ICON = { '📋': 'spec', '🔄': 'dev', '✅': 'impl', '⚠️': 'revisao', '❌': 'deprecado' };
+// `estado` da esteira (front-matter, 1.4.0+) → status do mapa. Estados
+// pré-especificado (rascunho, requisitos-aprovados, modelo-validado) caem
+// no default 'spec' — o mapa não distingue etapas anteriores ao contrato.
+const STATUS_BY_ESTADO = {
+  especificado: 'spec', 'em-desenvolvimento': 'dev', implementado: 'impl',
+  'revisao-necessaria': 'revisao', deprecado: 'deprecado',
+};
+// Legado (pré-1.4.0): linha manual `**Status**: [x] …` no corpo do N3.
 const STATUS_BY_IMPL = {
   especificado: 'spec', 'em desenvolvimento': 'dev', implementado: 'impl', deprecado: 'deprecado',
 };
@@ -187,6 +195,7 @@ for (const f of model.features.filter((x) => x.id)) {
   const idx = indexByFeat.get(f.id);
   const status =
     (idx && STATUS_BY_ICON[idx.status]) ||
+    (f.estado && STATUS_BY_ESTADO[f.estado]) ||
     (f.statusImpl && STATUS_BY_IMPL[f.statusImpl.toLowerCase()]) || 'spec';
   const pfNum = idx ? parseInt(String(idx.pf).replace(/\D/g, ''), 10) : NaN;
   const fsId = f.id.replace(/-\d{2}$/, '');
