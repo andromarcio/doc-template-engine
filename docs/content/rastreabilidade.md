@@ -17,6 +17,22 @@ recíproco em `_backlog/`). Cada **critério de aceite** é analisado e vira uma
 **regra de negócio** (se for invariante), um **`## Cenário`** (Gherkin, se for
 comportamento observável) ou **ambos** — rastreabilidade **semântica**, não apenas por ID.
 
+### N3 → História (o caminho inverso)
+
+A relação é **M:N** e fica registrada nos **três lugares**, que devem concordar:
+
+1. **`## Origem`** do N3 — feature → histórias que a originaram/alteraram;
+2. **`## Rastreabilidade — Features (N3) que realizam esta história`** em
+   `_backlog/[chave].md` — história → features (é por aqui que se responde
+   *"quais features esta história impactou?"*);
+3. a linha do par na tabela consolidada do `modules/INDEX.md`.
+
+Os elos são fechados **nos três lugares na mesma passada**: ao preencher a
+`## Origem` no `PROMPT_3A` (feature nova) ou `PROMPT_4A` (alteração), o lado da
+história e o `INDEX.md` são atualizados junto. Para verificar a consistência e
+detectar **elos unilaterais** (registrados só de um lado), rode a auditoria
+**AT** (`PROMPT_AUDIT_TRACE_LINKS`).
+
 ### N3 → código
 
 A seção `## Implementação` do N3 guarda **repositório + caminho**, e a tabela de

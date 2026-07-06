@@ -8,11 +8,13 @@ e usam placeholders `[entre colchetes]` para o conteúdo que cada instância for
 
 | Template | Conteúdo |
 |---|---|
+| [`CLAUDE.md`](#/file/engine/templates/global/CLAUDE.md) | Índice de contexto carregado a cada sessão (vai para a raiz da instância) |
 | [`N0_PRODUCT_VISION.md`](#/file/engine/templates/global/N0_PRODUCT_VISION.md) | Visão de Produto (N0) |
 | [`MASTER.md`](#/file/engine/templates/global/MASTER.md) | Documento mestre / índice geral |
 | [`DATA-MODEL.md`](#/file/engine/templates/global/DATA-MODEL.md) | Modelo de dados — **fonte única dos campos** |
 | [`NFR.md`](#/file/engine/templates/global/NFR.md) | Requisitos não-funcionais |
 | [`API-PATTERNS.md`](#/file/engine/templates/global/API-PATTERNS.md) | Padrões de API |
+| [`AUTHZ.md`](#/file/engine/templates/global/AUTHZ.md) | Modelo de autorização — controle de acesso por funcionalidade |
 | [`DESIGN-SYSTEM.md`](#/file/engine/templates/global/DESIGN-SYSTEM.md) | Design system |
 | [`SIZING.md`](#/file/engine/templates/global/SIZING.md) | Critérios de dimensionamento (PF/CFP) |
 | [`CONTAGEM-PF.md`](#/file/engine/templates/global/CONTAGEM-PF.md) | Contagem de Pontos de Função |

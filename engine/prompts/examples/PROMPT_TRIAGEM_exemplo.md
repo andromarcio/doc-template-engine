@@ -76,10 +76,10 @@ Confere? Posso descobrir o que já existe sobre cada item?
 
 | Artefato | Nível | Caminho | Objetivo (resumo) | Aderência |
 |---|---|---|---|---|
-| Cadastrar fundo gerido (`F01`) | N3 | `modules/cadastro/g-fundos-geridos/f-cadastrar-fundo-gerido.md` | Inclui um novo fundo gerido com seus dados básicos | **Cobre em parte** (não tem "Data de encerramento") |
+| Cadastrar fundo gerido (`F01`) | N3 | `modules/cadastro/fundos-geridos/f-cadastrar-fundo-gerido.md` | Inclui um novo fundo gerido com seus dados básicos | **Cobre em parte** (não tem "Data de encerramento") |
 | Pesquisar fundo gerido (`F02`) | N3 | `…/f-pesquisar-fundo-gerido.md` | Pesquisa/lista fundos por filtros e exibe resultados | **Cobre em parte** (sem exportação para Excel) |
 | Editar fundo gerido (`F03`) | N3 | `…/f-editar-fundo-gerido.md` | Edita os dados de um fundo existente | **Relacionado** (a "Data de encerramento" também reflete aqui) |
-| Feature Set Fundos Geridos (`CAD-FUN`) | N2 | `modules/cadastro/g-fundos-geridos/README.md` | Operações sobre fundos geridos (cadastrar, pesquisar, editar) | **Não cobre** exclusão |
+| Feature Set Fundos Geridos (`CAD-FUN`) | N2 | `modules/cadastro/fundos-geridos/README.md` | Operações sobre fundos geridos (cadastrar, pesquisar, editar) | **Não cobre** exclusão |
 | *(exclusão de fundo)* | — | — | — | **Não cobre** — candidato a criação |
 | *(portal público de investidores)* | — | — | — | **Não cobre** — área (domínio/FS) inexistente |
 

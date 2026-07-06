@@ -156,7 +156,8 @@ código/doc.
 
 Use o template de `_template-feature-set/README.md`. Agrupe rotas/controllers
 (código) e seções (doc) em Feature Sets lógicos de negócio. Preencha a tabela
-de Features, o Fluxo principal (mermaid — 🔍 se inferido só do código),
+de Features, o Fluxo principal (mermaid — 🔍 se inferido só do código; sempre para
+frente, **sem caminho de volta** — sem loops nem retorno a etapas anteriores),
 Telas e Permissões por perfil (de middleware/guards 💻, ou da doc 📄).
 
 ### 2.4 — N3 (um por feature)
@@ -172,7 +173,9 @@ Use o template `_template-feature.md` **na íntegra**, incluindo os blocos
   fonte mais confiável de comportamento) e marque 🔍 nos cenários inferidos
   só do controller. Mensagens de erro: texto **literal** (resolver no
   ERROR/MESSAGE-DICTIONARY), nunca "conforme o Design System".
-- **Campos**: só Label PO + regras de negócio (técnico fica no DATA-MODEL).
+- **Campos**: a tabela do N3 tem só Label PO, Tipo (negocial), Obrigatório e
+  Validação. Campo banco, Label Dev, tipo SQL, FK e índice **não** entram no N3 —
+  vivem só no DATA-MODEL; o N3 referencia (`→ ver DATA-MODEL.md: Entidade [Nome]`).
 - **Comportamento de tela**: se só houver backend, marque ❓ "requer análise
   do frontend ou do PO" — não invente.
 - **Métricas de tamanho**: deixar o esqueleto e marcar ❓ "preencher após

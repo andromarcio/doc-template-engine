@@ -1,10 +1,11 @@
-# N0_PRODUCT_VISION.md
-> **Nível 0** — Visão de Produto. O documento de referência mais alto do sistema:
-> define **por que** o produto existe, para **quem** e **que valor** entrega.
->
-> Os níveis N1–N3 são confrontados contra este documento para garantir que não
-> extrapolam o escopo nem contradizem os objetivos do produto. O N0 dá a direção;
-> não detalha funcionalidades, telas ou campos.
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+# Visão de Produto: [Nome do Produto]
+> **Nível 0** - Visão de Produto - `[SIGLA]`
+
+> O documento de referência mais alto do sistema: define **por que** o produto
+> existe, para **quem** e **que valor** entrega. Os níveis N1–N3 são confrontados
+> contra ele para garantir que não extrapolam o escopo nem contradizem os objetivos
+> do produto. O N0 dá a direção; não detalha funcionalidades, telas ou campos.
 >
 > **Quem mantém**: PO / Liderança de Produto
 > **Atualização**: revisado quando a estratégia do produto muda — não a cada feature.
@@ -90,6 +91,8 @@ que justifica adotar este produto em vez de uma alternativa ou do status quo.]
 ---
 
 ## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|

@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 <!--
   CONVENÇÃO DE VISIBILIDADE
   Blocos <div class="dev-only"> contêm detalhes técnicos.
@@ -20,13 +21,13 @@
 
 ## Feature Sets
 
-| Feature Set | Pasta | Descrição | Features |
+| Feature Set | Arquivo de Especificação (N2) | Descrição | Features |
 |---|---|---|---|
-| [Nome](./[pasta]/README.md) | `[dominio]/[pasta]/` | [descrição em uma linha] | [N] |
+| **[Nome do Feature Set]** <small>[SIGLA]-[SFS]</small> | [[pasta]/README.md](./[pasta]/README.md) | [descrição em uma linha] | [N] |
 
 ---
 
-## Regras transversais do domínio
+## Regras transversais de negócio
 
 1. [Regra que se aplica a todas as features deste domínio]
 2. [Regra que se aplica a todas as features deste domínio]
@@ -78,6 +79,16 @@
 ---
 
 </div>
+
+---
+
+## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
+| Data | Autor | Tipo | Descrição |
+|---|---|---|---|
+| [AAAA-MM-DD] | [autor] | N1 criado | [descrição] |
 
 ---
 

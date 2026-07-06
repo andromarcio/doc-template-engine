@@ -16,6 +16,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai complementar o N3 negocial com as definições técnicas da feature.
 O conteúdo negocial já foi validado pelo PO e não deve ser alterado.
 
@@ -78,7 +83,7 @@ Leia cada campo da tabela de campos do N3 negocial e:
 
 1. Localize no fragmento `global/data-models/[dominio].md` o Label Dev e o campo banco correspondentes
 2. Se o campo existir: confirme e prossiga
-3. Se o campo NÃO existir: proponha Label Dev e campo banco com ⚠️
+3. Se o campo NÃO existir: proponha Label Dev (camelCase) e campo banco (snake_case), ambos em português, com ⚠️
 
 Apresente o resultado:
 
@@ -94,7 +99,10 @@ Campos NOVOS (requerem aprovação e adição ao fragmento global/data-models/[d
 
 **Campos de seleção (`seleção → [Entidade]` no N3):** além do cruzamento acima,
 para cada campo de seleção confirme ou proponha a linha correspondente em
-**DATA-MODEL.md → Relacionamentos de seleção (comboboxes)**:
+**DATA-MODEL.md → Relacionamentos de seleção (comboboxes)**. Essa linha (FK,
+campo-valor, campo-label, endpoint, filtro) é **definição de banco**: ela vai
+**para o DATA-MODEL**, nunca para o N3. No N3 a seção técnica só referencia
+(`→ ver DATA-MODEL.md: Entidade [Nome]`) — não reescreva a FK nem o endpoint lá.
 
 ```
 Relacionamentos de seleção a registrar no DATA-MODEL.md:
@@ -250,7 +258,7 @@ escreva nenhum texto entre o título e a tabela**: nada de "Registra apenas Fun�
 Transação (EE/SE/CE)…", aviso de contagem provisória ou explicação sobre ALI/AIE
 estarem no DATA-MODEL. Essas notas existem só para orientar a contagem e vivem no
 `global/SIZING.md`, não no N3 gerado. Qualquer ressalva pontual (lacuna ⚠️, contagem
-provisória) vai no **Changelog** ou na **memória de cálculo** abaixo da tabela — nunca
+provisória) vai no **Changelog** (nova linha no topo, ordem decrescente por data) ou na **memória de cálculo** abaixo da tabela — nunca
 entre o cabeçalho e a tabela.
 
 | Função de Transação | Tipo | ALR | DER | Complexidade | PF | Data |
@@ -290,7 +298,7 @@ Apresente apenas as seções técnicas geradas. Pergunte:
 
 Após aprovação, gere o arquivo completo:
 
-📄 `modules/[dominio]/g-[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` — versão completa (usar o mesmo nome de arquivo gerado pelo PROMPT 3A; padrão: `f-` + verbo + entidade singular + adjetivo qualificador quando houver, em kebab-case)
+📄 `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` — **o mesmo arquivo gerado pelo PROMPT 3A, na mesma pasta** (o N3 técnico é uma mescla no arquivo existente, não um novo arquivo). `[feature-set]` é a pasta do Feature Set (onde vive o `README.md` do N2); nunca grave na raiz, `global/`, `engine/` ou outro domínio. Use o mesmo nome de arquivo do 3A (`f-` + verbo + entidade singular + adjetivo qualificador quando houver, em kebab-case).
 
 > **Nota**: as seções técnicas **não existem** no N3 negocial gerado pelo PROMPT 3A — este prompt as cria e insere abaixo de `## Comportamento de tela`, dentro do bloco `<div class="dev-only">`.
 
@@ -309,6 +317,7 @@ Após aprovação, gere o arquivo completo:
 > **Prioridade**: P? · **MVP**: sim/não   ← preservar do 3A
 
 ## Descrição                         ← negocial
+## Origem                            ← negocial (só se houver história de origem)
 ## Superfície                        ← negocial (Tela própria | Ação em tela)
 ## Regras de negócio                 ← negocial (com refs. aos dicionários)
 ## Cenários                          ← negocial (grupos negociais + marcadores)
@@ -330,7 +339,8 @@ Após aprovação, gere o arquivo completo:
 </div>
 
 ## Implementação                     ← rastreabilidade (preenchido após dev)
-## Changelog                         ← última seção; acrescentar entrada ao gerar o arquivo final
+## Changelog                         ← acrescentar entrada no topo (ordem decrescente por data) ao gerar o arquivo final
+*Links: [N2] · [N1] · [INDEX]*       ← rodapé (última linha, como no template)
 ```
 
 ---

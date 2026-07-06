@@ -14,17 +14,26 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai complementar o N1 negocial com as definições técnicas do domínio.
 O conteúdo negocial já foi validado pelo PO e não deve ser alterado.
 
 Regras da sessão:
 - Trabalhe um domínio de cada vez.
 - Cruze todos os campos com o DATA-MODEL.md. Campos já existentes: use
-  exatamente os nomes de lá. Campos novos: proponha Label Dev (camelCase)
-  e campo banco (seguindo a convenção do MASTER.md), sinalize com ⚠️ e
+  exatamente os nomes de lá. Campos novos: proponha Label Dev (camelCase, em
+  português) e campo banco (snake_case em português, seguindo a convenção do
+  MASTER.md), sinalize com ⚠️ e
   aguarde aprovação explícita antes de continuar.
 - O N1 não lista campos detalhados — apenas nome e descrição das entidades,
   com referência ao DATA-MODEL.md. Os campos completos vivem no DATA-MODEL.md.
+- **Fonte única de definição de banco**: campo banco, tipo SQL, FK, índice,
+  restrição de unicidade e enum vivem **só** no DATA-MODEL. O N1 **nunca** os
+  redefine — apenas referencia (`→ ver DATA-MODEL.md: Entidade [Nome]`).
 - Sinalize suposições com ⚠️.
 
 ---
@@ -82,14 +91,19 @@ Após receber os campos de cada entidade:
 
 ## PASSO 3 — Consolidação técnica
 
-Com as respostas, gere as seções técnicas (sem repetir as negociais):
+Com as respostas:
+
+- **Integrações com outros domínios** (seção **visível**, criada no PROMPT_1A):
+  complemente cada relação de Leitura/Escrita com o **tipo de integração**
+  (coluna *Como*: FK / Evento / Serviço). Não mova esta seção para `dev-only`.
+
+E gere as seções **técnicas** (dentro de `dev-only`, sem repetir as negociais):
 
 - Entidades do domínio (apenas: nome | descrição | → DATA-MODEL.md: [nome])
 - Dependências externas (tabela: serviço, uso, lib)
-- Integrações com outros domínios (leitura e escrita separadas, com tipo de integração)
 - Regras de acesso por role
 
-Apresente apenas as seções técnicas. Pergunte:
+Apresente as alterações (Integrações complementada + seções técnicas). Pergunte:
 > "As seções técnicas do N1 de [domínio] estão corretas?
 > Posso gerar o arquivo final mesclado?"
 
@@ -102,10 +116,11 @@ Após aprovação, gere:
 📄 `modules/[dominio]/README.md` — versão completa
 
 Aplique a marcação de visibilidade:
-- Seções negociais: visíveis para todos
-- Seções técnicas: dentro de `<div class="dev-only">`
+- Visíveis para todos: as seções negociais **e** `## Integrações com outros domínios`
+- Dentro de `<div class="dev-only">`: Entidades do domínio, Dependências externas
+  e Regras de acesso consolidadas
 
-> **Nota**: ao gerar o arquivo final, acrescentar nova entrada no `## Changelog` (última seção do arquivo) registrando a adição das seções técnicas.
+> **Nota**: ao gerar o arquivo final, acrescentar nova entrada no `## Changelog` (última seção do arquivo) registrando a adição das seções técnicas. A nova linha entra **no topo da tabela** (logo abaixo do cabeçalho), mantendo o changelog em **ordem decrescente por data**.
 
 ---
 

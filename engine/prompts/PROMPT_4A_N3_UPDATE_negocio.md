@@ -17,6 +17,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai me ajudar a atualizar uma especificação de feature (N3) já existente
 do ponto de vista de negócio. Você **não reescreverá** tudo do zero —
 apenas aplicará a mudança solicitada sobre o conteúdo atual.
@@ -164,7 +169,9 @@ alinhadas e confirme:
 Gere a versão atualizada das seções negociais do N3 afetadas,
 evidenciando o que mudou. Se a alteração veio de uma história, adicione a linha
 correspondente à seção `## Origem` (Tipo "Alteração"). Adicione ou atualize a
-seção de changelog:
+seção de changelog. **Insira a nova linha no topo da tabela** (logo abaixo do
+cabeçalho), mantendo o changelog em **ordem decrescente por data** — a entrada
+mais recente sempre primeiro:
 
 ```markdown
 ## Changelog
@@ -172,6 +179,7 @@ seção de changelog:
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data] | [nome] | Novo campo / Regra alterada / Correção | [o que mudou e por quê] |
+| [data anterior] | … | … | … |
 ```
 
 Apresente apenas as seções alteradas (não repita o que não mudou).
@@ -180,3 +188,31 @@ Se houver promoções aprovadas a dicionários, liste-as como ação pendente
 Pergunte:
 > "A atualização negocial do N3 de [feature] está correta?
 > Ajusta algo ou avanço para a parte técnica via PROMPT_4B?"
+
+---
+
+## PASSO 7 — Fechar o elo recíproco (se a alteração veio de uma história)
+
+**[Estado: GERACAO_ATUALIZACAO]**
+
+> Execute **somente se** uma história motivou esta alteração (uma linha Tipo
+> "Alteração" foi adicionada à `## Origem` no PASSO 6). O elo história ↔ feature
+> é **M:N** e precisa ficar registrado dos dois lados mais o índice — senão o
+> caminho inverso ("quais features esta história alterou?") fica incompleto.
+
+Atualize os outros dois lados, espelhando a linha que entrou na `## Origem`:
+
+**1. `modules/_backlog/[chave].md`** — na seção `## Rastreabilidade — Features
+(N3) que realizam esta história`, adicione a linha desta feature se ainda não
+constar, e registre uma linha no topo do changelog da história ("Feature
+alterada") — mantendo o changelog em ordem decrescente por data.
+
+**2. `modules/INDEX.md`** — garanta que existe a linha do par história↔feature na
+tabela `## Rastreabilidade: história → spec → código` (adicione se faltar;
+atualize o Status se ele mudou com esta alteração).
+
+**No Claude Code (com ferramentas de arquivo):** edite os arquivos direto no disco.
+**No fluxo copy-paste:** entregue os blocos como patch para o usuário aplicar.
+
+> 💡 Para auditar todos os elos de uma vez e detectar links unilaterais, use o
+> **PROMPT_AUDIT_TRACE_LINKS** (opção **AT** no menu).

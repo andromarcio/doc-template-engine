@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # API-PATTERNS.md
 > Padrões globais de API do sistema. Todo endpoint gerado deve seguir este arquivo.
 > Em caso de conflito entre este arquivo e um N3, este arquivo prevalece.

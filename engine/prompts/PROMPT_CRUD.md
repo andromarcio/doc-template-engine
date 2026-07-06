@@ -18,6 +18,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai especificar, numa única sessão, um Feature Set de **cadastro (CRUD)**
 seguindo o padrão do framework. A partir de **uma descrição da entidade e da
 tabela de campos**, produza o N2 do Feature Set e os N3 negociais das cinco
@@ -92,8 +97,9 @@ explícita antes de transitar de um estado de geração para o próximo.
 ## PASSO 1 — `[COLETA_ENTIDADE]`
 
 Confirme o domínio e a sigla (do N1, se fornecido; senão da identificação
-manual). Derive uma sigla de 3 letras para o Feature Set, formando o ID
-`[SIGLA]-[SFS]`. Então pergunte, em um bloco:
+manual). **Se o N1 já definir este Feature Set, reutilize o ID `[SIGLA]-[SFS]` dele**;
+caso contrário, derive uma sigla de 3 letras para o Feature Set, formando o ID
+`[SIGLA]-[SFS]` (e proponha incluí-lo no N1). Então pergunte, em um bloco:
 
 > 1. Qual o nome da entidade que será cadastrada (ex.: Fundo Gerido, Cliente)?
 > 2. Em 2-3 frases, o que este cadastro permite fazer? E o que ele
@@ -136,7 +142,7 @@ o Feature Set inteiro:
 > 8. **Permissões** (fonte única do projeto): quais **perfis** existem e, para
 >    **cada operação** (pesquisar, cadastrar, editar, excluir, visualizar), quais
 >    perfis podem executá-la? Descreva em linguagem de negócio.
-> 9. **Pesquisa**: há ordenação padrão, carga inicial (ex.: últimos N registros)
+> 9. **Pesquisa**: quais **colunas aparecem no resultado** (viram a seção obrigatória `## Colunas do resultado`); há ordenação padrão, carga inicial (ex.: últimos N registros)
 >    ou limite de resultados?
 > 10. Esta entidade precisa ficar registrada no **histórico de auditoria**? (sim/não —
 >     servirá para o 3B preencher a seção AuditLog; não vira regra de negócio)
@@ -160,6 +166,8 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 📄 `modules/[dominio]/[feature-set]/README.md`
 
+> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+
 ```
 # Feature Set: [Nome do Feature Set]
 > **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]`
@@ -175,19 +183,19 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 | Feature | Arquivo de Especificação (N3) | Descrição |
 |---|---|---|
-| **[SIGLA]-[SFS]-01**: Pesquisar [Entidade] | [f-pesquisar.md](f-pesquisar.md) | [uma linha] |
-| **[SIGLA]-[SFS]-02**: Cadastrar [Entidade] | [f-cadastrar.md](f-cadastrar.md) | [uma linha] |
-| **[SIGLA]-[SFS]-03**: Editar [Entidade] | [f-editar.md](f-editar.md) | [uma linha] |
-| **[SIGLA]-[SFS]-04**: Excluir [Entidade] | [f-excluir.md](f-excluir.md) | [uma linha] |
-| **[SIGLA]-[SFS]-05**: Visualizar [Entidade] | [f-visualizar.md](f-visualizar.md) | [uma linha] |
+| **Pesquisar [Entidade]** <small>[SIGLA]-[SFS]-01</small> | [f-pesquisar.md](f-pesquisar.md) | [uma linha] |
+| **Cadastrar [Entidade]** <small>[SIGLA]-[SFS]-02</small> | [f-cadastrar.md](f-cadastrar.md) | [uma linha] |
+| **Editar [Entidade]** <small>[SIGLA]-[SFS]-03</small> | [f-editar.md](f-editar.md) | [uma linha] |
+| **Excluir [Entidade]** <small>[SIGLA]-[SFS]-04</small> | [f-excluir.md](f-excluir.md) | [uma linha] |
+| **Visualizar [Entidade]** <small>[SIGLA]-[SFS]-05</small> | [f-visualizar.md](f-visualizar.md) | [uma linha] |
 
 ---
 
 ## Fluxo Principal
 
-[diagrama Mermaid `flowchart TD` — seguir a "Regra do Fluxo principal" do PROMPT_2A:
-nós entre aspas duplas, rótulos de seta sem aspas/barra; o diagrama é a única
-representação do fluxo, sem lista numerada acompanhante]
+[esqueleto canônico do tipo CRUD — copie o diagrama da "Regra do Fluxo principal
+(CRUD)" logo abaixo deste bloco e apenas substitua {Entidade}. Não redesenhe o grafo
+nem acompanhe de lista numerada — a estrutura é fixa para todo CRUD]
 
 ---
 
@@ -202,13 +210,13 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 
 | Tela | Rota sugerida | Features atendidas | Descrição |
 |---|---|---|---|
-| Pesquisa de [Entidade] | `/[dominio]/[feature-set]` | **...-01** | listagem + filtros; origem das ações |
-| Cadastrar [Entidade] | `/[dominio]/[feature-set]/novo` | **...-02** | formulário de cadastro |
-| Editar [Entidade] | `/[dominio]/[feature-set]/:id/editar` | **...-03** | mesmo formulário em modo edição |
-| Visualizar [Entidade] | `/[dominio]/[feature-set]/:id` | **...-05** | ficha somente leitura |
+| Pesquisa de [Entidade] | `/[dominio]/[feature-set]` | **Pesquisar [Entidade]** <small>[SIGLA]-[SFS]-01</small><br>**Excluir [Entidade]** <small>[SIGLA]-[SFS]-04</small> | listagem + filtros; origem das ações |
+| Cadastrar [Entidade] | `/[dominio]/[feature-set]/novo` | **Cadastrar [Entidade]** <small>[SIGLA]-[SFS]-02</small> | formulário de cadastro |
+| Editar [Entidade] | `/[dominio]/[feature-set]/:id/editar` | **Editar [Entidade]** <small>[SIGLA]-[SFS]-03</small> | mesmo formulário em modo edição |
+| Visualizar [Entidade] | `/[dominio]/[feature-set]/:id` | **Visualizar [Entidade]** <small>[SIGLA]-[SFS]-05</small> | ficha somente leitura |
 
-> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug da
-> pasta sem o prefixo `g-`. Exclusão não tem rota (ação em tela, da listagem).
+> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug (kebab)
+> da pasta do Feature Set. Exclusão não tem rota (ação em tela, da listagem).
 
 ---
 
@@ -226,10 +234,58 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N2 criado | Gerado pelo PROMPT CRUD |
+
+---
+
+*Links: [N1 [Nome do Domínio]](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
+
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
+> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*.
+> Em ordem de preferência: **1) "Reúne as operações de…"** (estruturalmente exato: um
+> conjunto reúne operações, já antecipando as features); **2) "Agrupa as funcionalidades
+> que permitem…"**; **3) "Permite ao [perfil] …"** (quando o destaque é o valor para o
+> perfil). **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível.
+> Ordene as frases assim: (1ª) quais operações reúne, já antecipando as features · (2ª) o
+> que isso permite ao perfil. A linha `**Não faz**:` delimita o escopo negativo do conjunto.
+> Exemplo (Feature Set **Cadastro de Clientes** `CLI-CAD`):
+> ```
+> ## Descrição
+> Reúne as operações de manutenção do cadastro de clientes: incluir, pesquisar, editar, visualizar e desativar um cliente. Permite ao operador manter os dados cadastrais sempre atualizados a partir de uma única área do sistema.
+>
+> **Não faz**: análise de crédito, faturamento ou histórico de compras do cliente.
+> ```
+
+> **Regra do Fluxo principal (CRUD)** — O `## Fluxo Principal` do CRUD é um
+> **esqueleto canônico fixo**: copie o diagrama abaixo e apenas troque `{Entidade}`
+> pelo nome da entidade. **Não** redesenhe os nós nem as setas — a estrutura é a mesma
+> para todo CRUD, o que torna o fluxo determinístico e idêntico entre features do mesmo
+> tipo, independente da LLM. O diagrama é a única representação do fluxo (sem lista
+> numerada) e, como todo fluxo principal de N2, é **só para frente**: todos os ramos
+> da decisão convergem para o nó final `Z`, **sem caminho de volta** (sem loops nem
+> retorno a etapas anteriores). Vale a syntax da "Regra do Fluxo principal" do
+> PROMPT_2A: nós entre aspas duplas; rótulos de seta sem aspas e sem `/`, `(` ou `)`.
+>
+> ```mermaid
+> flowchart TD
+>     A(["Usuário acessa a listagem de {Entidade}"]) --> B["Pesquisar {Entidade}"]
+>     B --> C{"Qual ação?"}
+>     C -->|Cadastrar novo| D["Cadastrar {Entidade}"]
+>     C -->|Selecionar registro| E{"Ação sobre o registro"}
+>     E -->|Visualizar| F["Visualizar {Entidade}"]
+>     E -->|Editar| G["Editar {Entidade}"]
+>     E -->|Excluir| H["Excluir {Entidade}"]
+>     D --> Z(["{Entidade} atualizada"])
+>     G --> Z
+>     H --> Z
+>     F --> Z
+> ```
 
 > **Regra das Permissões** — A seção `## Permissões por perfil` **sempre** é uma
 > **tabela Markdown** (perfis nas linhas × as cinco operações nas colunas).
@@ -249,6 +305,8 @@ Gere o N3 de **Cadastro** — a fonte canônica das demais operações. Use os c
 do PASSO 2 e siga **exatamente** a estrutura negocial do PROMPT_3A (PASSO 3):
 Descrição · Superfície · Regras de negócio · Cenários · Campos · Campos
 automáticos · Comportamento de tela · Changelog.
+
+> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste CRUD vão na **mesma pasta** do `README.md` do Feature Set: `modules/[dominio]/[feature-set]/`. `[feature-set]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Feature Set. Se em dúvida, pergunte antes de gravar.
 
 📄 `modules/[dominio]/[feature-set]/f-cadastrar.md` (ID `[SIGLA]-[SFS]-02`)
 
@@ -310,9 +368,11 @@ Com as cinco features aprovadas, rode a revisão de consistência do Feature Set
 [ ] Campos e regras canônicas estão referenciados pelos dicionários?
 ```
 
-Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na lista de
-Feature Sets do N1 (e no `modules/INDEX.md`); proponha a atualização e aguarde
-aprovação antes de gravar.
+Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na tabela de
+Feature Sets do N1 (e no `modules/INDEX.md`) **com o nome em link para o README do
+N2** — `[Nome](./[feature-set]/README.md)`; se faltar a entrada ou o link, inclua-o
+(e ajuste a linha `*Links: ...*` do N1). Proponha a atualização e aguarde aprovação
+antes de gravar.
 
 Encerre:
 > "Feature Set CRUD concluído (N2 + 5 N3 negociais). Para complementar a parte

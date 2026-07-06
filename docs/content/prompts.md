@@ -11,16 +11,28 @@ e são **auto-contidos** — não dependem de arquivos fora do `engine/`.
 | [`SYSTEM_PROMPT_analista_requisitos`](#/file/engine/prompts/SYSTEM_PROMPT_analista_requisitos.md) | Prompt de sistema do analista de requisitos (fluxo IV → EX) |
 | [`PROMPT_MENU`](#/file/engine/prompts/PROMPT_MENU.md) | Índice operacional — lista todas as opções |
 
-## Especificação por nível (N1 → N3)
+## Especificação por nível (N0 → N3)
 
 | Prompt | Nível | Passada |
 |---|---|---|
+| [`PROMPT_N0_VISAO`](#/file/engine/prompts/PROMPT_N0_VISAO.md) | N0 | Negócio (passada única) |
 | [`PROMPT_1A_N1_negocio`](#/file/engine/prompts/PROMPT_1A_N1_negocio.md) | N1 | Negócio |
 | [`PROMPT_1B_N1_tecnico`](#/file/engine/prompts/PROMPT_1B_N1_tecnico.md) | N1 | Técnico |
 | [`PROMPT_2A_N2_negocio`](#/file/engine/prompts/PROMPT_2A_N2_negocio.md) | N2 | Negócio (passada única) |
 | [`PROMPT_3A_N3_negocio`](#/file/engine/prompts/PROMPT_3A_N3_negocio.md) | N3 | Negócio |
 | [`PROMPT_3A_N3_negocio_transcricao`](#/file/engine/prompts/PROMPT_3A_N3_negocio_transcricao.md) | N3 | Negócio (de transcrição) |
 | [`PROMPT_3B_N3_tecnico`](#/file/engine/prompts/PROMPT_3B_N3_tecnico.md) | N3 | Técnico |
+
+## Atalhos por tipo de funcionalidade
+
+Geram **N2 + N3** numa única sessão para padrões recorrentes — o `## Fluxo Principal`
+sai de um esqueleto canônico fixo (determinístico, idêntico entre features do mesmo
+tipo, independente da LLM).
+
+| Prompt | Opção | Papel |
+|---|---|---|
+| [`PROMPT_CRUD`](#/file/engine/prompts/PROMPT_CRUD.md) | CR | CRUD padrão — 5 operações (pesquisar/cadastrar/editar/excluir/visualizar) |
+| [`PROMPT_WIZARD`](#/file/engine/prompts/PROMPT_WIZARD.md) | WZ | Wizard — processo guiado multi-etapas (principal + retomar/acompanhar/cancelar) |
 
 ## Manutenção e derivação
 
@@ -44,12 +56,15 @@ e são **auto-contidos** — não dependem de arquivos fora do `engine/`.
 
 | Prompt | Papel |
 |---|---|
+| [`PROMPT_REVIEW`](#/file/engine/prompts/PROMPT_REVIEW.md) | Revisão de conformidade de um artefato (N0–N3/data-model) — aponta o que corrigir (opção **RV**) |
 | [`PROMPT_CONTAGEM`](#/file/engine/prompts/PROMPT_CONTAGEM.md) | Contagem de Pontos de Função (APF) |
 | [`PROMPT_NFR`](#/file/engine/prompts/PROMPT_NFR.md) | Requisitos não-funcionais |
 | [`PROMPT_QA`](#/file/engine/prompts/PROMPT_QA.md) | Geração/validação de QA |
 | [`PROMPT_0_EXTRACTION`](#/file/engine/prompts/PROMPT_0_EXTRACTION.md) | Extração inicial de informação |
 | [`PROMPT_TRANSCRICAO_REUNIAO`](#/file/engine/prompts/PROMPT_TRANSCRICAO_REUNIAO.md) | Estrutura uma transcrição de reunião |
 | [`PROMPT_AUDIT_RULES_DEDUP`](#/file/engine/prompts/PROMPT_AUDIT_RULES_DEDUP.md) | Auditoria e deduplicação de regras |
+| [`PROMPT_AUDIT_TRACE_LINKS`](#/file/engine/prompts/PROMPT_AUDIT_TRACE_LINKS.md) | Auditoria dos elos história ↔ feature (consistência bidirecional) |
+| [`PROMPT_PENDENCIAS`](#/file/engine/prompts/PROMPT_PENDENCIAS.md) | Painel de pendências de especificação — consolida no `INDEX.md` (opção **PD**) |
 
 ## Engenharia reversa e dados
 

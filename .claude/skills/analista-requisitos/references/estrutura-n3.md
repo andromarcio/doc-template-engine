@@ -38,7 +38,7 @@ status: rascunho                    # rascunho | especificado | em-desenvolvimen
 
 ```markdown
 # [Nome da Feature]
-> **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[ID do N2]`
+> **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
 > **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não]
 
 ## Descrição
@@ -218,6 +218,8 @@ Scenario: [descrição técnica — cookies, headers, HTTP status, jobs]
 ---
 
 ## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|

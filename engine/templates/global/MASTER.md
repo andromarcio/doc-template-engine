@@ -1,15 +1,21 @@
 # MASTER.md
-> Arquivo de contexto global. Cole em toda sessão com o Claude,
-> independente do módulo ou nível que está sendo trabalhado.
+> Arquivo de contexto global, independente do módulo ou nível em trabalho.
+> No Claude Code é carregado automaticamente a cada sessão via o `CLAUDE.md` da
+> instância (ver `global/CLAUDE.md`); no fluxo copy-paste/CLI, cole-o em toda sessão.
 
 ---
 
 ## Identificação do sistema
 
-- **Nome**: [SIGLA/Nome do sistema]
+- **Sigla**: [sigla do sistema — 5 letras maiúsculas, ex.: SIGEF]
+- **Nome**: [nome do sistema por extenso — ex.: Sistema de Gestão de Fundos]
 - **Descrição**: [descrição em uma frase]
 - **Versão atual**: [a definir]
 - **Repositório de docs**: [nome-docs] (este repositório)
+
+> A **sigla do sistema** (5 letras) identifica o produto como um todo e é **distinta** da
+> `[SIGLA]` de **domínio** (3 letras, usada nos IDs `[SIGLA]-[SFS]-[NN]`) descrita
+> na seção *Identificadores únicos* abaixo.
 
 ---
 
@@ -63,7 +69,7 @@
 
 ### Nomenclatura
 - Rotas de API: kebab-case (ex.: `/recurso-exemplo`)
-- Tabelas/colunas do banco: [snake_case / UPPER_SNAKE_CASE] ⚠️ *(confirmar padrão da organização)*
+- Tabelas/colunas do banco: [snake_case / UPPER_SNAKE_CASE], em português ⚠️ *(confirmar padrão da organização)*
 - [demais convenções de classes, arquivos e testes conforme a stack escolhida]
 
 ### Frontend
@@ -98,7 +104,7 @@ entre ferramentas externas (Jira, Azure DevOps, etc.).
 **Regras:**
 - A história de usuário entra pelo ServiceNow; o framework **referencia** a chave (nunca cria ID próprio para a história) e a registra na seção `## Origem` do N3
 - A sigla do domínio é definida uma única vez na criação do N1 e nunca alterada
-- A sigla do Feature Set é definida na criação do N2, é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Feature Set (ex.: Usuários → `USR`)
+- A sigla do Feature Set é definida **no N1** (ao listar os Feature Sets do domínio) e **reutilizada** pelo N2; é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Feature Set (ex.: Usuários → `USR`)
 - A numeração de Features é sequencial dentro do Feature Set e não reutilizada após exclusão
 - O ID fica no cabeçalho de cada artefato, logo abaixo da linha `**Nível X**`
 
@@ -147,20 +153,24 @@ Features são nomeadas sempre no **infinitivo**, seguindo o padrão:
 
 ---
 
-## Nomenclatura de campos — três camadas
+## Nomenclatura de entidades e campos
 
-A nomenclatura de campos segue três camadas com responsabilidades distintas.
+Entidades e campos são nomeados em **português**. A nomenclatura de campos segue
+três camadas com responsabilidades distintas.
 **A única fonte de verdade para Label Dev e campo banco é o `global/DATA-MODEL.md`.**
 Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 
 | Camada | Convenção | Exemplo | Onde aparece |
 |---|---|---|---|
+| Entidade | PascalCase singular, português | `ModeloEmail` | DATA-MODEL.md, data-models/[dominio].md (cabeçalho) |
 | Label PO | Português, title case, sem jargão | `Nome completo` | N3 (tabela de campos), Gherkin, telas |
-| Label Dev | camelCase, inglês, autoexplicativo | `fullName` | DATA-MODEL.md, código, API |
-| Campo banco | snake_case ⚠️ | `full_name` | DATA-MODEL.md, migrations, ORM |
+| Label Dev | camelCase, português, autoexplicativo | `nomeCompleto` | DATA-MODEL.md, código, API |
+| Campo banco | snake_case, português ⚠️ | `nome_completo` | DATA-MODEL.md, migrations, ORM |
 
-> ⚠️ Confirmar o padrão oficial de identificadores do banco (snake_case vs.
-> UPPER_SNAKE_CASE, inglês vs. português) antes de gerar N1/N3.
+> ⚠️ Entidades e campos são nomeados em **português**. Confirme apenas a caixa
+> dos identificadores do banco (snake_case vs. UPPER_SNAKE_CASE) antes de gerar
+> N1/N3. Em engenharia reversa de bases legadas, transcreva os identificadores
+> como estão na origem (podem estar em inglês) — não os traduza.
 
 ---
 
@@ -189,6 +199,7 @@ Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 4. **Validação**: no frontend e no backend — nunca confiar apenas no client.
 5. **Auditoria**: ações críticas sempre registradas em log de auditoria.
 6. **Eventos internos**: [mensageria / chamadas diretas] ⚠️
+7. **Autorização**: acesso por **funcionalidade** (Feature = átomo de permissão), aplicado no servidor; vínculo perfil↔funcionalidade é dado configurável, nega por padrão — ver `global/AUTHZ.md` e `global/NFR.md` → SEG-01.
 
 ---
 
@@ -221,6 +232,7 @@ Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 
 | Arquivo | Propósito |
 |---|---|
+| `CLAUDE.md` (raiz) | Índice de contexto carregado a cada sessão no Claude Code |
 | `global/MASTER.md` | Stack, convenções globais (este arquivo) |
 | `global/DATA-MODEL.md` | Índice de entidades + campos globais + enums |
 | `global/SIZING.md` | Convenções de contagem APF e COSMIC |
@@ -229,4 +241,5 @@ Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 | `global/MESSAGE-DICTIONARY.md` | Mensagens de UI genéricas + baseline de validação |
 | `global/ERROR-DICTIONARY.md` | Fonte única de códigos de erro |
 | `global/API-PATTERNS.md` | Padrões de API |
+| `global/AUTHZ.md` | Modelo de autorização — controle de acesso por funcionalidade (Feature = átomo de permissão) |
 | `global/DESIGN-SYSTEM.md` | Padrões de UI |

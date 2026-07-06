@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # Feature Set: [Nome do Feature Set]
 > **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]`
 
@@ -10,28 +11,21 @@
 
 ## Features
 
-<!--
-  A coluna Prioridade ordena as user stories na exportação ao spec-kit
-  (1 N3 = 1 user story; este Feature Set = 1 "feature" do spec-kit). P1 = incremento
-  mínimo (MVP); P2/P3 = incrementos seguintes. Mantenha coerência com o campo
-  `prioridade` do front-matter de cada N3.
--->
-
-| Feature | Arquivo | Prioridade | Descrição |
-|---|---|---|---|
-| [Nome da Feature] | [[feature].md](./[feature].md) | [P1 / P2 / P3] | [descrição em uma linha] |
+| Feature | Arquivo de Especificação (N3) | Prioridade | Descrição |
+|---|---|---|
+| **[Nome da Feature]** <small>[SIGLA]-[SFS]-01</small> | [f-[verbo]-[entidade].md](f-[verbo]-[entidade].md) | **[P1 / P2 / P3]** | [descrição em uma linha] |
 
 ---
 
-## Fluxo principal
+## Fluxo Principal
 
 ```mermaid
 flowchart TD
-    A([Ponto de entrada do usuário]) --> B[Feature 1]
-    B --> C{Decisão?}
-    C -->|Sim| D[Resultado]
-    C -->|Não| E[Feature 2]
-    E --> F([Resultado final])
+    A(["Ponto de entrada do usuário"]) --> B["Feature 1"]
+    B --> C{"Decisão?"}
+    C -->|Sim| D["Resultado"]
+    C -->|Não| E["Feature 2"]
+    E --> F(["Resultado final"])
     D --> F
 ```
 
@@ -39,45 +33,43 @@ flowchart TD
 
 ## Dependências entre features
 
-| Regra | Descrição |
-|---|---|
-| [Feature A] depende de [Feature B] | [por quê e como] |
+[lista descrevendo pré-requisitos e relações entre as features]
 
 ---
 
 ## Telas
 
-| Tela | Rota | Features atendidas |
-|---|---|---|
-| [Nome da tela] | `/[rota]` | [Feature 1], [Feature 2] |
+| Tela | Rota sugerida | Features atendidas | Descrição |
+|---|---|---|---|
+| [Nome da tela] | `/[rota]` | **[Nome da Feature]** <small>[SIGLA]-[SFS]-01</small> | [o que a tela mostra] |
 
 ---
 
 ## Permissões por perfil
 
-| Perfil | [Feature 1] | [Feature 2] |
-|---|---|---|
-| [perfil admin] | [o que pode] | [o que pode] |
-| [perfil agente] | [o que pode] | [o que pode] |
-| [perfil viewer] | [o que pode] | [o que pode] |
+> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de
+> perfis nem permissões — qualquer acesso novo ou diferente entra nesta matriz.
+
+Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
+
+| Perfil | [Ação 1] | [Ação 2] | [Ação 3] |
+|---|---|---|---|
+| **[Perfil A]** | ✓ | ✓ | ✓ |
+| **[Perfil B]** | ✓ | — | ✓ |
+| **[Perfil C]** | ✓ | — | — |
+
+* **[Perfil A]** — [nível de acesso em uma linha].
 
 ---
 
-## Histórias de usuário relacionadas
+## Changelog
 
-<!--
-  Consolida as histórias (ServiceNow) que motivaram as features deste Feature
-  Set. Visão de cobertura: de uma história, quais features a realizam.
-  Detalhe por feature fica na seção "Origem" de cada N3.
--->
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 
-| História (ServiceNow) | Features (N3) que a realizam |
-|---|---|
-| [`STRYxxxxxxx`](../../_backlog/[chave].md) | [Feature 1], [Feature 2] |
+| Data | Autor | Tipo | Descrição |
+|---|---|---|---|
+| [AAAA-MM-DD] | [autor] | N2 criado | Gerado pelo PROMPT 2A |
 
 ---
 
----
-
-*Domínio: [Nome do Domínio] · Última revisão: —*
 *Links: [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*

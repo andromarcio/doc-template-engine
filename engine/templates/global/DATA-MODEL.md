@@ -1,11 +1,16 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # DATA-MODEL.md
 > **Índice e fonte de verdade** para nomenclatura e mapeamento de campos.
 > Os modelos detalhados estão fragmentados por domínio em `global/data-models/`
 > para otimizar o contexto enviado ao LLM — cole apenas o fragmento do
 > domínio que está sendo trabalhado, não o arquivo inteiro.
 >
-> Os N3 referenciam com: `→ ver DATA-MODEL.md: Entidade [Nome]`
-> Os N3 **nunca** duplicam Label Dev ou campo banco em suas tabelas.
+> **Fonte única de definição de banco.** Toda definição física — entidade/tabela,
+> Label Dev, campo banco, tipo SQL, FK, índice, restrição de unicidade e enum —
+> vive **exclusivamente** aqui (índice) e nos fragmentos `global/data-models/`.
+> Qualquer outro artefato (N0–N3, SDD, protótipo, contagem) **referencia**, nunca
+> redefine: `→ ver DATA-MODEL.md: Entidade [Nome]`. Os N3 usam só Label PO e
+> **nunca** duplicam Label Dev, campo banco, tipo ou FK em suas tabelas.
 
 ---
 
@@ -13,11 +18,14 @@
 
 | Camada | Convenção | Exemplo | Onde aparece |
 |---|---|---|---|
+| Entidade | PascalCase singular, português | `ModeloEmail` | **data-models/[dominio].md** (cabeçalho), "Modelos por domínio" |
 | Label PO | Português, title case, sem jargão | `Nome completo` | N3 (campos), Gherkin, telas |
-| Label Dev | camelCase, inglês, autoexplicativo | `fullName` | **data-models/[dominio].md** — apenas aqui |
-| Campo banco | snake_case ⚠️ | `full_name` | **data-models/[dominio].md** — apenas aqui |
+| Label Dev | camelCase, português, autoexplicativo | `nomeCompleto` | **data-models/[dominio].md** — apenas aqui |
+| Campo banco | snake_case, português ⚠️ | `nome_completo` | **data-models/[dominio].md** — apenas aqui |
 
-> ⚠️ Confirmar o padrão oficial de identificadores (idioma e caixa) antes de implementar.
+> ⚠️ Entidades e campos em **português**. Confirme apenas a caixa dos identificadores
+> (snake_case vs. UPPER_SNAKE_CASE) antes de implementar; em engenharia reversa,
+> transcreva a origem como está — não traduza.
 
 ---
 
@@ -82,7 +90,7 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 - **Campo (FK)** — Label Dev do campo que armazena a referência; termina em `Id`. É uma FK.
 - **Entidade origem** — entidade de onde vêm as opções; deve existir em "Modelos por domínio".
 - **Campo-valor** — o que é gravado no banco. Quase sempre o `id` da entidade origem.
-- **Campo-label** — Label Dev exibido na combobox (ex: `fullName`, `companyName`).
+- **Campo-label** — Label Dev exibido na combobox (ex: `nomeCompleto`, `razaoSocial`).
 - **Endpoint origem** — rota de coleção que retorna as opções (paginada, com `?search=` para autocomplete). **Nunca** um endpoint novo dedicado — reusa a coleção da entidade.
 - **Filtro de origem** — restrição de negócio sobre quais registros podem aparecer (ex.: "apenas ativos").
 

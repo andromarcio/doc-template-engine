@@ -247,6 +247,8 @@ definir se é formulário, modal, botão em lista ou página própria.]
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data de geração] | [Claude / autor] | Feature criada | N3 negocial gerado a partir de transcrição de reunião |

@@ -20,6 +20,8 @@ seguir diretamente para implementar.
 
 ### Regras de geração
 
+> **Fidelidade ao protótipo:** para telas cuja feature (N3) declara `Fidelidade ao protótipo: obrigatória`, o design **referencia o protótipo aprovado** (`prototypes/…`) como fonte de verdade do layout, componentes e estados — não reinterprete a tela pelo texto; desvio vira decisão 🏛️ e exige aprovação.
+
 1. **Referência, não repetição.** Sempre que uma regra ou campo já
    estiver definido nas specs, referencie o artefato de origem em vez
    de copiar o conteúdo. Use a notação: `→ ver [arquivo]: [seção]`
@@ -143,55 +145,50 @@ Request → [Middleware de Auth] → [Route Handler]
 
 ---
 
-## 3. Design do banco de dados
+## 3. Modelo de dados
 
-### 3.1 Diagrama entidade-relacionamento
-[Diagrama em texto das entidades cobertas por este SDD,
-com seus campos e relacionamentos.]
+> **Fonte única — não redefina o schema aqui.** A definição física do banco —
+> entidades, campos (Label Dev, campo banco, tipo SQL), chaves estrangeiras,
+> índices, restrições de unicidade e enums — vive **exclusivamente** no DATA-MODEL
+> (`global/DATA-MODEL.md` + os fragmentos `global/data-models/[dominio].md`). O SDD
+> **referencia**; **não** copia colunas, tipos, constraints, DDL nem `CREATE TABLE/
+> TYPE/INDEX`. Se o design exigir um campo, índice ou enum **novo**, **pare**:
+> proponha-o primeiro no DATA-MODEL (via PROMPT_1B/3B) e só então cite-o aqui.
 
-```
-[Entidade A]                    [Entidade B]
-├── id (uuid, PK)               ├── id (uuid, PK)
-├── organization_id (FK)        ├── organization_id (FK)
-├── [campo] ([tipo])    1──N    ├── entity_a_id (FK)
-└── ...                         └── ...
-```
+### 3.1 Entidades no escopo
 
-### 3.2 Tabelas
+→ Definição física completa: ver `DATA-MODEL.md` (índice) e os fragmentos
+`global/data-models/[dominio].md` dos domínios cobertos.
 
-Para cada tabela envolvida no escopo:
+| Entidade | Domínio | Fragmento (data-model) | N3 de origem |
+|---|---|---|---|
+| [Entidade] | [Domínio] | [data-models/[dominio].md](../global/data-models/[dominio].md) | [f-[verbo]-[entidade].md] |
 
-#### [nome_da_tabela]
-→ Entidade de origem: ver [N1/domínio]: [Entidade]
+### 3.2 Relacionamentos relevantes ao design
 
-| Campo | Tipo | Constraints | Índice | Notas |
-|---|---|---|---|---|
-| id | uuid | PK, NOT NULL | PK | Gerado pelo banco |
-| organization_id | uuid | FK, NOT NULL | INDEX | → organizations.id |
-| [campo] | [tipo] | [constraints] | [sim/não] | [notas] |
+[Descreva, em nível de **design**, apenas como as entidades **já definidas no
+DATA-MODEL** se combinam para esta solução (quem lê/escreve o quê, cardinalidade
+relevante à arquitetura). **Não** reescreva colunas, tipos ou FKs — cite cada
+relacionamento por referência.]
 
-**Índices adicionais**:
-```sql
-CREATE INDEX idx_[tabela]_[campo] ON [tabela]([campo]);
--- Justificativa: [por que este índice é necessário]
-```
+→ ver `DATA-MODEL.md`: **Relacionamentos** e **Relacionamentos de seleção (comboboxes)**.
 
-**Enums**:
-```sql
-CREATE TYPE [nome_enum] AS ENUM ('[valor1]', '[valor2]');
--- Usado em: [tabela].[campo]
--- → ver FIELD-DICTIONARY: [campo] (se aplicável)
-```
+### 3.3 Estratégia de migração
 
-### 3.3 Migrations
+[Apenas a **ordem** e a **estratégia** de aplicação das mudanças de schema que o
+DATA-MODEL já especifica: sequência, backfill de dados, reversibilidade, janela de
+downtime. **Não** reescreva o DDL — o conteúdo de cada migration (colunas, tipos,
+índices, enums) é o que o DATA-MODEL define; aqui registra-se só o **plano** de
+aplicá-lo.]
 
-Lista de migrations a criar, em ordem de execução:
+| Ordem | Mudança | Entidade/seção no DATA-MODEL | Estratégia |
+|---|---|---|---|
+| 001 | Criar tabela de [Entidade] | Entidade [Nome] | tabela nova |
+| 002 | Índices de [Entidade] | Índices e restrições de unicidade | — |
+| 003 | Enum [Nome] | Enums do sistema | — |
 
-| Ordem | Arquivo | O que faz |
-|---|---|---|
-| 001 | [timestamp]_create_[tabela].ts | Cria tabela [tabela] com campos base |
-| 002 | [timestamp]_create_[tabela]_indexes.ts | Índices de [tabela] |
-| 003 | [timestamp]_create_enum_[nome].ts | Enum [nome] |
+> Toda mudança listada aqui já deve constar no DATA-MODEL. Se algo índice/campo/enum
+> referido não estiver lá, **atualize o DATA-MODEL primeiro** — não o defina no SDD.
 
 ---
 

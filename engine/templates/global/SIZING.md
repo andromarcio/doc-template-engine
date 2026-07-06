@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # SIZING.md
 > Convenções de medição de tamanho funcional do sistema.
 > Fonte única de critérios para contagem APF e COSMIC.

@@ -44,9 +44,11 @@ window.DOKU_CONFIG = {
       section: "Fluxo de trabalho",
       items: [
         { title: "Como o método flui", page: "fluxo-de-trabalho", icon: "flow" },
+        { title: "Entrevista com o PO", page: "entrevista-po", icon: "book" },
         { title: "Triagem", page: "triagem", icon: "search" },
         { title: "História de usuário", page: "historia-usuario", icon: "ticket" },
         { title: "Rastreabilidade", page: "rastreabilidade", icon: "link" },
+        { title: "Mapa de rastreabilidade", page: "mapa-rastreabilidade", icon: "flow" },
       ],
     },
     {

@@ -13,6 +13,11 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
+
 Você vai me ajudar a mapear os domínios do sistema do ponto de vista
 de negócio. Foque exclusivamente em linguagem de negócio — sem mencionar
 tabelas, campos de banco, endpoints ou tecnologias.
@@ -64,6 +69,22 @@ uma de cada vez, aguardando minha resposta:
 > Para cada grupo: nome e uma linha do que engloba.
 > Pense em termos do que o usuário faz, não de como o sistema funciona."
 
+> **Atribua aqui o ID de cada Feature Set.** Para cada grupo identificado, proponha
+> uma **sigla de 3 letras maiúsculas** derivada do nome, formando o ID `[SIGLA]-[SFS]`
+> (ex.: no domínio `CAD`, "Fundos Geridos" → `CAD-GFG`), **única dentro do domínio**.
+> Confirme antes de seguir:
+> > "Feature Sets de **[área]** (`[SIGLA]`) e IDs propostos:
+> >
+> > | Feature Set | ID |
+> > |---|---|
+> > | [Nome] | [SIGLA]-[SFS] |
+> >
+> > Ajusto algum ou sigo?"
+>
+> Esse ID é **definitivo** e nasce no N1: o PROMPT_2A e os atalhos (CRUD/Wizard)
+> **reutilizam** essa sigla, não geram outra. Isso permite referenciar o Feature Set
+> (ex.: "vamos especificar `CAD-GFG`") antes mesmo de o N2 existir.
+
 **Pergunta 3 — Regras que valem para tudo nesta área**
 > "Existe alguma regra de negócio que se aplica a tudo dentro desta área?
 > Exemplos: 'qualquer ação exige aprovação de um gerente',
@@ -78,9 +99,10 @@ uma de cada vez, aguardando minha resposta:
 > > "⚠️ Isto é um requisito não-funcional ([categoria]). Não entra no N1 —
 > > proponho registrá-lo no NFR.md como [ID sugerido]. Confirma?"
 
-**Pergunta 4 — Relação com outras áreas**
-> "Esta área depende de informações de outras áreas para funcionar?
-> Outras áreas dependem desta? Descreva em linguagem de negócio."
+**Pergunta 4 — Integrações com outras áreas**
+> "Esta área **consome** informações de outras áreas para funcionar (leitura)?
+> Outras áreas **criam ou alteram** dados desta área (escrita)?
+> Para cada caso: qual área e qual informação, em linguagem de negócio."
 
 Com as respostas, gere o artefato parcial:
 
@@ -96,15 +118,17 @@ Com as respostas, gere o artefato parcial:
 [2-3 frases sobre o que faz]
 
 ### O que este domínio NÃO faz
-- [o que está fora do escopo e a qual domínio pertence]
+| Descrição | Pertence a |
+|---|---|
+| [o que está fora do escopo] | [Domínio responsável] |
 
 ---
 
 ## Feature Sets
 
-| Feature Set | Descrição |
-|---|---|
-| [Nome] | [descrição em uma linha] |
+| Feature Set | Arquivo de Especificação (N2) | Descrição | Features |
+|---|---|---|---|
+| **[Nome do Feature Set]** <small>[SIGLA]-[SFS]</small> | [[pasta]/README.md](./[pasta]/README.md) | [descrição em uma linha] | [N] |
 
 ---
 
@@ -114,18 +138,56 @@ Com as respostas, gere o artefato parcial:
 
 ---
 
-## Dependências com outros domínios
+## Integrações com outros domínios
 
-[descrição negocial — sem FK, joins ou nomes técnicos]
+### Leitura — domínios que consomem dados deste domínio
+| Domínio | O que consome | Como |
+|---|---|---|
+| [Domínio] | [entidade/campo em Label PO] | [a confirmar no PROMPT_1B] |
+
+### Escrita — domínios que criam ou alteram dados deste domínio
+| Domínio | O que altera | Situação |
+|---|---|---|
+| [Domínio] | [entidade/campo em Label PO] | [quando ocorre] |
 
 ---
 
 ## Changelog
 
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [data atual] | [Claude / autor] | N1 negocial criado | Gerado pelo PROMPT 1A |
+
+---
+
+*Última revisão: —*
+*Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
+
+> **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
+> parágrafo em **uma única linha contínua** (sem quebras internas). Comece com um **verbo
+> de responsabilidade/abrangência** — o domínio *responde por uma área*. Em ordem de
+> preferência: **1) "Responde por…"** (accountability sobre a área — combina com a seção
+> *O que este domínio NÃO faz*); **2) "Concentra…" / "Centraliza…"** (quando o foco é ser
+> fonte única); **3) "Governa…"** (domínios de regra/política). **Evite** verbos de ação
+> operacional (*Gerencia, Administra*) — eles puxam para o N2. Ordene as frases assim:
+> (1ª) o que o domínio responde e para quem · (2ª) o que mantém (entidades/dados
+> principais) · (3ª) quem o consome (papel transversal).
+> Exemplo (domínio **Clientes** `CLI`):
+> ```
+> ## Descrição
+> Responde por todo o cadastro e a gestão dos clientes da empresa, sendo a fonte única de identificação de pessoas físicas e jurídicas para os demais domínios. Mantém os dados cadastrais, a situação do cliente e seu histórico de relacionamento. É consumido por Vendas, Faturamento e Atendimento sempre que precisam identificar quem é o cliente.
+> ```
+
+> **Tabela de Feature Sets** — renderize cada Feature Set como
+> `**Nome** <small>[SIGLA]-[SFS]</small>` (nome em negrito + ID em `<small>`, mesmo
+> padrão das Features no N2). O **ID `[SIGLA]-[SFS]` é atribuído aqui no N1** (Pergunta 2)
+> e é definitivo — o PROMPT_2A o reutiliza. O link na coluna *Arquivo de Especificação
+> (N2)* (`./[pasta]/README.md`) e a contagem de **Features** (`[N]`) só são preenchidos
+> quando o Feature Set é detalhado no PROMPT_2A. O rodapé `*Links:*` também aponta para
+> os Feature Sets do domínio.
 
 Seções deixadas em branco para o PROMPT 1B:
 - Entidades e campos
@@ -171,3 +233,24 @@ Ao finalizar, informe:
 > "Parte negocial do N1 concluída. Para complementar com os campos,
 > entidades e integrações técnicas, use o PROMPT_1B passando
 > cada README.md gerado aqui como contexto."
+
+---
+
+## Checklist de conformidade do N1
+
+Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
+
+- [ ] Título exatamente `# Domínio: [Nome]`
+- [ ] Subtítulo em blockquote: `> **Nível 1** - Visão estratégica do domínio - [SIGLA]` (SIGLA de **3 letras maiúsculas** em crase, hífens `-`)
+- [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz` (tabela Descrição | Pertence a)
+- [ ] **Feature Sets**: tabela (Feature Set | Arquivo de Especificação (N2) | Descrição | Features); coluna *Feature Set* no formato `**Nome** <small>[SIGLA]-[SFS]</small>` com o **ID já atribuído** (`[SFS]` de 3 letras, único no domínio); link para `./[pasta]/README.md` na coluna *Arquivo*; rodapé `*Links:*` apontando para os Feature Sets
+- [ ] **Regras transversais de negócio**: lista numerada de **invariantes** (o *quê* a área garante) — qualidade do sistema (desempenho/segurança/auditoria) **não** entra aqui, vai para `global/NFR.md`
+- [ ] **Integrações com outros domínios**: tabelas de Leitura e Escrita em linguagem de negócio (a coluna *Como* pode ficar para o dev confirmar no PROMPT_1B)
+- [ ] **Changelog**
+- [ ] **Nenhuma** seção técnica: entidades, campos, dependências externas e regras de acesso ficam para o **PROMPT_1B** (que também confirma a coluna *Como* das Integrações)
+- [ ] Ao fechar todos os domínios: `modules/INDEX.md` negocial atualizado e cada N1 conferido contra o N0
+
+> **Gate determinístico** — após gravar o N1, rode `node scripts/validate-doc.mjs <arquivo>`.
+> Ele detecta o nível pelo subtítulo e exige as seções obrigatórias do N1 (Descrição +
+> `### O que este domínio NÃO faz`, Feature Sets, Regras transversais de negócio, Changelog).
+> O artefato só é conforme quando o validador retorna `✓` (sai com código 0).

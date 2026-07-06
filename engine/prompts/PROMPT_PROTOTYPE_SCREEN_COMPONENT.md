@@ -19,6 +19,9 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+> **Manifesto de fidelidade (obrigatório).** Ao gerar o(s) protótipo(s), registre/atualize a linha em `prototypes/INDEX.md` — caminho · N3 · **fidelidade** (lida da `## Superfície` do N3) · status **rascunho**. Na aprovação o status vira **aprovado** (quem/quando): só então a tela é contrato para a codificação. Telas `obrigatória` são verificadas na implementação pela checklist `node scripts/fidelity-checklist.mjs <pasta> <N3>`.
+
+
 Você vai gerar protótipos HTML de cada estado de tela de uma feature,
 focados **exclusivamente na área de conteúdo** — sem sidebar, topbar ou
 qualquer shell de aplicação.

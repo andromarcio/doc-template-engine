@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # CONTAGEM-PF.md
 > **Registro consolidado da contagem de Pontos de Função (APF / IFPUG CPM 4.3.1)**
 > do sistema. Reúne num só lugar **todos os Processos Elementares (PE)** — as

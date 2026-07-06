@@ -84,7 +84,7 @@ Confirme o que foi recebido e identifique o modo:
    com contagem de features
    *(Derive dos N2s ou do agrupamento dos N3s no Modo B)*
 
-4. **Regras transversais do domínio** — regras de negócio presentes em 2 ou
+4. **Regras transversais de negócio** — regras de negócio presentes em 2 ou
    mais Feature Sets do domínio; são candidatas a regra de domínio
    *(Cruze as seções "Regras de negócio" dos N3s ou N2s)*
 
@@ -145,13 +145,13 @@ Após aprovação, gere o arquivo completo seguindo o template N1:
 
 ## Feature Sets
 
-| Feature Set | Pasta | Descrição | Features |
+| Feature Set | Arquivo de Especificação (N2) | Descrição | Features |
 |---|---|---|---|
-| [Nome](./[pasta]/README.md) | `[dominio]/[pasta]/` | [descrição em uma linha] | [N] |
+| **[Nome do Feature Set]** <small>[SIGLA]-[SFS]</small> | [[pasta]/README.md](./[pasta]/README.md) | [descrição em uma linha] | [N] |
 
 ---
 
-## Regras transversais do domínio
+## Regras transversais de negócio
 
 1. [Regra que se aplica a todas as features deste domínio]
 
@@ -200,6 +200,8 @@ Após aprovação, gere o arquivo completo seguindo o template N1:
 ---
 
 ## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|

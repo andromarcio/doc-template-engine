@@ -70,10 +70,11 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 ---
 
-### 📥 Fase 0 — Preparação
+### 📥 Fase 0 — Visão e Preparação
 
 | # | Opção | O que faz |
 |---|---|---|
+| **N0** | Especificar Visão de Produto | Levanta propósito, personas, objetivos, KPIs, escopo, domínios previstos e tom de voz e gera `global/N0_PRODUCT_VISION.md` — o documento de referência mais alto e ponto de partida do fluxo **top-down** |
 | **HU** | Registrar história de usuário (ServiceNow) | Captura a história/item de backlog, mapeia as features que ela gera e cria o artefato em `_backlog/` — ponto de entrada do processo, com rastreabilidade história → spec |
 | **0** | Extrair insumos brutos | Organiza transcrições, PDFs, rascunhos e anotações em uma base estruturada para usar nas próximas fases |
 
@@ -96,11 +97,12 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 ---
 
-### ⚡ Atalho — CRUD padrão (N2 + N3)
+### ⚡ Atalhos por tipo de funcionalidade (N2 + N3)
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
 | **CR** | CRUD padrão — N2 + N3 das 5 operações | PO + Dev | A partir da descrição da entidade e da tabela de campos, gera o N2 do Feature Set e os N3 negociais de **Pesquisar, Cadastrar, Editar, Excluir e Visualizar** numa única sessão — derivando pesquisa/edição/exclusão/visualização do cadastro |
+| **WZ** | Wizard — N2 + N3 de processo guiado multi-etapas | PO + Dev | A partir da descrição do processo e da lista ordenada de etapas, gera o N2 e o N3 da **feature principal multi-etapas** (mais auxiliares: retomar rascunho, acompanhar status, cancelar) numa única sessão |
 
 ---
 
@@ -118,7 +120,10 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
+| **RV** | Revisar artefato (conformidade) | Analista / Tech Lead | Recebe **um** N0/N1/N2/N3/data-model, roda o gate determinístico e a revisão semântica (altitude, regra=invariante, fonte única de banco, canônicos, ⚠️) e devolve os itens a corrigir com severidade e rota — **não edita** |
 | **AU** | Deduplicar regras de negócio | Analista / Tech Lead | Varre N3s e detecta regras duplicadas, sobrepostas ou contraditórias entre features |
+| **AT** | Auditar elos história ↔ feature | Analista / Tech Lead | Varre `## Origem` dos N3, `## Rastreabilidade` das histórias e o `INDEX.md`; detecta elos unilaterais, ausências no índice e órfãos — garante que o caminho inverso (história → features) está consistente |
+| **PD** | Painel de pendências (o que falta especificar) | Analista / PO / Tech Lead | Varre `_backlog/`, READMEs de N2 e os N3 (⚠️) e **regenera** a seção `## Pendências de especificação` do `INDEX.md` — separando **existência** (falta N3) de **conteúdo** (lacunas em aberto), cada item com a rota para resolver |
 | **IV** | Investigar artefatos (delta → pending_changes) | PO + Analista | Cruza requisitos/delta com o que já existe e classifica cada bloco em `create`, `modify` ou `keep`; gera `pending_changes.md` para aprovação humana |
 | **EX** | Executar alterações aprovadas | Analista / Dev | Lê o `pending_changes.md` revisado e executa o prompt correto para cada item aprovado — um por vez, com confirmação entre eles |
 
@@ -192,6 +197,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **R3** | 1. MASTER.md *(se existir)* · 2. modules/INDEX.md + repos/[repo].md (do R0) *(ou domínio/SIGLA informados)* · 3. DATA-MODEL.md existente *(se houver)* · 4. **Documentação legada** (PDF/wiki/Word/planilha colados) · 5. **Código**: modelos · 6. Código: rotas/controllers · 7. Código: serviços · 8. Código: testes *(opcional)* · 9. Código: eventos/workers *(se houver)* |
 | **B2** | 1. N3s do Feature Set (todos) |
 | **B1** | 1. N2s do domínio (todos) · 2. modules/INDEX.md *(opcional, para mapear integrações)* · 3. N3s adicionais sem N2 *(opcional)* |
+| **N0** | 1. MASTER.md *(opcional — sigla, nome e descrição do produto; no Claude Code é lido do disco)* · 2. Descrição do produto em linguagem natural (problema, público, valor — coletada na sessão) · 3. modules/_base-conhecimento/[assunto].md *(opcional — saída do PROMPT_0)* |
 | **HU** | 1. Número da história no ServiceNow + descrição + critérios de aceite *(manual enquanto não há integração; via MCP no futuro)* · 2. modules/INDEX.md *(opcional — ajuda no roteamento)* · 3. N0_PRODUCT_VISION.md *(opcional)* |
 | **0** | 1. N0_PRODUCT_VISION.md *(opcional)* · 2. Insumos brutos (texto livre, transcrição, PDF colado) |
 | **1A** | 1. MASTER.md |
@@ -201,7 +207,10 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **3A** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. N1 *(opcional no bottom-up)* · 6. N2 *(opcional no bottom-up)* |
 | **RT** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. FIELD-DICTIONARY.md · 4. RULES-DICTIONARY.md · 5. MESSAGE-DICTIONARY.md · 6. Artefatos existentes N1/N2/N3 *(opcional — habilita atualização)* · 7. Transcrição da reunião |
 | **3B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 negocial aprovado |
+| **RV** | 1. O artefato a revisar (caminho no Claude Code, ou colado) · 2. global/DATA-MODEL.md + dicionários (FIELD/RULES/ERROR/MESSAGE) + N0/N1/N2 vizinhos *(sob demanda, para cruzamento)* |
 | **AU** | 1. RULES-DICTIONARY.md · 2. Trechos de regras transversais dos N1s relevantes · 3. N3s a varrer |
+| **AT** | 1. modules/INDEX.md *(no Claude Code é lido do disco)* · 2. Histórias em `modules/_backlog/*.md` (com a seção `## Rastreabilidade`) · 3. N3s a varrer (com a seção `## Origem`) |
+| **PD** | 1. modules/INDEX.md *(no Claude Code é lido do disco junto com a árvore `modules/`)* · 2. READMEs dos Feature Sets (N2) · 3. Histórias em `modules/_backlog/*.md` · 4. modules/_triagem/*.md *(opcional)* |
 | **IV** | 1. MASTER.md · 2. modules/INDEX.md · 3. RULES-DICTIONARY.md · 4. FIELD-DICTIONARY.md · 5. Delta / requisitos novos ou alterados · 6. Artefatos existentes afetados *(opcional — N3s, N2s relevantes)* |
 | **EX** | 1. MASTER.md · 2. pending_changes.md revisado · 3. Insumos específicos de cada item (coletados durante a execução) |
 | **4A** | 1. MASTER.md · 2. FIELD-DICTIONARY.md · 3. RULES-DICTIONARY.md · 4. N3 existente completo |
@@ -263,13 +272,18 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | R3 | PROMPT_CONVERSION.md |
 | B2 | PROMPT_N3_TO_N2.md |
 | B1 | PROMPT_N3_TO_N1.md |
+| RV | PROMPT_REVIEW.md |
 | AU | PROMPT_AUDIT_RULES_DEDUP.md |
+| AT | PROMPT_AUDIT_TRACE_LINKS.md |
+| PD | PROMPT_PENDENCIAS.md |
 | HU | PROMPT_BACKLOG.md |
+| N0 | PROMPT_N0_VISAO.md |
 | 0 | PROMPT_0_EXTRACTION.md |
 | 1A | PROMPT_1A_N1_negocio.md |
 | 1B | PROMPT_1B_N1_tecnico.md |
 | 2A | PROMPT_2A_N2_negocio.md |
 | CR | PROMPT_CRUD.md |
+| WZ | PROMPT_WIZARD.md |
 | 3A | PROMPT_3A_N3_negocio.md |
 | RT | PROMPT_TRANSCRICAO_REUNIAO.md |
 | 3B | PROMPT_3B_N3_tecnico.md |
@@ -330,3 +344,4 @@ Se um insumo obrigatório não estiver disponível, oriente como obtê-lo:
 | N2 do Feature Set | "Execute a opção **2A** para criar o N2 a partir do zero, ou **B2** para sintetizá-lo a partir dos N3s existentes." |
 | N3 negocial | "Execute a opção **3A** primeiro para criar a spec negocial desta feature." |
 | N3s para varredura (AU) | "Cole os arquivos N3 das features que deseja auditar. Não é obrigatório varrer o sistema inteiro de uma vez." |
+| Histórias/N3s para auditar elos (AT) | "Cole o `INDEX.md`, as histórias de `modules/_backlog/` e os N3 do escopo. No Claude Code, basta apontar o domínio — leio os arquivos do disco." |

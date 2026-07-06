@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # DESIGN-SYSTEM.md
 > Padrões de interface, componentes e escrita para produtos digitais.
 > Cole em sessões que envolvam criação ou alteração de telas.

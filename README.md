@@ -32,16 +32,17 @@ todo o resto.
 As **grandes áreas funcionais** do sistema (ex.: Vendas, Suporte, Usuários). Cada
 domínio recebe uma **sigla de 3 letras** como ID (ex.: `USR`) e descreve, em
 linguagem de negócio, o que faz, **o que explicitamente não faz** (e a quem isso
-pertence), seus Feature Sets, regras transversais e dependências com outros
-domínios. É a planta do sistema: mostra como ele se divide e como as partes se
+pertence), seus Feature Sets (cada um com link para o seu N2), regras transversais
+e integrações (leitura/escrita) com outros domínios. É a planta do sistema: mostra
+como ele se divide e como as partes se
 relacionam, sem entrar em telas ou campos.
 
 ### N2 — Feature Set
 
 Um **conjunto de funcionalidades** relacionadas dentro de um domínio (ex.: dentro
-de Vendas → Carrinho, Checkout). Herda a sigla do domínio e ganha a sua própria,
-formando o ID `[SIGLA]-[SFS]` (ex.: `USR-PRM`). Detalha a jornada principal do
-usuário (como um diagrama de fluxo), as features que o compõem, as telas
+de Vendas → Carrinho, Checkout). Seu ID `[SIGLA]-[SFS]` (ex.: `USR-PRM`) é definido
+já no N1, ao listar os Feature Sets do domínio; o N2 o reutiliza. Detalha a jornada principal do
+usuário (um diagrama de fluxo só para frente, sem caminho de volta), as features que o compõem, as telas
 envolvidas e — exclusivamente neste nível — as **permissões por perfil**. É a
 ponte entre a visão de domínio (N1) e a especificação fina de cada feature (N3).
 
@@ -123,10 +124,30 @@ História (ServiceNow STRYxxxxxxx)
   analisado e vira uma **regra de negócio** (se for invariante), um **`## Cenário`**
   (Gherkin, se for comportamento observável) ou **ambos** — rastreabilidade
   semântica, não apenas por ID.
+- **N3 → História (caminho inverso)**: para saber *quais features uma história
+  impactou*, o elo M:N é registrado nos três lugares — `## Origem` do N3, a tabela
+  `## Rastreabilidade` da história em `_backlog/` e o `INDEX.md`. O `PROMPT_3A`/`4A`
+  fecham os três na mesma passada; a auditoria **AT** (`PROMPT_AUDIT_TRACE_LINKS`)
+  detecta elos unilaterais.
 - **N3 → código**: seção `## Implementação` do N3 (repositório + caminho) e a
   tabela de rastreabilidade do `modules/INDEX.md`.
 - **No git**: commits e PR seguem a convenção
   `tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])`.
+
+### Painel de pendências: o que falta especificar
+
+Para ver **num só lugar** tudo que está pendente de especificar, o prompt
+**`PROMPT_PENDENCIAS`** (opção **PD** no menu) varre as fontes e **regenera** a seção
+`## Pendências de especificação` do `modules/INDEX.md`, separando:
+
+- **Existência** — algo é conhecido como necessário mas **ainda não tem N3** (histórias
+  do `_backlog/` a especificar, features citadas num N2 sem o `.md`, etc.);
+- **Conteúdo** — o artefato **existe**, mas tem lacunas em aberto (marcadores `⚠️`).
+
+A seção é **gerada, não mantida à mão**: a fonte de verdade continua distribuída
+(`_backlog/`, READMEs de N2, N3 com ⚠️) e o INDEX apenas **espelha** a visão — mesmo
+princípio do `CONTAGEM-PF.md`. Cada item linka de volta à fonte e traz a **rota** para
+resolvê-lo (**3A/CRUD/2A/1A** para existência, **4A/4B** para conteúdo).
 
 ## Estrutura
 
@@ -136,8 +157,9 @@ engine/
 │                 # NFR, protótipos, engenharia reversa, QA, conversão, etc.
 └── templates/    # esqueletos de documentação
     ├── global/   # N0, MASTER, DATA-MODEL, NFR, dicionários (FIELD/RULES/
-    │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, DESIGN-SYSTEM
-    ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de usuário)
+    │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, AUTHZ, DESIGN-SYSTEM
+    ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de
+    │             # usuário · _base-conhecimento: insumos extraídos pelo PROMPT_0)
     ├── prototypes/
     └── repos/
 docs/             # site de documentação (template para GitHub Pages)
@@ -173,13 +195,77 @@ Os prompts e templates são **conteúdo reutilizável**, consumidos por:
 O método foi desenhado para uso com as skills `analista-requisitos` (especificação
 N0–N3) e `apf-cpm` (Análise de Pontos de Função, IFPUG CPM 4.3.1).
 
+### Instalando a skill na instância
+
+A skill `analista-requisitos` vive **neste** repositório, em
+[`.claude/skills/`](.claude/skills/). O Claude Code (CLI, VS Code, JetBrains) só
+**descobre e aciona** skills automaticamente quando elas estão em uma destas pastas:
+
+- `<repositório-aberto>/.claude/skills/` — skills do projeto (a instância);
+- `~/.claude/skills/` — skills pessoais, válidas para todos os projetos da máquina.
+
+Portanto, **abrir o repositório da instância (ex.: `simpf-doc`) não dá acesso à
+skill** se ela não estiver fisicamente lá. Se a skill não aparece ao digitar `/` no
+chat — ou o agente conduz a especificação "na mão" sem entrar no fluxo de estados —
+é porque ela não foi instalada na instância. Instale com o script:
+
+```bash
+# a partir do checkout do doc-template-engine:
+./scripts/install-skill.sh ../simpf-doc   # instala em simpf-doc/.claude/skills/
+./scripts/install-skill.sh --user         # ou para todos os projetos (~/.claude/skills/)
+```
+
+Ou manualmente: `cp -R .claude/skills/analista-requisitos /caminho/da/instância/.claude/skills/`.
+
+Reexecute o script após atualizar a engine para propagar a versão nova da skill.
+
+> **Modelos menores (Haiku):** o auto-acionamento por descrição é menos agressivo
+> que no Sonnet/Opus. O `CLAUDE.md` da instância já instrui o agente a usar a skill
+> em sessões de especificação; ainda assim, se ela não disparar sozinha, invoque-a
+> explicitamente no chat (ex.: *"use a skill analista-requisitos"*).
+
+### Contexto persistente do projeto
+
+Para que o agente **sempre** tenha o contexto do sistema sendo especificado — sem
+recolá-lo a cada sessão — a instância mantém na sua raiz um `CLAUDE.md` (template em
+[`engine/templates/global/CLAUDE.md`](engine/templates/global/CLAUDE.md)). O Claude
+Code o lê automaticamente no início de toda sessão; ele é um **índice enxuto** que
+importa o contexto mínimo (`global/MASTER.md`, `global/N0_PRODUCT_VISION.md`,
+`modules/INDEX.md`). Os demais arquivos (dicionários, data-models, N1–N3) seguem
+lidos **sob demanda** pela skill `analista-requisitos`, que carrega esse índice na
+abertura da sessão.
+
+## Versionamento
+
+O framework é versionado em [`VERSION`](VERSION) (SemVer) com histórico em
+[`CHANGELOG.md`](CHANGELOG.md). A cada evolução do engine, faça o *bump* de `VERSION`
+e registre a mudança no changelog.
+
+Todo artefato gerado **ou atualizado** pelos prompts recebe um **carimbo de versão
+invisível** na primeira linha — um comentário HTML que não aparece no documento
+renderizado (PDF/HTML/preview do GitHub), só no source `.md`:
+
+```
+<!-- doc-template-engine: 1.0.0 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
+```
+
+Assim dá para auditar com que versão do framework cada artefato foi produzido, sem
+poluir o que o leitor de negócio vê. A regra completa está em
+[`engine/VERSIONING.md`](engine/VERSIONING.md); no fluxo copy-paste/CLI, o helper
+[`scripts/stamp.sh`](scripts/stamp.sh) insere/atualiza o carimbo de forma determinística:
+
+```bash
+./scripts/stamp.sh ../simpf-doc/modules/cadastro/clientes/f-cadastrar-cliente.md PROMPT_3A
+```
+
 ## Contribuindo
 
 Contribuições são bem-vindas via Pull Request. Diretrizes:
 
 - mantenha cada **prompt auto-contido** (sem depender de arquivos fora do `engine/`);
 - nos **templates**, use placeholders `[entre colchetes]` para o que a instância preenche;
-- um arquivo, um propósito — siga a convenção de nomes existente.
+- um arquivo, um propósito — siga a convenção de nomes existente;
+- toda evolução relevante faz *bump* de [`VERSION`](VERSION) + entrada no [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Licença
 

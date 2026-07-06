@@ -1,3 +1,4 @@
+<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 ---
 # ─────────────────────────────────────────────────────────────────
 # METADADOS MACHINE-READABLE (front-matter)
@@ -38,7 +39,18 @@ status: rascunho                    # rascunho | especificado | em-desenvolvimen
 > **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não] *(P1 = entra no incremento mínimo; ordena as user stories na exportação ao spec-kit)*
 
 ## Descrição
-[Descrição em 1-2 frases do que esta feature faz, em linguagem de negócio,
+
+<!--
+  O CONTRATO DE ENTREGA da feature (FEATURE-DEFINITION.md, FD-8): 1-2 frases de
+  negócio, para alguém que nunca viu o sistema, respondendo "o que eu ganho quando
+  esta feature estiver pronta?". Entrega ÚNICA (uma coisa, e desta feature — não
+  copie a descrição de outra), TANGÍVEL (ação + resultado, não intenção: nada de
+  "facilita/otimiza/melhora a experiência", "etc.", "de forma eficiente") e
+  NEGOCIAL (sem endpoint/API/banco — Modo PO).
+  Fórmula sugerida: "Permite que [ator] [ação] [entidade], [resultado observável]."
+-->
+
+[Descrição em 1-2 frases do que esta feature ENTREGA, em linguagem de negócio,
 para alguém que nunca viu o sistema.]
 
 ---
@@ -77,6 +89,9 @@ para alguém que nunca viu o sistema.]
 
 **[Tela própria | Ação em tela]** — [se tela própria: rota `/...`; se ação em tela: origem: [Feature/Tela] (`/rota`)]
 
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[feature-set]/[feature]/[estado].html`]
+<!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo. A fidelidade "obrigatória" é checada pelo validador. -->
+
 ---
 
 ## Regras de negócio
@@ -99,7 +114,7 @@ para alguém que nunca viu o sistema.]
 
 1. [Regra específica desta feature em linguagem de negócio]
    → ver RULES-DICTIONARY: [nome da regra] *(se for regra canônica)*
-   → ver [N1 do domínio]: Regras transversais: [N] *(se for regra de domínio)*
+   → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
 
 2. [Regra específica]
 
@@ -181,7 +196,18 @@ Feature: [Nome da feature em linguagem natural]
 
 *[Notas sobre dependências entre campos, se houver.]*
 
-### Campos preenchidos automaticamente pelo sistema
+---
+
+## Colunas do resultado
+<!-- Apenas para features de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em features que NÃO são de busca, OMITA esta seção. -->
+
+| Coluna (Label PO) | Origem | Ordenação |
+|---|---|---|
+| [campo exibido] | cadastro / entidade relacionada / derivado | padrão ↑ / ordenável / — |
+
+---
+
+## Campos automáticos
 
 | Label PO | Valor | Quando |
 |---|---|---|
@@ -392,6 +418,16 @@ logAction({
 -->
 
 **Rastreabilidade no git**: commits/PR referenciam o ID da feature e a história — `tipo([SIGLA]-[SFS]-[NN]): [resumo] (ServiceNow [STRYxxxxxxx])`
+
+---
+
+## Changelog
+
+<!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
+
+| Data | Autor | Tipo | Descrição |
+|---|---|---|---|
+| [AAAA-MM-DD] | [autor] | Feature criada | [descrição] |
 
 ---
 
