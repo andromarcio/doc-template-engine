@@ -49,6 +49,7 @@ window.DOKU_CONFIG = {
         { title: "História de usuário", page: "historia-usuario", icon: "ticket" },
         { title: "Rastreabilidade", page: "rastreabilidade", icon: "link" },
         { title: "Mapa de rastreabilidade", page: "mapa-rastreabilidade", icon: "flow" },
+        { title: "Esteira de checkpoints", page: "esteira-checkpoints", icon: "flow" },
       ],
     },
     {

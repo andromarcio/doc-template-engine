@@ -5,7 +5,7 @@
 > **Entrada**: N3 **técnicos aprovados** (3B concluído) de um Feature Set + artefatos globais
 > **Saída**: workspace que o **spec-kit vanilla** consome — `.specify/memory/constitution.md`,
 > `.specify/feature.json`, `specs/NNN-[feature-set]/{spec.md, plan.md, data-model.md, contracts/, quickstart.md}`
-> **Pré-requisito**: todos os N3 do escopo com `status: especificado` no front-matter e no `INDEX.md`
+> **Pré-requisito**: todos os N3 do escopo com `estado: especificado` no front-matter (gates CP1+CP2+CP3 aprovados na esteira de checkpoints) e no `INDEX.md`
 > **Próximo passo (fora deste prompt)**: no projeto-alvo, rodar o spec-kit **vanilla**:
 > `/speckit.tasks` → (opcional `/speckit.analyze`) → `/speckit.implement`
 
@@ -72,7 +72,7 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 === N2 DO FEATURE SET ===
 [cole/leia modules/[dominio]/[feature-set]/README.md]
 
-=== N3(s) DO FEATURE SET (técnicos, status: especificado) ===
+=== N3(s) DO FEATURE SET (técnicos, estado: especificado) ===
 [cole/leia todos os .md de feature do Feature Set]
 
 ---
@@ -82,8 +82,8 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 **Não exporte** se qualquer item abaixo falhar. Apresente um relatório e pare.
 
 ```
-[ ] Todos os N3 do escopo têm front-matter com status: especificado (3B concluído)?
-[ ] O status no modules/INDEX.md de cada feature é 📋 Especificado?
+[ ] Todos os N3 do escopo têm front-matter com estado: especificado (gates requisitos+modelo-dados+testes aprovados)?
+[ ] O estado no modules/INDEX.md de cada feature é 📋 especificado?
 [ ] Todo campo de cada N3 resolve em data-models/[dominio].md (Label PO → Label Dev → campo banco)?
 [ ] Todo error_code do front-matter existe no ERROR-DICTIONARY.md?
 [ ] Todo endpoint do front-matter tem seção ## API correspondente no N3?

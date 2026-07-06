@@ -304,14 +304,17 @@ Após aprovação, gere o arquivo completo:
 
 > **Nota (front-matter)**: atualize o bloco YAML do topo com o que foi definido aqui —
 > `endpoints` (espelha `## API`), `error_codes` (espelha `## Mapeamento de erros`),
-> `data_model_ref` (entidade confirmada), `depende_de` (N3 pré-requisito) e
-> `status: especificado`. Preserve a linha `> **Prioridade** … **MVP** …` do 3A. Esse
+> `data_model_ref` (entidade confirmada) e `depende_de` (N3 pré-requisito). **Não toque**
+> em `estado`/`gates`: o ciclo de vida é governado pela esteira de checkpoints
+> (`scripts/gates.py`) — `estado: especificado` só é alcançado aprovando os gates
+> CP1→CP2→CP3, um por PR. Preserve a linha `> **Prioridade** … **MVP** …` do 3A. Esse
 > espelho é o que torna a exportação ao spec-kit (`PROMPT_SPECKIT_EXPORT`) determinística.
 
 **Estrutura obrigatória** — respeitar exatamente esta ordem e headings, sem adicionar seções ou elementos não listados:
 ```
 ---                                  ← front-matter: ATUALIZAR endpoints, error_codes,
-                                        data_model_ref, depende_de, status: especificado
+                                        data_model_ref, depende_de (estado/gates: não tocar —
+                                        governados pela esteira de checkpoints)
 ---
 # [Nome]
 > **Prioridade**: P? · **MVP**: sim/não   ← preservar do 3A

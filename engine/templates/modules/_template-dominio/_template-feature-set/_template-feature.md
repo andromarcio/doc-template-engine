@@ -22,7 +22,19 @@ endpoints: []                       # ex.: ["POST /api/v1/recurso"] — preenche
 error_codes: []                     # ex.: ["ENTIDADE_ERRO"] — preencher no 3B
 depende_de: []                      # ex.: ["SIGLA-SFS-01"]
 servicenow: [STRYxxxxxxx]
-status: rascunho                    # rascunho | especificado | em-desenvolvimento | implementado | deprecado
+# ── Esteira de checkpoints (gates) ───────────────────────────────
+# Fonte de verdade do ciclo de vida desta feature, validada por scripts/gates.py.
+# 'estado' é DERIVADO dos gates (não editar à mão): rascunho → requisitos-aprovados
+# → modelo-validado → especificado → implementado. Manuais: em-desenvolvimento,
+# revisao-necessaria, deprecado.
+# Ordem dos checkpoints (não pule etapas): requisitos → modelo-dados → testes → codigo.
+# Ao aprovar um gate: aprovado: true e preencha 'por' e 'em' (AAAA-MM-DD).
+estado: rascunho
+gates:
+  requisitos:   { aprovado: false, por: "", em: "", pr: "" }   # CP1 — PO/Negócio (3A)
+  modelo-dados: { aprovado: false, por: "", em: "", pr: "" }   # CP2 — DBA/Arquiteto (DATA-MODEL/3B)
+  testes:       { aprovado: false, por: "", em: "", pr: "" }   # CP3 — QA (5B)
+  codigo:       { aprovado: false, por: "", em: "", pr: "" }   # CP4 — Tech Lead (code review)
 ---
 
 <!--
@@ -414,7 +426,10 @@ logAction({
 |---|---|---|---|
 | [endpoint/componente/job] | [repo] | [caminho no repo] | `main` |
 
-**Status**: `[ ] Especificado` · `[ ] Em desenvolvimento` · `[ ] Implementado` · `[ ] Deprecado`
+**Status**: definido pela **esteira de checkpoints** no front-matter (`estado` + `gates`)
+no topo deste arquivo — não duplicar aqui. `📋 especificado` = pronto para desenvolvimento
+(CP1+CP2+CP3 aprovados); `✅ implementado` = CP4 (code review) aprovado. Para sinalizar
+trabalho em andamento, declare `estado: em-desenvolvimento`. Ver `docs` da esteira de gates.
 
 <!--
   Elo spec → código. Para que a cadeia História → N3 → código fique completa,

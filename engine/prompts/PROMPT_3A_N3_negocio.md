@@ -493,7 +493,12 @@ endpoints: []
 error_codes: []
 depende_de: []
 servicenow: [STRYxxxxxxx ou vazio]
-status: rascunho
+estado: rascunho
+gates:
+  requisitos:   { aprovado: false, por: "", em: "", pr: "" }
+  modelo-dados: { aprovado: false, por: "", em: "", pr: "" }
+  testes:       { aprovado: false, por: "", em: "", pr: "" }
+  codigo:       { aprovado: false, por: "", em: "", pr: "" }
 ---
 
 # [Nome da Feature — exatamente como consta no N2]
