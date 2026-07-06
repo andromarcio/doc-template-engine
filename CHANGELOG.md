@@ -42,6 +42,14 @@ Correções de consistência entre as peças após a consolidação das branches
 - Site (`docs/content/entrevista-po.md`) — duas âncoras intra-página usavam hash
   simples (`#secao`), que o roteador interpreta como página e derrubava o conteúdo
   ("Página não encontrada"); corrigidas para o formato do app (`#/pagina#secao`).
+- `build-trace-data.mjs` — alinhado ao comportamento do `generate-trace-index.mjs`
+  nos dois pontos em que os geradores do grafo divergiam: **(1)** feature set sem
+  README de N2 (fluxo bottom-up legítimo: N3 antes de N2) agora vira nó — pela
+  tabela `## Feature Sets` do N1 ou, em último caso, sintetizado do ID da feature —
+  em vez de deixar as features soltas no mapa; **(2)** a linha-placeholder `| — |`
+  da tabela `## Implementação` não vira mais um nó de repositório "—" (filtro em
+  `lib/trace-index.mjs`). Na fixture `loja-acme`, os dois geradores passam a
+  produzir o mesmo grafo (21 nós, 26 arestas).
 
 ## [1.4.0] - 2026-07-06
 

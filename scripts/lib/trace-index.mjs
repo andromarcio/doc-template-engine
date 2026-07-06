@@ -152,7 +152,7 @@ export function scanInstance(root) {
       for (const row of tableRowsOf(impl.lines)) {
         const cells = splitRow(row);
         const repo = (cells[1] || '').replace(/[`[\]]/g, '').trim();
-        if (repo && !/^\[?repo\]?$/i.test(repo) && !isPlaceholderCell(cells[1] || '')) feat.implRepos.push(repo);
+        if (repo && !/^[—–-]+$/.test(repo) && !/^\[?repo\]?$/i.test(repo) && !isPlaceholderCell(cells[1] || '')) feat.implRepos.push(repo);
       }
       const st = impl.lines.find((l) => /\*\*Status\*\*/.test(l));
       if (st) {
