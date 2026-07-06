@@ -16,6 +16,43 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-07-06
+
+**Esteira de checkpoints (gates)**: o ciclo de vida de cada N3 (requisitos →
+modelo de dados → testes → código) vira uma máquina de estados validada por
+script — a próxima etapa só ocorre após a aprovação humana da anterior, e o
+estado vive no próprio `.md` (portátil com `git clone`).
+
+### Added
+- `engine/templates/scripts/gates.py` — máquina de estados da esteira: `check`
+  (valida transições no PR: não pular etapas, 1 gate por PR, `por`/`em`
+  preenchidos, `estado` consistente com os gates), `status` (readiness de todas
+  as features) e `promote --write` (regenera a seção espelho do `INDEX.md`).
+- `engine/templates/.github/` — kit de governança para as instâncias:
+  `CODEOWNERS` (aprovador por papel: PO/DBA/QA/Tech Lead), template de PR de
+  aprovação de gate, `workflows/gate-check.yml` (check obrigatório no PR) e
+  `workflows/promote-estado.yml` (espelha o estado no INDEX a cada merge).
+- Front-matter do `_template-feature.md` — bloco `estado` + `gates`
+  (CP1 requisitos, CP2 modelo-dados, CP3 testes, CP4 codigo) ao lado dos
+  metadados spec-kit; `estado` é derivado dos gates, não editado à mão.
+- `docs/content/esteira-checkpoints.md` — página do site documentando a esteira.
+
+### Changed
+- O campo `status` do front-matter foi **absorvido pelo `estado`** da esteira
+  (vocabulário: rascunho, requisitos-aprovados, modelo-validado, especificado,
+  em-desenvolvimento, implementado, revisao-necessaria, deprecado). A linha
+  manual `**Status**: [ ] Especificado…` do corpo do N3 saiu — o INDEX.md e a
+  legenda usam os estados da esteira.
+- `PROMPT_3A` gera o N3 já com `estado: rascunho` + bloco `gates`; `PROMPT_3B`
+  não altera mais o ciclo de vida (só os campos-espelho); `PROMPT_SPECKIT_EXPORT`
+  exige `estado: especificado` (CP1+CP2+CP3 aprovados) como pré-requisito.
+
+### Fixed
+- `gates.py::parse_front_matter` tolera o carimbo de versão
+  (`<!-- doc-template-engine: … -->`) que `scripts/stamp.sh` grava na primeira
+  linha de todo artefato — sem isso, nenhum N3 carimbado seria enxergado pela
+  esteira (check/promote pulariam todos, silenciosamente).
+
 ## [1.3.1] - 2026-07-04
 
 ### Fixed
