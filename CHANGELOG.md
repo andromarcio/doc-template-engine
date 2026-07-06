@@ -22,6 +22,15 @@ Consolidação pós-merge: correções de consistência entre as peças e entreg
 faltantes que as referências do engine já assumiam como existentes.
 
 ### Added
+- `.claude/skills/apf-cpm/` — a skill de Análise de Pontos de Função (IFPUG
+  CPM 4.3.1) que o `PROMPT_CONTAGEM` (opção CT) declara obrigatória e o
+  README/docs citam, mas que não existia no engine; trazida do `simpf-doc`
+  (o `install-skill.sh` já a instala junto). *(mergeado direto na main)*
+- `engine/templates/global/ALI-AIE-MAP.md` — template semente do registro
+  canônico de ALI/AIE exigido pela contagem (CT, `PROMPT_3B`,
+  `CONTAGEM-PF.md`); generalizado do `sifof-doc` — o arquivo real da
+  instância nasce dele na 1ª contagem e cresce incrementalmente.
+  *(mergeado direto na main)*
 - `engine/templates/prototypes/_biblioteca-ds/` — a biblioteca de componentes
   (`.dsc-*`, CAIXA DS) que o `DESIGN-SYSTEM.md`, os prompts de protótipo
   (6A–6D) e a skill `/prototype` referenciavam como "pronta", mas que **nunca
