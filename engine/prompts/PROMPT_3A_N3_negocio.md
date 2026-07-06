@@ -343,6 +343,21 @@ Pergunte ao usuário apenas o que a derivação não responde:
 
 ---
 
+## PASSO 1.6 — Prioridade e MVP
+
+Capture a **prioridade de entrega** da feature — ela alimenta o front-matter
+(`prioridade`/`mvp`) e ordena as user stories na exportação ao spec-kit
+(1 N3 = 1 user story; P1 entra no incremento mínimo).
+
+> "Qual a prioridade de entrega desta feature dentro do Feature Set?
+> **P1** = incremento mínimo (MVP) · **P2** / **P3** = incrementos seguintes."
+
+- Em **Modo A**, sugira a prioridade pela ordem/dependências já expressas no N2 e
+  confirme. Mantenha coerência com a coluna *Prioridade* da tabela de Features do N2.
+- Registre `prioridade` e `mvp` (true se P1) para usar no PASSO 3.
+
+---
+
 ## PASSO 2 — Coleta negocial por blocos
 
 Para cada feature, percorra os blocos abaixo em ordem.
@@ -466,9 +481,26 @@ Com as respostas de todos os blocos, gere:
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
+---
+id: [ID do N2 — ex.: SIGLA-SFS-NN]
+feature_set: [SIGLA]-[SFS]
+dominio: [SIGLA]
+entidade: [Entidade principal]
+prioridade: [P1 | P2 | P3]
+mvp: [true | false]
+data_model_ref: data-models/[dominio].md#[entidade]
+endpoints: []
+error_codes: []
+depende_de: []
+servicenow: [STRYxxxxxxx ou vazio]
+status: rascunho
+---
+
 # [Nome da Feature — exatamente como consta no N2]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Domínio: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
 <!-- Este é o CÓDIGO DA FEATURE (SIGLA do domínio + SFS do Feature Set + NN sequencial da feature, ex.: `CAD-CLI-01`) — NÃO o ID do Feature Set (`CAD-CLI`). Modo A: copie o código EXATO que a feature tem na tabela de Features do N2 (aparece em `<small>SIGLA-SFS-NN</small>`). Modo B (bottom-up): atribua provisório e ⚠️ confirme via B2. Nunca omita o `-NN`. -->
+> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não]
+<!-- ID — Modo A: ID do N2 (ex: F01) | Modo B: [SIGLA]-[SFS]-[NN] ⚠️ provisório -->
 
 ## Descrição
 [1-2 frases de negócio que declaram a ENTREGA — única, tangível e negocial (FEATURE-DEFINITION.md, FD-8). Fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]." Sem "etc."/"de forma eficiente", sem termo técnico, sem repetir a descrição de outra feature]
@@ -550,6 +582,14 @@ Com as respostas de todos os blocos, gere:
 
 ---
 
+## Critérios de sucesso
+
+| # | Critério mensurável | Origem |
+|---|---|---|
+| SC-01 | [resultado observável e medível, em linguagem de negócio] | [cenário / → ver NFR: [ID] / negócio] |
+
+---
+
 ## Changelog
 
 <!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
@@ -563,6 +603,11 @@ Com as respostas de todos os blocos, gere:
 *Feature Set: [Nome] · Domínio: [Nome] · Última revisão: —*
 *Links: [N2 do Feature Set](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
+
+**Preenchimento dos `Critérios de sucesso`**: derive 1–3 critérios **mensuráveis** e
+**agnósticos de tecnologia** a partir dos cenários e dos NFR herdados (consulte o
+`NFR.md` no contexto). Não invente métricas — se a feature não tiver métrica própria,
+referencie o NFR aplicável (`→ ver NFR: [ID]`). Apresente para confirmação do usuário.
 
 **Formato do bloco Gherkin** (seção `## Cenários`):
 ```gherkin
