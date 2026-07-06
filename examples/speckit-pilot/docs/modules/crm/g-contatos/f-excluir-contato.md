@@ -15,7 +15,12 @@ error_codes:
 depende_de:
   - CRM-CTT-01
 servicenow: STRY0010003
-status: especificado
+estado: especificado
+gates:
+  requisitos:   { aprovado: true, por: "PO Ana Lima", em: "2026-06-17", pr: "#21" }
+  modelo-dados: { aprovado: true, por: "DBA Rui Prado", em: "2026-06-18", pr: "#22" }
+  testes:       { aprovado: true, por: "QA Bia Nunes", em: "2026-06-19", pr: "#23" }
+  codigo:       { aprovado: false, por: "", em: "", pr: "" }
 ---
 
 # Excluir Contato
@@ -97,7 +102,9 @@ Feature: Excluir Contato
 |---|---|---|---|
 | Contato | identificação (somente leitura) | sim | registro selecionado na lista |
 
-### Campos preenchidos automaticamente pelo sistema
+---
+
+## Campos automáticos
 
 | Label PO | Valor | Quando |
 |---|---|---|
@@ -209,12 +216,11 @@ components/contatos/DeleteModal.tsx   ← modal de confirmação
 |---|---|---|---|
 | endpoint DELETE | crm-app | app/api/v1/contatos/[id] | `main` |
 
-**Status**: `[x] Especificado` · `[ ] Em desenvolvimento` · `[ ] Implementado` · `[ ] Deprecado`
-
 ---
 
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-07-06 | Claude | Atualização | Migrada à esteira de checkpoints (`estado`/`gates`); seção canônica Campos automáticos |
 | 2026-06-19 | Claude | Feature criada | N3 completo (3A+3B) |

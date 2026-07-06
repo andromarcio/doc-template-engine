@@ -97,6 +97,20 @@ faltantes que as referências do engine já assumiam como existentes.
 - Site (`docs/content/esteira-checkpoints.md`) — a legenda listava 6 dos 8
   estados da esteira; entram `⚠️ revisao-necessaria` e `❌ deprecado`,
   alinhando com `gates.py` e com a legenda do `INDEX.md`.
+- `examples/speckit-pilot` atualizado à régua vigente — os 3 N3 reprovavam no
+  `validate-doc` (sem `## Campos automáticos`; a pesquisa também sem
+  `## Colunas do resultado`) e não tinham a esteira no front-matter, violando
+  o pré-requisito (`estado: especificado`) do próprio `PROMPT_SPECKIT_EXPORT`
+  que o exemplo demonstra. Seções canônicas incluídas, front-matter migrado
+  (`estado` + `gates` CP1–CP3 aprovados), linha `**Status**:` abolida removida
+  e as 3 histórias criadas em `modules/_backlog/` — o exemplo agora passa
+  limpo em `validate-doc`, `validate-feature-semantics` e `audit-trace-links`
+  ("elos consistentes nas três fontes"), e o `gates.py status` mostra as 3
+  features `📋 prontas para desenvolvimento`.
+- `CHANGELOG.md` ganha o rodapé de links de comparação do Keep a Changelog
+  (esquema `vX.Y.Z`; os links resolvem quando as tags de release forem
+  criadas) e `docs/content/rastreabilidade.md` alinha a âncora interna ao
+  formato do roteador (`#/pagina`).
 - Fixtures `loja-acme` migradas para a esteira da 1.4.0 — os 5 N3 ganham
   front-matter `estado`/`gates` (o `gates.py` finalmente tem fixture que o
   exercite) e perdem a linha manual `**Status**:`, abolida na 1.4.0. Junto,
@@ -417,3 +431,14 @@ todo estado novo fica **nos próprios `.md`** (portátil com `git clone`).
 ### Changed
 - `CLAUDE.md` template da instância: instrução explícita para acionar a skill
   `analista-requisitos` em sessões de especificação e para carimbar artefatos.
+
+<!-- Tags de release: criar `vX.Y.Z` no commit do bump correspondente (os links
+     abaixo passam a resolver quando as tags forem enviadas ao remoto). -->
+[Unreleased]: https://github.com/andromarcio/doc-template-engine/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.3.1...v1.4.0
+[1.3.1]: https://github.com/andromarcio/doc-template-engine/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/andromarcio/doc-template-engine/releases/tag/v1.0.0
