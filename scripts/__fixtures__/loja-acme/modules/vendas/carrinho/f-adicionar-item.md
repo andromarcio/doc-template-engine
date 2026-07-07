@@ -1,3 +1,12 @@
+---
+id: VND-CAR-01
+estado: implementado
+gates:
+  requisitos:  { aprovado: true, por: "PO Ana", em: "2026-06-18", pr: "#11" }
+  modelo-dados: { aprovado: true, por: "DBA Zé", em: "2026-06-22", pr: "#13" }
+  testes:      { aprovado: true, por: "QA Lia", em: "2026-06-26", pr: "#15" }
+  codigo:      { aprovado: true, por: "TL Bia", em: "2026-06-30", pr: "#17" }
+---
 # Adicionar ao Carrinho
 > **Nível 3** - Feature Set: Carrinho — Domínio: Vendas - `VND-CAR-01`
 
@@ -15,7 +24,6 @@ Cliente adiciona um produto ao carrinho.
 |---|---|---|---|
 | componente carrinho | loja-web | src/cart | `main` |
 
-**Status**: `[ ] Especificado` · `[ ] Em desenvolvimento` · `[x] Implementado` · `[ ] Deprecado`
 
 ## Métricas de tamanho
 **Total: 5 PF**

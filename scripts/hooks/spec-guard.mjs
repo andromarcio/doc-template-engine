@@ -60,6 +60,7 @@ function main() {
     if (!file) return 0;
     const path = String(file).replace(/\\/g, '/');
     if (/(^|\/)engine\//.test(path)) return 0;               // templates do motor — isentos
+    if (/(^|\/)__fixtures__\//.test(path)) return 0;         // fixtures de teste — violações intencionais
 
     const problems = [];
 

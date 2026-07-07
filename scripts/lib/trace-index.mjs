@@ -88,6 +88,19 @@ function firstLine(lines, re) {
   return lines.find((l) => re.test(l)) || null;
 }
 
+// `estado` da esteira de checkpoints no front-matter do N3 (1.4.0+) — a fonte
+// do ciclo de vida. Tolera o carimbo de versão (<!-- ... -->) na 1ª linha.
+export function frontMatterEstado(lines) {
+  let i = 0;
+  if (lines[i] && lines[i].startsWith('<!--')) i += 1;
+  if (!lines[i] || lines[i].trim() !== '---') return null;
+  for (i += 1; i < lines.length && lines[i].trim() !== '---'; i += 1) {
+    const m = lines[i].match(/^estado:\s*([a-z-]+)/);
+    if (m) return m[1];
+  }
+  return null;
+}
+
 export function levelId(lines) {
   const line = firstLine(lines, /> \*\*Nível [0-3]\*\*/);
   if (!line) return null;
@@ -134,7 +147,8 @@ export function scanInstance(root) {
     const id = levelId(lines);
     const feat = {
       kind: 'feature', id, file, path: rel(file), title: titleOf(lines),
-      origem: [], links: [], stamps: [], implRepos: [], statusImpl: null,
+      origem: [], links: [], stamps: [], implRepos: [],
+      estado: frontMatterEstado(lines), statusImpl: null,
     };
     const orig = sectionSlice(lines, 'Origem');
     if (orig) {
@@ -152,7 +166,7 @@ export function scanInstance(root) {
       for (const row of tableRowsOf(impl.lines)) {
         const cells = splitRow(row);
         const repo = (cells[1] || '').replace(/[`[\]]/g, '').trim();
-        if (repo && !/^\[?repo\]?$/i.test(repo) && !isPlaceholderCell(cells[1] || '')) feat.implRepos.push(repo);
+        if (repo && !/^[—–-]+$/.test(repo) && !/^\[?repo\]?$/i.test(repo) && !isPlaceholderCell(cells[1] || '')) feat.implRepos.push(repo);
       }
       const st = impl.lines.find((l) => /\*\*Status\*\*/.test(l));
       if (st) {

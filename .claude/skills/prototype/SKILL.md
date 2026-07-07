@@ -80,7 +80,7 @@ alternadas por JS (`showScreen`), seguindo as regras abaixo.
 
 2. **Biblioteca de componentes**: linke `../_biblioteca-ds/ds.css` e use as classes `.dsc-*`.
    Não redefina tokens nem recrie componentes inline — apenas JS pontual de interação
-   pode ficar inline. `.prototype-badge` já vem estilizado — não reposicione com
+   pode ficar inline. `.dsc-proto-badge` já vem estilizado — não reposicione com
    `top/right/bottom/left` soltos.
 
 3. **Navegação funcional**: botões e links entre telas implementam troca de

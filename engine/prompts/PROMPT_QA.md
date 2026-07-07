@@ -4,8 +4,11 @@
 > **Insumo necessário**: N3 completo aprovado (preferencialmente após PROMPT_3B)
 > **Entrega**: plano de testes E2E e/ou script base (Playwright / Cypress /
 > Cucumber / roteiro manual)
+> **Onde salvar**: `qa/[dominio]/[feature-set]/[feature].md` — o plano viaja
+> **no PR que aprova o gate `testes` (CP3)**: o gate-check exige um arquivo de
+> `qa/` no diff, e o CODEOWNERS (`/qa/`) torna o QA revisor obrigatório.
 >
-> **Pré-requisito**: feature com status 📋 Especificado
+> **Pré-requisito**: feature com os gates CP1 (requisitos) e CP2 (modelo-dados) aprovados
 
 ---
 

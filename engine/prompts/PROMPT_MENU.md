@@ -144,6 +144,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 |---|---|---|---|
 | **5A** | Gerar SDD | Dev | Gera Software Design Document com arquitetura, pseudocódigo e sequência de implementação |
 | **5B** | Gerar plano de testes (QA) | QA | Gera plano de testes E2E ou scripts Playwright/Cypress/Cucumber a partir do N3 |
+| **SK** | Exportar para o spec-kit | Dev | Exporta os N3 aprovados (`estado: especificado`) de um Feature Set para o workspace do GitHub spec-kit (`spec.md`, `plan.md`, `data-model.md`, `contracts/`) — rumo a código + testes |
 
 ---
 
@@ -155,16 +156,26 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 ---
 
+### 🧱 Requisitos não-funcionais (NFR)
+
+| # | Opção | Audiência | O que faz |
+|---|---|---|---|
+| **NF** | Adicionar/ajustar NFR | Arquiteto / Dev / Analista | Atualiza o catálogo `global/NFR.md` (Especificação Suplementar): coleta o requisito não-funcional via questionário e devolve o catálogo completo atualizado |
+
+---
+
 ### 🎨 Fase 6 — Protótipos
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
 | **6A** | Protótipo de fluxo | Dev / Designer | HTML navegável com sidebar, topbar e fluxo entre telas (a partir do N2) |
 | **6B** | Protótipos de estado | Dev / Designer | Um HTML por estado (form, loading, empty, error) com layout completo (a partir do N3) |
+| **6C** | Protótipo de fluxo (componente) | Dev / Designer | Fluxo entre as áreas de conteúdo, **sem** sidebar/topbar/shell — para embutir (Storybook, iframe, doc técnica) ou iterar rápido (a partir do N2) |
+| **6D** | Protótipos de estado (componente) | Dev / Designer | Um HTML por estado só com a área de conteúdo, **sem** shell — para embutir ou comparar variações lado a lado (a partir do N3) |
 
-> Para embutir um protótipo sem o shell (Storybook, iframe, doc técnica), use a
-> classe utilitária `dsc-component-only` no `<main>` — ela esconde o shell e
-> mantém o mesmo layout de conteúdo. Não há prompt separado para isso.
+> Para **esconder o shell de um protótipo FULL já gerado** (6A/6B), use a classe
+> utilitária `dsc-component-only` no `<main>` — ela oculta o shell e mantém o
+> mesmo layout de conteúdo. Para gerar **direto sem shell**, use 6C/6D.
 
 ---
 
@@ -219,7 +230,11 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **5B** | 1. FIELD-DICTIONARY.md · 2. RULES-DICTIONARY.md · 3. ERROR-DICTIONARY.md · 4. N3 completo |
 | **6A** | 1. DESIGN-SYSTEM.md · 2. N2 do Feature Set · 3. N3s das features *(opcional)* |
 | **6B** | 1. DESIGN-SYSTEM.md · 2. N3 da feature |
+| **6C** | 1. DESIGN-SYSTEM.md · 2. N2 do Feature Set |
+| **6D** | 1. DESIGN-SYSTEM.md · 2. N3 da feature |
 | **CT** | 1. **Código do escopo** (feature `f-`/ID, feature set `g-`, ou nome do módulo/domínio) · 2. N3(s) do escopo · 3. global/SIZING.md · 4. global/DATA-MODEL.md + data-models/[dominio].md · 5. global/ALI-AIE-MAP.md · 6. global/CONTAGEM-PF.md *(para atualizar o consolidado)* |
+| **NF** | 1. global/NFR.md atual (completo) · 2. Dados do requisito (coletados no questionário do prompt) |
+| **SK** | 1. Diretório de saída (raiz do projeto já inicializado com o spec-kit) · 2. MASTER.md · 3. API-PATTERNS.md · 4. NFR.md · 5. DESIGN-SYSTEM.md · 6. Dicionários (ERROR/FIELD/RULES/MESSAGE) · 7. DATA-MODEL (fragmento do domínio) · 8. N2 do Feature Set · 9. N3s técnicos com `estado: especificado` |
 
 ---
 
@@ -293,7 +308,11 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | 5B | PROMPT_QA.md |
 | 6A | PROMPT_PROTOTYPE_FLOW_FULL.md |
 | 6B | PROMPT_PROTOTYPE_SCREEN_FULL.md |
+| 6C | PROMPT_PROTOTYPE_FLOW_COMPONENT.md |
+| 6D | PROMPT_PROTOTYPE_SCREEN_COMPONENT.md |
 | CT | PROMPT_CONTAGEM.md |
+| NF | PROMPT_NFR.md |
+| SK | PROMPT_SPECKIT_EXPORT.md |
 | IV | PROMPT_INVESTIGADOR.md |
 | EX | PROMPT_EXECUTOR.md |
 

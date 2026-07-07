@@ -128,7 +128,7 @@ ferramentas de gestão de requisitos, em texto plano.
 node scripts/build-trace-data.mjs -o docs/rastreabilidade/data.js
 ```
 
-Gera o índice do [mapa de rastreabilidade](#mapa-rastreabilidade) a partir dos
+Gera o índice do [mapa de rastreabilidade](#/mapa-rastreabilidade) a partir dos
 `.md` reais — nós (N0/domínios/feature sets/features/histórias/repositórios) e
 arestas (`contem`, `origina`, `implementa`, `integra`), com status e PF vindos
 do `INDEX.md`.

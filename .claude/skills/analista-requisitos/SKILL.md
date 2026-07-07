@@ -39,7 +39,7 @@ Use esta skill de dois modos:
 
 ## Protocolo obrigatório de sessão (F1 preflight · F2 autovalidação)
 
-Vale para **todo** prompt de especificação (N0, 1A/1B, 2A/2B, 3A/3B, 4A/4B, CRUD, WIZARD):
+Vale para **todo** prompt de especificação (N0, 1A/1B, 2A, 3A/3B, 4A/4B, CRUD, WIZARD):
 
 - **Antes de gerar (F1 — verificar o que já existe):** rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **Contexto verificado** — o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Nunca especifique sem esse confronto; nunca duplique ID/pasta existente.
 - **Depois de gravar (F2 — não fugir do padrão):** rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) e, quando o artefato for um **N3**, também `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e rode de novo até sair `✓`**. Nunca declare concluído com um validador reprovando. Fez algo diferente do que o prompt define? Corrija para o padrão.
@@ -214,6 +214,8 @@ Exemplos de estados por etapa:
 PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), descobre o que
                  já está documentado e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX
                  · registrar história HU). Não cria nem altera — só mostra e encaminha.
+PROMPT_BACKLOG → modules/_backlog/[chave].md (HU — história do ServiceNow; origina os N3
+                 e fecha a rastreabilidade história ↔ feature nos três lugares)
      ↓
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
      ↓
@@ -268,6 +270,7 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Gatilho da sessão | Prompt a ler |
 |---|---|
 | Necessidade nova (qualquer origem): descobrir o que já existe e decidir **criar × alterar** | `PROMPT_TRIAGEM.md` |
+| História de usuário / item de backlog do ServiceNow (intake → `_backlog/` + rastreabilidade) | `PROMPT_BACKLOG.md` |
 | CRUD padrão (cadastro): gerar N2 + N3 das 5 operações de uma vez | `PROMPT_CRUD.md` |
 | Wizard / assistente (processo guiado multi-etapas): gerar N2 + N3 da feature principal e auxiliares | `PROMPT_WIZARD.md` |
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
@@ -276,7 +279,6 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | N1 (Domínio) técnico + data-model | `PROMPT_1B_N1_tecnico.md` |
 | N2 (Feature Set) negocial — passada única | `PROMPT_2A_N2_negocio.md` |
 | N3 (Feature) negocial | `PROMPT_3A_N3_negocio.md` |
-| N3 negocial a partir de transcrição de reunião | `PROMPT_3A_N3_negocio_transcricao.md` |
 | N3 (Feature) técnico + data-model | `PROMPT_3B_N3_tecnico.md` |
 | Atualizar N3 existente — negocial (manutenção) | `PROMPT_4A_N3_UPDATE_negocio.md` |
 | Atualizar N3 existente — técnico (manutenção) | `PROMPT_4B_N3_UPDATE_tecnico.md` |
@@ -296,8 +298,9 @@ antes de conduzir** e siga o roteiro dele. Não reproduza o roteiro de memória.
 | Painel consolidado do que **falta especificar** (existência + lacunas ⚠️) → seção gerada no `INDEX.md` | `PROMPT_PENDENCIAS.md` |
 | Investigar delta → classificar artefatos (create/modify/keep) | `PROMPT_INVESTIGADOR.md` |
 | Executar alterações aprovadas em lote | `PROMPT_EXECUTOR.md` |
-| Protótipo (fluxo / tela) | `PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md` |
-| Transcrição de reunião | `PROMPT_TRANSCRICAO_REUNIAO.md` |
+| Protótipo (fluxo / tela) — com shell | `PROMPT_PROTOTYPE_FLOW_FULL.md`, `PROMPT_PROTOTYPE_SCREEN_FULL.md` |
+| Protótipo componente (sem shell — Storybook/iframe/iteração rápida) | `PROMPT_PROTOTYPE_FLOW_COMPONENT.md`, `PROMPT_PROTOTYPE_SCREEN_COMPONENT.md` |
+| Transcrição de reunião → gera/atualiza N1/N2/N3 negociais | `PROMPT_TRANSCRICAO_REUNIAO.md` |
 | Visão geral do fluxo / menu | `PROMPT_MENU.md` |
 
 **No Claude Code (com ferramentas de arquivo):** escreva os artefatos direto no disco no destino

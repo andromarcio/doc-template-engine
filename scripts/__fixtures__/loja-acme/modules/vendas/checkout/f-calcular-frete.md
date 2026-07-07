@@ -1,3 +1,12 @@
+---
+id: VND-CHK-01
+estado: em-desenvolvimento
+gates:
+  requisitos:  { aprovado: true, por: "PO Ana", em: "2026-06-18", pr: "#11" }
+  modelo-dados: { aprovado: true, por: "DBA Zé", em: "2026-06-22", pr: "#13" }
+  testes:      { aprovado: true, por: "QA Lia", em: "2026-06-26", pr: "#15" }
+  codigo:      { aprovado: false, por: "", em: "", pr: "" }
+---
 # Calcular Frete
 > **Nível 3** - Feature Set: Checkout — Domínio: Vendas - `VND-CHK-01`
 
@@ -14,7 +23,6 @@ Sistema calcula o frete pelo CEP de destino.
 |---|---|---|---|
 | endpoint frete | loja-api | src/frete | `main` |
 
-**Status**: `[ ] Especificado` · `[x] Em desenvolvimento` · `[ ] Implementado` · `[ ] Deprecado`
 
 ## Métricas de tamanho
 **Total: 6 PF**

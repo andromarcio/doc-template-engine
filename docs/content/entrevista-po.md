@@ -32,7 +32,7 @@ tecnologia.
    (CPF, e-mail, CEP…), o `FIELD-DICTIONARY` já traz as validações: pergunte só
    *obrigatoriedade* e *unicidade*. Se uma regra é canônica (maioridade, vigência…),
    o `RULES-DICTIONARY` já traz o comportamento: pergunte só os *parâmetros*
-   (ex.: idade mínima). Veja *[O que NÃO perguntar](#o-que-nao-perguntar)*.
+   (ex.: idade mínima). Veja *[O que NÃO perguntar](#/entrevista-po#o-que-nao-perguntar)*.
 6. **Saiba distinguir três coisas que parecem regra mas não são:**
    - a **reação** do sistema ("não salva", "exibe mensagem", "bloqueia") → vai para
      os **Cenários**, não para as regras;
@@ -62,7 +62,7 @@ E há dois pontos de entrada que **antecedem** a especificação:
 
 > 💡 **Atalhos.** Para um **cadastro completo** (as 5 operações) use `CRUD`; para um
 > **processo guiado multi-etapas** use `Wizard`. Ambos geram N2 + N3 numa sessão só —
-> ver *[Atalhos](#atalhos-crud-e-wizard)*.
+> ver *[Atalhos](#/entrevista-po#atalhos-crud-e-wizard)*.
 
 ---
 

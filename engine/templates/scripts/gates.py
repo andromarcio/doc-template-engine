@@ -53,6 +53,16 @@ GATE_TO_ESTADO = {
 # Estados manuais (não derivados de gates) que o autor pode declarar.
 ESTADOS_MANUAIS = {"em-desenvolvimento", "revisao-necessaria", "deprecado"}
 
+# Artefato-companheiro por gate: o PR que aprova o gate deve incluir o artefato
+# da etapa — é ele que torna o dono do checkpoint (CODEOWNERS) revisor
+# obrigatório, já que o flip em si vive no front-matter do N3 (dono: PO).
+#   CP1 dispensa (o artefato É o próprio N3); CP2 já viaja por convenção
+#   (DATA-MODEL.md no PR); CP3/CP4 são exigidos mecanicamente aqui.
+ARTEFATO_POR_GATE = {
+    "testes": (("qa/",), "o plano de testes em `qa/` (saída do PROMPT_QA / opção 5B)"),
+    "codigo": (("repos/",), "o registro da implementação em `repos/`"),
+}
+
 # Estado → ícone (legenda do INDEX.md).
 ICONES = {
     "rascunho": "✏️",
@@ -264,6 +274,27 @@ def validar_transicao(after, before, rotulo, erros):
             erros.append(f"{rotulo}: gate '{gate}' aprovado sem preencher 'em' (data).")
 
 
+def validar_artefato_gate(after, before, alterados, rotulo, erros):
+    """O PR que aprova o gate carrega o artefato da etapa? (CP3 qa/ · CP4 repos/)"""
+    novos = [
+        g for g in GATE_ORDER
+        if gate_aprovado(after, g) and not gate_aprovado(before, g)
+    ]
+    for gate in novos:
+        regra = ARTEFATO_POR_GATE.get(gate)
+        if not regra:
+            continue
+        prefixos, descricao = regra
+        tocados = [p.replace("\\", "/") for p in alterados]
+        if not any(t.startswith(prefixos) for t in tocados):
+            erros.append(
+                f"{rotulo}: gate '{gate}' aprovado, mas o PR não inclui {descricao} "
+                f"— nenhum arquivo alterado em {' / '.join(prefixos)}. O artefato da "
+                "etapa viaja no mesmo PR: é ele que leva o dono do checkpoint "
+                "(CODEOWNERS) ao review."
+            )
+
+
 def cmd_check(args):
     base = args.base
     alterados = arquivos_alterados(base)
@@ -275,7 +306,8 @@ def cmd_check(args):
             f"aviso: não consegui comparar com a base '{base}'; "
             "validando apenas a consistência interna de todos os N3.\n"
         )
-        alvos = [(p, m, {}) for p, m in listar_n3(args.root)]
+        # before=None ⇒ sem validação de transição/artefato (não há diff).
+        alvos = [(p, m, None) for p, m in listar_n3(args.root)]
     else:
         alvos = []
         for path in alterados:
@@ -301,6 +333,7 @@ def cmd_check(args):
         validar_estado(after, rotulo, erros)
         if before is not None:
             validar_transicao(after, before, rotulo, erros)
+            validar_artefato_gate(after, before, alterados, rotulo, erros)
 
     if erros:
         print("❌ Esteira de gates: transição inválida\n")

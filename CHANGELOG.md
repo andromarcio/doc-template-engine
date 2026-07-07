@@ -16,6 +16,156 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-07-06
+
+Consolidação pós-merge: correções de consistência entre as peças e entrega de
+faltantes que as referências do engine já assumiam como existentes.
+
+### Added
+- `.claude/skills/apf-cpm/` — a skill de Análise de Pontos de Função (IFPUG
+  CPM 4.3.1) que o `PROMPT_CONTAGEM` (opção CT) declara obrigatória e o
+  README/docs citam, mas que não existia no engine; trazida do `simpf-doc`
+  (o `install-skill.sh` já a instala junto). *(mergeado direto na main)*
+- `engine/templates/global/ALI-AIE-MAP.md` — template semente do registro
+  canônico de ALI/AIE exigido pela contagem (CT, `PROMPT_3B`,
+  `CONTAGEM-PF.md`); generalizado do `sifof-doc` — o arquivo real da
+  instância nasce dele na 1ª contagem e cresce incrementalmente.
+  *(mergeado direto na main)*
+- `engine/templates/prototypes/_biblioteca-ds/` — a biblioteca de componentes
+  (`.dsc-*`, CAIXA DS) que o `DESIGN-SYSTEM.md`, os prompts de protótipo
+  (6A–6D) e a skill `/prototype` referenciavam como "pronta", mas que **nunca
+  foi versionada** (nenhum commit da história a adicionou — todo protótipo
+  gerado nascia com o link de CSS quebrado). Entregue como implementação de
+  referência materializada da spec já documentada (tokens, breakpoints e grid
+  do `DESIGN-SYSTEM.md` + classes canônicas dos esqueletos dos prompts):
+  `ds.css`, `tokens.css`, `README.md` (contrato + catálogo de classes),
+  `index.html` (catálogo navegável) e `shell-responsive.html` (demo do
+  drawer/grid). Tema escuro via `app-dark`. Validada visualmente em headless
+  Chromium (claro/escuro, drawer, breakpoints) — confira os tokens com o
+  Figma da sua instância.
+
+### Changed
+- `PROMPT_MENU.md` — a Fase 6 ganha as opções **6C** (protótipo de fluxo
+  componente) e **6D** (protótipos de estado componente), expondo os prompts
+  `PROMPT_PROTOTYPE_FLOW_COMPONENT.md` e `PROMPT_PROTOTYPE_SCREEN_COMPONENT.md`,
+  que existiam no inventário mas não eram alcançáveis pelo menu — o texto ainda
+  afirmava "não há prompt separado para isso". Insumos e mapeamento
+  opção→arquivo incluídos; a dica de protótipos do `SYSTEM_PROMPT` e o
+  roteamento do `SKILL.md` acompanham. A classe `dsc-component-only` segue
+  documentada para esconder o shell de um protótipo FULL já gerado.
+
+- Esteira de checkpoints — o espelho do `INDEX.md` agora **viaja no próprio PR
+  do gate**: o `gate-check.yml` ganhou o passo "Espelho do INDEX em dia", que
+  reprova o PR se o `modules/INDEX.md` não refletir o front-matter dos N3
+  (`gates.py promote --write`), e o `promote-estado.yml` **deixou de fazer
+  `git push` direto na `main`** — com *Require a pull request before merging*
+  (a proteção que o próprio kit recomenda), aquele push era rejeitado e o
+  espelho nunca atualizava. O workflow virou uma verificação de *drift*
+  pós-merge, somente-leitura (`contents: read`). PR template, README do kit,
+  README raiz e a página *Esteira de checkpoints* acompanham o novo fluxo.
+
+- `PROMPT_MENU.md` — o inventário fecha com o menu: **SK** (Fase 5 —
+  Implementação) expõe o `PROMPT_SPECKIT_EXPORT` e **NF** (seção Requisitos
+  não-funcionais) expõe o `PROMPT_NFR`, ambos com insumos e mapeamento
+  opção→arquivo; `docs/content/prompts.md` ganha a linha do
+  `PROMPT_SPECKIT_EXPORT`. No `SKILL.md`, o intake de história
+  (`PROMPT_BACKLOG`, opção HU) entra na tabela de roteamento e no diagrama de
+  sequência, e a linha do protocolo deixa de citar "2A/2B" (o 2B é tombstone).
+
+- Esteira de checkpoints — **CP3 e CP4 ganham o aprovador certo garantido
+  mecanicamente**, fechando a promessa "quem aprova cada checkpoint
+  (PO/DBA/QA/Tech Lead)": como todos os gates flipam no front-matter do N3
+  (dono: PO), só CP1/CP2 tinham o dono correto forçado. Agora o padrão do CP2
+  (artefato-companheiro no PR) vale para os quatro: o `gates.py check` **exige
+  no diff** o plano de testes em `qa/` quando o gate `testes` é aprovado e o
+  registro em `repos/` quando o gate `codigo` é aprovado — e o `CODEOWNERS`
+  (`/qa/` → QA, `/repos/` → Tech Lead) torna o dono revisor obrigatório. A
+  pasta `qa/` foi formalizada (`engine/templates/qa/README.md`, convenção
+  `qa/[dominio]/[feature-set]/[feature].md`); o `PROMPT_QA` diz onde salvar;
+  PR template, READMEs, árvores de estrutura e a página da esteira acompanham.
+  De quebra, o fallback sem git do `gates.py check` deixou de acusar falsos
+  "N gates de uma vez" (passava `{}` como base em vez de pular a validação de
+  transição, contrariando o próprio aviso de "consistência interna").
+
+### Deprecated
+- `PROMPT_DATA_MODEL_negocio.md` — **aposentado** (vira tombstone, como o 2B).
+  Foi escrito para a variante negocial-apenas (`doc-template-engine-caixa`,
+  que mantém a cópia própria) e vazou para cá sem nunca ser integrado ao
+  menu/skill — era órfão total. Neste engine o modelo de dados segue com
+  `PROMPT_1B`/`PROMPT_3B`/`PROMPT_DATA_MODEL_FROM_SQL`; o template
+  `_template-dominio-negocio.md` e a validação negocial do `validate-doc.mjs`
+  continuam disponíveis. O `apply-spec-protocol.mjs` agora reconhece
+  tombstones (`## ⚠️`) e os pula sem alarde.
+
+### Fixed
+- `SYSTEM_PROMPT_analista_requisitos.md` — o intake de história citava `PROMPT_HU`,
+  nome que não existe; corrigido para `PROMPT_BACKLOG` (o prompt real da opção HU),
+  nas duas ocorrências (máquina de estados e diagrama do fluxo).
+- Roteamento da transcrição de reunião — o `SKILL.md` ainda roteava "N3 negocial a
+  partir de transcrição" para o descontinuado `PROMPT_3A_N3_negocio_transcricao.md`
+  (tombstone); a linha morta saiu e a rota única aponta para o substituto
+  `PROMPT_TRANSCRICAO_REUNIAO.md`. As páginas do site (`prompts.md`, `n3.md`)
+  deixaram de listar o prompt descontinuado como ativo.
+- Site (`docs/content/entrevista-po.md`) — duas âncoras intra-página usavam hash
+  simples (`#secao`), que o roteador interpreta como página e derrubava o conteúdo
+  ("Página não encontrada"); corrigidas para o formato do app (`#/pagina#secao`).
+- Site (`docs/content/esteira-checkpoints.md`) — a legenda listava 6 dos 8
+  estados da esteira; entram `⚠️ revisao-necessaria` e `❌ deprecado`,
+  alinhando com `gates.py` e com a legenda do `INDEX.md`.
+- `examples/speckit-pilot` atualizado à régua vigente — os 3 N3 reprovavam no
+  `validate-doc` (sem `## Campos automáticos`; a pesquisa também sem
+  `## Colunas do resultado`) e não tinham a esteira no front-matter, violando
+  o pré-requisito (`estado: especificado`) do próprio `PROMPT_SPECKIT_EXPORT`
+  que o exemplo demonstra. Seções canônicas incluídas, front-matter migrado
+  (`estado` + `gates` CP1–CP3 aprovados), linha `**Status**:` abolida removida
+  e as 3 histórias criadas em `modules/_backlog/` — o exemplo agora passa
+  limpo em `validate-doc`, `validate-feature-semantics` e `audit-trace-links`
+  ("elos consistentes nas três fontes"), e o `gates.py status` mostra as 3
+  features `📋 prontas para desenvolvimento`.
+- `CHANGELOG.md` ganha o rodapé de links de comparação do Keep a Changelog
+  (esquema `vX.Y.Z`; os links resolvem quando as tags de release forem
+  criadas) e `docs/content/rastreabilidade.md` alinha a âncora interna ao
+  formato do roteador (`#/pagina`).
+- Fixtures `loja-acme` migradas para a esteira da 1.4.0 — os 5 N3 ganham
+  front-matter `estado`/`gates` (o `gates.py` finalmente tem fixture que o
+  exercite) e perdem a linha manual `**Status**:`, abolida na 1.4.0. Junto,
+  os geradores do grafo (`build-trace-data.mjs`, `generate-trace-index.mjs`
+  e `lib/trace-index.mjs`) **passam a ler o `estado` do front-matter** como
+  fonte preferencial do status — ainda liam somente a linha abolida (que
+  segue aceita como fallback legado, sem regressão nos status do mapa). O
+  `spec-guard.mjs` isenta `__fixtures__/` dos gates: editar fixtures (que
+  carregam violações intencionais de teste) não é mais bloqueado pelo hook.
+- Esqueletos dos `PROMPT_PROTOTYPE_{FLOW,SCREEN}_FULL` — removido um bloco
+  morto de design system anterior (classes `layout-*`/`p-*` do PrimeNG, com
+  IDs `screen-*` duplicados), deixado por resolução de merge "aceitar ambos";
+  o `</div>` de fechamento do `.dsc-app`, engolido na mesma resolução, voltou;
+  e o drawer ganhou o `.dsc-sidebar-backdrop` — igualando o esqueleto canônico
+  da skill `/prototype`.
+- `PROMPT_PROTOTYPE_{FLOW,SCREEN}_COMPONENT` (opções 6C/6D) — migrados de uma
+  geração ainda anterior: linkavam `_biblioteca/sakai.css` (sakai-ng) e
+  geravam markup inteiro em classes `p-*`/`layout-*`, que não existem na
+  biblioteca do engine. Esqueletos e regras reescritos para
+  `_biblioteca-ds/ds.css` e classes `.dsc-*` (`dsc-component-only`,
+  `dsc-screen`, `dsc-proto-badge`, `dsc-toast`, `dsc-modal`…), alinhados aos
+  FULL. Resquícios de `p-select`/`.prototype-badge` nos textos de regra dos
+  FULL e da skill `/prototype` também corrigidos.
+- `DESIGN-SYSTEM.md` — o exemplo de tela de pesquisa apontava para
+  `prototypes/exemplo-clientes/…`, que nunca existiu; agora aponta para o
+  catálogo da `_biblioteca-ds`.
+- `gate-check.yml` (kit `.github` das instâncias) — o job ganhou
+  `name: Esteira de gates — check`: o branch protection casa pelo nome do
+  *check run* (= nome do job), e sem o `name:` o check publicado chamava-se
+  apenas `check` — a string que o README/CODEOWNERS mandam selecionar em
+  *Require status checks to pass* não existia.
+- `build-trace-data.mjs` — alinhado ao comportamento do `generate-trace-index.mjs`
+  nos dois pontos em que os geradores do grafo divergiam: **(1)** feature set sem
+  README de N2 (fluxo bottom-up legítimo: N3 antes de N2) agora vira nó — pela
+  tabela `## Feature Sets` do N1 ou, em último caso, sintetizado do ID da feature —
+  em vez de deixar as features soltas no mapa; **(2)** a linha-placeholder `| — |`
+  da tabela `## Implementação` não vira mais um nó de repositório "—" (filtro em
+  `lib/trace-index.mjs`). Na fixture `loja-acme`, os dois geradores passam a
+  produzir o mesmo grafo (21 nós, 26 arestas).
+
 ## [1.4.0] - 2026-07-06
 
 **Esteira de checkpoints (gates)**: o ciclo de vida de cada N3 (requisitos →
@@ -296,3 +446,14 @@ todo estado novo fica **nos próprios `.md`** (portátil com `git clone`).
 ### Changed
 - `CLAUDE.md` template da instância: instrução explícita para acionar a skill
   `analista-requisitos` em sessões de especificação e para carimbar artefatos.
+
+<!-- Tags de release: criar `vX.Y.Z` no commit do bump correspondente (os links
+     abaixo passam a resolver quando as tags forem enviadas ao remoto). -->
+[Unreleased]: https://github.com/andromarcio/doc-template-engine/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.3.1...v1.4.0
+[1.3.1]: https://github.com/andromarcio/doc-template-engine/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/andromarcio/doc-template-engine/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/andromarcio/doc-template-engine/releases/tag/v1.0.0

@@ -11,6 +11,11 @@
 //   árvore modules/ + N1/N2              → hierarquia                   (contem)
 //   ## Integrações com outros domínios   → aresta domínio → domínio     (integra)
 //
+// Feature set sem README de N2 (bottom-up legítimo: N3 antes de N2) não deixa a
+// feature solta: o nó vem da tabela ## Feature Sets do N1 ou, em último caso, é
+// sintetizado a partir do ID da feature — mesmo comportamento do
+// generate-trace-index.mjs.
+//
 // Uso (a partir da raiz da instância, ou com --root):
 //   node scripts/build-trace-data.mjs                          # imprime em stdout
 //   node scripts/build-trace-data.mjs -o docs/rastreabilidade/data.js
@@ -64,6 +69,14 @@ function firstParagraph(lines, section) {
 }
 
 const STATUS_BY_ICON = { '📋': 'spec', '🔄': 'dev', '✅': 'impl', '⚠️': 'revisao', '❌': 'deprecado' };
+// `estado` da esteira (front-matter, 1.4.0+) → status do mapa. Estados
+// pré-especificado (rascunho, requisitos-aprovados, modelo-validado) caem
+// no default 'spec' — o mapa não distingue etapas anteriores ao contrato.
+const STATUS_BY_ESTADO = {
+  especificado: 'spec', 'em-desenvolvimento': 'dev', implementado: 'impl',
+  'revisao-necessaria': 'revisao', deprecado: 'deprecado',
+};
+// Legado (pré-1.4.0): linha manual `**Status**: [x] …` no corpo do N3.
 const STATUS_BY_IMPL = {
   especificado: 'spec', 'em desenvolvimento': 'dev', implementado: 'impl', deprecado: 'deprecado',
 };
@@ -96,6 +109,7 @@ if (existsSync(n0Path)) {
 // --- N1 (domínios) + N2 (feature sets) ----------------------------------------
 const modulesDir = join(root, 'modules');
 const domainMeta = []; // { sigla, label, folder, lines } — p/ resolver integrações por nome
+const fsIds = new Set(); // feature sets já materializados como nó (N2, tabela do N1 ou síntese)
 for (const folder of subdirs(modulesDir).filter((n) => !n.startsWith('_'))) {
   const n1File = join(modulesDir, folder, 'README.md');
   if (!existsSync(n1File)) continue;
@@ -116,12 +130,31 @@ for (const folder of subdirs(modulesDir).filter((n) => !n.startsWith('_'))) {
     const n2Lines = read(n2File).split(/\r?\n/);
     const fsId = levelId(n2Lines);
     if (!fsId) continue;
+    fsIds.add(fsId);
     nodes.push({
       id: fsId, type: 'featureset', label: titleOf(n2Lines) || fsFolder,
       sub: `Feature Set · ${fsId}`, domain: sigla,
       desc: firstParagraph(n2Lines, 'Descrição'), path: relp('modules', folder, fsFolder, 'README.md'),
     });
     addEdge(sigla, fsId, 'contem');
+  }
+
+  // Fallback: feature sets listados na tabela ## Feature Sets do N1 mas ainda
+  // sem README de N2 — o nó nasce da linha da tabela (nome, descrição).
+  const fsTable = sectionSlice(lines, 'Feature Sets');
+  if (fsTable) {
+    for (const row of tableRowsOf(fsTable.lines)) {
+      const cells = splitRow(row);
+      const fsId = (String(cells[0] || '').match(/\b([A-Z]{3}-[A-Z]{3})\b/) || [])[1];
+      if (!fsId || fsIds.has(fsId)) continue;
+      fsIds.add(fsId);
+      const name = (String(cells[0]).match(/\*\*(.+?)\*\*/) || [])[1] || fsId;
+      nodes.push({
+        id: fsId, type: 'featureset', label: name, sub: `Feature Set · ${fsId}`,
+        domain: sigla, desc: (cells[2] || '').trim(), path: relp('modules', folder, 'README.md'),
+      });
+      addEdge(sigla, fsId, 'contem');
+    }
   }
 }
 
@@ -162,9 +195,20 @@ for (const f of model.features.filter((x) => x.id)) {
   const idx = indexByFeat.get(f.id);
   const status =
     (idx && STATUS_BY_ICON[idx.status]) ||
+    (f.estado && STATUS_BY_ESTADO[f.estado]) ||
     (f.statusImpl && STATUS_BY_IMPL[f.statusImpl.toLowerCase()]) || 'spec';
   const pfNum = idx ? parseInt(String(idx.pf).replace(/\D/g, ''), 10) : NaN;
   const fsId = f.id.replace(/-\d{2}$/, '');
+  if (!fsIds.has(fsId)) {
+    // Feature especificada antes do N2 e fora da tabela do N1 — sintetiza o nó
+    // do feature set a partir do ID para a feature não ficar solta no mapa.
+    fsIds.add(fsId);
+    nodes.push({
+      id: fsId, type: 'featureset', label: fsId, sub: `Feature Set · ${fsId}`,
+      domain: f.id.slice(0, 3), desc: '', path: '',
+    });
+    addEdge(f.id.slice(0, 3), fsId, 'contem');
+  }
   const lines = read(f.file).split(/\r?\n/);
   nodes.push({
     id: f.id, type: 'feature', label: f.title || f.id, status, pf: Number.isNaN(pfNum) ? null : pfNum,
