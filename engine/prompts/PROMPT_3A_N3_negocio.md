@@ -386,6 +386,17 @@ Apresente um bloco de cada vez e aguarde minhas respostas.
 > 4. Existe alguma informação que o sistema preenche automaticamente?
 >    Qual e quando?
 
+> 5. **De onde vem cada informação?** Para cada campo, confirme a origem com o
+>    usuário: **entrada do usuário**, **calculado** pelo sistema, ou **vem de uma
+>    fonte externa** (outro sistema/API — ex.: Receita, Serpro, ServiceNow).
+>    Se **externa**, pergunte explicitamente:
+>    - **Qual é a fonte?** (nome de negócio do sistema)
+>    - **Quando** o dado é consultado (a cada acesso? no preenchimento?) e se vale
+>      um **último valor conhecido** (cache) ou precisa estar sempre atual.
+>    - O que a funcionalidade faz **se a fonte estiver indisponível** — bloqueia,
+>      segue em modo degradado, ou usa o valor anterior?
+>    - O campo é **editável** pelo usuário ou **somente leitura**?
+
 Após receber os campos:
 - Verificar se algum é canônico (CPF, CEP, e-mail, telefone, senha,
   data de nascimento, data futura, valor monetário, percentual, URL,
@@ -396,6 +407,14 @@ Após receber os campos:
   Cliente já cadastrado"): tratar como campo de seleção `seleção → [Entidade]`
   — ver "Campos de seleção" no PASSO 1.5
 - Se não for canônico: registrar Label PO, tipo e validações informadas
+- **Origem de cada campo** (coluna *Origem* da tabela `## Campos`): marque
+  `entrada do usuário`, `calculado` ou `externo: [Fonte]`. Para todo campo
+  **`externo:`**, além de marcar a origem:
+  - registre um **`## Cenário`** para a **indisponibilidade da fonte** (o que o
+    usuário vê) — a mecânica (endpoint, timeout, retry) fica no **3B**, não aqui;
+  - registre a fonte como **AIE** em `global/ALI-AIE-MAP.md` (dado mantido por outro
+    sistema e lido por este = Arquivo de Interface Externa, para a contagem APF);
+  - se for **somente leitura**, prefira `## Campos automáticos` a `## Campos`.
 
 ---
 
@@ -546,10 +565,10 @@ gates:
 
 ## Campos
 
-| Label PO | Tipo | Obrigatório | Validação |
-|---|---|---|---|
-| [nome em português] | [tipo] | sim/não/automático | [regra em linguagem natural] |
-| [campo canônico] | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
+| Label PO | Origem | Tipo | Obrigatório | Validação |
+|---|---|---|---|---|
+| [nome em português] | [entrada do usuário / calculado / externo: [Fonte]] | [tipo] | sim/não/automático | [regra em linguagem natural] |
+| [campo canônico] | entrada do usuário | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
 
 ---
 

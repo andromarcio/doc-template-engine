@@ -96,10 +96,10 @@ Scenario: [descrição]
 
 ## Campos
 
-| Label PO | Tipo | Obrigatório | Validação |
-|---|---|---|---|
-| [nome em português] | [tipo] | sim/não/automático | [regra em linguagem natural] |
-| [campo canônico] | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
+| Label PO | Origem | Tipo | Obrigatório | Validação |
+|---|---|---|---|---|
+| [nome em português] | [entrada do usuário / calculado / externo: [Fonte]] | [tipo] | sim/não/automático | [regra em linguagem natural] |
+| [campo canônico] | entrada do usuário | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
 
 ---
 
