@@ -42,7 +42,7 @@ import do Claude Code). Ajuste a lista ao que existir na instância:
 ## Regras da instância
 
 - A documentação gerada vai sempre para `modules/`, `global/`, `prototypes/`,
-  `repos/` — **nunca** para dentro de `engine/` (somente-leitura).
+  `qa/`, `repos/` — **nunca** para dentro de `engine/` (somente-leitura).
 - **Sempre que a sessão envolver especificação de requisitos** — N0/N1/N2/N3,
   feature, feature set, domínio, CRUD, wizard, campos/regras de negócio, cenários
   Gherkin, dicionários, ou qualquer `PROMPT_*` de especificação — **acione a skill

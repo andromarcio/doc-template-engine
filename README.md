@@ -168,7 +168,8 @@ sustentam o fluxo, todas como **templates genéricos** prontos para a instância
 - **`scripts/gates.py`** — máquina de estados: valida transições (não pular etapas,
   um gate por PR), deriva o `estado` e regenera a esteira no `INDEX.md`;
 - **`.github/workflows/gate-check.yml`** — status check que **bloqueia o PR** se a
-  ordem dos checkpoints for violada;
+  ordem dos checkpoints for violada ou se o **artefato da etapa** não vier junto
+  (CP3 → plano de testes em `qa/` · CP4 → registro em `repos/`);
 - **`.github/workflows/promote-estado.yml`** + **`CODEOWNERS`** — o review do dono
   do artefato (PO/DBA/QA/Tech Lead) **é** a aprovação do checkpoint; o espelho do
   `INDEX.md` viaja **no próprio PR** (`gates.py promote --write`, exigido pelo
@@ -192,6 +193,7 @@ engine/
     ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de
     │             # usuário · _base-conhecimento: insumos extraídos pelo PROMPT_0)
     ├── prototypes/
+    ├── qa/       # planos de teste por feature — artefato do CP3 (PROMPT_QA)
     ├── repos/
     ├── scripts/  # gates.py — máquina de estados da esteira de checkpoints
     └── .github/  # CODEOWNERS, workflows (gate-check/promote-estado), PR template

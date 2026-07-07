@@ -31,8 +31,8 @@ Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um
 
 | Mecanismo | Garante |
 |---|---|
-| `gate-check.yml` (status check obrigatório) | a **ordem** (não pular etapas, 1 gate por PR, `por`/`em` preenchidos) e o **espelho do `INDEX.md` em dia** no próprio PR |
-| `CODEOWNERS` + branch protection | **quem** aprova cada checkpoint (PO/DBA/QA/Tech Lead) |
+| `gate-check.yml` (status check obrigatório) | a **ordem** (não pular etapas, 1 gate por PR, `por`/`em` preenchidos), o **espelho do `INDEX.md` em dia** e o **artefato da etapa no PR** (CP3 → `qa/` · CP4 → `repos/`) |
+| `CODEOWNERS` + branch protection | **quem** aprova cada checkpoint — o artefato-companheiro leva o dono certo ao review: CP1 `modules/` → PO · CP2 `DATA-MODEL` → DBA · CP3 `qa/` → QA · CP4 `repos/` → Tech Lead |
 | `promote-estado.yml` | rede de segurança pós-merge: **acusa** (sem push) espelho do `INDEX.md` defasado na `main` |
 
 ## Configuração única (na instância)
@@ -55,6 +55,10 @@ Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um
    modelo-dados: { aprovado: true, por: "bru.dba", em: 2026-06-23, pr: 0 }
    ```
    e ajuste `estado` para o derivado (ex.: `modelo-validado`).
+   **Inclua o artefato da etapa no mesmo PR** — é ele que torna o dono do
+   checkpoint revisor obrigatório: CP2 → `DATA-MODEL.md` · CP3 → plano de
+   testes em `qa/[dominio]/[feature-set]/[feature].md` · CP4 → registro em
+   `repos/`. Para CP3/CP4 o gate-check **exige** o artefato no diff.
 3. Regenere o espelho e inclua-o **no mesmo PR** (o gate-check reprova espelho
    defasado): `python scripts/gates.py promote --write` → commit do `modules/INDEX.md`.
 4. Abra o PR. O **gate-check** valida ordem + espelho; o **CODEOWNER** aprova;

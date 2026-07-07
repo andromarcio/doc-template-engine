@@ -9,6 +9,7 @@ engine/
     │             # MESSAGE/ERROR), SIZING, CONTAGEM-PF, API-PATTERNS, AUTHZ, DESIGN-SYSTEM
     ├── modules/  # domínio → feature-set → feature (+ _backlog: histórias de usuário)
     ├── prototypes/
+    ├── qa/       # planos de teste por feature (artefato do CP3)
     └── repos/
 ```
 
@@ -47,10 +48,13 @@ modules/
         └── _template-feature.md          # N3 — Feature
 ```
 
-### `prototypes/` e `repos/`
+### `prototypes/`, `qa/` e `repos/`
 
-`prototypes/` guarda esqueletos para protótipos de tela e fluxo; `repos/`
-documenta o mapeamento entre specs e os repositórios de código.
+`prototypes/` guarda esqueletos para protótipos de tela e fluxo; `qa/` guarda
+os planos de teste por feature (`qa/[dominio]/[feature-set]/[feature].md`,
+saída do `PROMPT_QA` — é o artefato que o PR do **CP3** deve incluir); `repos/`
+documenta o mapeamento entre specs e os repositórios de código (o registro que
+o PR do **CP4** deve incluir).
 
 ## Convenções
 

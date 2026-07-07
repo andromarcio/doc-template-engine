@@ -72,6 +72,21 @@ faltantes que as referências do engine já assumiam como existentes.
   (`PROMPT_BACKLOG`, opção HU) entra na tabela de roteamento e no diagrama de
   sequência, e a linha do protocolo deixa de citar "2A/2B" (o 2B é tombstone).
 
+- Esteira de checkpoints — **CP3 e CP4 ganham o aprovador certo garantido
+  mecanicamente**, fechando a promessa "quem aprova cada checkpoint
+  (PO/DBA/QA/Tech Lead)": como todos os gates flipam no front-matter do N3
+  (dono: PO), só CP1/CP2 tinham o dono correto forçado. Agora o padrão do CP2
+  (artefato-companheiro no PR) vale para os quatro: o `gates.py check` **exige
+  no diff** o plano de testes em `qa/` quando o gate `testes` é aprovado e o
+  registro em `repos/` quando o gate `codigo` é aprovado — e o `CODEOWNERS`
+  (`/qa/` → QA, `/repos/` → Tech Lead) torna o dono revisor obrigatório. A
+  pasta `qa/` foi formalizada (`engine/templates/qa/README.md`, convenção
+  `qa/[dominio]/[feature-set]/[feature].md`); o `PROMPT_QA` diz onde salvar;
+  PR template, READMEs, árvores de estrutura e a página da esteira acompanham.
+  De quebra, o fallback sem git do `gates.py check` deixou de acusar falsos
+  "N gates de uma vez" (passava `{}` como base em vez de pular a validação de
+  transição, contrariando o próprio aviso de "consistência interna").
+
 ### Deprecated
 - `PROMPT_DATA_MODEL_negocio.md` — **aposentado** (vira tombstone, como o 2B).
   Foi escrito para a variante negocial-apenas (`doc-template-engine-caixa`,

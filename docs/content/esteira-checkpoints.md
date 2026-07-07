@@ -75,8 +75,8 @@ aparece na prática:
 
 | Mecanismo | Garante |
 |---|---|
-| `gate-check.yml` (status check obrigatório) | a **ordem** — não pular etapas, 1 gate por PR, `por`/`em` preenchidos — e o **espelho do `INDEX.md` em dia** no próprio PR (`gates.py promote --write`) |
-| `CODEOWNERS` + branch protection | **quem** aprova cada checkpoint (PO/DBA/QA/Tech Lead) |
+| `gate-check.yml` (status check obrigatório) | a **ordem** — não pular etapas, 1 gate por PR, `por`/`em` preenchidos —, o **espelho do `INDEX.md` em dia** (`gates.py promote --write`) e o **artefato da etapa no PR** (CP3 → `qa/` · CP4 → `repos/`) |
+| `CODEOWNERS` + branch protection | **quem** aprova cada checkpoint — o artefato-companheiro leva o dono certo ao review: CP1 `modules/` → PO · CP2 `DATA-MODEL` → DBA · CP3 `qa/` → QA · CP4 `repos/` → Tech Lead |
 | `promote-estado.yml` | rede de segurança pós-merge: **acusa** (sem push na `main`) espelho do `INDEX.md` defasado |
 
 São complementares: a CI cuida da **sequência**, o review do CODEOWNER cuida da
