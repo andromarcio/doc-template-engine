@@ -256,19 +256,19 @@ de resultados). Confirme com o usuário e registre na seção `## Superfície`.
 A partir dos campos do N3 de cadastro, proponha automaticamente:
 
 - Todos os campos do cadastro, mantendo tipo, obrigatoriedade e validações
-- O campo identificador único → **imutável** (chave de negócio, não editável) — coluna *Alterável*
+- O campo identificador único → **imutável** (chave de negócio, não editável) — coluna *Edição*
 - Campos preenchidos automaticamente no cadastro → manter como automáticos
 
 Apresente a proposta ao usuário:
 
 > "Com base no cadastro, proponho o mesmo formulário com as seguintes diferenças:
 >
-> | Label PO | Alterável | Tipo | Obrigatório |
+> | Label PO | Edição | Tipo | Obrigatório |
 > |---|---|---|---|
 > | [identificador único] | ⚠️ imutável (não editável) | [tipo] | — |
 > | [demais campos] | editável | [tipo] | [igual ao cadastro] |
 >
-> Algum campo adicional deve ser **somente leitura** ou **imutável** na edição? (coluna *Alterável* do `## Campos`)
+> Algum campo adicional deve ser **somente leitura** ou **imutável** na edição? (coluna *Edição* do `## Campos`)
 > Algum campo deve ser removido ou ter sua obrigatoriedade alterada?"
 
 Após confirmação, **pule o BLOCO B** no PASSO 2 — os campos já estão derivados.
@@ -416,7 +416,7 @@ Após receber os campos:
     sistema e lido por este = Arquivo de Interface Externa, para a contagem APF);
   - se for **somente leitura**, prefira `## Campos automáticos` a `## Campos`.
 
-- **Alterável de cada campo** (coluna *Alterável* da tabela `## Campos`): `editável`
+- **Edição de cada campo** (coluna *Edição* da tabela `## Campos`): `editável`
   (padrão), `somente leitura` (exibido, não altera nesta feature) ou `imutável`
   (nunca muda após a criação — ex.: chave de negócio). Em **cadastro** tudo nasce
   `editável`; em **Edição** o identificador é `imutável` e o PASSO 1.5 pergunta se
@@ -571,7 +571,7 @@ gates:
 
 ## Campos
 
-| Label PO | Origem | Alterável | Tipo | Obrigatório | Validação |
+| Label PO | Origem | Edição | Tipo | Obrigatório | Validação |
 |---|---|---|---|---|---|
 | [nome em português] | [entrada do usuário / calculado / externo: [Fonte]] | [editável / somente leitura / imutável] | [tipo] | sim/não/automático | [regra em linguagem natural] |
 | [campo canônico] | entrada do usuário | editável | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |

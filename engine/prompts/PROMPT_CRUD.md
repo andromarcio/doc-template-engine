@@ -125,7 +125,7 @@ Ao receber os campos:
   **campo de seleção** (`seleção → [Entidade]`) — siga as regras de "Campos de
   seleção" do PROMPT_3A_N3_negocio.md (PASSO 1.5).
 - O campo identificador único (PASSO 1, pergunta 3) será **imutável** na Edição
-  (coluna *Alterável* da tabela ## Campos) e o critério de identificação na Exclusão.
+  (coluna *Edição* da tabela ## Campos) e o critério de identificação na Exclusão.
 
 ---
 

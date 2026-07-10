@@ -96,7 +96,7 @@ Scenario: [descrição]
 
 ## Campos
 
-| Label PO | Origem | Alterável | Tipo | Obrigatório | Validação |
+| Label PO | Origem | Edição | Tipo | Obrigatório | Validação |
 |---|---|---|---|---|---|
 | [nome em português] | [entrada do usuário / calculado / externo: [Fonte]] | [editável / somente leitura / imutável] | [tipo] | sim/não/automático | [regra em linguagem natural] |
 | [campo canônico] | entrada do usuário | editável | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |

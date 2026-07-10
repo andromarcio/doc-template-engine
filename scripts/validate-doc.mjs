@@ -237,7 +237,7 @@ function isSearchFeature(lines, file) {
 }
 
 // Feature de edição/alteração? (verbos: editar, alterar, atualizar). A editabilidade
-// dos campos precisa ser explícita nessas features (coluna "Alterável" em ## Campos).
+// dos campos precisa ser explícita nessas features (coluna "Edição" em ## Campos).
 function isEditFeature(lines, file) {
   const title = (lines.find((l) => l.trim().startsWith('# ')) || '').replace(/^#\s*/, '').trim();
   const verb = (title.split(/\s+/)[0] || '').toLowerCase();
@@ -275,10 +275,10 @@ function validateN3(lines, raw, errors, file) {
       }
     }
   }
-  // Gate de editabilidade: feature de edição exige a coluna "Alterável" em ## Campos
+  // Gate de editabilidade: feature de edição exige a coluna "Edição" em ## Campos
   // (quais campos são editáveis, somente leitura ou imutáveis — explícito, não inferido).
-  if (isEditFeature(lines, file) && header && !header.some((c) => /alter[áa]vel/i.test(c))) {
-    errors.push('Feature de edição sem a coluna "Alterável" na tabela "## Campos" — marque cada campo como editável / somente leitura / imutável.');
+  if (isEditFeature(lines, file) && header && !header.some((c) => /edi[çc][aã]o/i.test(c))) {
+    errors.push('Feature de edição sem a coluna "Edição" na tabela "## Campos" — marque cada campo como editável / somente leitura / imutável.');
   }
   // Gate de fidelidade: se a Superfície declara "Fidelidade ao protótipo: obrigatória",
   // precisa apontar o caminho do protótipo (prototypes/… ou um link .html).
