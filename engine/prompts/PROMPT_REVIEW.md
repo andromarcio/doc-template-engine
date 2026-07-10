@@ -120,7 +120,7 @@ Aplique **todos** os checks transversais e os específicos do nível detectado.
 
 ### Transversais (qualquer artefato)
 
-1. **Carimbo de versão** na 1ª linha (`<!-- doc-template-engine: <versão de VERSION> | prompt: … | atualizado: … -->`). Ausente/duplicado/desatualizado → achado.
+1. **Carimbo de versão** na 1ª linha (`<!-- docqui: <versão de VERSION> | prompt: … | atualizado: … -->`). Ausente/duplicado/desatualizado → achado.
 2. **Altitude.** Seção negocial não menciona endpoint, FK, tabela, tipo SQL, lib, JSON, HTTP. Seção técnica não reescreve regra/campo negocial — referencia.
 3. **Regra = invariante, não reação.** Em `Regras de negócio`, cada item é uma condição que o sistema sempre garante. "Não salva", "exibe mensagem", "bloqueia" é **reação** → pertence a `Cenários`, não à regra.
 4. **Fonte única de definição de banco.** Campo banco, Label Dev, tipo SQL, FK, índice, restrição de unicidade e enum **só** no DATA-MODEL. Qualquer um desses fora dele (no N1/N2/N3/SDD) é vazamento 🔴.

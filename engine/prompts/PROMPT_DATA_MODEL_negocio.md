@@ -17,7 +17,7 @@
 > 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
-Você vai consolidar o **modelo de entidades** de um domínio, em **linguagem de negócio pura**. Este é o data-model do `doc-template-engine-caixa`: contém **apenas a parte das entidades** — cada entidade, seus **atributos em Label PO**, e os **relacionamentos** entre elas.
+Você vai consolidar o **modelo de entidades** de um domínio, em **linguagem de negócio pura**. Este é o data-model do `docqui-caixa`: contém **apenas a parte das entidades** — cada entidade, seus **atributos em Label PO**, e os **relacionamentos** entre elas.
 
 **NUNCA** inclua a camada física de banco: **Label Dev** (camelCase técnico), **campo banco** (nome físico), **tipo SQL**, FK, índice, enum físico, classe de coluna, nem contagem **ALI/AIE**. Tudo isso pertence ao data-model técnico, **fora do escopo** desta instância. Se aparecer no insumo, **descarte** — não transcreva.
 
@@ -91,7 +91,7 @@ Antes de escrever, leia a versão em `VERSION` e componha o carimbo na **primeir
 ### 3.1 — Fragmento do domínio: `global/data-models/[dominio].md`
 
 ```
-<!-- doc-template-engine: <versão> | prompt: PROMPT_DATA_MODEL_negocio | atualizado: <YYYY-MM-DD> -->
+<!-- docqui: <versão> | prompt: PROMPT_DATA_MODEL_negocio | atualizado: <YYYY-MM-DD> -->
 # Data Model: [Nome do Domínio]
 > **Modelo de entidades (negocial)** — só a parte das entidades, sem camada física
 > (sem Label Dev, campo banco, tipo SQL, FK, índice ou contagem ALI/AIE).
@@ -115,7 +115,7 @@ Antes de escrever, leia a versão em `VERSION` e componha o carimbo na **primeir
 ### 3.2 — Índice: `global/DATA-MODEL.md`
 
 ```
-<!-- doc-template-engine: <versão> | prompt: PROMPT_DATA_MODEL_negocio | atualizado: <YYYY-MM-DD> -->
+<!-- docqui: <versão> | prompt: PROMPT_DATA_MODEL_negocio | atualizado: <YYYY-MM-DD> -->
 # DATA-MODEL.md
 > **Modelo de entidades (negocial)** — índice das entidades do sistema, sem camada
 > física de banco. Os modelos detalhados estão em `global/data-models/` por domínio.

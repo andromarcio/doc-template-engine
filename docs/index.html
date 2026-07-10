@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2026be" />
-    <title>doc-template-engine</title>
+    <meta name="theme-color" content="#1B2B4B" />
+    <title>docqui</title>
     <meta
       name="description"
-      content="Motor de prompts e templates do framework doc-template — especificação de software em quatro níveis (N0 → N3)."
+      content="Motor de prompts e templates do framework docqui — especificação de software em quatro níveis (N0 → N3), tintim por tintim."
     />
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
 
@@ -38,7 +38,8 @@
     <script>
       (function () {
         try {
-          var t = localStorage.getItem("doku-theme") || "system";
+          /* padrão: claro (Papel); escuro (Planta) por alternância explícita */
+          var t = localStorage.getItem("docqui-theme") || "light";
           var dark =
             t === "dark" ||
             (t === "system" &&
@@ -58,7 +59,7 @@
         <div class="sidebar__brand">
           <a class="brand" href="#/" aria-label="Início">
             <img class="brand__logo" src="assets/img/logo.svg" alt="" />
-            <span class="brand__name" id="brandName">doc-template</span>
+            <span class="brand__name" id="brandName">docqui</span>
           </a>
         </div>
 
@@ -86,7 +87,7 @@
             target="_blank"
             rel="noopener"
           >
-            <span class="workspace__badge">dt</span>
+            <span class="workspace__badge">dq</span>
             <span class="workspace__name">andromarcio/doc-template-engine</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5M7 9l5-5 5 5"/></svg>
           </a>

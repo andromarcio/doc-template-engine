@@ -132,7 +132,7 @@ Antes de escrever o conteúdo, leia a versão vigente em `VERSION` e componha o 
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos fora dos listados abaixo:**
 
 ```
-<!-- doc-template-engine: <versão> | prompt: PROMPT_N0 | atualizado: <YYYY-MM-DD> -->
+<!-- docqui: <versão> | prompt: PROMPT_N0 | atualizado: <YYYY-MM-DD> -->
 # Visão de Produto: [Nome do Produto]
 > **Nível 0** - Visão de Produto - `[SIGLA]`
 
@@ -260,7 +260,7 @@ Após aprovação, informe:
 
 Antes de apresentar, confira (todos os itens são obrigatórios):
 
-- [ ] Carimbo de versão na **primeira linha** (`<!-- doc-template-engine: … | prompt: PROMPT_N0 | atualizado: YYYY-MM-DD -->`)
+- [ ] Carimbo de versão na **primeira linha** (`<!-- docqui: … | prompt: PROMPT_N0 | atualizado: YYYY-MM-DD -->`)
 - [ ] Título exatamente `# Visão de Produto: [Nome]`
 - [ ] Subtítulo em blockquote: `> **Nível 0** - Visão de Produto - [SIGLA]` (SIGLA do produto em crase)
 - [ ] **Propósito** (foco na dor) e **Proposta de valor** (foco no benefício), cada parágrafo em uma linha contínua

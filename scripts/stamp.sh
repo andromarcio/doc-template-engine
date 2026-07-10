@@ -3,9 +3,10 @@
 # stamp.sh — insere ou atualiza o carimbo de versão (invisível) num artefato.
 #
 # O carimbo é um comentário HTML na primeira linha do arquivo:
-#   <!-- doc-template-engine: 1.0.0 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
+#   <!-- docqui: 2.0.0 | prompt: PROMPT_3A | atualizado: 2026-07-10 -->
 # Invisível no documento renderizado (PDF/HTML/preview), legível só no source .md.
-# Ver engine/VERSIONING.md.
+# Carimbos legados (prefixo `doc-template-engine:`, < 2.0.0) são reconhecidos e
+# migrados para o prefixo novo ao re-carimbar. Ver engine/VERSIONING.md.
 #
 set -euo pipefail
 
@@ -42,10 +43,10 @@ fi
 
 VERSION="$(tr -d '[:space:]' < "$ENGINE_DIR/VERSION")"
 TODAY="$(date +%F)"
-STAMP="<!-- doc-template-engine: ${VERSION} | prompt: ${PROMPT_ID} | atualizado: ${TODAY} -->"
+STAMP="<!-- docqui: ${VERSION} | prompt: ${PROMPT_ID} | atualizado: ${TODAY} -->"
 
 tmp="$(mktemp)"
-if head -n 1 "$FILE" | grep -q '^<!-- doc-template-engine:'; then
+if head -n 1 "$FILE" | grep -qE '^<!-- (docqui|doc-template-engine):'; then
   # Reescreve o carimbo existente, preserva o resto.
   printf '%s\n' "$STAMP" > "$tmp"
   tail -n +2 "$FILE" >> "$tmp"

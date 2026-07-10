@@ -1,6 +1,6 @@
 # Versionamento e carimbo de artefatos
 
-Este documento define **como o doc-template-engine é versionado** e **como cada
+Este documento define **como o docqui-engine é versionado** e **como cada
 artefato gerado pelos prompts registra, de forma invisível ao leitor, a versão do
 framework que o produziu**.
 
@@ -25,7 +25,7 @@ Todo artefato gerado **ou atualizado** por um prompt carrega, na **primeira linh
 um comentário HTML:
 
 ```
-<!-- doc-template-engine: 1.0.0 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
+<!-- docqui: 1.0.0 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
 ```
 
 ### Por que comentário HTML
@@ -74,9 +74,9 @@ preenchido) seguem a mesma regra quando gerados por prompt.
 
 ## 5. Governança multi-repositório (canônico × instâncias)
 
-O `doc-template-engine` é a **fonte única da verdade** de prompts, templates, skills e
+O `docqui-engine` é a **fonte única da verdade** de prompts, templates, skills e
 scripts. As instâncias (`simpf-doc`, `desenvolve-ai`, `sifof-doc`, …) **consomem** o
-engine; o `doc-template-engine-caixa` é a **variante negocial reduzida** (só a parte de
+engine; o `docqui-caixa` é a **variante negocial reduzida** (só a parte de
 negócio — sem os prompts/artefatos técnicos).
 
 - **Evolução nasce no canônico** e é replicada às demais, respeitando o escopo de cada

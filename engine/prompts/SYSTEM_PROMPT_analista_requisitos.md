@@ -37,7 +37,7 @@ Ao entrar no estado terminal de geração (`[GERACAO_ARTEFATO]`, `[ARQUIVO_FINAL
 (na raiz do engine) e garanta que a **primeira linha** do artefato seja o carimbo invisível:
 
 ```
-<!-- doc-template-engine: <versão de VERSION> | prompt: <PROMPT_ID corrente> | atualizado: <YYYY-MM-DD de hoje> -->
+<!-- docqui: <versão de VERSION> | prompt: <PROMPT_ID corrente> | atualizado: <YYYY-MM-DD de hoje> -->
 ```
 
 Em **atualização** de artefato (PROMPT_4A/4B e demais updates), **reescreva** o

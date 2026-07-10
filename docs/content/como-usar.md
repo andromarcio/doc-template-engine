@@ -5,7 +5,7 @@ Os prompts e templates são **conteúdo reutilizável**, consumidos por:
 - **instâncias de documentação** — cada projeto fornece seu próprio conteúdo
   (dicionários de campos/mensagens/regras/erros, modelo de dados) e usa estes
   prompts/templates como motor;
-- **ferramentas** que leem e executam os prompts (ex.: `doc-template-studio`).
+- **ferramentas** que leem e executam os prompts (ex.: `docqui-studio`).
 
 > O engine fornece **os prompts e os esqueletos**; o conteúdo específico de cada
 > sistema vive na instância, não aqui.

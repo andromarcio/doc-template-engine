@@ -32,7 +32,7 @@ Use esta skill de dois modos:
 
 > **Carimbo de versão (obrigatório):** ao gerar **ou atualizar** qualquer artefato, leia
 > `VERSION` (na raiz do engine) e garanta que a **primeira linha** seja o comentário invisível
-> `<!-- doc-template-engine: <versão> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`.
+> `<!-- docqui: <versão> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`.
 > Em updates, **reescreva** o carimbo (não duplique). Detalhes em `engine/VERSIONING.md`.
 
 ---

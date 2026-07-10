@@ -1,4 +1,4 @@
-<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # Protótipos — Manifesto de fidelidade e aprovação
 > Fonte de verdade do vínculo **protótipo ↔ N3**, do nível de **fidelidade** e do
 > **status de aprovação**. Uma tela com fidelidade **obrigatória** só vira **contrato

@@ -1,6 +1,7 @@
 # Changelog
 
-Todas as mudanças relevantes do **doc-template-engine** são registradas aqui.
+Todas as mudanças relevantes do **docqui-engine** (ex-`doc-template-engine`)
+são registradas aqui.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o
 versionamento segue [SemVer](https://semver.org/lang/pt-BR/):
@@ -15,6 +16,35 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
 [`engine/VERSIONING.md`](engine/VERSIONING.md).
 
 ## [Unreleased]
+
+## [2.0.0] - 2026-07-10
+
+### Changed
+- **BREAKING — rebatismo**: o framework `doc-template` passa a se chamar **docqui**
+  (**doc**umentação + a**qui**), com tagline oficial **“especificação tintim por
+  tintim”**. Referências a `doc-template-studio` viram `docqui-studio` e a variante
+  `doc-template-engine-caixa` vira `docqui-caixa`. O repositório GitHub segue como
+  `doc-template-engine` até o rename manual para `docqui-engine` (o GitHub redireciona
+  as URLs antigas automaticamente; por isso os links absolutos ainda apontam para o
+  slug atual).
+- **BREAKING — carimbo de versão**: o prefixo muda de `<!-- doc-template-engine: … -->`
+  para `<!-- docqui: … -->`. O `scripts/stamp.sh` reconhece carimbos legados e os
+  migra para o prefixo novo ao re-carimbar (artefatos existentes não precisam de
+  ação imediata).
+- **Site de docs** (`docs/`): retema com a paleta da marca — Papel `#FBF8F0`, Tinta
+  `#1B2B4B`, Grifo `#FFD94A`, Planta `#0F1B33`. O **modo claro (Papel) é o padrão**;
+  o escuro (Planta) fica disponível pela alternância do topo. Chave de tema renomeada
+  para `docqui-theme` (preferência antiga é ignorada, sem migração). Novo logo,
+  favicon e seleção de texto no estilo marca-texto.
+
+### Added
+- `engine/brand/` — identidade visual do docqui: símbolo **doc-pin** (positivo,
+  negativo e variante ≤ 24 px), logotipo monolinear com q-pin (e assinatura com
+  grifo no “qui”), lockup, social card 1200×630, badges (`versão` e `specado ✓`)
+  e o guia da marca [`BRAND.md`](engine/brand/BRAND.md) — cores, tipografia
+  (Sora/Inter/JetBrains Mono), elementos de sistema e regras de uso (incluindo as
+  restrições legais: nenhuma referência visual ao personagem de Hergé; pin distinto
+  do Google Maps).
 
 ## [1.2.0] - 2026-06-30
 

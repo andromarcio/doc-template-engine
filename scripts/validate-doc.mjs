@@ -349,7 +349,7 @@ function validateDataModel(lines, raw, kind, errors) {
   }
 }
 
-// Variante NEGOCIAL do data-model (usada pelo doc-template-engine-caixa): só a parte
+// Variante NEGOCIAL do data-model (usada pelo docqui-caixa): só a parte
 // das ENTIDADES, sem a camada física de banco. Detectada pelo marcador
 // "> **Modelo de entidades (negocial)**". Valida a estrutura reduzida e PROÍBE
 // vazamento físico (Label Dev / Campo banco / Tipo SQL).

@@ -1,6 +1,6 @@
-# doc-template-engine
+# docqui-engine
 
-Motor de **prompts** e **templates** do framework `doc-template` — um método para
+Motor de **prompts** e **templates** do framework `docqui` — um método para
 especificar software em **quatro níveis**, da visão de produto até a feature,
 gerando documentação **estruturada e rastreável**.
 
@@ -9,7 +9,7 @@ gerando documentação **estruturada e rastreável**.
 
 ## O que é
 
-`doc-template` organiza a especificação de um software numa hierarquia de quatro
+`docqui` organiza a especificação de um software numa hierarquia de quatro
 níveis de detalhe (**N0 → N3**). Cada nível responde a uma pergunta diferente, é
 mantido por um público diferente e produz um artefato próprio. Quanto mais alto o
 número, mais fino o detalhe: o **N0** enxerga o produto inteiro; o **N3** descreve

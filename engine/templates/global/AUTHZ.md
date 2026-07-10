@@ -1,4 +1,4 @@
-<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # AUTHZ.md — Modelo de Autorização
 > Padrão arquitetural transversal de **controle de acesso por funcionalidade**.
 > Independente de domínio: vale para toda Feature (N3) do sistema.

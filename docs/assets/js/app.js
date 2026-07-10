@@ -1,5 +1,5 @@
 /* =========================================================================
-   doc-template-engine — app
+   docqui-engine — app
    Build sidebar from config, route by hash, render Markdown, theme, TOC.
    ========================================================================= */
 (function () {
@@ -508,16 +508,16 @@
     });
   }
   function initTheme() {
-    var mode = "system";
+    var mode = "light";
     try {
-      mode = localStorage.getItem("doku-theme") || "system";
+      mode = localStorage.getItem("docqui-theme") || "light";
     } catch (e) {}
     applyTheme(mode);
     document.querySelectorAll(".theme-switch button").forEach(function (b) {
       b.addEventListener("click", function () {
         var m = b.dataset.themeSet;
         try {
-          localStorage.setItem("doku-theme", m);
+          localStorage.setItem("docqui-theme", m);
         } catch (e) {}
         applyTheme(m);
       });
@@ -525,9 +525,9 @@
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", function () {
-        var m = "system";
+        var m = "light";
         try {
-          m = localStorage.getItem("doku-theme") || "system";
+          m = localStorage.getItem("docqui-theme") || "light";
         } catch (e) {}
         if (m === "system") applyTheme("system");
       });

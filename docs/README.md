@@ -4,7 +4,7 @@ Site estático (HTML/CSS/JS, sem build) com a estética do editor **Dokumin**:
 barra lateral com navegação em árvore, busca, tema claro/escuro, sumário
 "nesta página" e conteúdo escrito em **Markdown**.
 
-> Feito para o repositório `doc-template-engine`, mas é **reutilizável**: troque o
+> Feito para o repositório `docqui-engine`, mas é **reutilizável**: troque o
 > conteúdo de `content/` e a navegação em `config.js` e ele serve qualquer projeto.
 
 ## Estrutura

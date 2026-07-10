@@ -1,8 +1,13 @@
-# doc-template-engine
+<img src="engine/brand/lockup.svg" alt="docqui" width="340">
 
-Motor de **prompts** e **templates** do framework `doc-template` — um método para
-especificar software em quatro níveis, da visão de produto até a feature, gerando
-documentação estruturada e rastreável.
+# docqui-engine
+
+> **especificação tintim por tintim** — *"Tá no Docqui."*
+
+Motor de **prompts** e **templates** do framework **docqui** (doc + aqui) — um
+método para especificar software em quatro níveis, da visão de produto até a
+feature, gerando documentação estruturada e rastreável. Identidade visual em
+[`engine/brand/BRAND.md`](engine/brand/BRAND.md).
 
 ## Os quatro níveis
 
@@ -153,6 +158,7 @@ resolvê-lo (**3A/CRUD/2A/1A** para existência, **4A/4B** para conteúdo).
 
 ```
 engine/
+├── brand/        # identidade visual — símbolo, logotipo, paleta (ver BRAND.md)
 ├── prompts/      # prompts que conduzem a especificação (N0→N3), contagem APF,
 │                 # NFR, protótipos, engenharia reversa, QA, conversão, etc.
 └── templates/    # esqueletos de documentação
@@ -187,7 +193,7 @@ Os prompts e templates são **conteúdo reutilizável**, consumidos por:
 - **instâncias de documentação** — cada projeto fornece seu próprio conteúdo
   (dicionários de campos/mensagens/regras/erros, modelo de dados) e usa estes
   prompts/templates como motor;
-- **ferramentas** que leem e executam os prompts (ex.: `doc-template-studio`).
+- **ferramentas** que leem e executam os prompts (ex.: `docqui-studio`).
 
 > O engine fornece **os prompts e os esqueletos**; o conteúdo específico de cada
 > sistema vive na instância, não aqui.
@@ -210,7 +216,7 @@ chat — ou o agente conduz a especificação "na mão" sem entrar no fluxo de e
 é porque ela não foi instalada na instância. Instale com o script:
 
 ```bash
-# a partir do checkout do doc-template-engine:
+# a partir do checkout do docqui-engine:
 ./scripts/install-skill.sh ../simpf-doc   # instala em simpf-doc/.claude/skills/
 ./scripts/install-skill.sh --user         # ou para todos os projetos (~/.claude/skills/)
 ```
@@ -246,8 +252,11 @@ invisível** na primeira linha — um comentário HTML que não aparece no docum
 renderizado (PDF/HTML/preview do GitHub), só no source `.md`:
 
 ```
-<!-- doc-template-engine: 1.0.0 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
+<!-- docqui: 2.0.0 | prompt: PROMPT_3A | atualizado: 2026-07-10 -->
 ```
+
+> Artefatos carimbados antes do 2.0.0 usam o prefixo legado
+> `doc-template-engine:`; o `stamp.sh` os reconhece e migra ao re-carimbar.
 
 Assim dá para auditar com que versão do framework cada artefato foi produzido, sem
 poluir o que o leitor de negócio vê. A regra completa está em

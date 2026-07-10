@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #
-# install-skill.sh — instala as skills do doc-template-engine numa instância
+# install-skill.sh — instala as skills do docqui-engine numa instância
 # de documentação (ou no diretório pessoal do Claude Code).
 #
 # O Claude Code (CLI, VS Code, JetBrains) só descobre skills automaticamente em:
 #   - <repo-aberto>/.claude/skills/   (skills do projeto)
 #   - ~/.claude/skills/               (skills pessoais, valem para todo projeto)
 #
-# A skill `analista-requisitos` vive no doc-template-engine. Para que o Claude a
+# A skill `analista-requisitos` vive no docqui-engine. Para que o Claude a
 # acione numa instância (ex.: simpf-doc), ela precisa estar fisicamente numa
 # dessas pastas. Este script faz essa cópia.
 #
@@ -22,7 +22,7 @@ Uso:
   $0 <caminho-da-instância>   instala em <caminho>/.claude/skills/
   $0 --user                   instala em ~/.claude/skills/ (todos os projetos)
 
-Copia as skills do doc-template-engine para onde o Claude Code as descobre
+Copia as skills do docqui-engine para onde o Claude Code as descobre
 automaticamente, de modo que ele possa acioná-las (ex.: a skill
 'analista-requisitos' ao falar de especificação de requisitos, N0–N3, CRUD…).
 

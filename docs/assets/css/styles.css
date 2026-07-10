@@ -1,5 +1,6 @@
 /* =========================================================================
-   doc-template-engine — Dokumin-inspired GitHub Pages theme
+   docqui — tema da marca (Papel/Planta), sobre a base Dokumin-inspired
+   Padrão: modo claro (Papel). Escuro (Planta) por alternância explícita.
    ========================================================================= */
 
 /* ---------- Design tokens ---------- */
@@ -9,40 +10,42 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono",
     Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Brand */
-  --brand-1: #4750e0;
-  --brand-2: #2026be;
-  --brand-3: #6e76ee;
-  --primary: #2026be;
-  --primary-strong: #191d94;
-  --primary-soft: rgba(32, 38, 190, 0.12);
+  /* Brand (Tinta + Grifo) */
+  --brand-1: #3d5387;
+  --brand-2: #1b2b4b;
+  --brand-3: #6e80b0;
+  --primary: #1b2b4b;
+  --primary-strong: #14213d;
+  --primary-soft: rgba(27, 43, 75, 0.1);
+  --grifo: #ffd94a;
+  --grifo-soft: rgba(255, 217, 74, 0.32);
 
-  /* Light surfaces */
-  --bg: #ffffff;
-  --bg-elev: #ffffff;
-  --bg-subtle: #f6f7f9;
-  --bg-hover: #f1f2f5;
-  --bg-active: #eef0ff;
-  --sidebar-bg: #fbfbfc;
-  --topbar-bg: rgba(255, 255, 255, 0.82);
+  /* Light surfaces (Papel) */
+  --bg: #fbf8f0;
+  --bg-elev: #fffefa;
+  --bg-subtle: #f5f1e4;
+  --bg-hover: #f1ecdd;
+  --bg-active: #f9efc8;
+  --sidebar-bg: #f7f3e8;
+  --topbar-bg: rgba(251, 248, 240, 0.85);
 
-  /* Text */
-  --text-strong: #14161c;
-  --text: #3a3f4b;
-  --text-muted: #8b909c;
-  --text-faint: #aab0bb;
+  /* Text (Tinta) */
+  --text-strong: #14213d;
+  --text: #3c4864;
+  --text-muted: #6b7691;
+  --text-faint: #98a1b7;
 
   /* Lines */
-  --border: #ebedf1;
-  --border-strong: #dfe2e8;
+  --border: #e9e2cf;
+  --border-strong: #dcd4bd;
 
   /* Accents */
-  --green: #16a34a;
-  --green-soft: rgba(34, 197, 94, 0.13);
-  --amber: #d97706;
-  --amber-soft: rgba(245, 158, 11, 0.15);
-  --red: #dc2626;
-  --link: #2a33d4;
+  --green: #1e7f5c;
+  --green-soft: rgba(30, 127, 92, 0.14);
+  --amber: #a8770f;
+  --amber-soft: rgba(255, 217, 74, 0.28);
+  --red: #be4b33;
+  --link: #2c4a9c;
 
   /* Effects */
   --radius-sm: 8px;
@@ -59,29 +62,34 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0d0e12;
-  --bg-elev: #14161c;
-  --bg-subtle: #131419;
-  --bg-hover: #1b1d25;
-  --bg-active: #1c1d35;
-  --sidebar-bg: #0f1015;
-  --topbar-bg: rgba(13, 14, 18, 0.82);
+  /* Planta (heliográfica) */
+  --bg: #0f1b33;
+  --bg-elev: #16233f;
+  --bg-subtle: #131f3a;
+  --bg-hover: #1c2a4a;
+  --bg-active: #223052;
+  --sidebar-bg: #0d1830;
+  --topbar-bg: rgba(15, 27, 51, 0.85);
 
-  --text-strong: #f1f2f5;
-  --text: #c6cad3;
-  --text-muted: #858b98;
-  --text-faint: #5e6470;
+  --text-strong: #eae7db;
+  --text: #c3c9da;
+  --text-muted: #8e99b8;
+  --text-faint: #5f6b8c;
 
-  --border: #23262f;
-  --border-strong: #2c303b;
+  --border: #24325a;
+  --border-strong: #2e3d6b;
 
-  --primary: #6067e6;
-  --primary-strong: #9197f4;
-  --primary-soft: rgba(96, 104, 230, 0.22);
-  --link: #98a0ff;
+  --primary: #8fa8e6;
+  --primary-strong: #b4c6f2;
+  --primary-soft: rgba(143, 168, 230, 0.18);
+  --link: #a8bcf0;
+  --grifo-soft: rgba(255, 217, 74, 0.24);
 
-  --green-soft: rgba(34, 197, 94, 0.16);
-  --amber-soft: rgba(245, 158, 11, 0.16);
+  --green: #4cc495;
+  --red: #e8836b;
+  --amber: #e3b83d;
+  --green-soft: rgba(76, 196, 149, 0.16);
+  --amber-soft: rgba(255, 217, 74, 0.14);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 20px 56px rgba(0, 0, 0, 0.6);
@@ -121,7 +129,8 @@ button {
   cursor: pointer;
 }
 ::selection {
-  background: var(--primary-soft);
+  /* seleção como marca-texto */
+  background: var(--grifo-soft);
 }
 
 /* Scrollbars */

@@ -1,7 +1,7 @@
 # Protótipo — Rastreabilidade visual (estilo Confluence)
 
 Protótipo navegável que demonstra os **dois recursos "Confluence"** que o
-Markdown cru não entrega, em cima dos artefatos que o `doc-template` já gera:
+Markdown cru não entrega, em cima dos artefatos que o `docqui` já gera:
 
 1. **Grafo de rastreabilidade interativo** — a cadeia
    `N0 → N1 → N2 → N3`, mais `história → feature → código` e as

@@ -1,5 +1,5 @@
 /* =========================================================================
-   Configuração do site — doc-template-engine
+   Configuração do site — docqui-engine
    -------------------------------------------------------------------------
    Este é o único arquivo que você precisa editar para adaptar o template:
    troque o nome, o repositório e a árvore de navegação. Cada item aponta
@@ -7,8 +7,8 @@
    ========================================================================= */
 window.DOKU_CONFIG = {
   /* Identidade do site */
-  name: "doc-template",
-  fullName: "doc-template-engine",
+  name: "docqui",
+  fullName: "docqui-engine",
   repo: "https://github.com/andromarcio/doc-template-engine",
   branch: "main",
   defaultPage: "introducao",

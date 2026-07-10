@@ -1,4 +1,4 @@
-<!-- doc-template-engine: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # Data Model: [Nome do Domínio]
 > **Modelo de entidades (negocial)** — só a parte das entidades, **sem camada física**
 > (sem Label Dev, campo banco, tipo SQL, FK, índice ou contagem ALI/AIE). Cole apenas
