@@ -256,19 +256,19 @@ de resultados). Confirme com o usuário e registre na seção `## Superfície`.
 A partir dos campos do N3 de cadastro, proponha automaticamente:
 
 - Todos os campos do cadastro, mantendo tipo, obrigatoriedade e validações
-- O campo identificador único → **somente leitura** (não editável)
+- O campo identificador único → **imutável** (chave de negócio, não editável) — coluna *Alterável*
 - Campos preenchidos automaticamente no cadastro → manter como automáticos
 
 Apresente a proposta ao usuário:
 
 > "Com base no cadastro, proponho o mesmo formulário com as seguintes diferenças:
 >
-> | Label PO | Tipo | Obrigatório | Observação |
+> | Label PO | Alterável | Tipo | Obrigatório |
 > |---|---|---|---|
-> | [identificador único] | [tipo] | — | ⚠️ Somente leitura — não editável |
-> | [demais campos] | [tipo] | [igual ao cadastro] | — |
+> | [identificador único] | ⚠️ imutável (não editável) | [tipo] | — |
+> | [demais campos] | editável | [tipo] | [igual ao cadastro] |
 >
-> Algum campo adicional deve se tornar somente leitura na edição?
+> Algum campo adicional deve ser **somente leitura** ou **imutável** na edição? (coluna *Alterável* do `## Campos`)
 > Algum campo deve ser removido ou ter sua obrigatoriedade alterada?"
 
 Após confirmação, **pule o BLOCO B** no PASSO 2 — os campos já estão derivados.
@@ -415,6 +415,12 @@ Após receber os campos:
   - registre a fonte como **AIE** em `global/ALI-AIE-MAP.md` (dado mantido por outro
     sistema e lido por este = Arquivo de Interface Externa, para a contagem APF);
   - se for **somente leitura**, prefira `## Campos automáticos` a `## Campos`.
+
+- **Alterável de cada campo** (coluna *Alterável* da tabela `## Campos`): `editável`
+  (padrão), `somente leitura` (exibido, não altera nesta feature) ou `imutável`
+  (nunca muda após a criação — ex.: chave de negócio). Em **cadastro** tudo nasce
+  `editável`; em **Edição** o identificador é `imutável` e o PASSO 1.5 pergunta se
+  há outros campos travados.
 
 ---
 
@@ -565,10 +571,10 @@ gates:
 
 ## Campos
 
-| Label PO | Origem | Tipo | Obrigatório | Validação |
-|---|---|---|---|---|
-| [nome em português] | [entrada do usuário / calculado / externo: [Fonte]] | [tipo] | sim/não/automático | [regra em linguagem natural] |
-| [campo canônico] | entrada do usuário | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
+| Label PO | Origem | Alterável | Tipo | Obrigatório | Validação |
+|---|---|---|---|---|---|
+| [nome em português] | [entrada do usuário / calculado / externo: [Fonte]] | [editável / somente leitura / imutável] | [tipo] | sim/não/automático | [regra em linguagem natural] |
+| [campo canônico] | entrada do usuário | editável | [tipo] | [obrig.] | → ver FIELD-DICTIONARY: [nome] |
 
 ---
 

@@ -209,9 +209,9 @@ Feature: [Nome da feature em linguagem natural]
   no DATA-MODEL.md — não duplicar aqui.
 -->
 
-| Label PO | Origem | Tipo | Obrigatório | Validação |
-|---|---|---|---|---|
-| [Nome do campo em português] | [entrada do usuário / calculado / externo: [Fonte]] | [texto / número / data / lista de opções / sim·não / arquivo] | sim / não / automático | [regras em linguagem natural] |
+| Label PO | Origem | Alterável | Tipo | Obrigatório | Validação |
+|---|---|---|---|---|---|
+| [Nome do campo em português] | [entrada do usuário / calculado / externo: [Fonte]] | [editável / somente leitura / imutável] | [texto / número / data / lista de opções / sim·não / arquivo] | sim / não / automático | [regras em linguagem natural] |
 
 *[Notas sobre dependências entre campos, se houver.]*
 

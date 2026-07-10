@@ -236,6 +236,16 @@ function isSearchFeature(lines, file) {
   return byTitle || byFile;
 }
 
+// Feature de edição/alteração? (verbos: editar, alterar, atualizar). A editabilidade
+// dos campos precisa ser explícita nessas features (coluna "Alterável" em ## Campos).
+function isEditFeature(lines, file) {
+  const title = (lines.find((l) => l.trim().startsWith('# ')) || '').replace(/^#\s*/, '').trim();
+  const verb = (title.split(/\s+/)[0] || '').toLowerCase();
+  const byTitle = /^(editar|alterar|atualizar)$/.test(verb);
+  const byFile = /(^|\/)f-(editar|alterar|atualizar)-/.test(String(file || '').replace(/\\/g, '/').toLowerCase());
+  return byTitle || byFile;
+}
+
 function validateN3(lines, raw, errors, file) {
   checkCommon(lines, errors);
   const sub = lines.find((l) => l.trim().startsWith('> **Nível 3**'));
@@ -264,6 +274,11 @@ function validateN3(lines, raw, errors, file) {
         errors.push('Tabela "## Colunas do resultado" sem a coluna "Coluna (Label PO)".');
       }
     }
+  }
+  // Gate de editabilidade: feature de edição exige a coluna "Alterável" em ## Campos
+  // (quais campos são editáveis, somente leitura ou imutáveis — explícito, não inferido).
+  if (isEditFeature(lines, file) && header && !header.some((c) => /alter[áa]vel/i.test(c))) {
+    errors.push('Feature de edição sem a coluna "Alterável" na tabela "## Campos" — marque cada campo como editável / somente leitura / imutável.');
   }
   // Gate de fidelidade: se a Superfície declara "Fidelidade ao protótipo: obrigatória",
   // precisa apontar o caminho do protótipo (prototypes/… ou um link .html).
