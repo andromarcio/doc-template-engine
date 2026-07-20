@@ -2,7 +2,9 @@
 
 Identidade visual do framework **docqui** (doc + aqui). Conceito: **preto no
 branco, com grifo** — a spec é tinta sobre papel; o marca-texto amarelo destaca
-o que importa. Aprovada em 2026-07-10 (proposta v1).
+o que importa. Aprovada em 2026-07-10; a apresentação completa da proposta está
+arquivada em [`proposta-v1.html`](proposta-v1.html) (autocontida — claro por
+padrão, modo Planta no botão do canto).
 
 ## Nome
 

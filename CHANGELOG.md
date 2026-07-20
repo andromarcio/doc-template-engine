@@ -45,6 +45,9 @@ leitor do documento) em todo artefato gerado pelos prompts — ver
   (Sora/Inter/JetBrains Mono), elementos de sistema e regras de uso (incluindo as
   restrições legais: nenhuma referência visual ao personagem de Hergé; pin distinto
   do Google Maps).
+- `engine/brand/proposta-v1.html` — apresentação completa da proposta de identidade,
+  arquivada como registro da decisão de design: página autocontida (abre em qualquer
+  navegador), claro por padrão e alternância para o modo Planta.
 
 ## [1.2.0] - 2026-06-30
 
