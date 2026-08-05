@@ -60,7 +60,7 @@ O **Portal de Compras** gerencia todo o processo de compras das Entidades Nacion
 - **EN-01 — Formato:** "Como {ator}, quero {ação}, para {benefício}." Uma história por objetivo. Ator específico ("analista de suprimentos", "aprovador", "fornecedor") — nunca "usuário" genérico. Benefício real, não circular.
 - **EN-02 — Critérios de aceite do card: lista curta e sem cerimônia.** De 3 a 7 condições objetivas e verificáveis, ao menos 1 negativa. **Sem título, sem numeração, sem blocos Dado/Quando/Então, sem textos de mensagem e sem tabelas** — critério de aceite não é regra de negócio nomeada; ele só existe dentro da sua história e serve para conversar e aceitar. Todo o detalhe verificável vive na especificação (6.3), que o card referencia.
 - **EN-03 — A história não carrega especificação.** Campos, regras detalhadas, mensagens, cenários e comportamento de tela **não entram no card**. Quando o levantamento produzir esse detalhe — e os portões vão produzi-lo —, registre-o **na especificação da funcionalidade** e faça a história apenas **referenciá-la** ("especificação afetada: Parametrizar ata de registro de preços").
-- **EN-04 — Identificação (apenas histórias).** Histórias recebem ID com prefixo de módulo e demanda: `HIST.[módulo].[demanda].[seq]` — ex.: `HIST.M16.D01.02`. O identificador da demanda é definido no enquadramento; a numeração nunca reinicia dentro da demanda, e HIST de documentos diferentes nunca colidem. Critérios de aceite não recebem numeração nem nome.
+- **EN-04 — Numeração das histórias: sequencial simples.** As histórias são numeradas em sequência dentro do documento — "História 1", "História 2"… — apenas para separar uma da outra; não há esquema de identificação além disso. Quando outra parte do documento precisar citar uma história, use o número com o título ("História 1 — Parametrizar a ata"). Critérios de aceite não recebem numeração nem nome.
 - **EN-05 — Perguntas em aberto acompanham o card.** Cada ⚠ tem dono e pergunta clara; a história só está pronta (DoR) com os portões passando e a lista de ⚠ vazia.
 
 ### 6.2 Portões de refinamento — o roteiro das suas perguntas
@@ -87,7 +87,7 @@ A especificação é organizada **por funcionalidade** (uma ação de negócio: 
 6. **Estados** — situações e transições permitidas: quem pode, quando, e o que é proibido.
 7. **Permissões** — perfil × ação.
 8. **Comportamento de tela** — navegação e comportamentos padrão (Cancelar, Voltar, Limpar, abrir/fechar modais), estados visuais (vazio, carregando, erro). **Nada disso vira cenário**, salvo quando o negócio lhe atribuir regra própria (ex.: confirmação obrigatória ao cancelar com alterações não salvas).
-9. **Rastreabilidade** — as demandas e histórias que criaram e alteraram esta funcionalidade (HIST…), com data — o histórico de evolução.
+9. **Rastreabilidade** — as demandas e histórias que criaram e alteraram esta funcionalidade (documento/pacote e "História N — título"), com data — o histórico de evolução.
 
 Regras da especificação:
 
@@ -104,7 +104,7 @@ Regras da especificação:
 - [ ] Toda história com ator específico e benefício não circular (P0)?
 - [ ] Critérios do card: 3–7 condições curtas, verificáveis, ao menos 1 negativa — sem título, sem numeração, sem Dado/Quando/Então, sem mensagens, sem tabelas (EN-02)?
 - [ ] Nenhum detalhe de especificação dentro do card — tudo referenciado (EN-03)?
-- [ ] Histórias com ID no padrão EN-04, sem colisão?
+- [ ] Histórias numeradas em sequência, com título claro (EN-04)?
 - [ ] Priorização justificada (EN-09)?
 - [ ] Lista de ⚠ pendentes com dono — idealmente vazia (EN-05)?
 
@@ -141,7 +141,7 @@ Regras da especificação:
 
 ## 9. Fluxo de trabalho
 
-1. **Enquadrar** — objetivo, usuário-alvo, critério de sucesso, módulo (GE-09), identificador da demanda (EN-04) e **funcionalidades afetadas** (especificações existentes? — EN-07). Declare suposições.
+1. **Enquadrar** — objetivo, usuário-alvo, critério de sucesso, módulo (GE-09) e **funcionalidades afetadas** (especificações existentes? — EN-07). Declare suposições.
 2. **Refinar** — histórias enxutas passando pelos portões (6.2); o detalhe descoberto vai direto para a especificação; priorização (EN-09).
 3. **Especificar** — criar ou atualizar a especificação de cada funcionalidade afetada (6.3), com rastreabilidade para as histórias.
 4. **Prototipar** — HTML conforme seção 7.

@@ -43,7 +43,7 @@ Fora do escopo deste pacote: a consulta/seleção pelo solicitante, o acompanham
 
 > Conforme o padrão: o card gera conversa, priorização e aceite. Todo o detalhe verificável — campos, regras, cenários, mensagens, estados, permissões e comportamento de tela — vive nas especificações de funcionalidade (seção 6), que os cards referenciam.
 
-### HIST.M16.D02.01 — Parametrizar a ata de registro de preços
+### História 1 — Parametrizar a ata de registro de preços
 
 **Como** administrador do Portal de Compras, **quero** parametrizar uma ata extraída do Protheus — nome, pedido mínimo, aprovação do gestor por exceção, imagens e autorizadores do consumo —, **para** controlar como a ata poderá ser usada pelos solicitantes.
 
@@ -58,7 +58,7 @@ Critérios de aceite:
 - A lista de autorizadores nasce do Protheus e pode ser ajustada no Portal sem afetar o acesso no Protheus.
 - Não é possível salvar com campo de regra ativada vazio ou inválido — os campos pendentes são apontados.
 
-### HIST.M16.D02.02 — Pesquisar atas para parametrização
+### História 2 — Pesquisar atas para parametrização
 
 **Como** administrador do Portal de Compras, **quero** pesquisar as atas e distinguir as já parametrizadas das ainda não parametrizadas, **para** localizar rapidamente a ata que desejo parametrizar ou editar.
 
@@ -186,7 +186,7 @@ Critérios de aceite:
 
 | Demanda / História | Data | O que mudou |
 |---|---|---|
-| Pacote 2 · HIST.M16.D02.01 | 02/08/2026 | Criação da funcionalidade (versão 1 da especificação) |
+| Pacote 2 · História 1 — Parametrizar a ata | 02/08/2026 | Criação da funcionalidade (versão 1 da especificação) |
 
 ### 6.2 Pesquisar atas para parametrização
 
@@ -261,14 +261,14 @@ Critérios de aceite:
 
 | Demanda / História | Data | O que mudou |
 |---|---|---|
-| Pacote 2 · HIST.M16.D02.02 | 02/08/2026 | Criação da funcionalidade (versão 1 da especificação) |
+| Pacote 2 · História 2 — Pesquisar atas | 02/08/2026 | Criação da funcionalidade (versão 1 da especificação) |
 
 ## 7. Protótipos navegáveis
 
 O protótipo do Pacote 2 é uma composição navegável das duas telas em um único arquivo (`composicao-atas-parametrizacao-v1.html`): a pesquisa e a parametrização. Ao acionar "Parametrizar"/"Editar" em uma linha, a parametrização abre com a ata carregada; "Voltar" retorna à lista. Inclui o "Modo requisitos": as etiquetas apontam a funcionalidade e o item da especificação (RN-xx ou cenário) que cada elemento atende, e a matriz ao final correlaciona tela ↔ especificação ↔ histórias da demanda.
 
-- Tela de pesquisa de atas — busca, filtro por status com contagem e lista com ação por linha (funcionalidade 6.2 · HIST.M16.D02.02).
-- Tela de parametrização — dados do Protheus em leitura e parâmetros editáveis, incluindo autorizadores de origem Protheus e inclusão manual (funcionalidade 6.1 · HIST.M16.D02.01).
+- Tela de pesquisa de atas — busca, filtro por status com contagem e lista com ação por linha (funcionalidade 6.2 · História 2).
+- Tela de parametrização — dados do Protheus em leitura e parâmetros editáveis, incluindo autorizadores de origem Protheus e inclusão manual (funcionalidade 6.1 · História 1).
 
 ## 8. Dependências
 
