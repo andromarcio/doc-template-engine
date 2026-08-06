@@ -10,19 +10,20 @@ O documento tem uma **abertura comum** (contexto, escopo, atores, glossário, ma
 
 | # | Seção da funcionalidade | O que entra | O que não entra |
 |---|---|---|---|
-| 1 | **Identificação e descrição** | Nome da funcionalidade, prioridade e uma ou duas frases de negócio dizendo o que ela entrega | Nada de intenção vaga ("melhorar", "facilitar") |
-| 2 | **História de usuário** | O card no formato ator + ação + benefício, que sustenta a conversa e a priorização | Detalhe de campo, regra, mensagem ou tela |
-| 3 | **Superfície** | Onde a funcionalidade vive: tela própria (com o caminho de menu) ou ação dentro de outra tela | Descrição de layout |
-| 4 | **Permissões** | Perfil × o que ele faz nesta funcionalidade, incluindo os perfis que não atuam | Perfis genéricos ("usuário") |
-| 5 | **Regras de negócio** | Invariantes atômicas, numeradas dentro da funcionalidade (RN-1, RN-2…): uma exigência por regra | A reação do sistema ("bloqueia", "exibe mensagem") e o texto da mensagem |
-| 6 | **Cenários** | Dado/Quando/Então, um bloco por cenário, organizados em cinco grupos: caminho feliz, erros de validação, conflitos com dados existentes, restrições de acesso e estados especiais. É aqui que a reação do sistema aparece | Texto literal das mensagens (referenciado, não copiado) |
-| 7 | **Campos** | Tabela: label, tipo, obrigatoriedade, forma de input, edição e validação | Definições físicas de banco |
-| 8 | **Campos automáticos** | Tabela: campo, valor e quando é preenchido pelo sistema | — |
-| 9 | **Mensagens** | Tabela condição → texto exibido, com críticas e sucesso | Mensagens dentro dos cenários ou das regras |
-| 10 | **Comportamento e estados da tela** | Navegação, ações padrão (Cancelar, Voltar, Limpar, Fechar) e os estados: carregando, vazio, erro, sucesso e limites | Regra de negócio disfarçada de comportamento |
-| 11 | **Protótipo** | Qual tela do protótipo navegável atende a funcionalidade e o que ela cobre | — |
+| 1 | **Identificação e descrição** | Nome da funcionalidade, prioridade e uma ou duas frases de negócio dizendo quem faz o quê e o que a funcionalidade entrega | Nada de intenção vaga ("melhorar", "facilitar") |
+| 2 | **Superfície** | Onde a funcionalidade vive: tela própria (com o caminho de menu) ou ação dentro de outra tela | Descrição de layout |
+| 3 | **Permissões** | Perfil × o que ele faz nesta funcionalidade, incluindo os perfis que não atuam | Perfis genéricos ("usuário") |
+| 4 | **Regras de negócio** | Invariantes atômicas, numeradas dentro da funcionalidade (RN-1, RN-2…): uma exigência por regra | A reação do sistema ("bloqueia", "exibe mensagem") e o texto da mensagem |
+| 5 | **Cenários** | Dado/Quando/Então, um bloco por cenário, organizados em cinco grupos: caminho feliz, erros de validação, conflitos com dados existentes, restrições de acesso e estados especiais. É aqui que a reação do sistema aparece | Texto literal das mensagens (referenciado, não copiado) |
+| 6 | **Campos** | Tabela: label, tipo, obrigatoriedade, forma de input, edição e validação | Definições físicas de banco |
+| 7 | **Campos automáticos** | Tabela: campo, valor e quando é preenchido pelo sistema | — |
+| 8 | **Mensagens** | Tabela condição → texto exibido, com críticas e sucesso | Mensagens dentro dos cenários ou das regras |
+| 9 | **Comportamento e estados da tela** | Navegação, ações padrão (Cancelar, Voltar, Limpar, Fechar) e os estados: carregando, vazio, erro, sucesso e limites | Regra de negócio disfarçada de comportamento |
+| 10 | **Protótipo** | Qual tela do protótipo navegável atende a funcionalidade e o que ela cobre | — |
 
 Ao final do documento: **suposições** (⚠ assumidas para viabilizar a especificação), **perguntas em aberto** e **histórico de versões**.
+
+**O documento é orientado à funcionalidade — a história de usuário não entra nele.** A história é o que origina a criação ou a evolução de uma funcionalidade: ela vive no backlog, dá o lastro à demanda e é citada apenas como **origem da versão** no histórico do documento. Quem descreve o que a funcionalidade é, aqui, é a sua descrição; quem prova o comportamento são as regras e os cenários.
 
 ## 2. O que muda em relação ao formato atual
 
@@ -31,7 +32,7 @@ Ao final do documento: **suposições** (⚠ assumidas para viabilizar a especif
 | Verificação do comportamento | Critérios de aceite acumulavam invariante, reação e mensagem | **Regras de negócio** guardam a invariante; **cenários** guardam a reação verificável |
 | Dado/Quando/Então | Aparecia dentro dos critérios de aceite, onde não cabe | Fica nos **cenários**, que é o lugar dele |
 | Critérios de aceite | Eram o único recipiente de tudo | Deixam de existir como seção: quem prova a entrega é o conjunto regras + cenários |
-| História de usuário | Era o documento | Continua presente, como âncora da conversa e da priorização — enxuta |
+| História de usuário | Organizava o documento — o documento era uma lista de histórias | Sai do documento: permanece no backlog como origem da criação ou da evolução, citada no histórico de versões. O documento passa a ser organizado por funcionalidade |
 | Cobertura de exceções | Dependia da diligência de quem escrevia | Os **cinco grupos de cenários** tornam a ausência visível: um grupo vazio é declarado |
 
 **Decisão implicada:** esta estrutura substitui a regra 5 do prompt (que proíbe seções de regras de negócio fora das histórias e critérios). Se a preferência for manter a regra 5, os itens de "Regras de negócio" voltam a ser critérios de aceite e a seção desaparece — o resto da anatomia permanece igual.
@@ -86,10 +87,6 @@ A precificação é a etapa em que o comprador registra, sobre uma solicitação
 | Prioridade | Must — é a origem do processo; sem ela nenhuma das demais funcionalidades acontece |
 
 Permite ao comprador registrar a precificação de uma solicitação de compra — classificação do processo, título, vigência, valores unitários e especificações dos itens e anexos das propostas — e encaminhar o processo à etapa seguinte com as informações necessárias ao Despacho do Presidente.
-
-### História de usuário
-
-**Como** comprador, **quero** registrar a precificação de uma solicitação de compra e encaminhá-la, **para** que o processo siga à etapa seguinte com os valores e as informações que fundamentam a decisão.
 
 ### Superfície
 
@@ -250,11 +247,7 @@ Tela "Precificação da solicitação de compra" do protótipo navegável, cobri
 | Conjunto | Precificação de SC — Módulo 07 (Cotação Eletrônica) |
 | Prioridade | Must — é a porta de entrada da revisão gerencial |
 
-Permite ao Gerente de Suprimentos localizar as solicitações de compra encaminhadas para revisão, distinguindo as pendentes das já revisadas, e abrir a que deseja analisar.
-
-### História de usuário
-
-**Como** gerente de suprimentos, **quero** pesquisar as solicitações de compra encaminhadas para revisão, **para** priorizar as pendentes e abri-las para análise.
+Permite ao Gerente de Suprimentos localizar as solicitações de compra encaminhadas para revisão, distinguindo as pendentes das já revisadas, e abrir a que deseja analisar para priorizar o trabalho de revisão.
 
 ### Superfície
 
@@ -402,6 +395,8 @@ Seguem a mesma anatomia e serão desenvolvidas na aprovação desta proposta:
 
 ## Histórico de versões
 
-| Versão | Data | Descrição |
-|---|---|---|
-| 1.0 | 06/08/2026 | Proposta de anatomia no formato N3 negocial, com aplicação às Funcionalidades 1 e 2 da Precificação de SC. |
+A coluna **Origem** registra a história de usuário ou a demanda que deu lastro à criação ou à evolução das funcionalidades desta versão — é o único ponto em que a história é citada no documento.
+
+| Versão | Data | Origem | Descrição |
+|---|---|---|---|
+| 1.0 | 06/08/2026 | Demanda de especificação do Módulo 07 — cards PDTIC25114-468 a 493 (Sprint SP23) | Proposta de anatomia no formato N3 negocial, com aplicação às Funcionalidades 1 e 2 da Precificação de SC. |
